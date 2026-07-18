@@ -1,0 +1,212 @@
+"use client";
+
+import React from "react";
+
+/**
+ * Capabilities — "Expert services for lasting success" section
+ *
+ * Exact replica of the reference design:
+ * a large rounded light-gray panel; the left column (heading, black
+ * "Contact sales →" pill, fine-print caption) is sticky while the right
+ * side — two staggered columns of white cards with indigo line icons —
+ * scrolls vertically past it.
+ */
+
+const ICON_STROKE = "#5D5CDE";
+
+const IconImplementation = () => (
+  <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+    <path
+      d="M5 11.5h20v12a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 5 23.5v-12Z"
+      stroke={ICON_STROKE}
+      strokeWidth="1.6"
+      strokeLinejoin="round"
+    />
+    <path d="M5 11.5 8 6h14l3 5.5" stroke={ICON_STROKE} strokeWidth="1.6" strokeLinejoin="round" />
+    <path d="M11 15.5h3M11 19h8" stroke={ICON_STROKE} strokeWidth="1.6" strokeLinecap="round" />
+  </svg>
+);
+
+const IconSuccessPlan = () => (
+  <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+    <circle cx="11" cy="10.5" r="3.5" stroke={ICON_STROKE} strokeWidth="1.6" />
+    <path
+      d="M4.5 24c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"
+      stroke={ICON_STROKE}
+      strokeWidth="1.6"
+      strokeLinecap="round"
+    />
+    <circle cx="21.5" cy="9" r="2.5" stroke={ICON_STROKE} strokeWidth="1.6" />
+    <path
+      d="M20.5 15.5c2.8 0 4.6 1.6 5.2 4.5"
+      stroke={ICON_STROKE}
+      strokeWidth="1.6"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+const IconManaged = () => (
+  <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+    <rect x="8" y="5" width="17" height="11" rx="1.5" stroke={ICON_STROKE} strokeWidth="1.6" />
+    <path d="M11 8.2h.01M13.6 8.2h.01M16.2 8.2h.01" stroke={ICON_STROKE} strokeWidth="2" strokeLinecap="round" />
+    <path
+      d="M5 9v11.5A1.5 1.5 0 0 0 6.5 22H21"
+      stroke={ICON_STROKE}
+      strokeWidth="1.6"
+      strokeLinecap="round"
+    />
+    <path d="M11 12.5h11M11 16h6" stroke={ICON_STROKE} strokeWidth="1.6" strokeLinecap="round" />
+  </svg>
+);
+
+const IconSupport = () => (
+  <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+    <path
+      d="M6 17v-2a9 9 0 0 1 18 0v2"
+      stroke={ICON_STROKE}
+      strokeWidth="1.6"
+      strokeLinecap="round"
+    />
+    <rect x="4.5" y="15.5" width="4.5" height="7" rx="2" stroke={ICON_STROKE} strokeWidth="1.6" />
+    <rect x="21" y="15.5" width="4.5" height="7" rx="2" stroke={ICON_STROKE} strokeWidth="1.6" />
+    <path
+      d="M23 22.5c0 2-1.5 3.5-4 3.5h-2.5"
+      stroke={ICON_STROKE}
+      strokeWidth="1.6"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+const IconTailored = () => (
+  <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+    <path
+      d="M24.5 12a10 10 0 1 1-6.5-8.4"
+      stroke={ICON_STROKE}
+      strokeWidth="1.6"
+      strokeLinecap="round"
+    />
+    <path
+      d="M20 12.5a5.5 5.5 0 1 1-4-4.3"
+      stroke={ICON_STROKE}
+      strokeWidth="1.6"
+      strokeLinecap="round"
+    />
+    <circle cx="14.5" cy="14.5" r="1.4" fill={ICON_STROKE} />
+    <path d="m14.5 14.5 7-7M21.5 4.5v3h3" stroke={ICON_STROKE} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+interface CapabilityCard {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
+const COLUMN_ONE: CapabilityCard[] = [
+  {
+    icon: <IconImplementation />,
+    title: "Implementation packages",
+    description:
+      "Experience top-priority implementation, optimization, and handover with a choice of 60–90 hour packages",
+  },
+  {
+    icon: <IconSuccessPlan />,
+    title: "Continued success plan",
+    description:
+      "Receive strategic guidance from a dedicated customer success manager to ensure smooth adoption and long-term success",
+  },
+];
+
+const COLUMN_TWO: CapabilityCard[] = [
+  {
+    icon: <IconManaged />,
+    title: "Managed services",
+    description:
+      "Leverage ongoing, hands-on sessions with our experts to help you best utilize the platform as your needs evolve",
+  },
+  {
+    icon: <IconSupport />,
+    title: "24/7 Premium support",
+    description:
+      "Work with a designated technical support team who knows your workflows, inside and out for super fast SLAs",
+  },
+  {
+    icon: <IconTailored />,
+    title: "Tailored services",
+    description:
+      "Hire certified experts for bespoke technical code or no-code projects for your account",
+  },
+];
+
+const Card: React.FC<CapabilityCard> = ({ icon, title, description }) => (
+  <article className="rounded-xl bg-white p-6">
+    <div className="mb-7">{icon}</div>
+    <h3 className="max-w-[190px] text-[22px] font-normal leading-[1.2] text-gray-900">
+      {title}
+    </h3>
+    <p className="mt-4 text-[13.5px] leading-relaxed text-gray-600">
+      {description}
+    </p>
+  </article>
+);
+
+const Capabilities: React.FC = () => {
+  return (
+    <section className="w-full bg-white px-4 py-6 sm:px-6 lg:px-8">
+      <div className="mx-auto block w-full max-w-[1400px] rounded-3xl bg-[#F4F4F7] px-4 py-14 transition-all duration-200 md:py-16">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-[1fr_1.35fr] md:gap-20">
+          {/* Left — sticky while the cards scroll */}
+          <div className="self-start md:sticky md:top-24 md:pt-24">
+            <h2 className="mb-12 mt-0 max-w-[420px] text-[40px] font-extralight leading-[1.3] tracking-[-0.05rem] text-[#1F2733]">
+              Expert services <br /> for lasting success
+            </h2>
+
+            <a
+              href="/contact"
+              className="mt-6 inline-flex items-center justify-start gap-2 rounded-full border border-black bg-black px-8 py-3.5 text-sm font-semibold text-white transition-all duration-100 hover:bg-gray-800"
+            >
+              Contact sales
+              <svg
+                className="h-3.5 w-3.5"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  d="M1.5 8h13m0 0L9 2.5M14.5 8L9 13.5"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </a>
+
+            <p className="mt-5 text-[11px] text-gray-500">
+              Services may require additional costs
+            </p>
+          </div>
+
+          {/* Right — two staggered columns of cards */}
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <div className="flex flex-col gap-5 sm:pt-28">
+              {COLUMN_ONE.map((card) => (
+                <Card key={card.title} {...card} />
+              ))}
+            </div>
+            <div className="flex flex-col gap-5">
+              {COLUMN_TWO.map((card) => (
+                <Card key={card.title} {...card} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Capabilities;

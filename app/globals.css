@@ -3,6 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --mondaydotcom-library---black: #1a1a1a;
+
+  /* FyerX homepage palette — strict, do not introduce other colors here */
+  --color-deep-blue: #0b2e59;
+  --color-mid-blue: #1f5c99;
+  --color-pale-blue: #e8f1fb;
+  --color-slate: #3d4a5c;
 }
 
 @theme inline {
@@ -10,6 +17,13 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-deep-blue: var(--color-deep-blue);
+  --color-mid-blue: var(--color-mid-blue);
+  --color-pale-blue: var(--color-pale-blue);
+  --color-slate: var(--color-slate);
+  /* font-calibri utility now maps to Poppins per client direction (was Calibri/Inter) */
+  --font-calibri: var(--font-poppins), Arial, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +36,48 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-poppins), Arial, sans-serif;
+}
+
+@keyframes dropdown-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-dropdown {
+  animation: dropdown-enter 0.14s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pill-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-pill-in {
+  animation: pill-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility animate-marquee {
+  animation: marquee 42s linear infinite;
 }
