@@ -3,151 +3,319 @@
 import { useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
+  Rocket,
+  Users,
+  ClipboardCheck,
+  Target,
+  Building2,
+  UserSearch,
+  Mail,
+  CalendarDays,
+  Search,
+  MessageSquareText,
+  Sparkles,
+  MapPin,
+  FileText,
+  Wand2,
   Bot,
-  MonitorSmartphone,
-  KeyRound,
-  PenTool,
-  Check,
+  MessageCircle,
+  Share2,
+  MessagesSquare,
+  Megaphone,
+  CalendarClock,
+  BookOpen,
+  Video,
+  Film,
+  MousePointerClick,
+  RefreshCw,
+  BarChart3,
+  Palette,
+  Compass,
+  LayoutTemplate,
+  Code2,
+  Workflow,
+  Database,
 } from "lucide-react";
 
 const TABS = [
-  "Strategy & Consulting",
+  "Marketing Strategy & Consulting",
   "Demand & Lead Generation",
-  "AI Marketing & Automation",
   "Search & AI Visibility",
-  "Content, Creative & Branding",
-  "Performance & Social",
+  "AI Marketing",
+  "Social Media Marketing",
+  "Content & Creative Production",
+  "Performance Marketing",
+  "Branding & Design",
+  "Marketing Automation",
 ];
 
-const TAB_IMAGES: Record<string, string> = {
-  "Strategy & Consulting": "/avatar/ai1.avif",
-  "Demand & Lead Generation": "/avatar/ai2.avif",
-  "AI Marketing & Automation": "/avatar/ai3.avif",
-  "Search & AI Visibility": "/avatar/ai4.avif",
-  "Content, Creative & Branding": "/avatar/ai5.avif",
-  "Performance & Social": "/avatar/ai6.avif",
-};
+// Only 6 existing illustrations — cycle them across the 9 tabs.
+const PANEL_GRADIENTS = [
+  "from-[#DC2626] to-[#F87171]",
+  "from-[#DB2777] to-[#F472B6]",
+  "from-[#2563EB] to-[#60A5FA]",
+  "from-[#EAB308] to-[#FDE047]",
+  "from-[#EA580C] to-[#FB923C]",
+  "from-[#7C3AED] to-[#C084FC]",
+];
 
-const TAB_PANEL_BG: Record<string, string> = {
-  "Strategy & Consulting": "from-[#DC2626] to-[#F87171]",
-  "Demand & Lead Generation": "from-[#DB2777] to-[#F472B6]",
-  "AI Marketing & Automation": "from-[#2563EB] to-[#60A5FA]",
-  "Search & AI Visibility": "from-[#EAB308] to-[#FDE047]",
-  "Content, Creative & Branding": "from-[#EA580C] to-[#FB923C]",
-  "Performance & Social": "from-[#7C3AED] to-[#C084FC]",
-};
+const TAB_IMAGES: Record<string, string> = Object.fromEntries(
+  TABS.map((tab, i) => [tab, `/avatar/ai${(i % 6) + 1}.avif`])
+);
 
-type TabContent = {
-  headline: string;
-  items: string[];
-};
+const TAB_PANEL_BG: Record<string, string> = Object.fromEntries(
+  TABS.map((tab, i) => [tab, PANEL_GRADIENTS[i % PANEL_GRADIENTS.length]])
+);
 
-const TAB_CONTENT: Record<string, TabContent> = {
-  "Strategy & Consulting": {
-    headline: "Marketing built on a foundation, not guesswork.",
-    items: [
-      "Go-to-Market Strategy for new products, markets, or segments",
-      "ICP and Buyer Persona Definition grounded in real sales data",
-      "Marketing Audits that identify what's working, what's wasted",
-      "Competitive Positioning that carves out defensible ground",
-    ],
-  },
-  "Demand & Lead Generation": {
-    headline: "Pipeline-first marketing that revenue teams can trust.",
-    items: [
-      "Account-Based Marketing for high-value target accounts",
-      "LinkedIn Lead Generation built for B2B decision-makers",
-      "Outbound and Cold Outreach that gets replies, not spam filters",
-      "Email Nurture Sequences that move leads through the funnel",
-      "Webinar and Event Marketing that convert attendees into pipeline",
-      "Revenue Attribution and Pipeline Reporting tied to actual deals",
-    ],
-  },
-  "AI Marketing & Automation": {
-    headline: "AI applied to output, not just used as a buzzword.",
-    items: [
-      "AI-Powered Content Generation at scale, reviewed by strategists",
-      "AI Ad Creative and Personalization tailored to each segment",
-      "Marketing Automation Agents that run repetitive workflows for you",
-      "Conversational AI for on-site and LinkedIn engagement",
-      "Marketing Automation and CRM Integration that connects every tool you use",
-    ],
-  },
-  "Search & AI Visibility": {
-    headline:
-      "Visible on Google. Visible inside ChatGPT, Claude, and Perplexity.",
-    items: [
-      "SEO to rank for the searches your buyers are already making",
-      "AEO (Answer Engine Optimization) to get cited inside AI-generated answers",
-      "GEO (Generative Engine Optimization) to shape how AI models describe your brand",
-      "Local SEO for regional and city-specific visibility",
-    ],
-  },
-  "Content, Creative & Branding": {
-    headline: "Positioning and creative that make authority visible.",
-    items: [
-      "Content Strategy and Editorial Calendars aligned to funnel stage",
-      "Thought Leadership and Whitepapers that build category authority",
-      "Video Production and Editing for brand and product storytelling",
-      "Motion Graphics and Animation for digital and social",
-      "Collaterals for sales enablement and events",
-      "Brand Identity and Guidelines for a consistent brand system",
-      "Brand Strategy and Positioning that differentiates you clearly",
-      "UI/UX Design and Website Design and Development built to convert",
-    ],
-  },
-  "Performance & Social": {
-    headline: "Every rupee of spend tracked back to pipeline.",
-    items: [
-      "Paid Search campaigns built around buyer intent",
-      "Paid Social across LinkedIn and Meta for B2B targeting",
-      "Retargeting and Conversion Rate Optimization",
-      "Landing Page Design and Optimization built for conversion",
-      "Marketing Analytics and ROI Tracking tied to revenue",
-      "Social Media Strategy and Management for consistent brand presence",
-      "Community Management to build engaged, owned audiences",
-    ],
-  },
-};
-
-type AgentCard = {
+type SubCard = {
   icon: LucideIcon;
-  iconBg: string;
-  iconColor: string;
   title: string;
   description: string;
 };
 
-const AGENT_CARDS: AgentCard[] = [
-  {
-    icon: Bot,
-    iconBg: "bg-gradient-to-br from-fuchsia-200 to-pink-300",
-    iconColor: "text-fuchsia-700",
-    title: "IT Help Agent",
-    description: "Handles technical issues and incidents.",
+type TabContent = {
+  heading: string;
+  description: string;
+  subCards: SubCard[];
+};
+
+const TAB_CONTENT: Record<string, TabContent> = {
+  "Marketing Strategy & Consulting": {
+    heading: "A clear starting point before you spend on execution",
+    description:
+      "We map your market, buyers, and positioning first, so campaigns start from a clear plan instead of guesswork.",
+    subCards: [
+      {
+        icon: Rocket,
+        title: "Go-to-Market Strategy",
+        description:
+          "Plans for launching a product, service, or new market entry with clear positioning and sequencing.",
+      },
+      {
+        icon: Users,
+        title: "ICP & Buyer Persona Definition",
+        description:
+          "Defines who you should be selling to, based on account data rather than guesswork.",
+      },
+      {
+        icon: ClipboardCheck,
+        title: "Marketing Audits",
+        description:
+          "A review of current marketing efforts to identify gaps, waste, and quick wins.",
+      },
+      {
+        icon: Target,
+        title: "Competitive Positioning",
+        description:
+          "Maps where you stand against competitors and sharpens your message accordingly.",
+      },
+    ],
   },
-  {
-    icon: MonitorSmartphone,
-    iconBg: "bg-gradient-to-br from-pink-200 to-rose-300",
-    iconColor: "text-rose-700",
-    title: "Device Agent",
-    description: "Manages device provisioning, replacements, and issues.",
+  "Demand & Lead Generation": {
+    heading: "Pipeline from accounts worth pursuing",
+    description:
+      "We focus outreach on the accounts and buyers most likely to convert, rather than chasing volume.",
+    subCards: [
+      {
+        icon: Building2,
+        title: "Account-Based Marketing",
+        description:
+          "Targets specific high-value accounts with coordinated outreach across channels.",
+      },
+      {
+        icon: UserSearch,
+        title: "LinkedIn Lead Generation",
+        description: "Finds and engages decision-makers directly on LinkedIn.",
+      },
+      {
+        icon: Mail,
+        title: "Outbound & Cold Outreach",
+        description:
+          "Structured email and call outreach to open conversations with new prospects.",
+      },
+      {
+        icon: CalendarDays,
+        title: "Webinar & Event Marketing",
+        description:
+          "Plans and promotes webinars and events that generate qualified leads.",
+      },
+    ],
   },
-  {
-    icon: KeyRound,
-    iconBg: "bg-gradient-to-br from-sky-200 to-blue-300",
-    iconColor: "text-blue-700",
-    title: "Access Agent",
-    description: "Processes system access requests and approvals securely.",
+  "Search & AI Visibility": {
+    heading: "Found by buyers already searching",
+    description:
+      "We help you show up in search results and AI-generated answers, right when buyers are looking for a solution.",
+    subCards: [
+      {
+        icon: Search,
+        title: "SEO",
+        description: "Improves organic search rankings for terms your buyers are searching.",
+      },
+      {
+        icon: MessageSquareText,
+        title: "AEO",
+        description: "Optimises content to appear in AI-generated answers and summaries.",
+      },
+      {
+        icon: Sparkles,
+        title: "GEO",
+        description: "Improves visibility within generative AI search results and assistants.",
+      },
+      {
+        icon: MapPin,
+        title: "Local SEO",
+        description: "Improves visibility for location-based searches relevant to your business.",
+      },
+    ],
   },
-  {
-    icon: PenTool,
-    iconBg: "bg-gray-100",
-    iconColor: "text-gray-500",
-    title: "Create your own",
-    description: "Build custom IT agents to handle any request your team receives.",
+  "AI Marketing": {
+    heading: "Faster output, still reviewed by people",
+    description:
+      "AI speeds up content and ad creative work, and our team checks everything before it goes live.",
+    subCards: [
+      {
+        icon: FileText,
+        title: "AI-Powered Content Generation",
+        description: "Uses AI to draft content faster, reviewed by our team before publishing.",
+      },
+      {
+        icon: Wand2,
+        title: "AI Ad Creative & Personalization",
+        description: "Generates and tailors ad creative variations using AI tools.",
+      },
+      {
+        icon: Bot,
+        title: "Marketing Automation Agents",
+        description: "AI-driven agents that handle repetitive marketing tasks automatically.",
+      },
+      {
+        icon: MessageCircle,
+        title: "Conversational AI",
+        description: "Chat-based tools that engage website visitors and qualify leads.",
+      },
+    ],
   },
-];
+  "Social Media Marketing": {
+    heading: "A presence that stays consistent",
+    description:
+      "We keep your social channels active and on-brand, so buyers see a business that's actually paying attention.",
+    subCards: [
+      {
+        icon: Share2,
+        title: "Social Media Strategy & Management",
+        description: "Plans and manages your ongoing social media presence.",
+      },
+      {
+        icon: MessagesSquare,
+        title: "Community Management",
+        description: "Responds to comments, messages, and community engagement daily.",
+      },
+      {
+        icon: Megaphone,
+        title: "Paid Social Campaigns",
+        description: "Runs paid campaigns across social platforms to reach target audiences.",
+      },
+    ],
+  },
+  "Content & Creative Production": {
+    heading: "Content that holds up over a longer decision",
+    description:
+      "We produce the whitepapers, videos, and case studies that support a considered B2B buying process.",
+    subCards: [
+      {
+        icon: CalendarClock,
+        title: "Content Strategy & Editorial Calendars",
+        description: "Plans what content to publish, where, and on what schedule.",
+      },
+      {
+        icon: BookOpen,
+        title: "Thought Leadership & Whitepapers",
+        description: "Produces in-depth content that builds credibility with B2B buyers.",
+      },
+      {
+        icon: Video,
+        title: "Video Production & Editing",
+        description: "Produces and edits video content for campaigns and brand use.",
+      },
+      {
+        icon: Film,
+        title: "Motion Graphics & Animation",
+        description: "Creates animated visuals for ads, explainers, and presentations.",
+      },
+    ],
+  },
+  "Performance Marketing": {
+    heading: "Paid campaigns measured the right way",
+    description:
+      "We run paid search and social, and track results against pipeline and revenue, not just cost-per-click.",
+    subCards: [
+      {
+        icon: MousePointerClick,
+        title: "Paid Search",
+        description: "Manages search ad campaigns to capture high-intent buyer traffic.",
+      },
+      {
+        icon: Share2,
+        title: "Paid Social",
+        description: "Manages paid campaigns across social platforms tied to specific goals.",
+      },
+      {
+        icon: RefreshCw,
+        title: "Retargeting & Conversion Optimization",
+        description: "Re-engages past visitors and improves how well pages convert.",
+      },
+      {
+        icon: BarChart3,
+        title: "Marketing Analytics & ROI Tracking",
+        description: "Tracks campaign data and ties it back to business results.",
+      },
+    ],
+  },
+  "Branding & Design": {
+    heading: "A brand that holds credibility in bigger deals",
+    description:
+      "We build the identity, positioning, and website that support you in front of serious enterprise buyers.",
+    subCards: [
+      {
+        icon: Palette,
+        title: "Brand Identity & Guidelines",
+        description: "Builds logos, colours, and usage rules for consistent brand presentation.",
+      },
+      {
+        icon: Compass,
+        title: "Brand Strategy & Positioning",
+        description: "Defines how your brand should be perceived and communicated.",
+      },
+      {
+        icon: LayoutTemplate,
+        title: "UI/UX Design",
+        description: "Designs interfaces and user flows for digital products and sites.",
+      },
+      {
+        icon: Code2,
+        title: "Website Design & Development",
+        description: "Builds and maintains websites that support your marketing goals.",
+      },
+    ],
+  },
+  "Marketing Automation": {
+    heading: "Leads that keep moving without manual follow-up",
+    description:
+      "We set up automation and CRM syncing so leads get nurtured and routed on their own.",
+    subCards: [
+      {
+        icon: Workflow,
+        title: "Marketing Automation",
+        description: "Sets up automated workflows that nurture and route leads.",
+      },
+      {
+        icon: Database,
+        title: "CRM Integration",
+        description: "Connects your marketing tools with your CRM so data stays in sync.",
+      },
+    ],
+  },
+};
 
 export default function AIPlatformHero() {
   const [activeTab, setActiveTab] = useState(TABS[0]);
@@ -157,60 +325,31 @@ export default function AIPlatformHero() {
     <main className="min-h-screen bg-white">
       <section className="mx-auto max-w-7xl px-6 py-8 sm:px-10 sm:py-10 lg:px-16">
         {/* ---------- Heading ---------- */}
-        <h1
+        <h2
           className="text-center tracking-tight text-black"
           style={{ fontSize: "43px", fontWeight: 400, lineHeight: "55px" }}
         >
-          Built for Every Function of Your{" "}
-          <span className="bg-gradient-to-r from-[#D91A72] to-[#FF74CE] bg-clip-text text-transparent">
-            Growth Team
-          </span>
-        </h1>
-        <p className="mx-auto mt-3 max-w-2xl text-center text-[14px] leading-relaxed text-gray-500 sm:text-[15px]">
-          Explore how FyerX supports each part of your marketing and revenue
-          engine.
-        </p>
+          One B2B marketing team, every capability
+        </h2>
 
         {/* ---------- Tabs ---------- */}
-        <nav className="mt-8 flex flex-col items-center gap-y-2 border-b border-gray-200 pb-3">
-          <div className="flex flex-wrap items-center justify-center gap-x-6 md:gap-x-8">
-            {TABS.slice(0, 4).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`relative flex-shrink-0 whitespace-nowrap pb-1 text-[14px] transition-colors ${
-                  activeTab === tab
-                    ? "font-semibold text-black"
-                    : "font-medium text-gray-400 hover:text-gray-600"
-                }`}
-              >
-                {tab}
-                {activeTab === tab && (
-                  <span className="absolute inset-x-0 -bottom-px h-[2px] rounded-full bg-black" />
-                )}
-              </button>
-            ))}
-          </div>
-          {TABS.length > 4 && (
-            <div className="flex flex-wrap items-center justify-center gap-x-6 md:gap-x-8">
-              {TABS.slice(4).map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`relative flex-shrink-0 whitespace-nowrap pb-1 text-[14px] transition-colors ${
-                    activeTab === tab
-                      ? "font-semibold text-black"
-                      : "font-medium text-gray-400 hover:text-gray-600"
-                  }`}
-                >
-                  {tab}
-                  {activeTab === tab && (
-                    <span className="absolute inset-x-0 -bottom-px h-[2px] rounded-full bg-black" />
-                  )}
-                </button>
-              ))}
-            </div>
-          )}
+        <nav className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-b border-gray-200 pb-3 md:gap-x-8">
+          {TABS.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`relative flex-shrink-0 whitespace-nowrap pb-1 text-[14px] transition-colors ${
+                activeTab === tab
+                  ? "font-semibold text-black"
+                  : "font-medium text-gray-400 hover:text-gray-600"
+              }`}
+            >
+              {tab}
+              {activeTab === tab && (
+                <span className="absolute inset-x-0 -bottom-px h-[2px] rounded-full bg-black" />
+              )}
+            </button>
+          ))}
         </nav>
 
         {/* ---------- Two column panel ---------- */}
@@ -218,23 +357,12 @@ export default function AIPlatformHero() {
           {/* Left card */}
           <div className="flex flex-col justify-between rounded-[24px] border border-gray-200 p-6 sm:p-7">
             <div>
-              <h2 className="text-[20px] font-bold leading-snug text-black sm:text-[22px]">
-                {tabContent.headline}
-              </h2>
-              <ul className="mt-4 space-y-2.5">
-                {tabContent.items.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2 text-[13px] leading-relaxed text-gray-600"
-                  >
-                    <Check
-                      className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#D91A72]"
-                      strokeWidth={2.5}
-                    />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+              <h3 className="text-[20px] font-bold leading-snug text-black sm:text-[22px]">
+                {tabContent.heading}
+              </h3>
+              <p className="mt-3 text-[14px] leading-relaxed text-gray-600">
+                {tabContent.description}
+              </p>
             </div>
             <button className="mt-6 flex w-fit items-center gap-2 rounded-full bg-black px-5 py-2.5 text-[14px] font-semibold text-white transition-transform hover:scale-[1.03] active:scale-[0.98]">
               Get Started
@@ -242,7 +370,7 @@ export default function AIPlatformHero() {
             </button>
           </div>
 
-          {/* Right panel */}
+          {/* Right panel — tab illustration */}
           <div
             className={`relative overflow-hidden rounded-[24px] bg-gradient-to-br p-3 ${TAB_PANEL_BG[activeTab]}`}
           >
@@ -256,19 +384,17 @@ export default function AIPlatformHero() {
           </div>
         </div>
 
-        {/* ---------- Bottom agent cards ---------- */}
+        {/* ---------- Sub-capability cards ---------- */}
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {AGENT_CARDS.map(({ icon: Icon, iconBg, iconColor, title, description }) => (
+          {tabContent.subCards.map(({ icon: Icon, title, description }) => (
             <div
               key={title}
               className="rounded-2xl border border-gray-200 p-5 transition-shadow hover:shadow-md"
             >
-              <div
-                className={`flex h-10 w-10 items-center justify-center rounded-xl ${iconBg}`}
-              >
-                <Icon className={`h-[18px] w-[18px] ${iconColor}`} strokeWidth={1.75} />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100">
+                <Icon className="h-[18px] w-[18px] text-gray-700" strokeWidth={1.75} />
               </div>
-              <h3 className="mt-3 text-[14px] font-bold text-black">{title}</h3>
+              <h4 className="mt-3 text-[14px] font-bold text-black">{title}</h4>
               <p className="mt-1 text-[12.5px] leading-relaxed text-gray-500">
                 {description}
               </p>

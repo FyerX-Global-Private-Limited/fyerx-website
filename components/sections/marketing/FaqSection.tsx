@@ -9,32 +9,44 @@ import React, { useState } from "react";
 
 const faqs = [
   {
-    q: "How is FyerX different from a traditional digital marketing agency?",
-    a: "FyerX is built specifically for B2B growth, combining strategy, demand generation, and AI into one connected system, rather than selling isolated services like SEO or social media in silos.",
+    q: "What does FyerX's B2B marketing service include?",
+    a: "FyerX covers strategy, demand generation, SEO and AI visibility, content, performance marketing, branding, and marketing automation, all under one team.",
   },
   {
-    q: "Do you only work with large enterprises?",
-    a: "No. FyerX works with growing B2B companies that need a real pipeline strategy, whether that's an early-stage startup building its first go-to-market plan or an established company scaling demand generation.",
+    q: "How is FyerX different from a typical marketing agency?",
+    a: "FyerX combines B2B strategy with focused execution and reporting tied to pipeline, instead of running generic campaigns disconnected from results.",
   },
   {
-    q: "What does 'AI-first' actually mean in your process?",
-    a: "It means AI is built into how we generate content, personalize ads, automate workflows, and optimize for visibility inside AI search tools, not used as a marketing buzzword.",
+    q: "Do you work with account-based marketing (ABM)?",
+    a: "Yes, account-based marketing is a core part of our demand generation service, built around targeting the accounts most likely to convert.",
   },
   {
-    q: "How do you measure success?",
-    a: "Every campaign is tracked back to pipeline and revenue impact, not just impressions or clicks, so results are reported in terms your leadership team and CFO actually care about.",
+    q: "How long does it take to see pipeline impact?",
+    a: "Most B2B clients see measurable pipeline movement within 60 to 90 days, depending on sales cycle length and starting point.",
   },
   {
-    q: "How long before we see results?",
-    a: "Timelines vary by service. Paid media and outbound can generate qualified leads within weeks, while SEO, AEO, and brand positioning compound over several months for long-term growth.",
+    q: "Can FyerX integrate with our existing CRM?",
+    a: "Yes, our marketing automation service includes CRM integration to keep lead data and follow-ups synced automatically.",
   },
   {
-    q: "Can you work alongside our in-house marketing team?",
-    a: "Yes. FyerX frequently works as an embedded extension of in-house teams, filling specific gaps like AI marketing, ABM, or AEO rather than replacing existing functions.",
+    q: "Is FyerX suited for SaaS and enterprise businesses?",
+    a: "FyerX works with SaaS, enterprise IT, financial services, manufacturing, and other B2B sectors with longer, considered sales cycles.",
+  },
+  {
+    q: "How does FyerX report on pipeline and revenue impact?",
+    a: "We provide attribution reporting that ties campaigns directly to pipeline generated and revenue closed, not just clicks or impressions.",
+  },
+  {
+    q: "What does it cost to get started?",
+    a: "Pricing depends on scope and service mix. Share your goals with our team for a plan built around your budget.",
+  },
+  {
+    q: "How do I get started with FyerX?",
+    a: "Fill out the contact form on this page or request a callback, and our team will follow up to understand your goals.",
   },
 ];
 
-function ChevronIcon({ open }) {
+function ChevronIcon({ open }: { open: boolean }) {
   return (
     <svg
       className={`faq__chevron ${open ? "faq__chevron--open" : ""}`}
@@ -56,15 +68,32 @@ function ChevronIcon({ open }) {
 }
 
 export default function FaqSection() {
-  const [openIndex, setOpenIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const toggle = (i) => setOpenIndex((prev) => (prev === i ? null : i));
+  const toggle = (i: number) => setOpenIndex((prev) => (prev === i ? null : i));
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    })),
+  };
 
   return (
     <section className="faq">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="faq__inner">
         <div className="faq__left">
-          <h2 className="faq__heading">Common Questions From B2B Marketing Leaders</h2>
+          <h2 className="faq__heading">Frequently Asked Questions</h2>
         </div>
 
         <div className="faq__right">

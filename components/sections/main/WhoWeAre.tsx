@@ -19,7 +19,7 @@ const CARDS: UseCaseCard[] = [
   {
     title: "Marketing",
     description:
-      "Campaigns, content, and brand strategy built to drive measurable growth.",
+      "Plan, launch, and track campaigns that drive measurable results for your business.",
     href: "/marketing",
     image: "/g1.avif",
     imageAlt: "Marketing services screenshot",
@@ -27,7 +27,7 @@ const CARDS: UseCaseCard[] = [
   {
     title: "Talent",
     description:
-      "Recruitment and staffing that connects businesses with the right people.",
+      "Find and onboard the right people for your team without the usual hiring delays.",
     href: "#",
     image: "/g2.avif",
     imageAlt: "Talent services screenshot",
@@ -35,7 +35,7 @@ const CARDS: UseCaseCard[] = [
   {
     title: "Technology",
     description:
-      "Websites and digital products built to scale as your business grows.",
+      "Build and maintain the websites and tools your business runs on, end to end.",
     href: "#",
     image: "/g3.avif",
     imageAlt: "Technology services screenshot",
@@ -99,8 +99,8 @@ const WhoWeAre: React.FC = () => {
 
         {/* Subtitle */}
         <p className="mx-auto mt-4 max-w-[820px] text-center text-base leading-relaxed text-gray-600 md:text-[17px]">
-          FyerX supports businesses across marketing, talent, and technology
-          — helping teams move faster without juggling separate vendors.
+          FyerX can be shaped around any business need, helping teams move
+          faster without the chaos of juggling separate vendors.
         </p>
 
         {/* Cards */}

@@ -14,42 +14,20 @@ import Image from "next/image";
 
 /* ----------------------------- link data ----------------------------- */
 
-const MAIN_LINKS = [
-  "Pricing",
-  "Contact us",
-  "Templates",
-  "SMB",
-  "Enterprise",
-  "Nonprofits",
-  "App marketplace",
-  "24/7 support",
-  "monday for agents",
-  "Hey AI, learn about us",
-];
-
 const USE_CASE_LINKS = [
   "Marketing",
-  "Project management",
-  "Operations",
-  "Sales",
-  "Product",
-  "IT",
-  "HR",
-  "Legal",
+  "Talent",
+  "Technology",
+  "Learning",
 ];
 
 const COMPANY_LINKS = [
-  "About us",
-  "Careers - We're hiring!",
-  "Insights for leaders",
-  "Press",
-  "Customer stories",
-  "Become a partner",
-  "Sustainability & ESG",
-  "Affiliates",
-  "monday foundation",
-  "Investor relations",
-  "monday ventures",
+  "About Us",
+  "Careers",
+  "Blog",
+  "Contact",
+  "Privacy Policy",
+  "Terms of Service",
 ];
 
 const RESOURCES_LINKS = [
@@ -61,11 +39,6 @@ const RESOURCES_LINKS = [
   "Global events",
   "monday spaces",
   "Startup for startup",
-  "App development",
-  "Find a partner",
-  "Hire an expert",
-  "Compare",
-  "FAQs",
 ];
 
 const LEGAL_LINKS = [
@@ -274,7 +247,7 @@ export default function Footer() {
       <div className="mx-auto max-w-[1296px] px-6">
         {/* ------------------------------ Link columns ------------------------------ */}
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-[1.39fr_1.03fr_1.7fr_1.39fr_1.37fr_1fr]">
-          {/* Col 1 — logo + main links */}
+          {/* Col 1 — logo + brand */}
           <div>
             <a href="#" className="mb-2 flex h-8 items-center gap-[7px]">
               <Image
@@ -285,14 +258,31 @@ export default function Footer() {
                 className="h-8 w-auto object-contain"
               />
             </a>
-            <div className="mt-[31px]">
-              <TextLinks items={MAIN_LINKS} />
+            <p className="mt-[31px] max-w-[280px] text-[0.8125rem] font-light leading-[1.6] text-[rgb(88,89,101)]">
+              FyerX — One partner for every part of your business.
+            </p>
+            <div className="mt-4 flex items-center gap-2 text-[0.8125rem] font-light text-[rgb(88,89,101)]">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 21s-7-5.7-7-11a7 7 0 0 1 14 0c0 5.3-7 11-7 11z" />
+                <circle cx="12" cy="10" r="2.5" />
+              </svg>
+              Bangalore, Karnataka, India
             </div>
           </div>
 
-          {/* Col 2 — Use case */}
+          {/* Col 2 — Capabilities */}
           <div>
-            <h4 className={headingCls}>Use case</h4>
+            <h4 className={headingCls}>Capabilities</h4>
             <TextLinks items={USE_CASE_LINKS} />
           </div>
 
@@ -389,7 +379,7 @@ export default function Footer() {
               ))}
             </div>
             <p className="mt-2 text-[13px] text-[#323338]">
-              All Rights Reserved &copy; fyerx.com
+              &copy; 2026 FyerX. All Rights Reserved.
             </p>
           </div>
 

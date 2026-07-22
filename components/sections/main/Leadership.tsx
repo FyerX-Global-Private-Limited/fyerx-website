@@ -112,29 +112,19 @@ export default function Leadership() {
       <style dangerouslySetInnerHTML={{ __html: css }} />
 
       <div className="ldr-container">
-        <h2 className="ldr-title">From pre- to post-sales, in one place</h2>
+        <h2 className="ldr-title">From first conversation to long-term partner</h2>
 
         <div className="ldr-grid">
           <FeatureCard
             icon={<ArrowIcon />}
-            title={
-              <>
-                Connect your entire
-                <br className="ldr-br" /> revenue cycle
-              </>
-            }
-            body="Share complete information at every stage to ensure handoffs and feedback are smooth and accurate."
+            title="Every stage, connected"
+            body="Information flows smoothly from planning through delivery, so nothing gets lost in handoffs."
           />
 
           <FeatureCard
             icon={<PillsIcon />}
-            title={
-              <>
-                Manage much more
-                <br className="ldr-br" /> than sales
-              </>
-            }
-            body="Involve legal, finance, and ops at just the right time, so approvals happen faster and deals never get stuck in handoff limbo."
+            title="More than one capability"
+            body="Marketing, talent, and technology work together under one roof, so approvals and updates move faster."
           />
 
           {/* Image card */}

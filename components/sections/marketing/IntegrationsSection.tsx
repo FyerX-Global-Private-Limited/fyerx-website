@@ -13,26 +13,31 @@ import React from "react";
  */
 
 const rowOne = [
-  { name: "Typeform", short: "T", color: "#262627" },
-  { name: "LinkedIn", short: "in", color: "#0A66C2" },
-  { name: "Drive", short: "▲", color: "#0066DA" },
-  { name: "Docusign", short: "D", color: "#000000" },
-  { name: "Slack", short: "#", color: "#4A154B" },
-  { name: "Teams", short: "T", color: "#5059C9" },
-  { name: "Outlook", short: "O", color: "#0A65C1" },
+  { name: "WeGoFin", short: "W", color: "#111114" },
+  { name: "Sayyam", short: "S", color: "#111114" },
+  { name: "Adro", img: "/avatar/adro.webp" },
+  { name: "Saraogi", short: "S", color: "#111114" },
+  { name: "Codeus", short: "C", color: "#111114" },
+  { name: "Bullsmart", img: "/avatar/bullsmart.png" },
+  { name: "Onroadz", img: "/avatar/onroad.png" },
+  { name: "KPRM", short: "K", color: "#111114" },
+  { name: "Kaypee Space", short: "K", color: "#111114" },
 ];
 
 const rowTwo = [
-  { name: "DropBox", short: "▽", color: "#0061FF" },
-  { name: "Calendar", short: "31", color: "#4285F4" },
-  { name: "Zoom", short: "Z", color: "#0B5CFF" },
-  { name: "Lusha", short: "L", color: "#8E00FF" },
-  { name: "Excel", short: "X", color: "#217346" },
-  { name: "Meta ads", short: "M", color: "#0866FF" },
-  { name: "Gmail", short: "M", color: "#EA4335" },
+  { name: "Avekshaa", img: "/avatar/avekshaa.png" },
+  { name: "Orihiro", short: "O", color: "#111114" },
+  { name: "Hoshitry", short: "H", color: "#111114" },
+  { name: "TrnDigital", short: "T", color: "#111114" },
+  { name: "Digitathya", img: "/avatar/digitathya.png" },
+  { name: "Cinepebble", short: "C", color: "#111114" },
+  { name: "WinExch", short: "W", color: "#111114" },
+  { name: "SpinMatch", short: "S", color: "#111114" },
 ];
 
-function AppChip({ name, short, color, img }) {
+type AppItem = { name: string; short?: string; color?: string; img?: string };
+
+function AppChip({ name, short, color, img }: AppItem) {
   return (
     <div className="app-chip">
       <span className="app-chip__hex">
@@ -50,7 +55,7 @@ function AppChip({ name, short, color, img }) {
   );
 }
 
-function MarqueeRow({ items, reverse = false }) {
+function MarqueeRow({ items, reverse = false }: { items: AppItem[]; reverse?: boolean }) {
   const loop = [...items, ...items];
   return (
     <div className="marquee">
@@ -68,13 +73,11 @@ export default function IntegrationsSection() {
     <section className="integrations">
       <div className="integrations__inner">
         <h2 className="integrations__title">
-          Connect 500+ apps and tools
-          <br />
-          your team already trusts
+          Trusted by B2B teams across industries
         </h2>
 
         <p className="integrations__subtitle">
-          Integrate your tech stack to reduce admin time and boost velocity.
+          A growing list of businesses that work with FyerX to build their pipeline.
         </p>
 
         <div className="integrations__cta-wrap">

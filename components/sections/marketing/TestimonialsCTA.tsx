@@ -20,40 +20,45 @@ const AVATARS = [
 
 const TESTIMONIAL_AVATAR = "https://randomuser.me/api/portraits/women/47.jpg";
 
+// Same client roster as TrustBar.tsx, muted grayscale for this darker card background.
+const LOGOS = [
+  { name: "WeGoFin" },
+  { name: "Sayyam" },
+  { name: "Adro", img: "/avatar/adro.webp" },
+  { name: "Saraogi" },
+  { name: "Codeus" },
+  { name: "Bullsmart", img: "/avatar/bullsmart.png" },
+  { name: "Onroadz", img: "/avatar/onroad.png" },
+  { name: "KPRM" },
+  { name: "Kaypee Space" },
+  { name: "Avekshaa", img: "/avatar/avekshaa.png" },
+  { name: "Orihiro" },
+  { name: "Hoshitry" },
+  { name: "TrnDigital" },
+  { name: "Digitathya", img: "/avatar/digitathya.png" },
+  { name: "Cinepebble" },
+  { name: "WinExch" },
+  { name: "SpinMatch" },
+];
+
 function LogoSet() {
   return (
     <>
-      <span
-        className="shrink-0 text-[32px] font-bold italic leading-none text-[#77777e]"
-        style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-      >
-        Canva
-      </span>
-
-      <span className="flex shrink-0 items-center gap-[2px] text-[24px] font-extrabold italic leading-none tracking-[-0.5px] text-[#3a3a40]">
-        <svg
-          className="h-[22px] w-[15px]"
-          viewBox="0 0 16 24"
-          fill="#3a3a40"
-          aria-hidden="true"
-        >
-          <path d="M8 0C8 0 3 6.5 3 12.5C3 17 5.2 20 8 20C10.8 20 13 17 13 12.5C13 10.5 12.3 8.4 11.4 6.6C10.7 9 9.6 10.6 8.6 10.6C7.5 10.6 8 5.5 8 0Z" />
-        </svg>
-        ZIPPO
-      </span>
-
-      <span className="shrink-0 text-[20px] font-bold leading-none tracking-[2.5px] text-[#4b4b52]">
-        LIONSGATE
-      </span>
-
-      <span
-        className="shrink-0 text-[32px] font-normal italic leading-none text-[#8a8a90]"
-        style={{
-          fontFamily: "'Brush Script MT', 'Segoe Script', cursive",
-        }}
-      >
-        Coca-Cola
-      </span>
+      {LOGOS.map((logo) => (
+        <span key={logo.name} className="flex shrink-0 items-center">
+          {logo.img ? (
+            <img
+              src={logo.img}
+              alt={logo.name}
+              className="h-6 w-auto max-w-full object-contain grayscale opacity-60"
+            />
+          ) : (
+            <span className="text-[15px] font-bold tracking-tight text-[#77777e]">
+              {logo.name}
+            </span>
+          )}
+        </span>
+      ))}
     </>
   );
 }
@@ -89,24 +94,20 @@ function Caret({ className }: { className?: string }) {
 export default function TestimonialsCTA() {
   return (
     <section
-      className="bg-white px-6 py-12 sm:px-10 sm:py-16 lg:px-16"
-      style={{
-        fontFamily:
-          "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-      }}
+      className="bg-white px-4 pb-2 sm:px-8 lg:px-[6%]"
+      style={{ fontFamily: "'Poppins', sans-serif" }}
     >
       <div className="rounded-[24px] bg-[#d9d2f4] px-6 py-16 lg:py-[88px]">
         <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-16 lg:flex-row lg:items-stretch lg:justify-between lg:gap-[120px]">
           {/* ------------------------------ Left column ------------------------------ */}
           <div className="flex min-w-0 flex-1 flex-col">
             <h2 className="max-w-[470px] mt-0 mb-0 text-[43px] font-medium leading-[1.3] tracking-[-0.05rem] text-[#181b34]">
-              Ready to hear more about our{" "}
-              <span className="text-[#7b72f9]">enterprise</span> solutions?
+              Ready to see what FyerX can do for your business?
             </h2>
 
             <p className="mt-6 max-w-[400px] text-[18px] font-light leading-[140%] text-[#181b34]">
-              Request a callback from our sales team to explore custom pricing
-              plans based on your unique needs and goals.
+              Share your goals with our team to explore the right approach and
+              pricing for your business.
             </p>
 
             {/* Spacer pushes logos + testimonial to the bottom of the column */}
@@ -124,25 +125,23 @@ export default function TestimonialsCTA() {
               </div>
             </div>
 
-            {/* Testimonial card */}
+            {/* Testimonial card — placeholder, pending a verified client quote */}
             <div className="mt-7 max-w-[465px] rounded-[8px] border border-[#323338] p-6">
               <p className="text-[14px] leading-[1.5] text-[#181b34]">
-                &ldquo;Now that all the different teams across the portfolio are
-                reporting in the same place, our leadership gets a live
-                10,000-foot view.&rdquo;
+                &ldquo;[Insert client quote, 15-25 words]&rdquo;
               </p>
               <div className="mt-5 flex items-center gap-4">
                 <img
                   src={TESTIMONIAL_AVATAR}
-                  alt="Kristina Muller"
+                  alt="[Client Name]"
                   className="h-[54px] w-[54px] shrink-0 rounded-full object-cover"
                 />
                 <div>
                   <p className="text-[15px] font-semibold leading-[1.4] text-[#181b34]">
-                    Kristina Muller
+                    [Client Name]
                   </p>
                   <p className="text-[14px] leading-[1.4] text-[#181b34]">
-                    SVP Delivery Operations &amp; PMO | VML
+                    [Title] | [Company Name]
                   </p>
                 </div>
               </div>
@@ -166,7 +165,7 @@ export default function TestimonialsCTA() {
 
             <div className="w-full rounded-[16px] bg-white px-6 py-7 shadow-[0px_6px_20px_rgba(29,37,45,0.05)] sm:px-9">
               <h3 className="text-center text-[16px] font-semibold text-[#181b34]">
-                Contact our sales team
+                Contact our team
               </h3>
 
               <form
@@ -290,7 +289,7 @@ export default function TestimonialsCTA() {
 
                 <textarea
                   name="message"
-                  placeholder="Tell us more about your team and what work you'd like to manage with monday.com"
+                  placeholder="Tell us more about your business and what you'd like support with"
                   className="h-[88px] w-full resize-none rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 py-2.5 text-[13px] leading-[1.5] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]"
                 />
 
@@ -302,17 +301,11 @@ export default function TestimonialsCTA() {
                 </button>
 
                 <p className="mx-auto mt-1.5 max-w-[300px] text-center text-[10.5px] leading-[1.6] text-[#333333]">
-                  By submitting this form, I accept monday.com&rsquo;s{" "}
-                  <a
-                    href="https://monday.com/l/privacy/privacy-policy/"
-                    className="underline"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  By submitting this form, you accept FyerX&rsquo;s{" "}
+                  <a href="/privacy-policy" className="underline">
                     Privacy Policy
                   </a>{" "}
-                  and consent to be contacted by monday.com for marketing and
-                  promotional purposes via email, phone, SMS, and other means
+                  and consent to be contacted regarding your enquiry.
                 </p>
               </form>
             </div>

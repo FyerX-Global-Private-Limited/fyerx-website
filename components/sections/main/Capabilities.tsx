@@ -107,36 +107,36 @@ interface CapabilityCard {
 const COLUMN_ONE: CapabilityCard[] = [
   {
     icon: <IconImplementation />,
-    title: "Implementation packages",
+    title: "Onboarding support",
     description:
-      "Experience top-priority implementation, optimization, and handover with a choice of 60–90 hour packages",
+      "Structured onboarding to get your engagement set up correctly from day one.",
   },
   {
     icon: <IconSuccessPlan />,
-    title: "Continued success plan",
+    title: "Dedicated account management",
     description:
-      "Receive strategic guidance from a dedicated customer success manager to ensure smooth adoption and long-term success",
+      "A single point of contact who understands your business and stays with you throughout.",
   },
 ];
 
 const COLUMN_TWO: CapabilityCard[] = [
   {
     icon: <IconManaged />,
-    title: "Managed services",
+    title: "Ongoing strategic guidance",
     description:
-      "Leverage ongoing, hands-on sessions with our experts to help you best utilize the platform as your needs evolve",
+      "Regular check-ins to keep your engagement aligned with your evolving goals.",
   },
   {
     icon: <IconSupport />,
-    title: "24/7 Premium support",
+    title: "Responsive support",
     description:
-      "Work with a designated technical support team who knows your workflows, inside and out for super fast SLAs",
+      "A support team that knows your account and responds quickly when you need it.",
   },
   {
     icon: <IconTailored />,
-    title: "Tailored services",
+    title: "Tailored engagements",
     description:
-      "Hire certified experts for bespoke technical code or no-code projects for your account",
+      "Custom scopes of work for specific needs outside our standard offerings.",
   },
 ];
 
@@ -160,14 +160,14 @@ const Capabilities: React.FC = () => {
           {/* Left — sticky while the cards scroll */}
           <div className="self-start md:sticky md:top-24 md:pt-24">
             <h2 className="mb-12 mt-0 max-w-[420px] text-[40px] font-extralight leading-[1.3] tracking-[-0.05rem] text-[#1F2733]">
-              Expert services <br /> for lasting success
+              Dedicated support <br /> for lasting success
             </h2>
 
             <a
               href="/contact"
               className="mt-6 inline-flex items-center justify-start gap-2 rounded-full border border-black bg-black px-8 py-3.5 text-sm font-semibold text-white transition-all duration-100 hover:bg-gray-800"
             >
-              Contact sales
+              Contact Us
               <svg
                 className="h-3.5 w-3.5"
                 viewBox="0 0 16 16"
@@ -186,7 +186,7 @@ const Capabilities: React.FC = () => {
             </a>
 
             <p className="mt-5 text-[11px] text-gray-500">
-              Services may require additional costs
+              Availability may vary based on engagement scope
             </p>
           </div>
 

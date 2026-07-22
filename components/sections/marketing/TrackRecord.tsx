@@ -94,6 +94,23 @@ const ICONS: Record<string, ReactNode> = {
       <rect x="29" y="30" width="9" height="9" rx="1.5" />
     </I>
   ),
+  logistics: (
+    <I>
+      <path d="M6 30V16a2 2 0 012-2h14a2 2 0 012 2v14" />
+      <path d="M24 22h8l6 6v4H24z" />
+      <circle cx="14" cy="34" r="4" />
+      <circle cx="34" cy="34" r="4" />
+      <path d="M6 30h4m14 0h4" />
+    </I>
+  ),
+  enterpriseit: (
+    <I>
+      <rect x="9" y="8" width="30" height="9" rx="2" />
+      <rect x="9" y="20" width="30" height="9" rx="2" />
+      <rect x="9" y="32" width="30" height="8" rx="2" />
+      <path d="M14 12.5h.01M14 24.5h.01" />
+    </I>
+  ),
 };
 
 /* ------------------------------------------------------------------ */
@@ -105,13 +122,13 @@ interface Industry {
 }
 
 const INDUSTRIES: Industry[] = [
-  { icon: "briefcase", label: ["Professional", "services"] },
-  { icon: "realestate", label: ["Real", "estate"] },
-  { icon: "software", label: ["Software", "& IT"] },
-  { icon: "media", label: ["Media &", "advertising"] },
-  { icon: "financial", label: ["Financial", "services"] },
-  { icon: "healthcare", label: ["Healthcare", "services"] },
-  { icon: "construction", label: ["Construction"] },
+  { icon: "software", label: ["SaaS &", "Technology"] },
+  { icon: "briefcase", label: ["Professional", "Services"] },
+  { icon: "construction", label: ["Manufacturing &", "Industrial"] },
+  { icon: "financial", label: ["Financial", "Services"] },
+  { icon: "healthcare", label: ["Healthcare &", "MedTech"] },
+  { icon: "logistics", label: ["Logistics &", "Supply Chain"] },
+  { icon: "enterpriseit", label: ["Enterprise", "IT"] },
   { icon: "other", label: ["Other"] },
 ];
 
@@ -130,9 +147,9 @@ export default function TrackRecord() {
      
 
       {/* ---------- Industry picker ---------- */}
-      <p className="tr-question">What would you like to manage?</p>
+      <p className="tr-question">What would you like support with?</p>
 
-      <div className="tr-cards" role="group" aria-label="What would you like to manage?">
+      <div className="tr-cards" role="group" aria-label="What would you like support with?">
         {INDUSTRIES.map((ind, i) => {
           const isOn = selected.has(i);
           return (
@@ -175,7 +192,7 @@ export default function TrackRecord() {
         </span>
       </button>
 
-      
+      <p className="tr-note">Free initial consultation, no commitment required</p>
 
       {/* Embedded styles — self-contained, no external CSS needed. */}
       <style>{css}</style>
@@ -230,12 +247,12 @@ const css = `
   }
   /* ---------- Question ---------- */
   .tr-hero .tr-question{
-    font-size:.75rem;
+    font-size:20px;
     line-height:120%;
     font-weight:600;
     color:var(--text);
     margin-top:24px;
-    margin-bottom:18px;
+    margin-bottom:34px;
   }
   /* ---------- Cards ---------- */
   .tr-hero .tr-cards{

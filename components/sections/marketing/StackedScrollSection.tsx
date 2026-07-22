@@ -1,6 +1,6 @@
 "use client";
 
-import { type CSSProperties, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 /**
  * StackedScrollSection
@@ -31,332 +31,49 @@ const STACK_TOP = 88;
 const PEEK = 26;
 
 /* -------------------------------------------------------------------------
- * Tiny building blocks for the mockups
+ * Case-study visual placeholder — reserves the mockup's spot until real
+ * screenshots/result graphics are available.
  * ---------------------------------------------------------------------- */
 
-function MondayMark({ className = "" }: { className?: string }) {
-  return (
-    <span
-      className={`inline-flex items-center gap-1 font-semibold text-neutral-700 ${className}`}
-    >
-      <span className="relative inline-flex h-4 w-4 items-center justify-center">
-        <span className="absolute h-2 w-2 rounded-full bg-red-400" style={{ left: 0 }} />
-        <span className="absolute h-2 w-2 rounded-full bg-yellow-400" style={{ left: 5 }} />
-        <span className="absolute h-2 w-2 rounded-full bg-green-500" style={{ left: 10 }} />
-      </span>
-      <span className="ml-2 text-[11px]">
-        <b className="font-bold">monday</b> CRM
-      </span>
-    </span>
-  );
-}
-
-function Avatar({ from, to, className = "" }: { from: string; to: string; className?: string }) {
-  return (
-    <span
-      className={`inline-block rounded-full bg-gradient-to-br ${from} ${to} ${className}`}
-    />
-  );
-}
-
-function Bar({ w = "w-full", className = "" }: { w?: string; className?: string }) {
-  return <span className={`block h-1.5 rounded-full ${w} ${className}`} />;
-}
-
-function Pill({
-  children,
-  className = "",
+function ComingSoonPlaceholder({
+  tone,
+  alt,
 }: {
-  children: ReactNode;
-  className?: string;
+  tone: "light" | "dark";
+  alt: string;
 }) {
-  return (
-    <span
-      className={`inline-flex items-center rounded-md px-1.5 py-0.5 text-[8px] font-semibold ${className}`}
-    >
-      {children}
-    </span>
-  );
-}
-
-/** Floating "agent" popup used on several panels. */
-function AgentPopup({
-  name,
-  body,
-  avatarFrom,
-  avatarTo,
-  className = "",
-  style,
-}: {
-  name: string;
-  body: string;
-  avatarFrom: string;
-  avatarTo: string;
-  className?: string;
-  style?: CSSProperties;
-}) {
+  const isDark = tone === "dark";
   return (
     <div
-      style={style}
-      className={`absolute w-[210px] rounded-xl border border-white/70 bg-white p-2.5 shadow-xl ${className}`}
+      role="img"
+      aria-label={alt}
+      className={`flex h-full w-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed ${
+        isDark ? "border-black/20 bg-black/5" : "border-white/30 bg-white/10"
+      }`}
     >
-      <div className="flex items-start gap-2">
-        <Avatar from={avatarFrom} to={avatarTo} className="h-8 w-8 flex-shrink-0" />
-        <div className="min-w-0">
-          <p className="text-[11px] font-bold text-neutral-900">{name}</p>
-          <p className="mt-0.5 text-[9px] leading-snug text-neutral-500">{body}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* -------------------------------------------------------------------------
- * Panel mockups (right column)
- * ---------------------------------------------------------------------- */
-
-function MockPipeline() {
-  return (
-    <div className="relative h-full w-full">
-      {/* base board */}
-      <div className="absolute left-6 top-14 w-[92%] rounded-2xl bg-white/95 p-3 shadow-2xl">
-        <MondayMark />
-        <p className="mt-2 text-[13px] font-bold text-neutral-900">New leads</p>
-
-        <p className="mt-3 text-[9px] font-semibold text-blue-500">LinkedIn</p>
-        {["Daniel Park", "Sophia Turner"].map((n) => (
-          <div key={n} className="mt-1 flex items-center gap-2">
-            <Avatar from="from-sky-300" to="to-indigo-400" className="h-4 w-4" />
-            <span className="w-20 truncate text-[9px] text-neutral-600">{n}</span>
-            <Pill className="bg-green-100 text-green-700">Contacted</Pill>
-            <Bar w="w-10" className="bg-blue-400" />
-          </div>
-        ))}
-
-        <p className="mt-3 text-[9px] font-semibold text-blue-500">Meta leads</p>
-        {["Jessica Green", "Emily Carter", "Ross Olive"].map((n) => (
-          <div key={n} className="mt-1 flex items-center gap-2">
-            <Avatar from="from-rose-300" to="to-orange-300" className="h-4 w-4" />
-            <span className="w-20 truncate text-[9px] text-neutral-600">{n}</span>
-            <Pill className="bg-green-100 text-green-700">Contacted</Pill>
-            <Bar w="w-10" className="bg-blue-400" />
-          </div>
-        ))}
-      </div>
-
-      {/* floating task chips */}
-      <div className="absolute left-24 top-[128px] flex items-center gap-1 rounded-lg bg-white px-2 py-1 shadow-lg">
-        <Avatar from="from-sky-300" to="to-blue-500" className="h-4 w-4" />
-        <span className="text-[8.5px] text-neutral-700">Find new qualified leads</span>
-        <Pill className="bg-green-100 text-green-700">Completed</Pill>
-      </div>
-      <div className="absolute left-16 top-[176px] flex items-center gap-1 rounded-lg bg-white px-2 py-1 shadow-lg">
-        <Avatar from="from-sky-300" to="to-blue-500" className="h-4 w-4" />
-        <span className="text-[8.5px] text-neutral-700">Enrich new leads from LI</span>
-        <Pill className="bg-green-100 text-green-700">Completed</Pill>
-      </div>
-      <div className="absolute left-28 top-[224px] flex items-center gap-1 rounded-lg bg-white px-2 py-1 shadow-lg">
-        <Avatar from="from-sky-300" to="to-blue-500" className="h-4 w-4" />
-        <span className="text-[8.5px] text-neutral-700">Score leads by relevance</span>
-        <Pill className="bg-amber-100 text-amber-700">In progress</Pill>
-      </div>
-
-      <AgentPopup
-        className="right-2 top-2"
-        name="Lead Agent"
-        body="I've found and scored 20 new leads in your territory. Ready to jump in?"
-        avatarFrom="from-orange-200"
-        avatarTo="to-rose-300"
-      />
-    </div>
-  );
-}
-
-function MockData() {
-  return (
-    <div className="relative h-full w-full">
-      <div className="absolute left-6 top-16 w-[92%] rounded-2xl bg-white/95 p-3 shadow-2xl">
-        <div className="flex items-center justify-between">
-          <MondayMark />
-          <span className="text-[10px] font-bold text-neutral-800">$70,000</span>
-        </div>
-
-        <p className="mt-2 text-[10px] font-semibold text-neutral-700">Deal stages</p>
-        <div className="mt-1 flex gap-1">
-          <span className="rounded bg-emerald-500 px-2 py-1 text-[8px] font-semibold text-white">New</span>
-          <span className="rounded bg-neutral-100 px-2 py-1 text-[8px] text-neutral-500">Discovery</span>
-          <span className="rounded bg-neutral-100 px-2 py-1 text-[8px] text-neutral-500">Proposal</span>
-        </div>
-
-        <div className="mt-3 grid grid-cols-3 gap-2">
-          <div className="col-span-2">
-            <p className="text-[9px] font-semibold text-neutral-700">Emails &amp; Activities</p>
-            {[
-              ["AI summary", "James confirmed budget approval and requested a revised proposal."],
-              ["Meeting", "with James Lawson, Sarah Chen"],
-              ["Email", "From: James Lawson"],
-            ].map(([t, s]) => (
-              <div key={t} className="mt-1.5 flex items-start gap-1.5">
-                <span className="mt-0.5 h-4 w-4 flex-shrink-0 rounded bg-gradient-to-br from-violet-400 to-blue-400" />
-                <div>
-                  <p className="text-[8.5px] font-semibold text-neutral-700">{t}</p>
-                  <p className="text-[8px] leading-snug text-neutral-400">{s}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div>
-            <p className="text-[9px] font-semibold text-neutral-700">Deal info</p>
-            <p className="mt-1 text-[8px] text-neutral-400">Activities timeline</p>
-            <div className="mt-1 flex gap-0.5">
-              {["bg-rose-400", "bg-blue-400", "bg-emerald-400", "bg-amber-400"].map((c, i) => (
-                <span key={i} className={`h-2 w-1 rounded-full ${c}`} />
-              ))}
-            </div>
-            <p className="mt-2 text-[8px] text-neutral-400">Stage</p>
-            <Bar w="w-12" className="mt-0.5 bg-blue-400" />
-            <p className="mt-2 text-[8px] text-neutral-400">Owners</p>
-            <div className="mt-0.5 flex -space-x-1">
-              <Avatar from="from-sky-300" to="to-blue-400" className="h-3 w-3 ring-1 ring-white" />
-              <Avatar from="from-rose-300" to="to-orange-300" className="h-3 w-3 ring-1 ring-white" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="absolute right-3 top-3 w-[190px] rounded-xl border border-white/70 bg-white p-2.5 shadow-xl">
-        <p className="text-[10px] font-bold text-neutral-900">▤ Meeting overview</p>
-        <p className="mt-1 text-[9px] leading-snug text-neutral-500">
-          Meridian Group is looking to consolidate their sales tools and improve pipeline
-          visibility across the team.
-        </p>
-        <div className="mt-2 space-y-1">
-          <Bar className="bg-gradient-to-r from-emerald-200 to-blue-200" />
-          <Bar w="w-4/5" className="bg-gradient-to-r from-emerald-200 to-blue-200" />
-          <Bar w="w-2/3" className="bg-gradient-to-r from-emerald-200 to-blue-200" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function MockWin() {
-  return (
-    <div className="relative h-full w-full">
-      <div className="absolute left-6 top-16 w-[80%] rounded-2xl bg-white/95 p-3 shadow-2xl">
-        <MondayMark />
-        <p className="mt-2 text-[13px] font-bold text-neutral-900">Good morning, David</p>
-        <div className="mt-2 flex items-center gap-2 rounded-lg border border-neutral-200 px-2 py-1.5">
-          <span className="h-3 w-3 rounded-full bg-gradient-to-br from-violet-400 to-blue-400" />
-          <span className="text-[9px] text-neutral-400">Ask anything...</span>
-        </div>
-        <div className="mt-2 space-y-1">
-          <Bar className="bg-neutral-100" />
-          <Bar w="w-3/4" className="bg-neutral-100" />
-        </div>
-      </div>
-
-      <div className="absolute right-2 top-2 w-[200px] rounded-xl border border-white/70 bg-white p-2.5 shadow-xl">
-        <div className="flex items-center gap-2">
-          <Avatar from="from-amber-700" to="to-orange-900" className="h-6 w-6" />
-          <p className="text-[11px] font-bold text-neutral-900">Meeting Prep Agent</p>
-        </div>
-        <p className="mt-1.5 text-[9px] font-semibold text-neutral-600">☑ TL;DR</p>
-        <p className="text-[9px] leading-snug text-neutral-500">
-          Chloe is leading a regional expansion and is interested in learning more.
-        </p>
-        <p className="mt-1.5 text-[9px] font-semibold text-neutral-600">✦ Meeting objectives</p>
-        <ul className="mt-0.5 space-y-0.5 text-[8.5px] text-neutral-500">
-          <li>• Evaluate expansion priorities</li>
-          <li>• Understand project and delivery</li>
-          <li>• Determine decision makers</li>
-          <li>• Review similar consulting work</li>
-        </ul>
-      </div>
-    </div>
-  );
-}
-
-function MockForecast() {
-  return (
-    <div className="relative h-full w-full">
-      <div className="absolute left-6 top-16 w-[92%] rounded-2xl bg-white/95 p-3 shadow-2xl">
-        <MondayMark />
-        <p className="mt-2 text-[12px] font-bold text-neutral-900">
-          Pipeline health report — Q2, 2026
-        </p>
-
-        <div className="mt-2 grid grid-cols-3 gap-2">
-          {[
-            ["Pipeline coverage", "3.1x"],
-            ["Stuck deals", "5"],
-            ["Est. revenue", "$1.2M"],
-          ].map(([label, val]) => (
-            <div key={label} className="rounded-lg bg-neutral-50 p-2">
-              <p className="text-[8px] text-neutral-400">{label}</p>
-              <p className="mt-0.5 text-[13px] font-bold text-neutral-800">{val}</p>
-            </div>
-          ))}
-        </div>
-
-        <p className="mt-3 text-[9px] font-semibold text-neutral-700">Pipeline distribution</p>
-        <div className="mt-1 flex h-3 overflow-hidden rounded-md">
-          <span className="bg-neutral-500" style={{ width: "11%" }} />
-          <span className="bg-sky-300" style={{ width: "30%" }} />
-          <span className="bg-emerald-300" style={{ width: "36%" }} />
-          <span className="bg-emerald-500" style={{ width: "23%" }} />
-        </div>
-        <div className="mt-1 flex flex-wrap gap-2 text-[7.5px] text-neutral-500">
-          <span>● Discovery 11%</span>
-          <span>● Proposal 30%</span>
-          <span>● Negotiation 36%</span>
-          <span>● Commit 23%</span>
-        </div>
-      </div>
-
-      <AgentPopup
-        className="right-2 top-2 !w-[220px]"
-        name="Pipeline monitor agent"
-        body="There are 5 lower velocity deals across your team. I've drafted nudges for the reps with next steps."
-        avatarFrom="from-sky-300"
-        avatarTo="to-blue-500"
-      />
-    </div>
-  );
-}
-
-/* Panel 5 — reconstructed in the same language (not in the reference). */
-function MockAssistant() {
-  return (
-    <div className="relative h-full w-full">
-      <div className="absolute left-6 top-16 w-[92%] rounded-2xl bg-white/95 p-3 shadow-2xl">
-        <MondayMark />
-        <p className="mt-2 text-[12px] font-bold text-neutral-900">Ask anything about everything</p>
-        <div className="mt-2 flex items-center gap-2 rounded-lg border border-neutral-200 px-2 py-1.5">
-          <span className="h-3 w-3 rounded-full bg-gradient-to-br from-violet-400 to-blue-400" />
-          <span className="text-[9px] text-neutral-400">How is the West region trending?</span>
-        </div>
-        <div className="mt-2 space-y-1.5">
-          <Bar className="bg-neutral-100" />
-          <Bar w="w-5/6" className="bg-neutral-100" />
-          <Bar w="w-2/3" className="bg-neutral-100" />
-          <div className="mt-2 grid grid-cols-3 gap-1.5">
-            {["+18%", "42", "$310K"].map((v) => (
-              <div key={v} className="rounded-md bg-neutral-50 p-1.5">
-                <p className="text-[11px] font-bold text-neutral-800">{v}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <AgentPopup
-        className="right-2 top-2"
-        name="Company Brain"
-        body="West region is up 18% QoQ, driven by faster proposal-to-close times."
-        avatarFrom="from-violet-300"
-        avatarTo="to-indigo-500"
-      />
+      <svg
+        className={isDark ? "text-neutral-900/50" : "text-white/70"}
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="M3 15l4.5-4.5a1.5 1.5 0 0 1 2.1 0L12 13l3-3a1.5 1.5 0 0 1 2.1 0L21 13.5" />
+        <circle cx="8" cy="9" r="1.4" />
+      </svg>
+      <p
+        className={`text-sm font-medium ${
+          isDark ? "text-neutral-900/70" : "text-white/80"
+        }`}
+      >
+        Case Study Coming Soon
+      </p>
     </div>
   );
 }
@@ -367,64 +84,70 @@ function MockAssistant() {
 
 type Panel = {
   id: string;
-  badge: string;
+  label: string; // "Case Study 0X" icon label
   title: ReactNode;
   description: string;
+  cta: string;
   bg: string; // Tailwind bg-[...]
   tone: "light" | "dark"; // text colour on the panel
-  mockup: ReactNode;
+  alt: string;
 };
 
 const PANELS: Panel[] = [
   {
-    id: "ai-discovery",
-    badge: "AI-First Discovery",
-    title: "Buyers Research With AI Before They Talk to You",
+    id: "case-study-01",
+    label: "Case Study 01",
+    title: "[Client Name — SaaS Company]",
     description:
-      "Most B2B buyers now use AI tools to shortlist vendors before a single sales conversation happens. If your brand isn't visible inside those AI answers, you're invisible at the exact moment research begins.",
+      "How we helped a B2B SaaS company grow qualified pipeline by [XX]% in [X] months through account-based marketing and LinkedIn lead generation.",
+    cta: "Read the Case Study",
     bg: "bg-[#123fd4]",
     tone: "light",
-    mockup: <MockPipeline />,
+    alt: "[Client Name — SaaS Company] — FyerX case study",
   },
   {
-    id: "ai-infrastructure",
-    badge: "AI Infrastructure",
-    title: "AI Is Now Infrastructure, Not a Tool",
+    id: "case-study-02",
+    label: "Case Study 02",
+    title: "[Client Name — Manufacturing Company]",
     description:
-      "Leading marketing teams have moved AI from an experiment to the operating layer behind content, personalization, and reporting. FyerX builds that same layer into your marketing from day one.",
+      "How a focused SEO and content strategy helped a manufacturing business rank on page one for [XX] high-intent search terms.",
+    cta: "Read the Case Study",
     bg: "bg-[#2f7bf6]",
     tone: "light",
-    mockup: <MockData />,
+    alt: "[Client Name — Manufacturing Company] — FyerX case study",
   },
   {
-    id: "search-battlegrounds",
-    badge: "Search x AI",
-    title: "Search Has Split Into Two Battlegrounds",
+    id: "case-study-03",
+    label: "Case Study 03",
+    title: "[Client Name — Financial Services Company]",
     description:
-      "Google rankings still matter, but so does how ChatGPT, Claude, and Perplexity describe your brand. FyerX optimizes for both, through SEO and AEO/GEO, so you're found everywhere your buyer looks.",
+      "How marketing automation and CRM integration cut lead response time by [XX]% for a financial services provider.",
+    cta: "Read the Case Study",
     bg: "bg-[#12b562]",
     tone: "light",
-    mockup: <MockWin />,
+    alt: "[Client Name — Financial Services Company] — FyerX case study",
   },
   {
-    id: "built-with-ai",
-    badge: "Built With AI",
-    title: "Generic Agencies Bolt AI On. We Build With It.",
+    id: "case-study-04",
+    label: "Case Study 04",
+    title: "[Client Name — Enterprise IT Company]",
     description:
-      "Most agencies added an 'AI services' line item to an old playbook. FyerX designed its entire growth system around AI from the ground up, across content, ad personalization, and automation.",
+      "How a rebrand and website redesign helped an enterprise IT company win larger deals with a stronger brand presence.",
+    cta: "Read the Case Study",
     bg: "bg-[#f7c518]",
     tone: "dark",
-    mockup: <MockForecast />,
+    alt: "[Client Name — Enterprise IT Company] — FyerX case study",
   },
   {
-    id: "compounding-growth",
-    badge: "Compounding Growth",
-    title: "The Result: Marketing That Compounds",
+    id: "case-study-05",
+    label: "Case Study 05",
+    title: "[Client Name — Professional Services Firm]",
     description:
-      "Strategy plus AI plus demand generation working together doesn't just produce a campaign. It produces a system that gets more efficient and more predictable with every quarter.",
+      "How performance marketing and retargeting brought down cost-per-lead by [XX]% for a professional services firm.",
+    cta: "Read the Case Study",
     bg: "bg-[#6b4df6]",
     tone: "light",
-    mockup: <MockAssistant />,
+    alt: "[Client Name — Professional Services Firm] — FyerX case study",
   },
 ];
 
@@ -478,9 +201,23 @@ export default function StackedScrollSection() {
                     {/* Left: copy */}
                     <div className="flex flex-col">
                       <span
-                        className={`inline-flex w-fit items-center rounded-md px-3 py-1 text-xs font-medium ${badgeCls}`}
+                        className={`inline-flex w-fit items-center gap-1.5 rounded-md px-3 py-1 text-xs font-medium ${badgeCls}`}
                       >
-                        {panel.badge}
+                        <svg
+                          width="13"
+                          height="13"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path d="M9 3h6a1 1 0 0 1 1 1v2H8V4a1 1 0 0 1 1-1Z" />
+                          <rect x="3" y="6" width="18" height="14" rx="2" />
+                        </svg>
+                        {panel.label}
                       </span>
                       <h3
                         className={`mt-6 text-2xl font-bold leading-[1.15] tracking-tight sm:text-3xl md:text-[32px] ${textColor}`}
@@ -490,11 +227,20 @@ export default function StackedScrollSection() {
                       <p className={`mt-5 max-w-md text-sm leading-relaxed ${subColor}`}>
                         {panel.description}
                       </p>
+                      <button
+                        type="button"
+                        className={`mt-6 inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-transform hover:scale-[1.03] active:scale-[0.98] ${
+                          isDark ? "bg-neutral-900 text-white" : "bg-white text-neutral-900"
+                        }`}
+                      >
+                        {panel.cta}
+                        <span aria-hidden="true">→</span>
+                      </button>
                     </div>
 
-                    {/* Right: mockup */}
+                    {/* Right: case study visual placeholder */}
                     <div className="relative h-[300px] w-full sm:h-[340px]">
-                      {panel.mockup}
+                      <ComingSoonPlaceholder tone={panel.tone} alt={panel.alt} />
                     </div>
                   </div>
                 </div>

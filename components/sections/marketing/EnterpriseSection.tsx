@@ -14,10 +14,10 @@ const IMAGE_SRC =
   "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=1200&q=80";
 
 const features = [
-  "Premium implementation",
-  "Enterprise-grade security",
-  "Advanced permissions",
-  "24/7 premium support",
+  "Dedicated campaign support",
+  "Reporting tied to real results",
+  "Flexible engagement models",
+  "Quick turnaround on requests",
 ];
 
 function CheckIcon() {
@@ -74,11 +74,11 @@ export default function EnterpriseSection() {
     <section className="ent">
       <div className="ent__card">
         <div className="ent__left">
-          <h2 className="ent__title">Talk to an expert for enterprise solutions</h2>
+          <h2 className="ent__title">Talk to an expert for B2B marketing</h2>
 
           <p className="ent__subtitle">
-            Streamline your entire sales cycle, from lead to renewal, with
-            enterprise-grade control, security, and support.
+            Get a clear view of what's possible for your pipeline, and the
+            right approach to get there, with support along the way.
           </p>
 
           <ul className="ent__list">
@@ -93,7 +93,7 @@ export default function EnterpriseSection() {
           </ul>
 
           <button className="ent__cta" type="button">
-            Contact sales
+            Contact Sales
           </button>
         </div>
 

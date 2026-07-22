@@ -6,9 +6,9 @@ import { useState } from "react";
 const pillars: { label: string; video: string }[] = [
   { label: "Marketing", video: "/marketing-video.mp4" },
   { label: "Talent", video: "/talent.mp4" },
-  // No dedicated clips yet for Learning/Technology — reuse existing videos.
-  { label: "Learning", video: "/whowe.mp4" },
+  // No dedicated clips yet for Technology/Learning — reuse existing videos.
   { label: "Technology", video: "/marketing-video.mp4" },
+  { label: "Learning", video: "/whowe.mp4" },
 ];
 
 function CheckIcon() {
@@ -59,9 +59,9 @@ export default function Hero() {
         >
           <h1
             className="font-normal tracking-[-0.03em] text-black"
-            style={{ fontSize: "3.5rem", lineHeight: 1 }}
+            style={{ fontSize: "36px", lineHeight: 1.25 }}
           >
-            You lead.<br />We deliver.
+            You focus on growth.<br />We handle execution.
           </h1>
 
           <p
@@ -74,7 +74,7 @@ export default function Hero() {
               lineHeight: 1.5,
             }}
           >
-            Where strategy, talent, and technology create measurable business results.
+            Where your business goals and our teams work together on one dependable partner.
           </p>
 
           {/* Pillar toggle — selects which video leads the stack */}
@@ -136,6 +136,9 @@ export default function Hero() {
             >
               Get Started <ArrowIcon />
             </Link>
+            <p className="mt-3 text-xs text-slate">
+              No obligation • Free initial consultation
+            </p>
           </div>
         </div>
 
