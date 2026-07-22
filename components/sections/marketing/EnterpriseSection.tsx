@@ -39,7 +39,7 @@ function CheckIcon() {
   );
 }
 
-function CloverImage({ src }) {
+function CloverImage({ src }: { src: string }) {
   return (
     <svg
       className="ent-clover"
