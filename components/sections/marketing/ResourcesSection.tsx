@@ -21,7 +21,7 @@ const IMG_AGENTS =
 const IMG_GEO =
   "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80";
 
-function PhotoTop({ src, alt }) {
+function PhotoTop({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="res-top res-top--photo">
       <img src={src} alt={alt} />
