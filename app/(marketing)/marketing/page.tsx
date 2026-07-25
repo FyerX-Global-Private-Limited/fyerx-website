@@ -12,6 +12,8 @@ import IntegrationsSection from "@/components/sections/marketing/IntegrationsSec
 import EnterpriseSection from "@/components/sections/marketing/EnterpriseSection";
 import ResourcesSection from "@/components/sections/marketing/ResourcesSection";
 import FaqSection from "@/components/sections/marketing/FaqSection";
+import IntegrationsHero from "@/components/sections/marketing/IntegrationsHero";
+import SeeWhatYouCanBuild from "@/components/sections/marketing/SeeWhatYouCanBuild";
 export default function MarketingPage() {
   return (
     <>
@@ -24,8 +26,10 @@ export default function MarketingPage() {
       <StackedScrollSection />
       <Leadership />
         <CampaignsSection />
+             <IntegrationsHero />
              <IntegrationsSection />
              <EnterpriseSection />
+             <SeeWhatYouCanBuild />
              <ResourcesSection />
               <FaqSection />
       <TestimonialsCTA />         
