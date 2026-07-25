@@ -1,6 +1,11 @@
 "use client";
 
-import { useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import {
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+  type ReactElement,
+} from "react";
 
 /**
  * SeeWhatYouCanBuild
@@ -32,7 +37,7 @@ type Card = {
   desc: string;
   cats: string[];
   variant: "p" | "k";
-  Preview: () => JSX.Element;
+  Preview: () => ReactElement;
 };
 
 /* ----------------------------- preview mockups ---------------------------- */
