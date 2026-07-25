@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 /**
  * Integrations "Connect 500+ apps" section
@@ -81,9 +82,7 @@ export default function IntegrationsSection() {
         </p>
 
         <div className="integrations__cta-wrap">
-          <button className="integrations__cta" type="button">
-            Get Started <span aria-hidden="true">→</span>
-          </button>
+          <PrimaryCtaLink href="/talent/book-session" color="#2935a3">Get Started</PrimaryCtaLink>
         </div>
 
         <div className="integrations__rows">

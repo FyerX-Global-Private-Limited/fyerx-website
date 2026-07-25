@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 export default function BookingCTA() {
   return (
@@ -9,14 +9,11 @@ export default function BookingCTA() {
         </h2>
         <p className="text-green-100 text-lg leading-8 max-w-lg">
           Book a session today and speak with a qualified talent specialist
-          who's here to support you.
+          who&apos;s here to support you.
         </p>
-        <Link
-          href="/talent/book-session"
-          className="rounded-full bg-white text-green-800 px-8 py-3 font-semibold hover:bg-green-50 transition-colors"
-        >
+        <PrimaryCtaLink href="/talent/book-session" color="#2935a3">
           Book a Session
-        </Link>
+        </PrimaryCtaLink>
       </div>
     </section>
   );

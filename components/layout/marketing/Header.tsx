@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 // ── Icons ──────────────────────────────────────────────────────────────────────
 function ChevronDown({ open }: { open: boolean }) {
@@ -349,12 +350,11 @@ export default function MarketingHeader() {
           )}
         </div>
 
-        <Link
-          href="/contact"
-          className="hidden md:inline-block rounded-full bg-blue-600 text-white px-5 py-2 text-sm font-medium hover:bg-blue-700 transition-colors"
-        >
-          Get Started
-        </Link>
+        <div className="hidden md:block">
+          <PrimaryCtaLink href="/contact">
+            Get Started
+          </PrimaryCtaLink>
+        </div>
 
         <button
           className="md:hidden p-1.5 text-zinc-700 hover:bg-zinc-50 rounded-[6px]"
@@ -399,13 +399,13 @@ export default function MarketingHeader() {
                 {item.label}
               </Link>
             ))}
-            <Link
+            <PrimaryCtaLink
               href="/contact"
               onClick={closeAll}
-              className="mt-3 flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white text-[15px] font-semibold px-4 py-3 rounded-full transition-colors"
+              className="mt-3"
             >
               Get Started
-            </Link>
+            </PrimaryCtaLink>
           </div>
         </div>
       )}

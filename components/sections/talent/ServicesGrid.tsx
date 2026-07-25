@@ -2,6 +2,7 @@
 
 import { useId, useRef, useState } from "react";
 import Image from "next/image";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 /**
  * ServicesGrid — "Why B2B teams choose FyerX over a typical agency" section.
@@ -167,13 +168,7 @@ export default function ServicesGrid() {
           </h2>
 
           <div className="mt-8 flex flex-col items-center">
-            <button
-              type="button"
-              className="inline-flex items-center gap-2 rounded-full bg-[#0B2E59] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#092547]"
-            >
-              Get Started
-              <span aria-hidden="true">→</span>
-            </button>
+            <PrimaryCtaLink href="/talent/book-session" color="#2935a3">Get Started</PrimaryCtaLink>
             <p className="mt-3 text-sm text-neutral-500">
               Get full access, no commitment required
             </p>

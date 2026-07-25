@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 export default function TalentHero() {
   return (
@@ -14,12 +15,9 @@ export default function TalentHero() {
         challenges and unlock your potential.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 mt-4">
-        <Link
-          href="/talent/book-session"
-          className="rounded-full bg-green-700 text-white px-8 py-3 font-medium hover:bg-green-800 transition-colors"
-        >
+        <PrimaryCtaLink href="/talent/book-session" color="#2935a3">
           Book a Session
-        </Link>
+        </PrimaryCtaLink>
         <Link
           href="/talent/individual"
           className="rounded-full border border-zinc-200 text-zinc-900 px-8 py-3 font-medium hover:bg-zinc-50 transition-colors"

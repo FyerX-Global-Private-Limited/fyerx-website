@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 // ── Icons ──────────────────────────────────────────────────────────────────────
 function ChevronDown({ open }: { open: boolean }) {
@@ -303,12 +304,11 @@ export default function TalentHeader() {
           )}
         </div>
 
-        <Link
-          href="/talent/book-session"
-          className="hidden md:inline-block rounded-full bg-[#0B2E59] text-white px-5 py-2 text-sm font-medium hover:bg-[#092547] transition-colors"
-        >
-          Book a Session
-        </Link>
+        <div className="hidden md:block">
+          <PrimaryCtaLink href="/talent/book-session" color="#2935a3">
+            Book a Session
+          </PrimaryCtaLink>
+        </div>
 
         <button
           className="md:hidden p-1.5 text-zinc-700 hover:bg-zinc-50 rounded-[6px]"
@@ -353,13 +353,14 @@ export default function TalentHeader() {
                 {item.label}
               </Link>
             ))}
-            <Link
+            <PrimaryCtaLink
               href="/talent/book-session"
               onClick={closeAll}
-              className="mt-3 flex items-center justify-center bg-[#0B2E59] hover:bg-[#092547] text-white text-[15px] font-semibold px-4 py-3 rounded-full transition-colors"
+              className="mt-3"
+              color="#2935a3"
             >
               Book a Session
-            </Link>
+            </PrimaryCtaLink>
           </div>
         </div>
       )}

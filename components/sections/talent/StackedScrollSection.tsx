@@ -1,6 +1,7 @@
 "use client";
 
 import { type ReactNode } from "react";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 /**
  * StackedScrollSection
@@ -169,13 +170,9 @@ export default function StackedScrollSection() {
               Why B2B Marketing Needs an AI-First Partner Now
             </h2>
           </div>
-          <button
-            type="button"
-            className="inline-flex flex-shrink-0 items-center gap-2 rounded-full bg-[#0B2E59] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#092547]"
-          >
+          <PrimaryCtaLink href="/talent/book-session" className="flex-shrink-0" color="#2935a3">
             Get Started
-            <span aria-hidden="true">→</span>
-          </button>
+          </PrimaryCtaLink>
         </div>
 
         {/* Stacking cards */}

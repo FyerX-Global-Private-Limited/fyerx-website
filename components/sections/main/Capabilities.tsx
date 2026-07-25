@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 /**
  * Capabilities — "Expert services for lasting success" section
@@ -163,27 +164,9 @@ const Capabilities: React.FC = () => {
               Dedicated support <br /> for lasting success
             </h2>
 
-            <a
-              href="/contact"
-              className="mt-6 inline-flex items-center justify-start gap-2 rounded-full border border-black bg-black px-8 py-3.5 text-sm font-semibold text-white transition-all duration-100 hover:bg-gray-800"
-            >
+            <PrimaryCtaLink href="/contact" className="mt-6">
               Contact Us
-              <svg
-                className="h-3.5 w-3.5"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  d="M1.5 8h13m0 0L9 2.5M14.5 8L9 13.5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </a>
+            </PrimaryCtaLink>
 
             <p className="mt-5 text-[11px] text-gray-500">
               Availability may vary based on engagement scope

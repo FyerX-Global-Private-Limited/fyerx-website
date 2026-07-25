@@ -1,5 +1,7 @@
 "use client";
 
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+
 /**
  * CampaignsSection
  * -------------------------------------------------------------------------
@@ -106,20 +108,16 @@ export default function CampaignsSection() {
               </h2>
 
               <p className="mt-6 max-w-sm text-sm font-medium leading-relaxed text-neutral-300">
-                We take the time to understand the roles you're hiring for and the kind
-                of team you're building, so every profile we send is worth your time.
+                We take the time to understand the roles you&apos;re hiring for and the kind
+                of team you&apos;re building, so every profile we send is worth your time.
                 One point of contact, clear timelines, and support that continues past
                 the offer letter.
               </p>
 
               <div className="mt-8 flex items-center gap-6">
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-900 transition-colors hover:bg-neutral-100"
-                >
+                <PrimaryCtaLink href="/talent/book-session" color="#2935a3">
                   Get Started
-                  <span aria-hidden="true">→</span>
-                </button>
+                </PrimaryCtaLink>
                 <a
                   href="#"
                   className="text-sm font-medium text-white underline underline-offset-4 hover:text-neutral-200"

@@ -1,5 +1,7 @@
 "use client";
 
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+
 /**
  * CampaignsSection
  * -------------------------------------------------------------------------
@@ -112,13 +114,7 @@ export default function CampaignsSection() {
               </p>
 
               <div className="mt-8 flex items-center gap-6">
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-900 transition-colors hover:bg-neutral-100"
-                >
-                  Get Started
-                  <span aria-hidden="true">→</span>
-                </button>
+                <PrimaryCtaLink href="/contact">Get Started</PrimaryCtaLink>
                 <a
                   href="#"
                   className="text-sm font-medium text-white underline underline-offset-4 hover:text-neutral-200"

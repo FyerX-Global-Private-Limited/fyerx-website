@@ -81,3 +81,19 @@ body {
 @utility animate-marquee {
   animation: marquee 42s linear infinite;
 }
+
+/* Primary CTA "orb swoosh" — see components/ui/PrimaryCta.tsx */
+@keyframes orbSwoosh {
+  0% {
+    background-position: -350px center;
+  }
+  25% {
+    background-position: calc(100% + 350px) center;
+  }
+  25.001% {
+    background-position: -350px center;
+  }
+  100% {
+    background-position: -350px center;
+  }
+}

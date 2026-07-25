@@ -14,6 +14,7 @@
  */
 
 import { useState, type ReactNode } from "react";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 /* ------------------------------------------------------------------ */
 /* Icons — 40x40 outline SVGs, stroke inherits currentColor            */
@@ -183,14 +184,7 @@ export default function TrackRecord() {
       </div>
 
       {/* ---------- CTA ---------- */}
-      <button className="tr-cta" type="button">
-        Get Started{" "}
-        <span className="tr-arrow">
-          <svg width="20" height="14" viewBox="0 0 20 14" fill="none">
-            <path d="M1 7h17M12.5 1.5L18 7l-5.5 5.5" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </span>
-      </button>
+      <PrimaryCtaLink href="/contact">Get Started</PrimaryCtaLink>
 
       <p className="tr-note">Free initial consultation, no commitment required</p>
 

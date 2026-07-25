@@ -14,6 +14,7 @@
  */
 
 import { useState, type ReactNode } from "react";
+import { PrimaryCtaButton } from "@/components/ui/PrimaryCta";
 
 /* ------------------------------------------------------------------ */
 /* Icons — 40x40 outline SVGs, stroke inherits currentColor            */
@@ -121,7 +122,11 @@ export default function TrackRecord() {
   const toggle = (i: number) =>
     setSelected((prev) => {
       const next = new Set(prev);
-      next.has(i) ? next.delete(i) : next.add(i);
+      if (next.has(i)) {
+        next.delete(i);
+      } else {
+        next.add(i);
+      }
       return next;
     });
 
@@ -178,14 +183,7 @@ export default function TrackRecord() {
       </div>
 
       {/* ---------- CTA ---------- */}
-      <button className="tr-cta" type="button">
-        Get Started{" "}
-        <span className="tr-arrow">
-          <svg width="20" height="14" viewBox="0 0 20 14" fill="none">
-            <path d="M1 7h17M12.5 1.5L18 7l-5.5 5.5" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </span>
-      </button>
+      <PrimaryCtaButton>Get Started</PrimaryCtaButton>
 
       
 
@@ -314,25 +312,6 @@ const css = `
     font-weight:400;
     color:#333333;
   }
-  /* ---------- CTA ---------- */
-  .tr-hero .tr-cta{
-    display:inline-flex;
-    align-items:center;
-    gap:12px;
-    background:#111111;
-    color:#ffffff;
-    font-family:inherit;
-    font-size:20px;
-    font-weight:400;
-    border:none;
-    border-radius:999px;
-    padding:10px 30px;
-    cursor:pointer;
-    transition:background-color .25s ease,transform .25s ease;
-  }
-  .tr-hero .tr-cta:hover{background:#000000;}
-  .tr-hero .tr-arrow{display:inline-flex;transition:transform .25s ease;}
-  .tr-hero .tr-cta:hover .tr-arrow{transform:translateX(4px);}
   /* ---------- Note ---------- */
   .tr-hero .tr-note{
     font-size:18px;

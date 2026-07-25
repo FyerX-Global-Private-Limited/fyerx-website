@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 const pillars: { label: string; video: string }[] = [
   { label: "Marketing", video: "/marketing-video.mp4" },
@@ -15,15 +15,6 @@ function CheckIcon() {
   return (
     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round">
       <polyline points="20 6 9 17 4 12" />
-    </svg>
-  );
-}
-
-function ArrowIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.3} strokeLinecap="round" strokeLinejoin="round">
-      <line x1="4" y1="12" x2="20" y2="12" />
-      <polyline points="13 5 20 12 13 19" />
     </svg>
   );
 }
@@ -120,28 +111,7 @@ export default function Hero() {
 
           {/* CTA — ref: pills → button 30px → 20px scaled */}
           <div className="mt-5">
-            <Link
-              href="#contact"
-              className="relative overflow-hidden gap-2 text-white text-[15px] font-semibold"
-              style={{
-                display: "flex",
-                width: "fit-content",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                // Ref button 64×~200px @1920 → ~43px tall here.
-                padding: "0.8125rem 1.75rem",
-                borderRadius: "10rem",
-                backgroundColor: "#ab0549",
-                color: "#ffffff",
-                backgroundImage:
-                  "radial-gradient(circle closest-side, rgba(254, 155, 11, 0.85) 0%, rgba(255, 129, 228, 0.85) 50%, rgba(97, 97, 255, 0) 100%)",
-                backgroundSize: "350px 350px",
-                backgroundRepeat: "no-repeat",
-                animation: "orbSwoosh 6s ease-in-out 2s infinite both",
-              }}
-            >
-              Get Started <ArrowIcon />
-            </Link>
+            <PrimaryCtaLink href="#contact">Get Started</PrimaryCtaLink>
             <p className="mt-3 text-xs text-slate">
               Confidential consultation . Custom to your business
             </p>
@@ -187,23 +157,6 @@ export default function Hero() {
           ))}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes orbSwoosh {
-          0% {
-            background-position: -350px center;
-          }
-          25% {
-            background-position: calc(100% + 350px) center;
-          }
-          25.001% {
-            background-position: -350px center;
-          }
-          100% {
-            background-position: -350px center;
-          }
-        }
-      `}</style>
     </section>
   );
 }

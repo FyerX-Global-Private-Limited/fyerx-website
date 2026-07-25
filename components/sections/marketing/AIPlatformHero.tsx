@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import type { LucideIcon } from "lucide-react";
 import {
   Rocket,
@@ -364,10 +365,9 @@ export default function AIPlatformHero() {
                 {tabContent.description}
               </p>
             </div>
-            <button className="mt-6 flex w-fit items-center gap-2 rounded-full bg-black px-5 py-2.5 text-[14px] font-semibold text-white transition-transform hover:scale-[1.03] active:scale-[0.98]">
+            <PrimaryCtaLink href="/contact" className="mt-6">
               Get Started
-              <span aria-hidden>→</span>
-            </button>
+            </PrimaryCtaLink>
           </div>
 
           {/* Right panel — tab illustration */}

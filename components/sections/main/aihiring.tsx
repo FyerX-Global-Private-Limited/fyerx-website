@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { PrimaryCtaLink } from '@/components/ui/PrimaryCta';
 
 /**
  * Control & governance section — single-file Next.js + React.
@@ -52,9 +53,9 @@ export default function AiHiring() {
             AI-driven speed. Human-led decisions. Built-in compliance.
           </p>
 
-          <a href="#" className="cg__cta">
-            Get Started <span aria-hidden="true">&rarr;</span>
-          </a>
+          <PrimaryCtaLink href="#" className="mt-10">
+            Get Started
+          </PrimaryCtaLink>
 
           <div className="cg__badges">
             <GdprBadge />
@@ -130,26 +131,6 @@ export default function AiHiring() {
           font-size: 18px;
           line-height: 1.55;
           color: var(--muted);
-        }
-
-        .cg__cta {
-          margin-top: 40px;
-          align-self: flex-start;
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          background: var(--accent);
-          color: #fff;
-          text-decoration: none;
-          font-size: 16px;
-          font-weight: 500;
-          padding: 15px 30px;
-          border-radius: 999px;
-          transition: background 0.18s ease, transform 0.18s ease;
-        }
-        .cg__cta:hover {
-          background: var(--accent-hover);
-          transform: translateY(-1px);
         }
 
         .cg__badges {

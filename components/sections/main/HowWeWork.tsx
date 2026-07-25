@@ -14,6 +14,7 @@
  */
 
 import { useState } from "react";
+import { PrimaryCtaButton } from "@/components/ui/PrimaryCta";
 
 interface TabData {
   label: string;
@@ -79,14 +80,7 @@ export default function HowWeWork() {
         <div className="panel-left fade-swap" key={`left-${active}`}>
           <h2>{t.label}</h2>
           <p>{t.para}</p>
-          <button className="cta" type="button">
-            {t.cta}{" "}
-            <span className="arrow">
-              <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
-                <path d="M1 6h13M10 1l5 5-5 5" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-          </button>
+          <PrimaryCtaButton className="mt-12">{t.cta}</PrimaryCtaButton>
         </div>
 
         {/* ---------- Right column: video ---------- */}
@@ -168,19 +162,10 @@ const css = `
   }
   .hww-hero .panel-left p{
     color:var(--black);
-    margin-bottom:0px;
+    margin-bottom:20px;
     font-size:1rem;
     line-height:150%;
   }
-  .hww-hero .cta{
-    display:inline-flex;align-items:center;gap:10px;background:var(--primary);
-    color:#fff;font-family:inherit;font-size:16px;font-weight:400;border:none;
-    border-radius:999px;padding:14px 28px;cursor:pointer;transition:background-color .25s ease;
-    margin-top:32px;
-  }
-  .hww-hero .cta:hover{background:var(--primary-dark);}
-  .hww-hero .cta .arrow{transition:transform .25s ease;display:inline-flex;}
-  .hww-hero .cta:hover .arrow{transform:translateX(4px);}
   /* ---------- Board card ---------- */
   .hww-hero .board-card{
     background:var(--card-bg);border-radius:16px;padding:28px; /* equal border on all 4 sides */

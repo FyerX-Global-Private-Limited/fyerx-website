@@ -22,23 +22,23 @@ const TESTIMONIAL_AVATAR = "https://randomuser.me/api/portraits/women/47.jpg";
 
 // Same client roster as TrustBar.tsx, muted grayscale for this darker card background.
 const LOGOS = [
-  { name: "WeGoFin" },
+  { name: "WeGoFin", img: "/trustbarlogos/trimmed/wegofin.png" },
   { name: "Sayyam" },
-  { name: "Adro", img: "/avatar/adro.webp" },
-  { name: "Saraogi" },
-  { name: "Codeus" },
-  { name: "Bullsmart", img: "/avatar/bullsmart.png" },
-  { name: "Onroadz", img: "/avatar/onroad.png" },
+  { name: "Adro", img: "/trustbarlogos/trimmed/adro.png" },
+  { name: "Saraogi", img: "/trustbarlogos/trimmed/sarogi.png" },
+  { name: "Codeus", img: "/trustbarlogos/trimmed/codeus.png" },
+  { name: "Bullsmart", img: "/trustbarlogos/trimmed/bullsmart.png" },
+  { name: "Onroadz", img: "/trustbarlogos/trimmed/onroad.png" },
   { name: "KPRM" },
-  { name: "Kaypee Space" },
-  { name: "Avekshaa", img: "/avatar/avekshaa.png" },
-  { name: "Orihiro" },
+  { name: "Kaypee Space", img: "/trustbarlogos/trimmed/kaypeespace.png" },
+  { name: "Avekshaa", img: "/trustbarlogos/trimmed/avekshaa.png" },
+  { name: "Orihiro", img: "/trustbarlogos/trimmed/orihiro.png" },
   { name: "Hoshitry" },
   { name: "TrnDigital" },
-  { name: "Digitathya", img: "/avatar/digitathya.png" },
-  { name: "Cinepebble" },
+  { name: "Digitathya", img: "/trustbarlogos/trimmed/digitathya.png" },
+  { name: "Cinepebble", img: "/trustbarlogos/trimmed/cinipebble.png" },
   { name: "WinExch" },
-  { name: "SpinMatch" },
+  { name: "SpinMatch", img: "/trustbarlogos/trimmed/spinmatch.png" },
 ];
 
 function LogoSet() {

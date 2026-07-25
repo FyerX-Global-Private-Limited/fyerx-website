@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import type { LucideIcon } from "lucide-react";
 import {
   Code2,
@@ -265,10 +266,9 @@ export default function AIPlatformHero() {
                 {tabContent.description}
               </p>
             </div>
-            <button className="mt-6 flex w-fit items-center gap-2 rounded-full bg-[#0B2E59] px-5 py-2.5 text-[14px] font-semibold text-white transition-colors transition-transform hover:bg-[#092547] hover:scale-[1.03] active:scale-[0.98]">
+            <PrimaryCtaLink href="/talent/book-session" className="mt-6" color="#2935a3">
               Get Started
-              <span aria-hidden>→</span>
-            </button>
+            </PrimaryCtaLink>
           </div>
 
           {/* Right panel — tab illustration */}

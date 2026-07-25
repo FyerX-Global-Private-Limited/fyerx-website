@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 // ── Logo ───────────────────────────────────────────────────────────────────────
 function FyerxLogo() {
@@ -25,15 +26,6 @@ function ChevronDown({ open }: { open: boolean }) {
       stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
       className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}>
       <polyline points="6 9 12 15 18 9" />
-    </svg>
-  );
-}
-function ArrowRightIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="4" y1="12" x2="20" y2="12" />
-      <polyline points="13 5 20 12 13 19" />
     </svg>
   );
 }
@@ -570,11 +562,10 @@ export default function MainHeader() {
                          transition-colors duration-100 whitespace-nowrap">
               Contact Now
             </Link>
-            <Link href="/contact" onClick={closeAll} onMouseEnter={() => setOpenMenu(null)}
-              className="h-[40px] flex items-center justify-center text-center gap-2 px-6 rounded-full bg-[#5c4fe0] hover:bg-[#4a3dc7]
-                         cursor-pointer text-[0.875rem] font-light leading-[100%] text-white transition-colors duration-100 whitespace-nowrap">
-              Get Started <ArrowRightIcon />
-            </Link>
+            <PrimaryCtaLink href="/contact" onClick={closeAll} onMouseEnter={() => setOpenMenu(null)}
+              className="h-[40px] whitespace-nowrap">
+              Get Started
+            </PrimaryCtaLink>
           </div>
 
           {/* Mobile hamburger */}
@@ -640,11 +631,9 @@ export default function MainHeader() {
               </Link>
             ))}
             <div className="mt-3 pt-3 border-t border-[#e6e9ef] flex flex-col gap-2.5">
-              <Link href="/contact" onClick={closeAll}
-                className="flex items-center justify-center gap-[6px] bg-[#5c4fe0] hover:bg-[#4a3dc7] text-white
-                           text-[15px] font-semibold px-4 py-3 rounded-full transition-colors">
-                Get Started <ArrowRightIcon />
-              </Link>
+              <PrimaryCtaLink href="/contact" onClick={closeAll}>
+                Get Started
+              </PrimaryCtaLink>
               <Link href="/contact" onClick={closeAll}
                 className="flex items-center justify-center border-[1.5px] border-[#5c4fe0] text-[#5c4fe0]
                            text-[15px] font-semibold px-4 py-3 rounded-full hover:bg-[#eeecfc] transition-colors">

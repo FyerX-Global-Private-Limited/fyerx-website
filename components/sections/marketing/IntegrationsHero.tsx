@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 /**
  * IntegrationsHero
@@ -165,27 +166,9 @@ export default function IntegrationsHero() {
           collaboration, and drive better business results faster.
         </p>
 
-        <a
-          href="#"
-          className="group mt-9 inline-flex items-center gap-2 rounded-full bg-gray-900 px-7 py-3.5 text-base font-medium text-white shadow-sm transition-colors hover:bg-gray-800"
-        >
+        <PrimaryCtaLink href="/contact" className="mt-9">
           Get Started
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="transition-transform duration-300 group-hover:translate-x-1"
-            aria-hidden="true"
-          >
-            <line x1="5" y1="12" x2="19" y2="12" />
-            <polyline points="12 5 19 12 12 19" />
-          </svg>
-        </a>
+        </PrimaryCtaLink>
       </div>
 
       {/* Scrolling logo rows */}
