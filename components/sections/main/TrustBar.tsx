@@ -1,21 +1,24 @@
 const logos = [
-  { name: "WeGoFin" },
-  { name: "Sayyam" },
-  { name: "Adro", img: "/avatar/adro.webp" },
-  { name: "Saraogi" },
-  { name: "Codeus" },
-  { name: "Bullsmart", img: "/avatar/bullsmart.png" },
-  { name: "Onroadz", img: "/avatar/onroad.png" },
-  { name: "KPRM" },
-  { name: "Kaypee Space" },
-  { name: "Avekshaa", img: "/avatar/avekshaa.png" },
-  { name: "Orihiro" },
-  { name: "Hoshitry" },
-  { name: "TrnDigital" },
-  { name: "Digitathya", img: "/avatar/digitathya.png" },
-  { name: "Cinepebble" },
-  { name: "WinExch" },
-  { name: "SpinMatch" },
+  { name: "Adro", img: "/trustbarlogos/trimmed/adro.png" },
+  { name: "Ambience", img: "/trustbarlogos/trimmed/ambience.png" },
+  { name: "Avekshaa", img: "/trustbarlogos/trimmed/avekshaa.png" },
+  { name: "Blummber", img: "/trustbarlogos/trimmed/blummber.png" },
+  { name: "Bullsmart", img: "/trustbarlogos/trimmed/bullsmart.png" },
+  { name: "Cinepebble", img: "/trustbarlogos/trimmed/cinipebble.png" },
+  { name: "Codeus", img: "/trustbarlogos/trimmed/codeus.png" },
+  { name: "Digitathya", img: "/trustbarlogos/trimmed/digitathya.png" },
+  { name: "Dyashin", img: "/trustbarlogos/trimmed/dyashin.png" },
+  { name: "Kaypee Space", img: "/trustbarlogos/trimmed/kaypeespace.png" },
+  { name: "Multimedia", img: "/trustbarlogos/trimmed/multimedia.png" },
+  { name: "Onroadz", img: "/trustbarlogos/trimmed/onroad.png" },
+  { name: "Orihiro", img: "/trustbarlogos/trimmed/orihiro.png" },
+  { name: "Saraogi", img: "/trustbarlogos/trimmed/sarogi.png" },
+  { name: "Silvercross", img: "/trustbarlogos/trimmed/silvercross.png" },
+  { name: "Solv", img: "/trustbarlogos/trimmed/solv.png" },
+  { name: "SpinMatch", img: "/trustbarlogos/trimmed/spinmatch.png" },
+  { name: "WeGoFin", img: "/trustbarlogos/trimmed/wegofin.png" },
+  { name: "Workdays", img: "/trustbarlogos/trimmed/workdays.png" },
+  { name: "Zassets", img: "/trustbarlogos/trimmed/zassets.png" },
 ];
 
 export default function TrustBar() {
@@ -47,31 +50,21 @@ export default function TrustBar() {
         style={{ marginTop: "10px" }}
       >
         <div
-          className="animate-marquee group-hover:[animation-play-state:paused] flex items-center"
+          className="animate-marquee group-hover:[animation-play-state:paused] flex items-center gap-x-14 sm:gap-x-16 lg:gap-x-20"
           style={{
-            columnGap: "1.5rem",
             width: "max-content",
           }}
         >
           {[...logos, ...logos].map((logo, i) => (
             <div
               key={`${logo.name}-${i}`}
-              className="shrink-0 flex items-center justify-center text-center font-bold tracking-tight text-black w-[calc((100vw-1.5rem)/2)] sm:w-[calc((100vw-3rem)/3)] md:w-[calc((100vw-4.5rem)/4)] lg:w-[calc((100vw-7.5rem)/6)]"
-              style={{
-                padding: "0 1rem",
-              }}
+              className="shrink-0 flex items-center justify-center px-3 h-4 sm:h-5 lg:h-6"
             >
-              {logo.img ? (
-                <img
-                  src={logo.img}
-                  alt={logo.name}
-                  className="h-6 w-auto max-w-full object-contain sm:h-7 lg:h-8"
-                />
-              ) : (
-                <span className="text-sm sm:text-base lg:text-lg leading-snug">
-                  {logo.name}
-                </span>
-              )}
+              <img
+                src={logo.img}
+                alt={logo.name}
+                className="h-full w-auto object-contain"
+              />
             </div>
           ))}
         </div>

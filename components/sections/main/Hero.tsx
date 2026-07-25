@@ -70,7 +70,7 @@ export default function Hero() {
               // Ref gaps: H1 → subtitle 40px → 28px; subtitle → pills 47px → 32px.
               marginTop: "1.75rem",
               marginBottom: "2rem",
-              fontSize: "clamp(1rem, 0.8664rem + 0.2155vw, 1.125rem)",
+              fontSize: "15px",
               lineHeight: 1.5,
             }}
           >
@@ -100,16 +100,15 @@ export default function Hero() {
                 <button
                   key={pillar.label}
                   type="button"
-                  onMouseEnter={() => setActive(i)}
                   onClick={() => setActive(i)}
-                  className={`inline-flex items-center gap-2 h-8 rounded-full px-3.5 text-sm font-normal transition-colors duration-200 ${
+                  className={`inline-flex items-center gap-2 h-8 rounded-full px-3.5 text-sm cursor-pointer transition-colors duration-200 ${
                     isActive
-                      ? "bg-pale-blue text-deep-blue"
-                      : "bg-[#f2f3f5] text-slate hover:bg-pale-blue/60"
+                      ? "bg-[#ab0549]/10 text-[#ab0549] font-medium"
+                      : "bg-[#f2f3f5] text-slate font-normal hover:bg-[#ab0549]/10"
                   }`}
                 >
                   {isActive && (
-                    <span className="flex items-center justify-center w-4 h-4 rounded-full bg-deep-blue text-white">
+                    <span className="flex items-center justify-center w-4 h-4 rounded-full bg-[#ab0549] text-white">
                       <CheckIcon />
                     </span>
                   )}
@@ -123,7 +122,7 @@ export default function Hero() {
           <div className="mt-5">
             <Link
               href="#contact"
-              className="gap-2 bg-[#5c4fe0] hover:bg-[#4a3dc7] text-white text-[15px] font-semibold transition-colors duration-200"
+              className="relative overflow-hidden gap-2 text-white text-[15px] font-semibold"
               style={{
                 display: "flex",
                 width: "fit-content",
@@ -132,12 +131,19 @@ export default function Hero() {
                 // Ref button 64×~200px @1920 → ~43px tall here.
                 padding: "0.8125rem 1.75rem",
                 borderRadius: "10rem",
+                backgroundColor: "#ab0549",
+                color: "#ffffff",
+                backgroundImage:
+                  "radial-gradient(circle closest-side, rgba(254, 155, 11, 0.85) 0%, rgba(255, 129, 228, 0.85) 50%, rgba(97, 97, 255, 0) 100%)",
+                backgroundSize: "350px 350px",
+                backgroundRepeat: "no-repeat",
+                animation: "orbSwoosh 6s ease-in-out 2s infinite both",
               }}
             >
               Get Started <ArrowIcon />
             </Link>
             <p className="mt-3 text-xs text-slate">
-              No obligation • Free initial consultation
+              Confidential consultation . Custom to your business
             </p>
           </div>
         </div>
@@ -181,6 +187,23 @@ export default function Hero() {
           ))}
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes orbSwoosh {
+          0% {
+            background-position: -350px center;
+          }
+          25% {
+            background-position: calc(100% + 350px) center;
+          }
+          25.001% {
+            background-position: -350px center;
+          }
+          100% {
+            background-position: -350px center;
+          }
+        }
+      `}</style>
     </section>
   );
 }

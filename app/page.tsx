@@ -9,7 +9,9 @@ import TrackRecord from "@/components/sections/main/TrackRecord";
 import Leadership from "@/components/sections/main/Leadership";
 import GrowthOutlook from "@/components/sections/main/GrowthOutlook";
 import TestimonialsCTA from "@/components/sections/main/TestimonialsCTA";
-
+import AiHiring from "@/components/sections/main/aihiring";
+import SecurityControl from "@/components/sections/main/securitycontrol";
+import Trust from "@/components/sections/main/trust";
 export default function Home() {
   return (
     <>
@@ -18,10 +20,13 @@ export default function Home() {
         <Hero />
         <TrustBar />
         <WhoWeAre />
+        <AiHiring />
         <Capabilities />
         <HowWeWork />
         <TrackRecord />
         <Leadership />
+        <Trust />
+        <SecurityControl />
         <GrowthOutlook />
         <TestimonialsCTA />
       </main>

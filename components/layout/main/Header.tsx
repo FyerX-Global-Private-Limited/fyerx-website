@@ -534,20 +534,20 @@ export default function MainHeader() {
 
             {/* Marketing — icon-list mega-menu */}
             <div onMouseEnter={() => open("Marketing")}>
-              <button className={`flex items-center justify-center text-center gap-2 px-4 py-[9px] rounded-[8px]
+              <Link href="/marketing" onClick={closeAll} className={`flex items-center justify-center text-center gap-2 px-4 py-[9px] rounded-[8px]
                 cursor-pointer text-[0.875rem] font-light leading-[100%] transition-colors duration-100
                 ${openMenu === "Marketing" ? "bg-[#eeecfc] text-[#5c4fe0]" : "bg-transparent text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"}`}>
                 Marketing <ChevronDown open={openMenu === "Marketing"} />
-              </button>
+              </Link>
             </div>
 
             {/* Talent — column mega-menu */}
             <div onMouseEnter={() => open("Talent")}>
-              <button className={`flex items-center justify-center text-center gap-2 px-4 py-[9px] rounded-[8px]
+              <Link href="/talent" onClick={closeAll} className={`flex items-center justify-center text-center gap-2 px-4 py-[9px] rounded-[8px]
                 cursor-pointer text-[0.875rem] font-light leading-[100%] transition-colors duration-100
                 ${openMenu === "Talent" ? "bg-[#eeecfc] text-[#5c4fe0]" : "bg-transparent text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"}`}>
                 Talent <ChevronDown open={openMenu === "Talent"} />
-              </button>
+              </Link>
             </div>
 
             {/* Plain links */}

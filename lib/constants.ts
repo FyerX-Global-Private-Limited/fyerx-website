@@ -10,7 +10,7 @@ export const mainNav: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Marketing", href: "/marketing" },
-  { label: "Consulting", href: "/consulting" },
+  { label: "Talent", href: "/talent" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -21,9 +21,9 @@ export const marketingNav: NavItem[] = [
   { label: "Contact", href: "/contact" },
 ];
 
-export const consultingNav: NavItem[] = [
-  { label: "Home", href: "/consulting" },
-  { label: "Individual", href: "/consulting/individual" },
-  { label: "Book a Session", href: "/consulting/book-session" },
+export const talentNav: NavItem[] = [
+  { label: "Home", href: "/talent" },
+  { label: "Individual", href: "/talent/individual" },
+  { label: "Book a Session", href: "/talent/book-session" },
   { label: "Contact", href: "/contact" },
 ];

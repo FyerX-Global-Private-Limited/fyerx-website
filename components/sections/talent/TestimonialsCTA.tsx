@@ -99,12 +99,12 @@ export default function TestimonialsCTA() {
           {/* ------------------------------ Left column ------------------------------ */}
           <div className="flex min-w-0 flex-1 flex-col">
             <h2 className="max-w-[470px] mt-0 mb-0 text-[43px] font-medium leading-[1.3] tracking-[-0.05rem] text-[#181b34]">
-              Ready to see what FyerX can do for your business?
+              Ready to build a stronger team?
             </h2>
 
             <p className="mt-6 max-w-[400px] text-[18px] font-light leading-[140%] text-[#181b34]">
-              Share your goals with our team to explore the right approach and
-              pricing for your business.
+              Request a callback from our team to talk through the roles
+              you're looking to fill.
             </p>
 
             {/* Spacer pushes logos + testimonial to the bottom of the column */}
@@ -162,7 +162,7 @@ export default function TestimonialsCTA() {
 
             <div className="w-full rounded-[16px] bg-white px-6 py-7 shadow-[0px_6px_20px_rgba(29,37,45,0.05)] sm:px-9">
               <h3 className="text-center text-[16px] font-semibold text-[#181b34]">
-                Contact our team
+                Contact our talent team
               </h3>
 
               <form
@@ -267,18 +267,22 @@ export default function TestimonialsCTA() {
 
                 <div className="relative">
                   <select
-                    name="explore"
+                    name="rolesToFill"
                     required
                     defaultValue=""
                     className={selectBase}
                   >
                     <option value="" disabled>
-                      What would you like to explore?*
+                      What roles are you looking to fill?*
                     </option>
-                    <option value="work-management">Work management</option>
-                    <option value="crm">CRM</option>
-                    <option value="dev">Software development</option>
-                    <option value="service">Service management</option>
+                    <option value="contract-staffing">Contract Staffing</option>
+                    <option value="rpo">RPO</option>
+                    <option value="permanent-executive">
+                      Permanent Hiring &amp; Executive Search
+                    </option>
+                    <option value="it-tech-talent">IT &amp; Tech Talent</option>
+                    <option value="hr-advisory">HR Advisory</option>
+                    <option value="global-staffing">Global Staffing</option>
                     <option value="other">Other</option>
                   </select>
                   <Caret />
@@ -286,13 +290,13 @@ export default function TestimonialsCTA() {
 
                 <textarea
                   name="message"
-                  placeholder="Tell us more about your business and what you'd like support with"
+                  placeholder="Tell us more about your hiring needs"
                   className="h-[88px] w-full resize-none rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 py-2.5 text-[13px] leading-[1.5] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]"
                 />
 
                 <button
                   type="submit"
-                  className="mx-auto mt-3 h-10 w-24 rounded-full bg-[#6c6cff] text-[14px] font-normal text-white transition-colors duration-150 hover:bg-[#5b5bd6]"
+                  className="mx-auto mt-3 h-10 w-24 rounded-full bg-[#0B2E59] text-[14px] font-normal text-white transition-colors duration-150 hover:bg-[#092547]"
                 >
                   Submit
                 </button>

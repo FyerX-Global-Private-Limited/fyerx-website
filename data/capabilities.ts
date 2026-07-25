@@ -31,7 +31,7 @@ export const capabilities: Capability[] = [
     description:
       "Recruitment and staffing solutions that connect businesses with professionals suited to their specific needs.",
     icon: "people",
-    href: "/consulting",
+    href: "/talent",
   },
   {
     slug: "technology",
