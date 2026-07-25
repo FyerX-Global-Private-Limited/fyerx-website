@@ -194,7 +194,7 @@ const servicesCategories: MenuCategory[] = [
 const simpleLinks = [
   { label: "Our Work", href: "/marketing/case-studies" },
   { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
+  { label: "Contact", href: "/contact?form=marketing" },
 ];
 
 // ── Services mega-menu — left = clickable categories (avatar + label), 2 per
