@@ -102,6 +102,23 @@ function ChevronDownIcon() {
   );
 }
 
+function ChevronRightIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="9 6 15 12 9 18" />
+    </svg>
+  );
+}
+
+function ArrowLeftIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <line x1="19" y1="12" x2="5" y2="12" />
+      <polyline points="12 19 5 12 12 5" />
+    </svg>
+  );
+}
+
 function ArrowRightIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -124,6 +141,7 @@ type FormConfig = {
   badgeLabel: string;
   tint: string;
   accent: string;
+  image: { src: string; alt: string };
   subheading: string;
   helpLabel: string;
   helpOptions: string[];
@@ -140,6 +158,7 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     badgeLabel: "Marketing Enquiry",
     tint: "#DCEAFB",
     accent: "#2E63B8",
+    image: { src: "/g1.avif", alt: "FyerX marketing team at work" },
     subheading:
       "Let's explore how we can build your pipeline through campaigns, SEO, content, or brand strategy.",
     helpLabel: "What are you looking for help with?",
@@ -169,6 +188,7 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     badgeLabel: "Talent Enquiry",
     tint: "#FBE2DE",
     accent: "#D6543A",
+    image: { src: "/g2.avif", alt: "FyerX talent team at work" },
     subheading:
       "Let's explore how we can build your hiring pipeline through staffing, RPO, or executive search.",
     helpLabel: "What are you looking for help with?",
@@ -191,6 +211,7 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     badgeLabel: "Technology Enquiry",
     tint: "#FCF0D6",
     accent: "#B7791F",
+    image: { src: "/g3.avif", alt: "FyerX technology team at work" },
     subheading:
       "Let's explore how we can build or support the websites and tools your business runs on.",
     helpLabel: "What are you looking for help with?",
@@ -210,6 +231,7 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     badgeLabel: "Career Enquiry",
     tint: "#DFF4EC",
     accent: "#0E8A7D",
+    image: { src: "/leadership.avif", alt: "FyerX leadership team" },
     subheading:
       "Let's explore roles at FyerX or through our hiring network, based on your experience and interests.",
     helpLabel: "Which team are you interested in?",
@@ -244,25 +266,6 @@ function Field({
 }
 
 /* ============================================================= */
-/* Fixed visual — stays constant regardless of which enquiry tab  */
-/* is active.                                                     */
-/* ============================================================= */
-
-function ContactVisual() {
-  return (
-    <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl">
-      <Image
-        src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww"
-        alt="A FyerX team member ready to help with your enquiry"
-        fill
-        sizes="(min-width: 1024px) 480px, 100vw"
-        className="object-cover"
-      />
-    </div>
-  );
-}
-
-/* ============================================================= */
 /* Hero                                                           */
 /* ============================================================= */
 
@@ -292,34 +295,117 @@ function HeroSection() {
 }
 
 /* ============================================================= */
-/* Form + switcher card                                           */
+/* Hub — the default landing view. One big clickable card per     */
+/* enquiry type (unmistakably clickable), plus a photo grid.      */
 /* ============================================================= */
 
-function ContactFormSection({ initial }: { initial: FormKey }) {
-  const [active, setActive] = useState<FormKey>(initial);
+function ContactHub({ onSelect }: { onSelect: (key: FormKey) => void }) {
+  return (
+    <section className="w-full bg-white px-6 py-10 sm:py-14">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 rounded-[28px] bg-[#F3F1FC] p-6 sm:p-10 lg:grid-cols-2 lg:gap-10">
+        {/* Left — heading + category cards */}
+        <div>
+          <h2 className="text-3xl font-bold tracking-tight text-[#181b34] sm:text-4xl">
+            Get in Touch
+          </h2>
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-[#3d4a5c]">
+            Tell us who you are, and we&rsquo;ll route you to the right team.
+          </p>
+
+          <div className="mt-7 flex flex-col gap-4">
+            {FORM_ORDER.map((key) => {
+              const cfg = FORM_CONFIG[key];
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => onSelect(key)}
+                  className="group flex cursor-pointer items-center gap-4 rounded-2xl p-5 text-left transition-transform duration-150 hover:-translate-y-0.5"
+                  style={{ background: cfg.tint }}
+                >
+                  <span
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm"
+                    style={{ color: cfg.accent }}
+                  >
+                    {cfg.icon}
+                  </span>
+                  <span className="flex-1">
+                    <span className="block text-base font-semibold text-[#181b34]">
+                      {cfg.badgeLabel}
+                    </span>
+                    <span className="mt-1 block text-sm leading-relaxed text-[#3d4a5c]">
+                      {cfg.subheading}
+                    </span>
+                  </span>
+                  <span
+                    className="shrink-0 transition-transform duration-150 group-hover:translate-x-1"
+                    style={{ color: cfg.accent }}
+                  >
+                    <ChevronRightIcon />
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Right — 2x2 photo grid, one image per enquiry type */}
+        <div className="grid grid-cols-2 gap-4">
+          {FORM_ORDER.map((key) => {
+            const img = FORM_CONFIG[key].image;
+            return (
+              <div key={key} className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  sizes="(min-width: 1024px) 280px, 45vw"
+                  className="object-cover"
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================= */
+/* Form — shown once an enquiry type is selected from the hub.    */
+/* ============================================================= */
+
+function ContactForm({ config, onBack }: { config: FormConfig; onBack: () => void }) {
   const [selected, setSelected] = useState<string[]>([]);
-  const config = FORM_CONFIG[active];
-  const otherKeys = FORM_ORDER.filter((key) => key !== active);
 
   const toggleOption = (opt: string) =>
     setSelected((prev) =>
       prev.includes(opt) ? prev.filter((o) => o !== opt) : [...prev, opt]
     );
 
-  const handleSwitch = (key: FormKey) => {
-    setActive(key);
-    setSelected([]);
-  };
-
   return (
     <section className="w-full bg-white px-6 py-10 sm:py-14">
       <div className="mx-auto grid max-w-6xl grid-cols-1 overflow-hidden rounded-[28px] border border-[#e6e9ef] shadow-[0_20px_60px_rgba(11,46,89,0.08)] lg:grid-cols-2">
-        {/* Left — form, always shows the active enquiry type */}
+        {/* Left — form */}
         <div className="p-6 sm:p-8">
-          <span className="inline-flex items-center gap-2 rounded-full bg-[#E8F1FB] px-3.5 py-1.5 text-xs font-semibold text-[#0B2E59]">
-            {config.icon}
-            {config.badgeLabel}
-          </span>
+          <div className="flex items-center justify-between">
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex cursor-pointer items-center gap-2 text-sm font-medium text-[#3d4a5c] transition-colors hover:text-[#181b34]"
+            >
+              <ArrowLeftIcon />
+              Back
+            </button>
+
+            <span
+              className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold"
+              style={{ background: config.tint, color: config.accent }}
+            >
+              {config.icon}
+              {config.badgeLabel}
+            </span>
+          </div>
 
           <p className="mt-3 max-w-md text-sm leading-relaxed text-[#3d4a5c]">
             {config.subheading}
@@ -382,7 +468,7 @@ function ContactFormSection({ initial }: { initial: FormKey }) {
                       type="button"
                       onClick={() => toggleOption(opt)}
                       aria-pressed={isSelected}
-                      className="rounded-full border px-3.5 py-2 text-xs font-medium transition-colors"
+                      className="cursor-pointer rounded-full border px-3.5 py-2 text-xs font-medium transition-colors"
                       style={
                         isSelected
                           ? { background: "#0B2E59", borderColor: "#0B2E59", color: "#fff" }
@@ -415,7 +501,7 @@ function ContactFormSection({ initial }: { initial: FormKey }) {
 
             <button
               type="submit"
-              className="mt-2 inline-flex w-fit items-center gap-2 rounded-full bg-[#0B2E59] px-7 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              className="mt-2 inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-[#0B2E59] px-7 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
             >
               {config.submitLabel}
               <ArrowRightIcon />
@@ -423,46 +509,35 @@ function ContactFormSection({ initial }: { initial: FormKey }) {
           </form>
         </div>
 
-        {/* Right — fixed visual on top, the other 3 enquiry types below.  */}
-        {/* Clicking one swaps the form on the left; the visual never     */}
-        {/* changes.                                                       */}
-        <div className="flex flex-col gap-4 bg-[#f7f9fc] p-6 sm:p-8">
-          <div className="flex flex-col gap-3">
-            {otherKeys.map((key) => {
-              const cfg = FORM_CONFIG[key];
-              return (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => handleSwitch(key)}
-                  className="group flex items-center gap-4 rounded-2xl p-4 text-left transition-transform hover:-translate-y-0.5"
-                  style={{ background: cfg.tint }}
-                >
-                  <span
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/70"
-                    style={{ color: cfg.accent }}
-                  >
-                    {cfg.icon}
-                  </span>
-                  <span className="flex-1 text-sm font-semibold text-[#181b34]">
-                    {cfg.tabLabel}
-                  </span>
-                  <span
-                    className="transition-transform group-hover:translate-x-1"
-                    style={{ color: cfg.accent }}
-                  >
-                    <ArrowRightIcon />
-                  </span>
-                </button>
-              );
-            })}
+        {/* Right — photo matching whichever enquiry type is open */}
+        <div className="p-6 sm:p-8" style={{ background: config.tint }}>
+          <div className="relative h-full min-h-[420px] w-full overflow-hidden rounded-2xl">
+            <Image
+              src={config.image.src}
+              alt={config.image.alt}
+              fill
+              sizes="(min-width: 1024px) 480px, 100vw"
+              className="object-cover"
+            />
           </div>
-
-          <ContactVisual />
         </div>
       </div>
     </section>
   );
+}
+
+/* ============================================================= */
+/* Hub / form switcher                                            */
+/* ============================================================= */
+
+function ContactHubAndForm({ initial }: { initial: FormKey | null }) {
+  const [active, setActive] = useState<FormKey | null>(initial);
+
+  if (active === null) {
+    return <ContactHub onSelect={setActive} />;
+  }
+
+  return <ContactForm config={FORM_CONFIG[active]} onBack={() => setActive(null)} />;
 }
 
 /* ============================================================= */
@@ -551,15 +626,15 @@ function ContactDetailsMap() {
 export default function ContactPage() {
   const searchParams = useSearchParams();
 
-  const initial = useMemo<FormKey>(() => {
+  const initial = useMemo<FormKey | null>(() => {
     const param = searchParams.get("form");
-    return param && param in FORM_CONFIG ? (param as FormKey) : "marketing";
+    return param && param in FORM_CONFIG ? (param as FormKey) : null;
   }, [searchParams]);
 
   return (
     <>
       <HeroSection />
-      <ContactFormSection initial={initial} />
+      <ContactHubAndForm initial={initial} />
       <ContactDetailsMap />
     </>
   );
