@@ -178,10 +178,6 @@ const Capabilities: React.FC = () => {
             <PrimaryCtaLink href="/contact" className="mt-6">
               Contact Us
             </PrimaryCtaLink>
-
-            <p className="mt-5 text-[11px] text-gray-500">
-              Availability may vary based on engagement scope
-            </p>
           </div>
 
           {/* Right — two staggered columns of cards */}

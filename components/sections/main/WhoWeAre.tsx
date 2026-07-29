@@ -13,6 +13,8 @@ interface UseCaseCard {
   href: string;
   image: string;
   imageAlt: string;
+  color: string;
+  textColor: string;
 }
 
 const CARDS: UseCaseCard[] = [
@@ -23,6 +25,8 @@ const CARDS: UseCaseCard[] = [
     href: "/marketing",
     image: "/g1.avif",
     imageAlt: "Marketing services screenshot",
+    color: "#FFC900",
+    textColor: "#111111",
   },
   {
     title: "Talent",
@@ -31,6 +35,8 @@ const CARDS: UseCaseCard[] = [
     href: "#",
     image: "/g2.avif",
     imageAlt: "Talent services screenshot",
+    color: "#11551C",
+    textColor: "#ffffff",
   },
   {
     title: "Technology",
@@ -39,6 +45,8 @@ const CARDS: UseCaseCard[] = [
     href: "#",
     image: "/g3.avif",
     imageAlt: "Technology services screenshot",
+    color: "#20287A",
+    textColor: "#ffffff",
   },
 ];
 
@@ -79,7 +87,8 @@ function CaseCard({ card }: { card: UseCaseCard }) {
 
       <a
         href={card.href}
-        className="mt-6 inline-flex h-[37px] w-full items-center justify-center gap-2 rounded-lg bg-black px-6 text-[15px] font-medium text-white transition-colors duration-200 hover:bg-gray-800"
+        style={{ backgroundColor: card.color, color: card.textColor }}
+        className="mt-6 inline-flex h-[37px] w-full items-center justify-center gap-2 rounded-lg px-6 text-[15px] font-medium transition-opacity duration-200 hover:opacity-90"
       >
         Get Started
         <ArrowIcon className="h-4 w-4" />
@@ -94,7 +103,7 @@ const WhoWeAre: React.FC = () => {
       <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <h2 className="text-center font-[family-name:var(--font-poppins)] text-[36px] font-medium tracking-[-0.02em] leading-[1.25]">
-          <span className="text-black">Integrated Capabilities,{" "}</span>
+          <span className="text-black">Integrated Capabilities, </span>
           <span
             style={{
               background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",

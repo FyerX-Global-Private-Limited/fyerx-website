@@ -164,7 +164,7 @@ export default function TrackRecord() {
               <span className="tr-check" aria-hidden="true">
                 {isOn && (
                   <svg viewBox="0 0 16 16" fill="none">
-                    <path d="M3.5 8.5l3 3 6-7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M3.5 8.5l3 3 6-7" stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 )}
               </span>
@@ -184,7 +184,7 @@ export default function TrackRecord() {
       </div>
 
       {/* ---------- CTA ---------- */}
-      <PrimaryCtaLink href="/contact">Get Started</PrimaryCtaLink>
+      <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Get Started</PrimaryCtaLink>
 
       <p className="tr-note">Free initial consultation, no commitment required</p>
 
@@ -292,8 +292,8 @@ const css = `
     box-shadow:0 4px 14px rgba(17,17,17,0.06);
   }
   .tr-hero .tr-card.selected{
-    border-color:var(--blue);
-    box-shadow:0 0 0 1px var(--blue);
+    border-color:#FFC900;
+    box-shadow:0 0 0 1px #FFC900;
   }
   .tr-hero .tr-check{
     position:absolute;
@@ -310,8 +310,8 @@ const css = `
     transition:background-color .2s ease,border-color .2s ease;
   }
   .tr-hero .tr-card.selected .tr-check{
-    background:var(--blue);
-    border-color:var(--blue);
+    background:#FFC900;
+    border-color:#FFC900;
   }
   .tr-hero .tr-check svg{width:12px;height:12px;}
   .tr-hero .tr-icon{

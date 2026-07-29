@@ -166,10 +166,7 @@ export default function FaqSection() {
           flex-direction: column;
         }
         .faq__item {
-          border-top: 1px solid #dcdce0;
-        }
-        .faq__item:last-child {
-          border-bottom: 1px solid #dcdce0;
+          margin-top: 10px;
         }
         .faq__question {
           width: 100%;
@@ -177,11 +174,12 @@ export default function FaqSection() {
           align-items: center;
           justify-content: space-between;
           gap: 24px;
-          background: none;
+          background: #FFC900;
           border: none;
+          border-radius: 12px;
           cursor: pointer;
           text-align: left;
-          padding: 24px 4px;
+          padding: 20px 20px;
           font-family: inherit;
         }
         .faq__question-text {

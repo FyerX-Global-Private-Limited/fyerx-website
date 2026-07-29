@@ -3,7 +3,7 @@
 import React from 'react';
 
 /**
- * "Designed for security and control" section — single-file Next.js + React.
+ * "Built for businesses moving forward" section — single-file Next.js + React.
  * Drop this in as app/page.tsx (App Router) or pages/index.tsx (Pages Router),
  * or import <SecurityControl /> anywhere.
  * Fully self-contained: no Tailwind, no icon library, no extra dependencies.
@@ -18,24 +18,24 @@ type Card = {
 
 const CARDS: Card[] = [
   {
-    icon: <ComplianceBadges />,
-    title: 'One business brief',
-    body: 'Start with one clear requirement, not separate conversations across multiple external partners.',
+    icon: <GrowthPathIcon />,
+    title: 'Growth initiatives',
+    body: 'From new-market plans to demand creation, we help turn commercial priorities into focused action.',
   },
   {
-    icon: <LockIcon />,
-    title: 'Shared context',
-    body: 'Your priorities and decisions stay connected as work moves between teams and requirements.',
+    icon: <PuzzleGapIcon />,
+    title: 'Capability gaps',
+    body: 'When internal capacity falls short, bring in the expertise needed to keep work progressing.',
   },
   {
-    icon: <CursorClickIcon />,
-    title: 'Flexible capability access',
-    body: 'Add the right capability as needs change, without restarting the relationship each time.',
+    icon: <ConnectedArrowsIcon />,
+    title: 'Business change',
+    body: 'New systems, new teams, or new direction require support that works with the wider business.',
   },
   {
-    icon: <CubeIcon />,
-    title: 'Continuity in delivery',
-    body: 'Keep work moving with context and accountability carried from first brief to final outcome.',
+    icon: <ForwardArrowIcon />,
+    title: 'Execution at pace',
+    body: 'Move from decision to delivery with a team built to take responsibility for the work.',
   },
 ];
 
@@ -43,9 +43,8 @@ export default function SecurityControl() {
   return (
     <section className="sc">
       <h2 className="sc__heading">
-        When the work matters,
+        Built for businesses
         <br />
-        the{" "}
         <span
           style={{
             background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
@@ -55,7 +54,7 @@ export default function SecurityControl() {
             color: "transparent",
           }}
         >
-          partner matters
+          moving forward
         </span>
       </h2>
 
@@ -179,123 +178,46 @@ export default function SecurityControl() {
 /* Card icons (inline SVG)                                       */
 /* ============================================================= */
 
-function LockIcon() {
+function GrowthPathIcon() {
+  // Upward path — an ascending line ending in an arrow, for "Growth initiatives"
   return (
     <svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="24" y="44" width="48" height="38" rx="8" />
-      <path d="M34 44v-8a14 14 0 0 1 28 0v8" />
+      <path d="M18 68 L36 50 L50 62 L74 34" />
+      <path d="M58 34 H74 V50" />
     </svg>
   );
 }
 
-function CursorClickIcon() {
+function PuzzleGapIcon() {
+  // Missing puzzle piece — a solid piece and a dashed, separated piece, for "Capability gaps"
   return (
     <svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      {/* radiating arcs */}
-      <path d="M44 40a16 16 0 0 1 16 16" />
-      <path d="M37 33a26 26 0 0 1 26 26" />
-      {/* cursor pointer */}
-      <path d="M46 46 46 76 53.5 68.5 59 80 64 77.5 58.5 66.5 69 66.5 Z" fill="#fff" />
+      <path d="M14 28 H40 V38 A6 6 0 0 1 40 50 V60 H14 Z" />
+      <path d="M82 28 H56 V38 A6 6 0 0 0 56 50 V60 H82 Z" strokeDasharray="4 5" />
     </svg>
   );
 }
 
-function CubeIcon() {
+function ConnectedArrowsIcon() {
+  // Two curved arrows forming a loop, for "Business change"
   return (
-    <svg width="100" height="100" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M50 20 82 38v34L50 90 18 72V38z" />
-      <path d="M18 38l32 18 32-18" />
-      <path d="M50 56v34" />
+    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M16 36 A34 34 0 0 1 74 26" />
+      <path d="M60 18 H76 V34" />
+      <path d="M80 60 A34 34 0 0 1 22 70" />
+      <path d="M36 78 H20 V62" />
     </svg>
   );
 }
 
-/* ============================================================= */
-/* Compliance badges row (monochrome SVG approximations).        */
-/* Swap these for official badge assets when you have them.      */
-/* ============================================================= */
-
-function ComplianceBadges() {
+function ForwardArrowIcon() {
+  // Forward arrow with motion lines, for "Execution at pace"
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-      <GdprBadge />
-      <Soc2Badge />
-      <IsoBadge />
-      <HipaaBadge />
-    </div>
-  );
-}
-
-function round(n: number) {
-  return Math.round(n * 1000) / 1000;
-}
-
-function GdprBadge() {
-  const stars = Array.from({ length: 12 }).map((_, i) => {
-    const angle = (i / 12) * Math.PI * 2 - Math.PI / 2;
-    const r = 26;
-    return <Star key={i} cx={round(32 + r * Math.cos(angle))} cy={round(32 + r * Math.sin(angle))} />;
-  });
-  return (
-    <span role="img" aria-label="GDPR compliant" style={{ display: 'inline-flex' }}>
-      <svg width="52" height="52" viewBox="0 0 64 64" fill="#111">
-        {stars}
-        <text x="32" y="36" textAnchor="middle" fontSize="12" fontWeight="700" fontFamily="Arial, sans-serif" fill="#111">GDPR</text>
-      </svg>
-    </span>
-  );
-}
-
-function Star({ cx, cy }: { cx: number; cy: number }) {
-  const pts: string[] = [];
-  for (let i = 0; i < 10; i++) {
-    const rad = i % 2 === 0 ? 2.6 : 1.1;
-    const a = (i / 10) * Math.PI * 2 - Math.PI / 2;
-    pts.push(`${round(cx + rad * Math.cos(a))},${round(cy + rad * Math.sin(a))}`);
-  }
-  return <polygon points={pts.join(' ')} />;
-}
-
-function Soc2Badge() {
-  return (
-    <span role="img" aria-label="AICPA SOC 2" style={{ display: 'inline-flex' }}>
-      <svg width="52" height="52" viewBox="0 0 64 64" fill="none">
-        <circle cx="32" cy="32" r="30" stroke="#111" strokeWidth="2" />
-        <circle cx="32" cy="32" r="24" stroke="#111" strokeWidth="1" />
-        <text x="32" y="27" textAnchor="middle" fontSize="8" fontWeight="700" fontFamily="Arial, sans-serif" fill="#111">AICPA</text>
-        <text x="32" y="41" textAnchor="middle" fontSize="12" fontWeight="800" fontFamily="Arial, sans-serif" fill="#111">SOC 2</text>
-      </svg>
-    </span>
-  );
-}
-
-function IsoBadge() {
-  return (
-    <span role="img" aria-label="ISO 27001 certified" style={{ display: 'inline-flex' }}>
-      <svg width="52" height="52" viewBox="0 0 64 64" fill="none">
-        <circle cx="32" cy="32" r="30" stroke="#111" strokeWidth="2" />
-        <ellipse cx="32" cy="32" rx="12" ry="30" stroke="#111" strokeWidth="1" />
-        <line x1="2" y1="32" x2="62" y2="32" stroke="#111" strokeWidth="1" />
-        <rect x="18" y="26" width="28" height="12" rx="2" fill="#fff" stroke="#111" strokeWidth="0.5" />
-        <text x="32" y="31" textAnchor="middle" fontSize="7" fontWeight="800" fontFamily="Arial, sans-serif" fill="#111">ISO</text>
-        <text x="32" y="38" textAnchor="middle" fontSize="6.5" fontWeight="700" fontFamily="Arial, sans-serif" fill="#111">27001</text>
-      </svg>
-    </span>
-  );
-}
-
-function HipaaBadge() {
-  return (
-    <span role="img" aria-label="HIPAA compliant" style={{ display: 'inline-flex' }}>
-      <svg width="52" height="52" viewBox="0 0 64 64" fill="none">
-        <circle cx="32" cy="32" r="30" stroke="#111" strokeWidth="2" />
-        <line x1="32" y1="14" x2="32" y2="46" stroke="#111" strokeWidth="2" />
-        <circle cx="32" cy="13" r="2" fill="#111" />
-        <path d="M32 18 C24 24 24 32 32 38" stroke="#111" strokeWidth="1.6" fill="none" />
-        <path d="M32 18 C40 24 40 32 32 38" stroke="#111" strokeWidth="1.6" fill="none" />
-        <path d="M26 16 L38 16" stroke="#111" strokeWidth="1.6" />
-        <text x="32" y="56" textAnchor="middle" fontSize="9" fontWeight="800" fontFamily="Arial, sans-serif" fill="#111">HIPAA</text>
-      </svg>
-    </span>
+    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M14 40 H26" />
+      <path d="M14 56 H26" />
+      <path d="M34 48 H70" />
+      <path d="M58 34 L74 48 L58 62" />
+    </svg>
   );
 }

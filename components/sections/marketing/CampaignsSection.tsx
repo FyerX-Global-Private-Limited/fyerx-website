@@ -114,7 +114,7 @@ export default function CampaignsSection() {
               </p>
 
               <div className="mt-8 flex items-center gap-6">
-                <PrimaryCtaLink href="/contact">Get Started</PrimaryCtaLink>
+                <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Get Started</PrimaryCtaLink>
                 <a
                   href="#"
                   className="text-sm font-medium text-white underline underline-offset-4 hover:text-neutral-200"

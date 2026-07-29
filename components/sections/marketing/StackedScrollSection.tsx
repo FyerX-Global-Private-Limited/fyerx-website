@@ -175,7 +175,7 @@ export default function StackedScrollSection() {
               Why B2B Marketing Needs an AI-First Partner Now
             </h2>
           </div>
-          <PrimaryCtaLink href="/contact" className="flex-shrink-0">
+          <PrimaryCtaLink href="/contact" className="flex-shrink-0 text-black!" color="#FFC900">
             Get Started
           </PrimaryCtaLink>
         </div>
@@ -231,9 +231,7 @@ export default function StackedScrollSection() {
                       </p>
                       <button
                         type="button"
-                        className={`mt-6 inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-transform hover:scale-[1.03] active:scale-[0.98] ${
-                          isDark ? "bg-neutral-900 text-white" : "bg-white text-neutral-900"
-                        }`}
+                        className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-[#FFC900] px-5 py-2.5 text-sm font-semibold text-black transition-transform hover:scale-[1.03] active:scale-[0.98]"
                       >
                         {panel.cta}
                         <span aria-hidden="true">→</span>

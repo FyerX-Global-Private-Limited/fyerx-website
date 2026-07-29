@@ -3,12 +3,42 @@
 import { useState } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
-const pillars: { label: string; video: string }[] = [
-  { label: "Marketing", video: "/marketing-video.mp4" },
-  { label: "Talent", video: "/talent.mp4" },
+const pillars: {
+  label: string;
+  video: string;
+  activeClass: string;
+  hoverClass: string;
+  dotClass: string;
+}[] = [
+  {
+    label: "Marketing",
+    video: "/marketing-video.mp4",
+    activeClass: "bg-[#ab0549]/10 text-[#ab0549]",
+    hoverClass: "hover:bg-[#ab0549]/10",
+    dotClass: "bg-[#ab0549]",
+  },
+  {
+    label: "Talent",
+    video: "/talent.mp4",
+    activeClass: "bg-[#2563eb]/10 text-[#2563eb]",
+    hoverClass: "hover:bg-[#2563eb]/10",
+    dotClass: "bg-[#2563eb]",
+  },
   // No dedicated clips yet for Technology/Learning — reuse existing videos.
-  { label: "Technology", video: "/marketing-video.mp4" },
-  { label: "Learning", video: "/whowe.mp4" },
+  {
+    label: "Technology",
+    video: "/marketing-video.mp4",
+    activeClass: "bg-[#16a34a]/10 text-[#16a34a]",
+    hoverClass: "hover:bg-[#16a34a]/10",
+    dotClass: "bg-[#16a34a]",
+  },
+  {
+    label: "Learning",
+    video: "/whowe.mp4",
+    activeClass: "bg-[#7c3aed]/10 text-[#7c3aed]",
+    hoverClass: "hover:bg-[#7c3aed]/10",
+    dotClass: "bg-[#7c3aed]",
+  },
 ];
 
 function CheckIcon() {
@@ -108,12 +138,12 @@ export default function Hero() {
                   onClick={() => setActive(i)}
                   className={`inline-flex items-center gap-2 h-8 rounded-full px-3.5 text-sm cursor-pointer transition-colors duration-200 ${
                     isActive
-                      ? "bg-[#ab0549]/10 text-[#ab0549] font-medium"
-                      : "bg-[#f2f3f5] text-slate font-normal hover:bg-[#ab0549]/10"
+                      ? `${pillar.activeClass} font-medium`
+                      : `bg-[#f2f3f5] text-slate font-normal ${pillar.hoverClass}`
                   }`}
                 >
                   {isActive && (
-                    <span className="flex items-center justify-center w-4 h-4 rounded-full bg-[#ab0549] text-white">
+                    <span className={`flex items-center justify-center w-4 h-4 rounded-full text-white ${pillar.dotClass}`}>
                       <CheckIcon />
                     </span>
                   )}

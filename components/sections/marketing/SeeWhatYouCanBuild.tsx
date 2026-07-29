@@ -269,7 +269,7 @@ const CSS = `
 .swb-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
 .swb-tab{padding:9px 18px;border-radius:12px;font-size:15px;color:#4b5563;background:#f9fafb;border:1px solid #e5e7eb;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
 .swb-tab:hover{background:#f3f4f6}
-.swb-tab.swb-active{color:#111827;background:linear-gradient(90deg,#8b5cf6,#f59e0b);border:none;padding:1.5px}
+.swb-tab.swb-active{color:#111827;background:#FFC900;border:none;padding:1.5px}
 .swb-tab.swb-active .swb-inner{display:block;background:#fff;border-radius:11px;padding:9px 18px}
 .swb-track{display:flex;gap:22px;overflow-x:auto;overflow-y:hidden;padding:0 64px 10px;max-width:1190px;margin:0 auto;cursor:grab;user-select:none;scroll-snap-type:x proximity;-ms-overflow-style:none;scrollbar-width:none}
 .swb-track::-webkit-scrollbar{display:none}
@@ -334,7 +334,7 @@ const CSS = `
 .swb-desc{font-size:14px;font-weight:500;line-height:1.5;max-width:260px}
 .swb-card.swb-p .swb-desc{color:#6d28d9}
 .swb-card.swb-k .swb-desc{color:#be185d}
-.swb-startbtn{background:#111827;color:#fff;border:none;border-radius:99px;padding:13px 24px;font-size:14px;font-weight:600;white-space:nowrap;cursor:pointer;font-family:inherit}
-.swb-startbtn:hover{background:#1f2937}
+.swb-startbtn{background:#FFC900;color:#1a1a1a;border:none;border-radius:99px;padding:13px 24px;font-size:14px;font-weight:600;white-space:nowrap;cursor:pointer;font-family:inherit}
+.swb-startbtn:hover{background:#e6b400}
 @media (max-width:560px){.swb-card{flex-basis:86vw;max-width:86vw}.swb-h1{font-size:34px}}
 `;

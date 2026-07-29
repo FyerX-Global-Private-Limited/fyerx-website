@@ -97,7 +97,7 @@ export default function TestimonialsCTA() {
       className="bg-white px-4 pb-2 sm:px-8 lg:px-[6%]"
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
-      <div className="rounded-[24px] bg-[#d9d2f4] px-6 py-16 lg:py-[88px]">
+      <div className="rounded-[24px] bg-[#ab05491a] px-6 py-16 lg:py-[88px]">
         <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-16 lg:flex-row lg:items-stretch lg:justify-between lg:gap-[120px]">
           {/* ------------------------------ Left column ------------------------------ */}
           <div className="flex min-w-0 flex-1 flex-col">

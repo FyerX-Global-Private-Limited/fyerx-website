@@ -292,7 +292,7 @@ export default function TestimonialsCTA() {
 
                 <button
                   type="submit"
-                  className="mx-auto mt-3 h-10 w-24 rounded-full bg-[#6c6cff] text-[14px] font-normal text-white transition-colors duration-150 hover:bg-[#5b5bd6]"
+                  className="mx-auto mt-3 h-10 w-24 rounded-full bg-[#FFC900] text-[14px] font-normal text-black transition-colors duration-150 hover:bg-[#e6b400]"
                 >
                   Submit
                 </button>

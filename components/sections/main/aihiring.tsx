@@ -181,19 +181,23 @@ export default function AiHiring() {
         }
 
         .cg__iconBox--red {
-          background: #fbe3e3;
+          background: transparent;
+          border: 1.5px solid #d8534a;
           color: #d8534a;
         }
         .cg__iconBox--purple {
-          background: #ece7fc;
+          background: transparent;
+          border: 1.5px solid #6d5efc;
           color: #6d5efc;
         }
         .cg__iconBox--yellow {
-          background: #fbf1d6;
+          background: transparent;
+          border: 1.5px solid #d1a12e;
           color: #d1a12e;
         }
         .cg__iconBox--green {
-          background: #e1f5e7;
+          background: transparent;
+          border: 1.5px solid #2fa360;
           color: #2fa360;
         }
 

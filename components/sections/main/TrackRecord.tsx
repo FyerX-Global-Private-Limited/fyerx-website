@@ -34,57 +34,58 @@ const I = ({ children }: { children: ReactNode }) => (
 );
 
 const ICONS: Record<string, ReactNode> = {
-  briefcase: (
+  growth: (
     <I>
-      <rect x="8" y="16" width="32" height="22" rx="3" />
-      <path d="M18 16v-3a3 3 0 013-3h6a3 3 0 013 3v3" />
-      <path d="M8 26h13m6 0h13" />
-      <rect x="21" y="23" width="6" height="6" rx="1.5" />
+      <path d="M6 40h36" />
+      <path d="M10 32l8-10 7 6 13-16" />
+      <path d="M30 6h8v8" />
     </I>
   ),
-  realestate: (
-    <I>
-      <path d="M10 38V20l9-7 9 7v18" />
-      <path d="M28 38V14h10v24" />
-      <path d="M6 38h36" />
-      <path d="M15 26h2m5 0h2M15 32h2m5 0h2M32 20h2m-2 6h2m-2 6h2" />
-    </I>
-  ),
-  software: (
-    <I>
-      <rect x="8" y="10" width="32" height="22" rx="3" />
-      <path d="M8 26h32" />
-      <path d="M20 38h8m-4-6v6" />
-      <path d="M15 18l4 3-4 3m8 0h6" />
-    </I>
-  ),
-  media: (
-    <I>
-      <path d="M10 22v8a2 2 0 002 2h3" />
-      <path d="M15 20l16-8v24l-16-8z" />
-      <path d="M15 20v12" />
-      <path d="M36 18c2 1.5 2 6.5 0 8" />
-      <path d="M18 32l2 8h4l-2-8" />
-    </I>
-  ),
-  financial: (
+  target: (
     <I>
       <circle cx="24" cy="24" r="16" />
-      <path d="M29 18.5c-1-1.5-2.8-2.5-5-2.5-3 0-5 1.8-5 4s2 3.4 5 4 5 1.8 5 4-2 4-5 4c-2.2 0-4-1-5-2.5" />
-      <path d="M24 12.5v3.5m0 16v3.5" />
+      <circle cx="24" cy="24" r="9" />
+      <circle cx="24" cy="24" r="2" />
     </I>
   ),
-  healthcare: (
+  team: (
     <I>
-      <path d="M24 6l14 5v10c0 10-6 17-14 21C16 38 10 31 10 21V11l14-5z" />
-      <path d="M24 17v10m-5-5h10" />
+      <circle cx="16" cy="17" r="6" />
+      <path d="M4 39v-2a9 9 0 019-9h6a9 9 0 019 9v2" />
+      <circle cx="34" cy="15" r="5" />
+      <path d="M26 39v-1a8 8 0 018-8h1a8 8 0 018 8v1" />
     </I>
   ),
-  construction: (
+  digital: (
     <I>
-      <path d="M14 20a7 7 0 01-4-11l5 5 4-4-5-5a7 7 0 0111 4" />
-      <path d="M34 28a7 7 0 014 11l-5-5-4 4 5 5a7 7 0 01-11-4" />
-      <path d="M17 23l-7 7a3 3 0 004 4l7-7m4-4l7-7a3 3 0 00-4-4l-7 7" />
+      <rect x="10" y="10" width="28" height="18" rx="2" />
+      <path d="M4 34h40l-3 5H7l-3-5z" />
+      <path d="M18 19a6 6 0 0110-4m2 4a6 6 0 01-10 4" />
+      <path d="M28 13l2 2-2 2M20 25l-2-2 2-2" />
+    </I>
+  ),
+  megaphone: (
+    <I>
+      <path d="M6 20v8a2 2 0 002 2h2l18 8V10L10 18H8a2 2 0 00-2 2z" />
+      <path d="M28 16a9 9 0 010 16" />
+      <path d="M14 30l2 8h5l-2-8" />
+    </I>
+  ),
+  operations: (
+    <I>
+      <circle cx="10" cy="12" r="4" />
+      <circle cx="38" cy="12" r="4" />
+      <circle cx="24" cy="26" r="4" />
+      <circle cx="10" cy="40" r="4" />
+      <circle cx="38" cy="40" r="4" />
+      <path d="M13 15l8 8m14-11l-8 8M20 30l-8 7m22-7l8 7" />
+    </I>
+  ),
+  capability: (
+    <I>
+      <path d="M24 10L4 20l20 10 20-10-20-10z" />
+      <path d="M14 24v10c0 3 5 6 10 6s10-3 10-6V24" />
+      <path d="M40 20v12" />
     </I>
   ),
   other: (
@@ -106,14 +107,14 @@ interface Industry {
 }
 
 const INDUSTRIES: Industry[] = [
-  { icon: "briefcase", label: ["Professional", "services"] },
-  { icon: "realestate", label: ["Real", "estate"] },
-  { icon: "software", label: ["Software", "& IT"] },
-  { icon: "media", label: ["Media &", "advertising"] },
-  { icon: "financial", label: ["Financial", "services"] },
-  { icon: "healthcare", label: ["Healthcare", "services"] },
-  { icon: "construction", label: ["Construction"] },
-  { icon: "other", label: ["Other"] },
+  { icon: "growth", label: ["Revenue", "Growth"] },
+  { icon: "target", label: ["Market", "Expansion"] },
+  { icon: "team", label: ["Team", "Building"] },
+  { icon: "digital", label: ["Digital", "Transformation"] },
+  { icon: "megaphone", label: ["Brand", "Building"] },
+  { icon: "operations", label: ["Business", "Operations"] },
+  { icon: "capability", label: ["Capability", "Development"] },
+  { icon: "other", label: ["Something", "Else"] },
 ];
 
 export default function TrackRecord() {
@@ -134,7 +135,8 @@ export default function TrackRecord() {
     <section className="tr-hero">
       {/* ---------- Heading ---------- */}
       <h1 className="tr-title">
-        The only marketing first partner{" "}
+      Built around what
+your {" "}
         <span
           style={{
             background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
@@ -144,16 +146,16 @@ export default function TrackRecord() {
             color: "transparent",
           }}
         >
-          your team will love
+         business needs next
         </span>
       </h1>
 
       <p className="tr-sub">
-       Grow faster with a team that understands your industry and adapts to how you work.
+     Select the priority in front of you. We will help identify the right way forward.
       </p>
 
       {/* ---------- Industry picker ---------- */}
-      <p className="tr-question">What would you like to manage?</p>
+    
 
       <div className="tr-cards" role="group" aria-label="What would you like to manage?">
         {INDUSTRIES.map((ind, i) => {
@@ -237,7 +239,7 @@ const css = `
     line-height:1.5;
     font-weight:300;
     color:#333333;
-    margin:1.75rem auto .25rem;
+    margin:1.75rem auto 2rem;
   }
   /* ---------- Question ---------- */
   .tr-hero .tr-question{

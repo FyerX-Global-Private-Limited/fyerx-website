@@ -102,10 +102,10 @@ export default function MarketingHero() {
 
         {/* CTAs */}
         <div className="mt-6 flex w-full flex-col items-center justify-center gap-3 sm:mt-[30px] sm:w-auto sm:flex-row sm:gap-[22px]">
-          <PrimaryCtaLink href="/contact">Get Started</PrimaryCtaLink>
+          <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Get Started</PrimaryCtaLink>
           <button
             type="button"
-            className="inline-flex h-[44px] w-full items-center justify-center rounded-[10px] bg-[#e7f2fd] px-7 text-[16px] font-semibold text-[#077be8] transition-colors duration-150 hover:bg-[#d8eafc] sm:h-[47px] sm:w-auto sm:text-[18px]"
+            className="inline-flex h-[44px] w-full items-center justify-center rounded-[10px] bg-[#FFC900] px-7 text-[16px] font-semibold text-black transition-colors duration-150 hover:bg-[#e6b400] sm:h-[47px] sm:w-auto sm:text-[18px]"
           >
             Talk to Our Team
           </button>

@@ -188,8 +188,8 @@ export default function EnterpriseSection() {
         }
         .ent__cta {
           margin-top: 30px;
-          background: #000000;
-          color: #ffffff;
+          background: #FFC900;
+          color: #1a1a1a;
           border: none;
           border-radius: 999px;
           padding: 15px 30px;

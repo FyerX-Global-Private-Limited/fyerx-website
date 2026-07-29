@@ -351,7 +351,7 @@ export default function MarketingHeader() {
         </div>
 
         <div className="hidden md:block">
-          <PrimaryCtaLink href="/contact">
+          <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">
             Get Started
           </PrimaryCtaLink>
         </div>
@@ -402,7 +402,8 @@ export default function MarketingHeader() {
             <PrimaryCtaLink
               href="/contact"
               onClick={closeAll}
-              className="mt-3"
+              className="mt-3 text-black!"
+              color="#FFC900"
             >
               Get Started
             </PrimaryCtaLink>

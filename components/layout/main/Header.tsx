@@ -9,11 +9,11 @@ import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 function FyerxLogo() {
   return (
     <Image
-      src="/15.png"
+      src="/logo.webp"
       alt="FyerX"
-      width={3478}
-      height={1289}
-      className="h-10 w-auto object-contain select-none"
+      width={140}
+      height={32}
+      className="h-8 w-auto object-contain select-none"
       priority
     />
   );

@@ -168,7 +168,7 @@ export default function ServicesGrid() {
           </h2>
 
           <div className="mt-8 flex flex-col items-center">
-            <PrimaryCtaLink href="/contact">Get Started</PrimaryCtaLink>
+            <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Get Started</PrimaryCtaLink>
             <p className="mt-3 text-sm text-neutral-500">
               Get full access, no commitment required
             </p>
@@ -229,7 +229,7 @@ export default function ServicesGrid() {
                 type="button"
                 aria-label="Previous"
                 onClick={() => scrollByCard(-1)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 shadow-sm transition-colors hover:bg-neutral-50"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#FFC900] bg-[#FFC900] text-black shadow-sm transition-colors hover:bg-[#e6b400]"
               >
                 <ChevronIcon direction="left" className="h-4 w-4" />
               </button>
@@ -237,7 +237,7 @@ export default function ServicesGrid() {
                 type="button"
                 aria-label="Next"
                 onClick={() => scrollByCard(1)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 shadow-sm transition-colors hover:bg-neutral-50"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#FFC900] bg-[#FFC900] text-black shadow-sm transition-colors hover:bg-[#e6b400]"
               >
                 <ChevronIcon direction="right" className="h-4 w-4" />
               </button>

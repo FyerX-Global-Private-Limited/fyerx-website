@@ -345,16 +345,13 @@ export default function AIPlatformHero() {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`relative flex-shrink-0 whitespace-nowrap pb-1 text-[14px] transition-colors ${
+              className={`flex-shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-[14px] transition-colors ${
                 activeTab === tab
-                  ? "font-semibold text-black"
+                  ? "bg-[#FFC900] font-semibold text-black"
                   : "font-medium text-gray-400 hover:text-gray-600"
               }`}
             >
               {tab}
-              {activeTab === tab && (
-                <span className="absolute inset-x-0 -bottom-px h-[2px] rounded-full bg-black" />
-              )}
             </button>
           ))}
         </nav>
@@ -371,7 +368,7 @@ export default function AIPlatformHero() {
                 {tabContent.description}
               </p>
             </div>
-            <PrimaryCtaLink href="/contact" className="mt-6">
+            <PrimaryCtaLink href="/contact" className="mt-6 text-black!" color="#FFC900">
               Get Started
             </PrimaryCtaLink>
           </div>
