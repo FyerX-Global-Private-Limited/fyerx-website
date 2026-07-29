@@ -229,11 +229,11 @@ const css = `
   /* ---------- Heading ---------- */
   .tr-hero .tr-title{
     max-width:18ch;
-    font-size:3rem;
-    line-height:113%;
-    font-weight:400;
-    color:var(--text);
-    letter-spacing:-1px;
+    font-size:46px;
+    line-height:1.12;
+    font-weight:500;
+    color:var(--ink);
+    letter-spacing:-0.02em;
     margin:0 auto 40px;
   }
   .tr-hero .tr-gradient{

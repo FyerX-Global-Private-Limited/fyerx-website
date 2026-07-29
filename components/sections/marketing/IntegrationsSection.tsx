@@ -116,11 +116,11 @@ export default function IntegrationsSection() {
         }
         .integrations__title {
           margin: 0;
-          font-size: clamp(30px, 4.2vw, 52px);
-          line-height: 1.15;
-          font-weight: 700;
-          letter-spacing: -0.5px;
-          color: #111114;
+          font-size: 46px;
+          line-height: 1.12;
+          font-weight: 500;
+          letter-spacing: -0.02em;
+          color: var(--ink);
         }
         .integrations__subtitle {
           margin: 22px auto 0;

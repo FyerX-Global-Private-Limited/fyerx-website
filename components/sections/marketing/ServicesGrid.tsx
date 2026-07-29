@@ -162,7 +162,7 @@ export default function ServicesGrid() {
       <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
         {/* Heading */}
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl md:text-[2.75rem]">
+          <h2 className="text-[46px] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)]">
             Why B2B teams choose FyerX over a typical agency
             <SparkleIcon className="ml-2 inline-block h-7 w-7 align-middle sm:h-8 sm:w-8" />
           </h2>

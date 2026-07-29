@@ -26,7 +26,7 @@ const inter = Inter({
 const css = `
 .gro-section{background:#fff;width:100%;overflow:hidden;}
 .gro-container{margin:0 auto;width:100%;max-width:1776px;padding:64px 82px;}
-.gro-title{text-align:left;font-weight:400;color:#1E1F21;font-size:2rem;line-height:1.3;letter-spacing:.005em;margin:0;}
+.gro-title{text-align:left;font-weight:500;color:var(--ink);font-family:var(--font-poppins), Arial, sans-serif;font-size:36px;line-height:1.25;letter-spacing:-0.02em;margin:0;}
 .gro-grid{margin-top:53px;display:grid;grid-template-columns:1fr;gap:32px;}
 .gro-card{display:flex;flex-direction:column;border-radius:14px;border:1px solid #E7E8EA;background:#F7F7F8;overflow:hidden;text-decoration:none;}
 .gro-card-image{position:relative;width:100%;aspect-ratio:538/304;background:#fff;}
@@ -81,7 +81,20 @@ export default function GrowthOutlook() {
       <style dangerouslySetInnerHTML={{ __html: css }} />
 
       <div className="gro-container">
-        <h2 className="gro-title">Resources and insights to inspire</h2>
+        <h2 className="gro-title">
+          <span
+            style={{
+              background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              color: "transparent",
+            }}
+          >
+            Resources
+          </span>{" "}
+          and insights to inspire
+        </h2>
 
         <div className="gro-grid">
           {CARDS.map((card) => (

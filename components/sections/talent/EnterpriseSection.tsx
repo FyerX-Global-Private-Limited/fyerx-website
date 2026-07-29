@@ -137,11 +137,11 @@ export default function EnterpriseSection() {
         }
         .ent__title {
           margin: 0;
-          font-size: clamp(30px, 3.4vw, 42px);
+          font-size: 46px;
           line-height: 1.12;
-          font-weight: 700;
-          letter-spacing: -0.5px;
-          color: #111114;
+          font-weight: 500;
+          letter-spacing: -0.02em;
+          color: var(--ink);
         }
         .ent__subtitle {
           margin: 20px 0 0;

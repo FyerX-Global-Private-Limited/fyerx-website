@@ -19,35 +19,23 @@ type Card = {
 const CARDS: Card[] = [
   {
     icon: <ComplianceBadges />,
-    title: (
-      <>
-        Enterprise-grade
-        <br />
-        security
-      </>
-    ),
-    body: "Built on monday.com's trusted security standards so it's safe for sensitive work at scale.",
+    title: 'One business brief',
+    body: 'Start with one clear requirement, not separate conversations across multiple external partners.',
   },
   {
     icon: <LockIcon />,
-    title: 'Private by default',
-    body: 'Your data, context, and chats stay private. Nothing is shared unless you say so.',
+    title: 'Shared context',
+    body: 'Your priorities and decisions stay connected as work moves between teams and requirements.',
   },
   {
     icon: <CursorClickIcon />,
-    title: (
-      <>
-        Controlled by
-        <br />
-        you
-      </>
-    ),
-    body: 'Acts on your behalf, but with your approval. You review, approve, and stay in control of every step.',
+    title: 'Flexible capability access',
+    body: 'Add the right capability as needs change, without restarting the relationship each time.',
   },
   {
     icon: <CubeIcon />,
-    title: 'Full visibility',
-    body: 'Every action is clear and traceable. You always know what happened, and why.',
+    title: 'Continuity in delivery',
+    body: 'Keep work moving with context and accountability carried from first brief to final outcome.',
   },
 ];
 
@@ -55,9 +43,20 @@ export default function SecurityControl() {
   return (
     <section className="sc">
       <h2 className="sc__heading">
-        Designed for security and control,
+        When the work matters,
         <br />
-        so you can work with confidence
+        the{" "}
+        <span
+          style={{
+            background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
+            backgroundClip: "text",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            color: "transparent",
+          }}
+        >
+          partner matters
+        </span>
       </h2>
 
       <div className="sc__grid">
@@ -89,9 +88,11 @@ export default function SecurityControl() {
           margin-bottom: 55px;
           max-width: 29ch;
           text-align: center;
-          font-size: 42px;
-          line-height: 115%;
-          font-weight: 400;
+          font-family: var(--font-poppins), Arial, sans-serif;
+          font-size: 36px;
+          line-height: 1.25;
+          font-weight: 500;
+          letter-spacing: -0.02em;
           color: var(--ink);
         }
 

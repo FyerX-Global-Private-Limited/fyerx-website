@@ -39,9 +39,21 @@ export default function TrustBar() {
             marginBottom: "2.5rem",
             fontSize: "1.125rem",
             lineHeight: "1.4",
+            fontWeight: 500,
           }}
         >
-          Organisations That Have Partnered With Us
+          Organisations That Have{" "}
+          <span
+            style={{
+              background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              color: "transparent",
+            }}
+          >
+            Partnered With Us
+          </span>
         </h2>
       </div>
 
@@ -58,12 +70,12 @@ export default function TrustBar() {
           {[...logos, ...logos].map((logo, i) => (
             <div
               key={`${logo.name}-${i}`}
-              className="shrink-0 flex items-center justify-center px-3 h-4 sm:h-5 lg:h-6"
+              className="shrink-0 flex items-center justify-center px-3 h-6 w-[132px] sm:h-7 sm:w-[154px] lg:h-8 lg:w-[176px]"
             >
               <img
                 src={logo.img}
                 alt={logo.name}
-                className="h-full w-auto object-contain"
+                className="h-full w-full object-contain"
               />
             </div>
           ))}

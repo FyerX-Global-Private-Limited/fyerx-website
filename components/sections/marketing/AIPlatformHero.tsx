@@ -327,8 +327,14 @@ export default function AIPlatformHero() {
       <section className="mx-auto max-w-7xl px-6 py-8 sm:px-10 sm:py-10 lg:px-16">
         {/* ---------- Heading ---------- */}
         <h2
-          className="text-center tracking-tight text-black"
-          style={{ fontSize: "43px", fontWeight: 400, lineHeight: "55px" }}
+          className="text-center"
+          style={{
+            fontSize: "46px",
+            fontWeight: 500,
+            lineHeight: 1.12,
+            letterSpacing: "-0.02em",
+            color: "var(--ink)",
+          }}
         >
           One B2B marketing team, every capability
         </h2>

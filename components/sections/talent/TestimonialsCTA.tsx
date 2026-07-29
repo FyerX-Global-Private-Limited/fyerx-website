@@ -98,7 +98,7 @@ export default function TestimonialsCTA() {
         <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-16 lg:flex-row lg:items-stretch lg:justify-between lg:gap-[120px]">
           {/* ------------------------------ Left column ------------------------------ */}
           <div className="flex min-w-0 flex-1 flex-col">
-            <h2 className="max-w-[470px] mt-0 mb-0 text-[43px] font-medium leading-[1.3] tracking-[-0.05rem] text-[#181b34]">
+            <h2 className="max-w-[470px] mt-0 mb-0 text-[46px] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)]">
               Ready to build a stronger team?
             </h2>
 

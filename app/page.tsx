@@ -25,7 +25,7 @@ export default function Home() {
         <HowWeWork />
         <TrackRecord />
         <Leadership />
-        <Trust />
+        {/* <Trust /> */}
         <SecurityControl />
         <GrowthOutlook />
         <TestimonialsCTA />

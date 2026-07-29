@@ -18,7 +18,7 @@ const css = `
 .ldr-container{width:100%;max-width:80rem;margin-left:auto;margin-right:auto;padding:2.8rem 24px;}
 @media (min-width:640px){.ldr-container{padding:2.8rem 40px;}}
 @media (min-width:1024px){.ldr-container{padding:2.8rem 64px;}}
-.ldr-title{text-align:center;font-weight:400;color:#000;font-size:2.5rem;line-height:1.3;letter-spacing:-0.02em;margin:0;}
+.ldr-title{text-align:center;font-weight:500;color:var(--ink);font-size:46px;line-height:1.12;letter-spacing:-0.02em;margin:0;}
 .ldr-grid{margin-top:56px;display:grid;grid-template-columns:1fr;gap:0px;border-radius:24px;}
 .ldr-card{border-radius:24px;border:1px solid rgb(195,198,212);background:#fff;padding:34px 37px;display:flex;flex-direction:column;}
 .ldr-icon{display:block;flex:none;}

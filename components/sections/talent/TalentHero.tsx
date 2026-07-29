@@ -7,7 +7,7 @@ export default function TalentHero() {
       <span className="text-xs font-semibold uppercase tracking-widest text-green-700 bg-green-50 px-4 py-1.5 rounded-full">
         Fyerx Talent
       </span>
-      <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-zinc-900 max-w-3xl leading-tight">
+      <h1 className="text-[46px] font-medium tracking-[-0.02em] text-[var(--ink)] max-w-3xl leading-[1.12] md:text-6xl">
         Expert guidance for growth and clarity
       </h1>
       <p className="text-xl text-zinc-500 max-w-xl leading-8">

@@ -160,8 +160,19 @@ const Capabilities: React.FC = () => {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-[1fr_1.35fr] md:gap-20">
           {/* Left — sticky while the cards scroll */}
           <div className="self-start md:sticky md:top-24 md:pt-24">
-            <h2 className="mb-12 mt-0 max-w-[420px] text-[40px] font-extralight leading-[1.3] tracking-[-0.05rem] text-[#1F2733]">
-              Dedicated support <br /> for lasting success
+            <h2 className="mb-12 mt-0 max-w-[420px] font-[family-name:var(--font-poppins)] text-[36px] font-medium leading-[1.25] tracking-[-0.02em] text-[var(--ink)]">
+              Dedicated support <br /> for{" "}
+              <span
+                style={{
+                  background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  color: "transparent",
+                }}
+              >
+                lasting success
+              </span>
             </h2>
 
             <PrimaryCtaLink href="/contact" className="mt-6">

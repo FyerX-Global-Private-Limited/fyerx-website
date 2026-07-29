@@ -23,7 +23,7 @@ const poppins = Poppins({
 const css = `
 .ldr-section{background:#fff;width:100%;overflow:hidden;}
 .ldr-container{width:100%;max-width:80rem;margin-left:auto;margin-right:auto;padding:48px 16px;}
-.ldr-title{text-align:center;font-weight:400;color:#000;font-size:2.5rem;line-height:1.3;letter-spacing:-0.02em;margin:0;}
+.ldr-title{text-align:center;font-weight:500;color:var(--ink);font-family:var(--font-poppins), Arial, sans-serif;font-size:36px;line-height:1.25;letter-spacing:-0.02em;margin:0;}
 .ldr-grid{margin-top:56px;display:grid;grid-template-columns:1fr;gap:0px;border-radius:24px;}
 .ldr-card{border-radius:24px;border:1px solid rgb(195,198,212);background:#fff;padding:34px 37px;display:flex;flex-direction:column;}
 .ldr-icon{display:block;flex:none;}
@@ -112,7 +112,20 @@ export default function Leadership() {
       <style dangerouslySetInnerHTML={{ __html: css }} />
 
       <div className="ldr-container">
-        <h2 className="ldr-title">From first conversation to long-term partner</h2>
+        <h2 className="ldr-title">
+          From first conversation to{" "}
+          <span
+            style={{
+              background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              color: "transparent",
+            }}
+          >
+            long-term partner
+          </span>
+        </h2>
 
         <div className="ldr-grid">
           <FeatureCard

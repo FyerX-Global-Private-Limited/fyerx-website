@@ -10,28 +10,32 @@ import { PrimaryCtaLink } from '@/components/ui/PrimaryCta';
  * Styling uses Next.js's built-in styled-jsx.
  */
 
-type Feature = { icon: React.ReactNode; title: string; body: string };
+type Feature = { icon: React.ReactNode; title: string; body: string; tint: 'red' | 'purple' | 'yellow' | 'green' };
 
 const FEATURES: Feature[] = [
   {
     icon: <KeyIcon />,
-    title: "You decide what AI can and can't do",
-    body: 'Set clear guardrails for every action. Agents operate within your rules, so you stay in control.',
+    title: 'Strategic by design',
+    body: 'Every engagement begins with a clear understanding of the business objective, not a pre-set solution.',
+    tint: 'red',
   },
   {
     icon: <HistoryIcon />,
-    title: 'Full activity log',
-    body: 'Every decision is logged and traceable, so you always have answers when it matters.',
+    title: 'Disciplined execution',
+    body: 'Defined plans, clear ownership, and consistent follow-through keep work progressing without unnecessary friction.',
+    tint: 'purple',
   },
   {
     icon: <UserCheckIcon />,
-    title: 'Human in the loop, always',
-    body: 'Every candidate that moves forward is approved by your team. Agents handle the volume, you make the decisions.',
+    title: 'Partnership mindset',
+    body: 'We work as an extension of your team, bringing context, judgement, and continuity to every engagement.',
+    tint: 'yellow',
   },
   {
     icon: <ShieldIcon />,
-    title: 'Enterprise-grade security',
-    body: 'Every candidate, every conversation, fully in-house. No third-party exposure.',
+    title: 'Built for progress',
+    body: 'Our work is structured to create measurable movement today while supporting what the business needs next.',
+    tint: 'green',
   },
 ];
 
@@ -41,35 +45,40 @@ export default function AiHiring() {
       <div className="cg__inner">
         {/* Left column */}
         <div className="cg__left">
-          <p className="cg__eyebrow">Control &amp; governance</p>
+          <p className="cg__eyebrow">The FyerX standard</p>
 
           <h2 className="cg__heading">
-            Guardrails built for
+            <span
+              style={{
+                background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                color: "transparent",
+              }}
+            >
+              Built for work
+            </span>
             <br />
-            the stakes of hiring
+            that moves business forward
           </h2>
 
           <p className="cg__sub">
-            AI-driven speed. Human-led decisions. Built-in compliance.
+            Clear thinking, reliable execution, and a working relationship designed around your priorities.
           </p>
 
           <PrimaryCtaLink href="#" className="mt-10">
-            Get Started
+            Work with FyerX
           </PrimaryCtaLink>
 
-          <div className="cg__badges">
-            <GdprBadge />
-            <Soc2Badge />
-            <IsoBadge />
-            <HipaaBadge />
-          </div>
+          <p className="cg__trust">Strategy-led · Outcome-focused · Built to last</p>
         </div>
 
         {/* Right column: 2x2 feature grid */}
         <div className="cg__grid">
           {FEATURES.map((f) => (
             <article className="cg__card" key={f.title}>
-              <div className="cg__iconBox">{f.icon}</div>
+              <div className={`cg__iconBox cg__iconBox--${f.tint}`}>{f.icon}</div>
               <h3 className="cg__cardTitle">{f.title}</h3>
               <p className="cg__cardBody">{f.body}</p>
             </article>
@@ -118,8 +127,9 @@ export default function AiHiring() {
 
         .cg__heading {
           margin: 0;
-          font-size: 46px;
-          line-height: 1.12;
+          font-family: var(--font-poppins), Arial, sans-serif;
+          font-size: 36px;
+          line-height: 1.25;
           font-weight: 500;
           letter-spacing: -0.02em;
           color: var(--ink);
@@ -133,12 +143,11 @@ export default function AiHiring() {
           color: var(--muted);
         }
 
-        .cg__badges {
-          margin-top: 90px;
-          display: flex;
-          align-items: center;
-          gap: 26px;
-          flex-wrap: wrap;
+        .cg__trust {
+          margin: 20px 0 0;
+          font-size: 14px;
+          letter-spacing: 0.02em;
+          color: var(--muted);
         }
 
         /* ---------- Right column ---------- */
@@ -171,6 +180,23 @@ export default function AiHiring() {
           color: var(--ink);
         }
 
+        .cg__iconBox--red {
+          background: #fbe3e3;
+          color: #d8534a;
+        }
+        .cg__iconBox--purple {
+          background: #ece7fc;
+          color: #6d5efc;
+        }
+        .cg__iconBox--yellow {
+          background: #fbf1d6;
+          color: #d1a12e;
+        }
+        .cg__iconBox--green {
+          background: #e1f5e7;
+          color: #2fa360;
+        }
+
         .cg__cardTitle {
           margin: 30px 0 1.5rem;
           max-width: 23ch;
@@ -196,12 +222,6 @@ export default function AiHiring() {
           .cg__inner {
             grid-template-columns: 1fr;
             gap: 48px;
-          }
-          .cg__heading {
-            font-size: 40px;
-          }
-          .cg__badges {
-            margin-top: 40px;
           }
         }
 
@@ -262,81 +282,3 @@ function ShieldIcon() {
   );
 }
 
-/* ============================================================= */
-/* Compliance badges (monochrome SVG approximations).            */
-/* Swap these for official badge assets when you have them.      */
-/* ============================================================= */
-
-function round(n: number) {
-  return Math.round(n * 1000) / 1000;
-}
-
-function GdprBadge() {
-  const stars = Array.from({ length: 12 }).map((_, i) => {
-    const angle = (i / 12) * Math.PI * 2 - Math.PI / 2;
-    const r = 26;
-    return <Star key={i} cx={round(32 + r * Math.cos(angle))} cy={round(32 + r * Math.sin(angle))} />;
-  });
-  return (
-    <span role="img" aria-label="GDPR compliant" style={{ display: 'inline-flex' }}>
-      <svg width="58" height="58" viewBox="0 0 64 64" fill="#111">
-        {stars}
-        <text x="32" y="36" textAnchor="middle" fontSize="12" fontWeight="700" fontFamily="Arial, sans-serif" fill="#111">GDPR</text>
-      </svg>
-    </span>
-  );
-}
-
-function Star({ cx, cy }: { cx: number; cy: number }) {
-  const pts: string[] = [];
-  for (let i = 0; i < 10; i++) {
-    const rad = i % 2 === 0 ? 2.6 : 1.1;
-    const a = (i / 10) * Math.PI * 2 - Math.PI / 2;
-    pts.push(`${round(cx + rad * Math.cos(a))},${round(cy + rad * Math.sin(a))}`);
-  }
-  return <polygon points={pts.join(' ')} />
-}
-
-function Soc2Badge() {
-  return (
-    <span role="img" aria-label="AICPA SOC 2" style={{ display: 'inline-flex' }}>
-      <svg width="58" height="58" viewBox="0 0 64 64" fill="none">
-        <circle cx="32" cy="32" r="30" stroke="#111" strokeWidth="2" />
-        <circle cx="32" cy="32" r="24" stroke="#111" strokeWidth="1" />
-        <text x="32" y="27" textAnchor="middle" fontSize="8" fontWeight="700" fontFamily="Arial, sans-serif" fill="#111">AICPA</text>
-        <text x="32" y="41" textAnchor="middle" fontSize="12" fontWeight="800" fontFamily="Arial, sans-serif" fill="#111">SOC 2</text>
-      </svg>
-    </span>
-  );
-}
-
-function IsoBadge() {
-  return (
-    <span role="img" aria-label="ISO 27001 certified" style={{ display: 'inline-flex' }}>
-      <svg width="58" height="58" viewBox="0 0 64 64" fill="none">
-        <circle cx="32" cy="32" r="30" stroke="#111" strokeWidth="2" />
-        <ellipse cx="32" cy="32" rx="12" ry="30" stroke="#111" strokeWidth="1" />
-        <line x1="2" y1="32" x2="62" y2="32" stroke="#111" strokeWidth="1" />
-        <rect x="18" y="26" width="28" height="12" rx="2" fill="#fff" stroke="#111" strokeWidth="0.5" />
-        <text x="32" y="31" textAnchor="middle" fontSize="7" fontWeight="800" fontFamily="Arial, sans-serif" fill="#111">ISO</text>
-        <text x="32" y="38" textAnchor="middle" fontSize="6.5" fontWeight="700" fontFamily="Arial, sans-serif" fill="#111">27001</text>
-      </svg>
-    </span>
-  );
-}
-
-function HipaaBadge() {
-  return (
-    <span role="img" aria-label="HIPAA compliant" style={{ display: 'inline-flex' }}>
-      <svg width="58" height="58" viewBox="0 0 64 64" fill="none">
-        <circle cx="32" cy="32" r="30" stroke="#111" strokeWidth="2" />
-        <line x1="32" y1="14" x2="32" y2="46" stroke="#111" strokeWidth="2" />
-        <circle cx="32" cy="13" r="2" fill="#111" />
-        <path d="M32 18 C24 24 24 32 32 38" stroke="#111" strokeWidth="1.6" fill="none" />
-        <path d="M32 18 C40 24 40 32 32 38" stroke="#111" strokeWidth="1.6" fill="none" />
-        <path d="M26 16 L38 16" stroke="#111" strokeWidth="1.6" />
-        <text x="32" y="56" textAnchor="middle" fontSize="9" fontWeight="800" fontFamily="Arial, sans-serif" fill="#111">HIPAA</text>
-      </svg>
-    </span>
-  );
-}

@@ -72,13 +72,15 @@ export default function Trust() {
         }
 
         .trust__heading {
-          color: rgb(0, 0, 0);
+          color: var(--ink);
           width: auto;
           margin-top: 0px;
           margin-bottom: 0px;
-          font-size: 3rem;
-          font-weight: 400;
-          line-height: 1.2;
+          font-family: var(--font-poppins), Arial, sans-serif;
+          font-size: 36px;
+          font-weight: 500;
+          line-height: 1.25;
+          letter-spacing: -0.02em;
         }
 
         .trust__sub {
@@ -157,9 +159,6 @@ export default function Trust() {
         }
 
         @media (max-width: 900px) {
-          .trust__heading {
-            font-size: 42px;
-          }
           .trust__grid {
             grid-template-columns: repeat(2, 1fr);
             max-width: 560px;

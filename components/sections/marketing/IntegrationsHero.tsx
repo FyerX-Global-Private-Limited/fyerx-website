@@ -149,13 +149,15 @@ export default function IntegrationsHero() {
         </span>
 
         <h1
-          className="max-w-3xl tracking-tight text-gray-900"
+          className="max-w-3xl"
           style={{
             marginTop: 0,
             marginBottom: 0,
-            fontSize: "3rem",
-            lineHeight: 1.1,
-            fontWeight: 400,
+            fontSize: "46px",
+            lineHeight: 1.12,
+            fontWeight: 500,
+            letterSpacing: "-0.02em",
+            color: "var(--ink)",
           }}
         >
           Connect the tools you already use to work smarter

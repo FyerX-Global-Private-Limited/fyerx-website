@@ -101,8 +101,8 @@ export default function CampaignsSection() {
               </span>
 
               <h2
-                className="mt-8 font-bold leading-[1.1] tracking-tight text-white"
-                style={{ fontSize: "35px" }}
+                className="mt-8 font-medium text-white"
+                style={{ fontSize: "46px", lineHeight: 1.12, letterSpacing: "-0.02em" }}
               >
                 A marketing team that actually understands your business
               </h2>

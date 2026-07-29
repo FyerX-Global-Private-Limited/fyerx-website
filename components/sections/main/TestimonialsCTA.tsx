@@ -101,8 +101,19 @@ export default function TestimonialsCTA() {
         <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-16 lg:flex-row lg:items-stretch lg:justify-between lg:gap-[120px]">
           {/* ------------------------------ Left column ------------------------------ */}
           <div className="flex min-w-0 flex-1 flex-col">
-            <h2 className="max-w-[470px] mt-0 mb-0 text-[43px] font-medium leading-[1.3] tracking-[-0.05rem] text-[#181b34]">
-              Ready to see what FyerX can do for your business?
+            <h2 className="max-w-[470px] mt-0 mb-0 font-[family-name:var(--font-poppins)] text-[36px] font-medium leading-[1.25] tracking-[-0.02em] text-[var(--ink)]">
+              Ready to see what FyerX can do for{" "}
+              <span
+                style={{
+                  background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  color: "transparent",
+                }}
+              >
+                your business?
+              </span>
             </h2>
 
             <p className="mt-6 max-w-[400px] text-[18px] font-light leading-[140%] text-[#181b34]">

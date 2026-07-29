@@ -72,7 +72,7 @@ export default function MarketingHero() {
         </div>
 
         {/* Headline with rotating pill */}
-        <h1 className="mt-4 text-[32px] font-bold leading-[1.15] tracking-[-0.02em] text-[#191918] sm:mt-5 sm:text-[48px] sm:leading-[1.2] sm:tracking-[-0.03em] md:text-[64px] lg:mt-[20px] lg:text-[96px] lg:leading-[1.26] lg:tracking-[-0.04em]">
+        <h1 className="mt-4 text-[46px] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)] sm:mt-5 sm:text-[48px] sm:leading-[1.2] sm:tracking-[-0.03em] md:text-[64px] lg:mt-[20px] lg:text-[96px] lg:leading-[1.26] lg:tracking-[-0.04em]">
           Where the right talent
           <br />
           <span

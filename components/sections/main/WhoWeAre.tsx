@@ -93,8 +93,19 @@ const WhoWeAre: React.FC = () => {
     <section className="w-full bg-white py-16 md:py-20">
       <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <h2 className="bg-gradient-to-r from-black to-gray-300 bg-clip-text text-center text-4xl font-semibold tracking-tight text-transparent md:text-[52px] md:leading-[1.15]">
-          Use Case
+        <h2 className="text-center font-[family-name:var(--font-poppins)] text-[36px] font-medium tracking-[-0.02em] leading-[1.25]">
+          <span className="text-black">Integrated Capabilities,{" "}</span>
+          <span
+            style={{
+              background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              color: "transparent",
+            }}
+          >
+            Delivered by One Team
+          </span>
         </h2>
 
         {/* Subtitle */}

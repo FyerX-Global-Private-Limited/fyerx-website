@@ -101,8 +101,8 @@ export default function CampaignsSection() {
               </span>
 
               <h2
-                className="mt-8 font-bold leading-[1.1] tracking-tight text-white"
-                style={{ fontSize: "35px" }}
+                className="mt-8 font-medium leading-[1.12] tracking-[-0.02em] text-white"
+                style={{ fontSize: "46px" }}
               >
                 A hiring partner that actually understands your roles
               </h2>

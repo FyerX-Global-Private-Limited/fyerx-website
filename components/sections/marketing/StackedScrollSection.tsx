@@ -164,8 +164,13 @@ export default function StackedScrollSection() {
         <div className="flex flex-col gap-6 pt-12 sm:flex-row sm:items-start sm:justify-between sm:pt-16">
           <div className="max-w-xl">
             <h2
-              className="tracking-tight text-neutral-900"
-              style={{ fontSize: "43px", fontWeight: 400, lineHeight: "55px" }}
+              style={{
+                fontSize: "46px",
+                fontWeight: 500,
+                lineHeight: 1.12,
+                letterSpacing: "-0.02em",
+                color: "var(--ink)",
+              }}
             >
               Why B2B Marketing Needs an AI-First Partner Now
             </h2>

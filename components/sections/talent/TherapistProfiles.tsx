@@ -23,7 +23,7 @@ export default function TherapistProfiles() {
   return (
     <section className="py-24">
       <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-3xl font-bold tracking-tight text-center mb-14">
+        <h2 className="text-[46px] font-medium leading-[1.12] tracking-[-0.02em] text-center text-[var(--ink)] mb-14">
           Meet our talent
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">

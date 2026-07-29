@@ -49,10 +49,24 @@ export default function Hero() {
           }}
         >
           <h1
-            className="font-normal tracking-[-0.03em] text-black"
-            style={{ fontSize: "36px", lineHeight: 1.25 }}
+            className="tracking-[-0.03em] text-black"
+            style={{ fontSize: "36px", lineHeight: 1.25, fontWeight: 500 }}
           >
-            You focus on growth.<br />We handle execution.
+            You{" "}
+            <span
+              style={{
+                fontSize: "36px",
+                lineHeight: 1.25,
+                background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                color: "transparent",
+              }}
+            >
+              focus on growth.
+            </span>
+            <br />We handle execution.
           </h1>
 
           <p

@@ -56,7 +56,20 @@ export default function HowWeWork() {
 
   return (
     <section className="hww-hero">
-      <h1 className="hero-title">Support that moves with your business</h1>
+      <h1 className="hero-title">
+        Support that moves with{" "}
+        <span
+          style={{
+            background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
+            backgroundClip: "text",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            color: "transparent",
+          }}
+        >
+          your business
+        </span>
+      </h1>
 
       {/* ---------- Tab bar ---------- */}
       <div className="tabbar-wrap">
@@ -121,14 +134,15 @@ const css = `
     align-items:center;
     display:flex;
     flex-flow:column;
-    color:rgb(0, 0, 0);
+    color:var(--ink);
     width:auto;
     margin-top:0px;
     margin-bottom:40px;
-    letter-spacing:-0.03em;
-    font-size:3.5rem;
-    line-height:1.2;
-    font-weight:400;
+    letter-spacing:-0.02em;
+    font-family:var(--font-poppins), Arial, sans-serif;
+    font-size:36px;
+    line-height:1.25;
+    font-weight:500;
   }
   /* ---------- Tab bar ---------- */
   .hww-hero .tabbar-wrap{display:flex;justify-content:center;margin-bottom:56px;}
@@ -191,7 +205,6 @@ const css = `
   }
   @media (max-width:1024px){
     .hww-hero .panel{grid-template-columns:1fr;gap:40px;}
-    .hww-hero .hero-title{font-size:40px;}
     .hww-hero .tabbar{flex-wrap:wrap;justify-content:center;border-radius:24px;}
   }
 `;

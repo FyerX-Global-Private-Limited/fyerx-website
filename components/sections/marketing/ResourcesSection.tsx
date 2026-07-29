@@ -111,10 +111,11 @@ export default function ResourcesSection() {
         .res__heading {
           margin: 0;
           text-align: center;
-          font-size: clamp(28px, 3.4vw, 40px);
-          font-weight: 600;
-          letter-spacing: -0.5px;
-          color: #18181b;
+          font-size: 46px;
+          line-height: 1.12;
+          font-weight: 500;
+          letter-spacing: -0.02em;
+          color: var(--ink);
         }
         .res__subheading {
           margin: 12px 0 44px;

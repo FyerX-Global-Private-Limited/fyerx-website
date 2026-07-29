@@ -155,11 +155,11 @@ export default function FaqSection() {
         }
         .faq__heading {
           margin: 0;
-          font-size: 35px;
-          line-height: 1.3;
+          font-size: 46px;
+          line-height: 1.12;
           font-weight: 500;
-          letter-spacing: -0.5px;
-          color: #18181b;
+          letter-spacing: -0.02em;
+          color: var(--ink);
         }
         .faq__right {
           display: flex;

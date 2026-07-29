@@ -134,16 +134,22 @@ export default function TrackRecord() {
     <section className="tr-hero">
       {/* ---------- Heading ---------- */}
       <h1 className="tr-title">
-        The only <span className="tr-gradient">AI-first</span>{" "}
-        <span className="tr-blue">CRM</span>
-        <br />
-        your team will love
+        The only marketing first partner{" "}
+        <span
+          style={{
+            background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
+            backgroundClip: "text",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            color: "transparent",
+          }}
+        >
+          your team will love
+        </span>
       </h1>
 
       <p className="tr-sub">
-        Grow revenue faster with an intuitive CRM built on
-        <br />
-        code-free automations and intelligent workflows.
+       Grow faster with a team that understands your industry and adapts to how you work.
       </p>
 
       {/* ---------- Industry picker ---------- */}
@@ -208,12 +214,13 @@ const css = `
   .tr-hero *{margin:0;padding:0;box-sizing:border-box;}
   /* ---------- Heading ---------- */
   .tr-hero .tr-title{
-    max-width:18ch;
-    font-size:3rem;
-    line-height:113%;
-    font-weight:400;
-    color:var(--text);
-    letter-spacing:-1px;
+    max-width:22ch;
+    font-family:var(--font-poppins), Arial, sans-serif;
+    font-size:36px;
+    line-height:1.25;
+    font-weight:500;
+    color:var(--ink);
+    letter-spacing:-0.02em;
     margin:0 auto 40px;
   }
   .tr-hero .tr-gradient{

@@ -265,7 +265,7 @@ const CSS = `
 .swb-root{background:#fff;color:#111827;font-family:"Poppins",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
 .swb-root *{box-sizing:border-box}
 .swb-wrap{max-width:1142px;margin:0 auto;padding:40px 64px 0}
-.swb-h1{color:rgb(0,0,0);width:auto;margin-top:0;margin-bottom:0;font-size:3rem;font-weight:400;line-height:2.2}
+.swb-h1{color:var(--ink);width:auto;margin-top:0;margin-bottom:0;font-size:46px;font-weight:500;line-height:1.12;letter-spacing:-0.02em}
 .swb-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
 .swb-tab{padding:9px 18px;border-radius:12px;font-size:15px;color:#4b5563;background:#f9fafb;border:1px solid #e5e7eb;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
 .swb-tab:hover{background:#f3f4f6}
