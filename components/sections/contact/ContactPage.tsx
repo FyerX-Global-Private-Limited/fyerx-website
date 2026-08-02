@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type InputHTMLAttributes, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type FormEvent, type InputHTMLAttributes, type ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 
@@ -129,6 +129,17 @@ function ArrowRightIcon() {
 }
 
 /* ============================================================= */
+/* Brand colours — logo palette                                   */
+/* ============================================================= */
+
+const BRAND = {
+  crimson: "#730031",
+  blue: "#2A35A1",
+  green: "#003335",
+  yellow: "#FFC900",
+} as const;
+
+/* ============================================================= */
 /* Form field data                                                */
 /* ============================================================= */
 
@@ -141,10 +152,12 @@ type FormConfig = {
   badgeLabel: string;
   tint: string;
   accent: string;
+  onTint: string;
+  onTintMuted: string;
   image: { src: string; alt: string };
-  subheading: string;
-  helpLabel: string;
-  helpOptions: string[];
+  hubDescription: string;
+  helpLabel?: string;
+  helpOptions?: string[];
   budgetOptions?: string[];
   variant: "standard" | "job";
   submitLabel: string;
@@ -156,11 +169,13 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     icon: <MegaphoneIcon />,
     tabLabel: "Marketing",
     badgeLabel: "Marketing Enquiry",
-    tint: "#DCEAFB",
-    accent: "#2E63B8",
-    image: { src: "/g1.avif", alt: "FyerX marketing team at work" },
-    subheading:
-      "Let's explore how we can build your pipeline through campaigns, SEO, content, or brand strategy.",
+    tint: BRAND.yellow,
+    accent: BRAND.yellow,
+    onTint: "#111111",
+    onTintMuted: "rgba(17, 17, 17, 0.78)",
+    image: { src: "/contact/contact-marketing.png", alt: "Marketing team collaborating on campaigns and growth strategy" },
+    hubDescription:
+      "Speak with our marketing team about demand generation, campaigns, brand, content, and growth strategy.",
     helpLabel: "What are you looking for help with?",
     helpOptions: [
       "Demand & Lead Generation",
@@ -186,11 +201,13 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     icon: <BriefcaseIcon />,
     tabLabel: "Talent",
     badgeLabel: "Talent Enquiry",
-    tint: "#FBE2DE",
-    accent: "#D6543A",
-    image: { src: "/g2.avif", alt: "FyerX talent team at work" },
-    subheading:
-      "Let's explore how we can build your hiring pipeline through staffing, RPO, or executive search.",
+    tint: BRAND.green,
+    accent: BRAND.green,
+    onTint: "#FFFFFF",
+    onTintMuted: "rgba(255, 255, 255, 0.88)",
+    image: { src: "/contact/contact-talent.png", alt: "Talent team supporting staffing and recruitment" },
+    hubDescription:
+      "Connect with our talent team for staffing, permanent hiring, executive search, or recruitment support.",
     helpLabel: "What are you looking for help with?",
     helpOptions: [
       "Contract Staffing",
@@ -198,6 +215,7 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
       "Executive Search",
       "RPO",
       "IT & Tech Talent",
+      "Global Staffing",
       "HR Advisory",
       "Other",
     ],
@@ -209,16 +227,20 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     icon: <LaptopCodeIcon />,
     tabLabel: "Technology",
     badgeLabel: "Technology Enquiry",
-    tint: "#FCF0D6",
-    accent: "#B7791F",
-    image: { src: "/g3.avif", alt: "FyerX technology team at work" },
-    subheading:
-      "Let's explore how we can build or support the websites and tools your business runs on.",
+    tint: BRAND.blue,
+    accent: BRAND.blue,
+    onTint: "#FFFFFF",
+    onTintMuted: "rgba(255, 255, 255, 0.88)",
+    image: { src: "/contact/contact-technology.png", alt: "Technology team working on cloud, data, and digital transformation" },
+    hubDescription:
+      "Engage our technology team for ServiceNow, transformation, data and AI, cloud, DevOps, or advisory requirements.",
     helpLabel: "What are you looking for help with?",
     helpOptions: [
-      "Website Development",
-      "App Development",
-      "Ongoing Maintenance & Support",
+      "ServiceNow",
+      "Digital Transformation",
+      "Data & AI",
+      "Cloud & DevOps",
+      "Technology Consulting",
       "Other",
     ],
     variant: "standard",
@@ -229,13 +251,13 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     icon: <BadgeCheckIcon />,
     tabLabel: "Careers",
     badgeLabel: "Career Enquiry",
-    tint: "#DFF4EC",
-    accent: "#0E8A7D",
-    image: { src: "/leadership.avif", alt: "FyerX leadership team" },
-    subheading:
-      "Let's explore roles at FyerX or through our hiring network, based on your experience and interests.",
-    helpLabel: "Which team are you interested in?",
-    helpOptions: ["Marketing", "Talent", "Technology", "Design", "Sales", "Other"],
+    tint: BRAND.crimson,
+    accent: BRAND.crimson,
+    onTint: "#FFFFFF",
+    onTintMuted: "rgba(255, 255, 255, 0.88)",
+    image: { src: "/contact/contact-career.png", alt: "Professionals exploring career opportunities with FyerX" },
+    hubDescription:
+      "Submit your profile for opportunities with FyerX and roles across our client hiring network.",
     variant: "job",
     submitLabel: "Submit Application",
   },
@@ -247,20 +269,50 @@ const FORM_ORDER: FormKey[] = ["marketing", "talent", "technology", "job"];
 /* Form field primitives                                          */
 /* ============================================================= */
 
+const sectionPad = "px-4 sm:px-6";
+const containerCls = "mx-auto w-full min-w-0 max-w-6xl";
+
 const inputCls =
-  "w-full rounded-xl border border-transparent bg-[#f7f9fc] px-4 py-3 text-sm text-[#181b34] placeholder-[#8b8fa3] outline-none transition-colors focus:border-[#0B2E59] focus:bg-white";
-const selectCls = `${inputCls} appearance-none cursor-pointer pr-9`;
+  "w-full min-w-0 rounded-xl border border-transparent bg-[#f7f9fc] px-4 py-3 text-base text-[#181b34] placeholder-[#8b8fa3] outline-none transition-colors focus:border-[#730031] focus:bg-white sm:text-sm [-webkit-appearance:none]";
+const selectCls = `${inputCls} appearance-none cursor-pointer bg-[#f7f9fc] pr-9`;
 const labelCls = "mb-1.5 block text-sm font-semibold text-[#181b34]";
+const footerHeadingCls = "text-sm font-medium text-[rgb(88,89,101)]";
+
+function RequiredMark() {
+  return (
+    <span className="ml-0.5 font-semibold" style={{ color: BRAND.crimson }} aria-hidden="true">
+      *
+    </span>
+  );
+}
+
+function FieldLabel({
+  children,
+  required = false,
+  className = labelCls,
+}: {
+  children: ReactNode;
+  required?: boolean;
+  className?: string;
+}) {
+  return (
+    <span className={className}>
+      {children}
+      {required && <RequiredMark />}
+    </span>
+  );
+}
 
 function Field({
   label,
   className = "",
+  required,
   ...props
-}: { label: string; className?: string } & InputHTMLAttributes<HTMLInputElement>) {
+}: { label: string; className?: string; required?: boolean } & InputHTMLAttributes<HTMLInputElement>) {
   return (
     <label className={`block ${className}`}>
-      <span className={labelCls}>{label}</span>
-      <input {...props} className={inputCls} />
+      <FieldLabel required={required}>{label}</FieldLabel>
+      <input {...props} required={required} className={inputCls} />
     </label>
   );
 }
@@ -271,20 +323,20 @@ function Field({
 
 function HeroSection() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#f7f9fc] px-6 py-10 sm:py-14">
+    <section className={`relative w-full overflow-x-clip bg-white py-8 sm:py-12 md:py-14 ${sectionPad}`}>
       <div className="pointer-events-none absolute inset-y-0 right-0 w-full sm:w-3/5" aria-hidden="true">
-        <div className="absolute -right-16 top-1/4 h-[420px] w-[420px] rounded-full bg-[#4A7FC1] opacity-30 blur-[100px]" />
-        <div className="absolute right-16 top-1/2 h-[360px] w-[360px] -translate-y-1/2 rounded-full bg-[#1F5C99] opacity-30 blur-[90px]" />
-        <div className="absolute -right-10 bottom-0 h-[320px] w-[320px] rounded-full bg-[#0B2E59] opacity-20 blur-[90px]" />
+        <div className="absolute -right-8 top-1/4 h-[220px] w-[220px] rounded-full opacity-20 blur-[80px] sm:-right-16 sm:h-[420px] sm:w-[420px] sm:opacity-25 sm:blur-[100px]" style={{ background: BRAND.yellow }} />
+        <div className="absolute right-4 top-1/2 h-[180px] w-[180px] -translate-y-1/2 rounded-full opacity-20 blur-[70px] sm:right-16 sm:h-[360px] sm:w-[360px] sm:opacity-25 sm:blur-[90px]" style={{ background: BRAND.blue }} />
+        <div className="absolute -right-6 bottom-0 h-[160px] w-[160px] rounded-full opacity-20 blur-[70px] sm:-right-10 sm:h-[320px] sm:w-[320px] sm:blur-[90px]" style={{ background: BRAND.crimson }} />
       </div>
 
-      <div className="relative mx-auto max-w-6xl">
+      <div className={`relative ${containerCls}`}>
         <div className="max-w-xl">
-          <p className="text-sm font-semibold text-[#1F5C99]">Get in Touch</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#181b34] sm:text-4xl">
+          <p className="text-sm font-semibold" style={{ color: BRAND.crimson }}>Get in Touch</p>
+          <h1 className="mt-2 text-2xl font-bold tracking-tight text-[#181b34] sm:text-3xl md:text-4xl">
             Let&rsquo;s Talk, Reach Out to Us
           </h1>
-          <p className="mt-3 max-w-md text-base leading-relaxed text-[#3d4a5c]">
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-[#3d4a5c] sm:text-base">
             Our team is ready to help — whether you&rsquo;re hiring, marketing, building, or
             exploring a career at FyerX.
           </p>
@@ -301,18 +353,18 @@ function HeroSection() {
 
 function ContactHub({ onSelect }: { onSelect: (key: FormKey) => void }) {
   return (
-    <section className="w-full bg-white px-6 py-10 sm:py-14">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 rounded-[28px] bg-[#F3F1FC] p-6 sm:p-10 lg:grid-cols-2 lg:gap-10">
+    <section className={`w-full overflow-x-clip bg-white py-8 sm:py-12 md:py-14 ${sectionPad}`}>
+      <div className={`${containerCls} grid grid-cols-1 gap-6 rounded-2xl border border-[#e6e9ef] bg-white p-4 sm:gap-8 sm:rounded-[28px] sm:p-6 md:p-8 lg:grid-cols-2 lg:gap-10`}>
         {/* Left — heading + category cards */}
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight text-[#181b34] sm:text-4xl">
+        <div className="min-w-0">
+          <h2 className="text-2xl font-bold tracking-tight text-[#181b34] sm:text-3xl md:text-4xl">
             Get in Touch
           </h2>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-[#3d4a5c]">
-            Tell us who you are, and we&rsquo;ll route you to the right team.
+            Select the area relevant to your enquiry, and our team will take it from there.
           </p>
 
-          <div className="mt-7 flex flex-col gap-4">
+          <div className="mt-5 flex flex-col gap-3 sm:mt-7 sm:gap-4">
             {FORM_ORDER.map((key) => {
               const cfg = FORM_CONFIG[key];
               return (
@@ -320,26 +372,26 @@ function ContactHub({ onSelect }: { onSelect: (key: FormKey) => void }) {
                   key={key}
                   type="button"
                   onClick={() => onSelect(key)}
-                  className="group flex cursor-pointer items-center gap-4 rounded-2xl p-5 text-left transition-transform duration-150 hover:-translate-y-0.5"
+                  className="group flex w-full min-w-0 cursor-pointer items-start gap-3 rounded-2xl p-4 text-left transition-transform duration-150 active:scale-[0.99] sm:items-center sm:gap-4 sm:p-5 sm:hover:-translate-y-0.5"
                   style={{ background: cfg.tint }}
                 >
                   <span
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm"
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm sm:h-11 sm:w-11"
                     style={{ color: cfg.accent }}
                   >
                     {cfg.icon}
                   </span>
-                  <span className="flex-1">
-                    <span className="block text-base font-semibold text-[#181b34]">
-                      {cfg.badgeLabel}
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm font-semibold sm:text-base" style={{ color: cfg.onTint }}>
+                      {cfg.tabLabel}
                     </span>
-                    <span className="mt-1 block text-sm leading-relaxed text-[#3d4a5c]">
-                      {cfg.subheading}
+                    <span className="mt-1 block text-xs leading-relaxed sm:text-sm" style={{ color: cfg.onTintMuted }}>
+                      {cfg.hubDescription}
                     </span>
                   </span>
                   <span
-                    className="shrink-0 transition-transform duration-150 group-hover:translate-x-1"
-                    style={{ color: cfg.accent }}
+                    className="mt-1 shrink-0 transition-transform duration-150 sm:mt-0 sm:group-hover:translate-x-1"
+                    style={{ color: cfg.onTint }}
                   >
                     <ChevronRightIcon />
                   </span>
@@ -349,17 +401,17 @@ function ContactHub({ onSelect }: { onSelect: (key: FormKey) => void }) {
           </div>
         </div>
 
-        {/* Right — 2x2 photo grid, one image per enquiry type */}
-        <div className="grid grid-cols-2 gap-4">
+        {/* Right — 2x2 photo grid */}
+        <div className="grid min-w-0 grid-cols-2 gap-3 sm:gap-4">
           {FORM_ORDER.map((key) => {
             const img = FORM_CONFIG[key].image;
             return (
-              <div key={key} className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+              <div key={key} className="relative aspect-[4/5] min-h-[140px] overflow-hidden rounded-xl sm:min-h-0 sm:rounded-2xl">
                 <Image
                   src={img.src}
                   alt={img.alt}
                   fill
-                  sizes="(min-width: 1024px) 280px, 45vw"
+                  sizes="(max-width: 640px) 44vw, (min-width: 1024px) 280px, 45vw"
                   className="object-cover"
                 />
               </div>
@@ -377,43 +429,61 @@ function ContactHub({ onSelect }: { onSelect: (key: FormKey) => void }) {
 
 function ContactForm({ config, onBack }: { config: FormConfig; onBack: () => void }) {
   const [selected, setSelected] = useState<string[]>([]);
+  const [helpError, setHelpError] = useState(false);
 
-  const toggleOption = (opt: string) =>
-    setSelected((prev) =>
-      prev.includes(opt) ? prev.filter((o) => o !== opt) : [...prev, opt]
-    );
+  useEffect(() => {
+    setSelected([]);
+    setHelpError(false);
+  }, [config.key]);
+
+  const toggleOption = (opt: string) => {
+    setSelected((prev) => {
+      const next = prev.includes(opt) ? prev.filter((o) => o !== opt) : [...prev, opt];
+      if (next.length > 0) setHelpError(false);
+      return next;
+    });
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (config.helpOptions && selected.length === 0) {
+      setHelpError(true);
+      return;
+    }
+    setHelpError(false);
+  };
 
   return (
-    <section className="w-full bg-white px-6 py-10 sm:py-14">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 overflow-hidden rounded-[28px] border border-[#e6e9ef] shadow-[0_20px_60px_rgba(11,46,89,0.08)] lg:grid-cols-2">
-        {/* Left — form */}
-        <div className="p-6 sm:p-8">
-          <div className="flex items-center justify-between">
+    <section className={`w-full overflow-x-clip bg-white py-8 sm:py-12 md:py-14 ${sectionPad}`}>
+      <div className={`${containerCls} grid grid-cols-1 overflow-hidden rounded-2xl border border-[#e6e9ef] shadow-[0_12px_40px_rgba(11,46,89,0.06)] sm:rounded-[28px] sm:shadow-[0_20px_60px_rgba(11,46,89,0.08)] lg:grid-cols-2`}>
+        {/* Form — first on mobile */}
+        <div className="order-1 min-w-0 p-4 sm:p-6 lg:p-8">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <button
               type="button"
               onClick={onBack}
-              className="inline-flex cursor-pointer items-center gap-2 text-sm font-medium text-[#3d4a5c] transition-colors hover:text-[#181b34]"
+              className="inline-flex min-h-[44px] cursor-pointer items-center gap-2 text-sm font-medium text-[#3d4a5c] transition-colors hover:text-[#181b34]"
             >
               <ArrowLeftIcon />
               Back
             </button>
 
             <span
-              className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold"
-              style={{ background: config.tint, color: config.accent }}
+              className="inline-flex max-w-full items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-semibold sm:px-3.5 sm:text-xs"
+              style={{ background: config.tint, color: config.onTint }}
             >
-              {config.icon}
-              {config.badgeLabel}
+              <span className="shrink-0">{config.icon}</span>
+              <span className="truncate">{config.tabLabel}</span>
             </span>
           </div>
 
           <p className="mt-3 max-w-md text-sm leading-relaxed text-[#3d4a5c]">
-            {config.subheading}
+            {config.hubDescription}
           </p>
 
           <div className="mt-5 border-t border-[#e6e9ef]" />
 
-          <form key={config.key} className="mt-5 flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
+          <form key={config.key} className="mt-5 flex min-w-0 flex-col gap-4" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field label="First Name" type="text" required />
               <Field label="Last Name" type="text" required />
@@ -421,26 +491,33 @@ function ContactForm({ config, onBack }: { config: FormConfig; onBack: () => voi
 
             {config.variant === "job" ? (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <Field label="Current Job Title" type="text" />
-                <Field label="Years of Experience" type="text" />
+                <Field label="Current Job Title" type="text" required />
+                <Field label="Years of Experience" type="text" required />
               </div>
             ) : (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <Field label="Job Title" type="text" />
-                <Field label="Company" type="text" />
+                <Field label="Job Title" type="text" required />
+                <Field label="Company" type="text" required />
               </div>
             )}
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field label="Email" type="email" required />
-              <Field label="Phone Number" type="tel" />
+              <Field label="Phone Number" type="tel" required />
             </div>
+
+            {config.variant === "job" && (
+              <>
+                <Field label="LinkedIn Profile (URL)" type="url" placeholder="https://linkedin.com/in/your-profile" required />
+                <Field label="What type of role are you looking for?" type="text" required />
+              </>
+            )}
 
             {config.budgetOptions && (
               <label className="block">
-                <span className={labelCls}>Monthly Marketing Budget</span>
+                <FieldLabel required>Monthly Marketing Budget</FieldLabel>
                 <span className="relative block">
-                  <select defaultValue="" className={selectCls}>
+                  <select defaultValue="" className={selectCls} required>
                     <option value="" disabled>
                       Select a range
                     </option>
@@ -457,51 +534,76 @@ function ContactForm({ config, onBack }: { config: FormConfig; onBack: () => voi
               </label>
             )}
 
-            <div>
-              <p className={labelCls}>{config.helpLabel}</p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {config.helpOptions.map((opt) => {
-                  const isSelected = selected.includes(opt);
-                  return (
-                    <button
-                      key={opt}
-                      type="button"
-                      onClick={() => toggleOption(opt)}
-                      aria-pressed={isSelected}
-                      className="cursor-pointer rounded-full border px-3.5 py-2 text-xs font-medium transition-colors"
-                      style={
-                        isSelected
-                          ? { background: "#0B2E59", borderColor: "#0B2E59", color: "#fff" }
-                          : { background: "#f7f9fc", borderColor: "transparent", color: "#3d4a5c" }
-                      }
-                    >
-                      {opt}
-                    </button>
-                  );
-                })}
+            {config.helpOptions && (
+              <div>
+                <FieldLabel required>{config.helpLabel}</FieldLabel>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {config.helpOptions.map((opt) => {
+                    const isSelected = selected.includes(opt);
+                    return (
+                      <button
+                        key={opt}
+                        type="button"
+                        onClick={() => toggleOption(opt)}
+                        aria-pressed={isSelected}
+                        className="cursor-pointer rounded-full border px-3 py-2 text-[11px] font-medium transition-colors sm:px-3.5 sm:py-2 sm:text-xs"
+                        style={
+                          isSelected
+                            ? { background: config.accent, borderColor: config.accent, color: config.onTint === "#111111" ? "#111111" : "#fff" }
+                            : { background: "#f7f9fc", borderColor: "transparent", color: "#3d4a5c" }
+                        }
+                      >
+                        {opt}
+                      </button>
+                    );
+                  })}
+                </div>
+                {helpError && (
+                  <p className="mt-1.5 text-xs" style={{ color: BRAND.crimson }}>Please select at least one option.</p>
+                )}
               </div>
-            </div>
+            )}
 
             {config.variant === "job" && (
               <div>
-                <p className={labelCls}>Resume Upload</p>
+                <FieldLabel required>Resume Upload</FieldLabel>
                 <input
                   type="file"
                   accept=".pdf"
-                  className="mt-2 block w-full rounded-xl border border-dashed border-[#d6dae3] bg-[#f7f9fc] px-4 py-3 text-xs text-[#8b8fa3] file:mr-3 file:rounded-full file:border-0 file:bg-[#0B2E59]/10 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-[#0B2E59]"
+                  required
+                  className="mt-2 block w-full rounded-xl border border-dashed border-[#d6dae3] bg-[#f7f9fc] px-4 py-3 text-xs text-[#8b8fa3] file:mr-3 file:rounded-full file:border-0 file:bg-[#730031]/10 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-[#730031]"
                 />
                 <p className="mt-1.5 text-xs text-[#8b8fa3]">PDF, max 5MB</p>
               </div>
             )}
 
             <label className="block">
-              <span className={labelCls}>Message</span>
+              <FieldLabel>Message</FieldLabel>
               <textarea rows={4} className={`${inputCls} resize-none`} />
             </label>
 
+            {config.variant === "job" && (
+              <label className="flex cursor-pointer items-start gap-2.5">
+                <input
+                  type="checkbox"
+                  required
+                  className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-[#d6dae3]"
+                  style={{ accentColor: BRAND.crimson }}
+                />
+                <span className="text-xs leading-relaxed text-[#3d4a5c]">
+                  <RequiredMark /> By submitting this form, you accept FyerX&rsquo;s{" "}
+                  <a href="/privacy-policy" className="underline hover:opacity-80" style={{ color: BRAND.crimson }}>
+                    Privacy Policy
+                  </a>{" "}
+                  and consent to be contacted regarding your application.
+                </span>
+              </label>
+            )}
+
             <button
               type="submit"
-              className="mt-2 inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-[#0B2E59] px-7 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              className="mt-2 inline-flex w-full min-h-[44px] cursor-pointer items-center justify-center gap-2 rounded-full px-7 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:w-fit"
+              style={{ background: BRAND.crimson }}
             >
               {config.submitLabel}
               <ArrowRightIcon />
@@ -509,15 +611,16 @@ function ContactForm({ config, onBack }: { config: FormConfig; onBack: () => voi
           </form>
         </div>
 
-        {/* Right — photo matching whichever enquiry type is open */}
-        <div className="p-6 sm:p-8" style={{ background: config.tint }}>
-          <div className="relative h-full min-h-[420px] w-full overflow-hidden rounded-2xl">
+        {/* Image — below form on mobile, right column on desktop */}
+        <div className="order-2 p-4 sm:p-6 lg:p-8" style={{ background: config.tint }}>
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl sm:aspect-[5/4] sm:rounded-2xl lg:aspect-auto lg:min-h-[420px] lg:h-full">
             <Image
               src={config.image.src}
               alt={config.image.alt}
               fill
-              sizes="(min-width: 1024px) 480px, 100vw"
+              sizes="(max-width: 1024px) 100vw, 480px"
               className="object-cover"
+              priority
             />
           </div>
         </div>
@@ -537,7 +640,13 @@ function ContactHubAndForm({ initial }: { initial: FormKey | null }) {
     return <ContactHub onSelect={setActive} />;
   }
 
-  return <ContactForm config={FORM_CONFIG[active]} onBack={() => setActive(null)} />;
+  return (
+    <ContactForm
+      key={active}
+      config={FORM_CONFIG[active]}
+      onBack={() => setActive(null)}
+    />
+  );
 }
 
 /* ============================================================= */
@@ -546,17 +655,17 @@ function ContactHubAndForm({ initial }: { initial: FormKey | null }) {
 
 const DETAIL_ITEMS = [
   {
-    key: "location",
+    key: "address",
     icon: <PinIcon />,
-    label: "Location",
+    label: "Address",
     value: "HSR Layout, Bengaluru, Karnataka – 560102",
     actionLabel: "Get directions",
     href: "https://maps.google.com/?q=HSR+Layout,+Bengaluru,+Karnataka+560102",
   },
   {
-    key: "contact",
+    key: "phone",
     icon: <PhoneIcon />,
-    label: "Contact",
+    label: "Phone",
     value: "+91 7598306999",
     actionLabel: "Call us",
     href: "tel:+917598306999",
@@ -569,45 +678,37 @@ const DETAIL_ITEMS = [
     actionLabel: "Email us",
     href: "mailto:hello@fyerx.com",
   },
-  {
-    key: "map",
-    icon: <PinIcon />,
-    label: "Visit Us",
-    value: "See us on the map",
-    actionLabel: "Open in Maps",
-    href: "https://maps.google.com/?q=HSR+Layout,+Bengaluru,+Karnataka+560102",
-  },
 ];
 
 function ContactDetailsMap() {
   return (
-    <section className="w-full bg-gradient-to-b from-white via-[#f7f9fc] to-[#e8f1fb] px-6 py-10 sm:py-14">
-      <div className="mx-auto max-w-6xl">
+    <section className={`w-full overflow-x-clip bg-gradient-to-b from-white via-[#fafafa] to-[#f5f5f5] py-8 sm:py-12 md:py-14 ${sectionPad}`}>
+      <div className={containerCls}>
         <div className="mx-auto max-w-xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-[#181b34] sm:text-4xl">
+          <h2 className="text-2xl font-bold tracking-tight text-[#181b34] sm:text-3xl md:text-4xl">
             Contact Details
           </h2>
-          <p className="mt-2 text-base leading-relaxed text-[#3d4a5c]">
+          <p className="mt-2 text-sm leading-relaxed text-[#3d4a5c] sm:text-base">
             Prefer to reach us directly? Here&rsquo;s how to find us.
           </p>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:grid-cols-3 sm:gap-4">
           {DETAIL_ITEMS.map((item) => (
             <div
               key={item.key}
-              className="flex flex-col items-start rounded-2xl border border-[#e6e9ef] bg-white p-5"
+              className="flex min-w-0 flex-col items-start rounded-2xl border border-[#e6e9ef] bg-white p-4 sm:p-5"
             >
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E8F1FB] text-[#0B2E59]">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl text-white sm:h-11 sm:w-11" style={{ background: BRAND.crimson }}>
                 {item.icon}
               </span>
-              <p className="mt-3 text-base font-semibold text-[#181b34]">{item.label}</p>
-              <p className="mt-1 text-sm leading-relaxed text-[#3d4a5c]">{item.value}</p>
+              <p className={`mt-3 ${footerHeadingCls}`}>{item.label}</p>
+              <p className="mt-1 break-words text-sm leading-relaxed text-[#3d4a5c]">{item.value}</p>
               <a
                 href={item.href}
                 target={item.href.startsWith("http") ? "_blank" : undefined}
                 rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="mt-4 inline-flex items-center justify-center rounded-full border border-[#d6dae3] px-4 py-2 text-xs font-semibold text-[#181b34] transition-colors hover:border-[#0B2E59] hover:text-[#0B2E59]"
+                className="mt-4 inline-flex min-h-[40px] items-center justify-center rounded-full border border-[#d6dae3] px-4 py-2 text-xs font-semibold text-[#181b34] transition-colors hover:border-[#730031] hover:text-[#730031]"
               >
                 {item.actionLabel}
               </a>
@@ -632,10 +733,10 @@ export default function ContactPage() {
   }, [searchParams]);
 
   return (
-    <>
+    <div className="overflow-x-clip pb-[env(safe-area-inset-bottom)]">
       <HeroSection />
       <ContactHubAndForm initial={initial} />
       <ContactDetailsMap />
-    </>
+    </div>
   );
 }
