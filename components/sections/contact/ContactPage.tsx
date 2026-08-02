@@ -573,13 +573,15 @@ function ContactForm({ config, onBack }: { config: FormConfig; onBack: () => voi
 
             {config.variant === "job" && (
               <div>
-                <FieldLabel required>Resume Upload</FieldLabel>
-                <input
-                  type="file"
-                  accept=".pdf"
-                  required
-                  className="mt-2 block w-full rounded-xl border border-dashed border-[#d6dae3] bg-[#f7f9fc] px-4 py-3 text-xs text-[#8b8fa3] file:mr-3 file:rounded-full file:border-0 file:bg-[#730031]/10 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-[#730031]"
-                />
+                <label className="block cursor-pointer">
+                  <FieldLabel required>Resume Upload</FieldLabel>
+                  <input
+                    type="file"
+                    accept=".pdf"
+                    required
+                    className="mt-2 block w-full cursor-pointer rounded-xl border border-dashed border-[#d6dae3] bg-[#f7f9fc] px-4 py-3 text-xs text-[#8b8fa3] file:mr-3 file:cursor-pointer file:rounded-full file:border-0 file:bg-[#730031]/10 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-[#730031]"
+                  />
+                </label>
                 <p className="mt-1.5 text-xs text-[#8b8fa3]">The PDF must be a maximum of 3 MB.</p>
               </div>
             )}
