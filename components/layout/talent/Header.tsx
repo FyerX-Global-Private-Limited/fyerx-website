@@ -1,0 +1,369 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { useRef, useState } from "react";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+
+// ── Icons ──────────────────────────────────────────────────────────────────────
+function ChevronDown({ open }: { open: boolean }) {
+  return (
+    <svg
+      width="10"
+      height="10"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+    >
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  );
+}
+
+function HamburgerIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  );
+}
+
+type IconName =
+  | "clipboardCheck" | "gear" | "personPlus" | "funnel"
+  | "sparkle" | "database" | "search" | "doc" | "plug" | "tag" | "chart" | "globe";
+
+function Glyph({ name }: { name: IconName }) {
+  const c = {
+    width: 18, height: 18, viewBox: "0 0 24 24", fill: "none",
+    stroke: "currentColor", strokeWidth: 1.6,
+    strokeLinecap: "round" as const, strokeLinejoin: "round" as const,
+  };
+  switch (name) {
+    case "clipboardCheck":
+      return <svg {...c}><rect x="5.5" y="4" width="13" height="17" rx="2" /><rect x="9" y="2.5" width="6" height="3" rx="1" /><polyline points="9 12.5 11 14.5 15 10.5" /></svg>;
+    case "gear":
+      return <svg {...c}><circle cx="12" cy="12" r="3" /><path d="M12 3v2.4M12 18.6V21M21 12h-2.4M5.4 12H3M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7M18.4 18.4l-1.7-1.7M7.3 7.3 5.6 5.6" /></svg>;
+    case "personPlus":
+      return <svg {...c}><circle cx="10" cy="8" r="3.5" /><path d="M3.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6" /><line x1="18" y1="7" x2="18" y2="13" /><line x1="15" y1="10" x2="21" y2="10" /></svg>;
+    case "funnel":
+      return <svg {...c}><polygon points="4 4 20 4 14 12 14 19 10 21 10 12 4 4" /></svg>;
+    case "sparkle":
+      return <svg {...c}><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18" /></svg>;
+    case "database":
+      return <svg {...c}><ellipse cx="12" cy="5.5" rx="7" ry="2.5" /><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13" /><path d="M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5" /></svg>;
+    case "search":
+      return <svg {...c}><circle cx="10.8" cy="10.8" r="6.8" /><line x1="15.8" y1="15.8" x2="21" y2="21" /></svg>;
+    case "doc":
+      return <svg {...c}><rect x="5.5" y="3" width="13" height="18" rx="1.8" /><line x1="8.5" y1="8" x2="15.5" y2="8" /><line x1="8.5" y1="12" x2="15.5" y2="12" /><line x1="8.5" y1="16" x2="13" y2="16" /></svg>;
+    case "plug":
+      return <svg {...c}><path d="M9 2.5v4M15 2.5v4M6 6.5h12v4a6 6 0 0 1-12 0z" /><path d="M9 16.5v5M15 16.5v5" /></svg>;
+    case "tag":
+      return <svg {...c}><path d="M11.7 3.5H5.8a2.3 2.3 0 0 0-2.3 2.3v5.9l10.8 10.8 8.2-8.2L11.7 3.5z" /><circle cx="8.3" cy="8.3" r="1.3" fill="currentColor" stroke="none" /></svg>;
+    case "chart":
+      return <svg {...c}><line x1="5" y1="19" x2="5" y2="12" /><line x1="12" y1="19" x2="12" y2="6" /><line x1="19" y1="19" x2="19" y2="15" /></svg>;
+    case "globe":
+      return <svg {...c}><circle cx="12" cy="12" r="9" /><ellipse cx="12" cy="12" rx="4" ry="9" /><line x1="3" y1="12" x2="21" y2="12" /></svg>;
+  }
+}
+
+// ── Data ───────────────────────────────────────────────────────────────────────
+type MenuCategory = {
+  label: string;
+  avatar: string;
+  items: { label: string; href: string; icon: IconName }[];
+};
+
+const talentCategories: MenuCategory[] = [
+  {
+    label: "Contract Staffing",
+    avatar: "/avatar/1.avif",
+    items: [
+      { label: "IT & Tech Contract Roles", icon: "gear", href: "#" },
+      { label: "Project-Based Staffing", icon: "clipboardCheck", href: "#" },
+      { label: "Volume/Bulk Staffing", icon: "personPlus", href: "#" },
+      { label: "Cross-Border Contract Staffing (US)", icon: "globe", href: "#" },
+    ],
+  },
+  {
+    label: "RPO",
+    avatar: "/avatar/2.avif",
+    items: [
+      { label: "End-to-End Recruitment Outsourcing", icon: "funnel", href: "#" },
+      { label: "On-Demand RPO", icon: "sparkle", href: "#" },
+      { label: "Enterprise RPO", icon: "database", href: "#" },
+    ],
+  },
+  {
+    label: "Permanent Hiring & Executive Search",
+    avatar: "/avatar/3.avif",
+    items: [
+      { label: "Permanent Hiring", icon: "personPlus", href: "#" },
+      { label: "Executive Search", icon: "search", href: "#" },
+    ],
+  },
+  {
+    label: "IT & Tech Talent",
+    avatar: "/avatar/4.avif",
+    items: [
+      { label: "Software Development Roles", icon: "doc", href: "#" },
+      { label: "ServiceNow & Enterprise Platform Talent", icon: "plug", href: "#" },
+      { label: "Data & AI Talent", icon: "sparkle", href: "#" },
+      { label: "DevOps & Cloud Talent", icon: "database", href: "#" },
+    ],
+  },
+  {
+    label: "HR Advisory",
+    avatar: "/avatar/5.avif",
+    items: [
+      { label: "Hiring Assessments", icon: "clipboardCheck", href: "#" },
+      { label: "Background Verification", icon: "tag", href: "#" },
+      { label: "Compensation Benchmarking", icon: "chart", href: "#" },
+    ],
+  },
+  {
+    label: "Global Staffing",
+    avatar: "/avatar/6.avif",
+    items: [
+      { label: "US Contract Staffing", icon: "globe", href: "#" },
+      { label: "Remote Team Building", icon: "personPlus", href: "#" },
+      { label: "Cross-Border Compliance Support", icon: "globe", href: "#" },
+    ],
+  },
+];
+
+const simpleLinks = [
+  { label: "Individual", href: "/talent/individual" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact" },
+];
+
+// ── Talent mega-menu — left = clickable categories (avatar + label), 2 per
+// row; right = sub-items for whichever category is active.
+function TalentMenu({ onClose }: { onClose: () => void }) {
+  const [active, setActive] = useState(0);
+  const category = talentCategories[active];
+
+  return (
+    <div className="animate-dropdown bg-white border-t border-[#e6e9ef] rounded-b-[12px] shadow-[0_16px_36px_rgba(20,20,43,0.12),0_2px_8px_rgba(20,20,43,0.06)]">
+      <div className="flex px-10 pt-6 pb-6">
+        {/* Left — heading + main headings, 2 per row */}
+        <div className="w-[560px] pr-8">
+          <div className="flex items-center gap-3 text-[#9a9ea8]">
+            <Glyph name="personPlus" />
+            <span className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">
+              Talent Solutions
+            </span>
+          </div>
+          <p className="mt-[1.125rem] mb-[1.125rem] text-[0.75rem] leading-[1.6] text-[#676879]">
+            An overview of what we offer
+          </p>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-5">
+            {talentCategories.map((cat, i) => (
+              <button
+                key={cat.label}
+                type="button"
+                onClick={() => setActive(i)}
+                onMouseEnter={() => setActive(i)}
+                className="flex items-center gap-3 text-left group"
+              >
+                <Image
+                  src={cat.avatar}
+                  alt=""
+                  width={40}
+                  height={40}
+                  className="w-10 h-10 rounded-[10px] object-cover shrink-0"
+                />
+                <span
+                  className={`text-[0.875rem] font-normal leading-[1.3] transition-colors duration-100 group-hover:text-blue-600 ${
+                    active === i ? "text-blue-600" : "text-black"
+                  }`}
+                >
+                  {cat.label}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="w-px bg-[#eef0f4] mx-2" />
+
+        {/* Right — sub-items for the active category */}
+        <div className="flex-1 pl-8">
+          <p className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">
+            Service Details
+          </p>
+          <p className="mt-[1.125rem] mb-[1.125rem] text-[0.75rem] leading-[1.6] text-[#676879] whitespace-nowrap">
+            {category.label}
+          </p>
+          <ul className="flex flex-col gap-1">
+            {category.items.map((item) => (
+              <li key={item.label}>
+                <Link
+                  href={item.href}
+                  onClick={onClose}
+                  className="flex items-center gap-2 py-1 text-[0.875rem] font-normal leading-[1.4] text-black hover:text-blue-600 transition-colors duration-100"
+                >
+                  <span className="text-[#8b8fa3] shrink-0">
+                    <Glyph name={item.icon} />
+                  </span>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function TalentHeader() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const openMenu = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setMenuOpen(true);
+  };
+  const scheduleClose = () => {
+    closeTimer.current = setTimeout(() => setMenuOpen(false), 200);
+  };
+  const cancelClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+  };
+  const closeAll = () => {
+    setMenuOpen(false);
+    setMobileOpen(false);
+  };
+
+  return (
+    <header
+      className="sticky top-0 z-50 w-full border-b border-blue-100 bg-white/80 backdrop-blur-md"
+      onMouseLeave={scheduleClose}
+    >
+      <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 h-16 flex items-center justify-between">
+        <Link href="/talent" className="flex items-center" onClick={closeAll}>
+          <Image
+            src="/talentlogo.png"
+            alt="Fyerx Talent"
+            width={210}
+            height={48}
+            className="h-12 w-auto object-contain"
+          />
+        </Link>
+
+        <div className="hidden md:flex flex-1 items-center justify-center relative">
+          <nav className="flex items-center gap-1">
+            <div onMouseEnter={openMenu}>
+              <button
+                className={`flex items-center gap-2 px-4 py-[9px] rounded-[8px] cursor-pointer text-sm transition-colors duration-100 ${
+                  menuOpen ? "bg-blue-50 text-blue-600" : "text-zinc-600 hover:bg-zinc-50"
+                }`}
+              >
+                Talent <ChevronDown open={menuOpen} />
+              </button>
+            </div>
+
+            {simpleLinks.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={closeAll}
+                onMouseEnter={() => setMenuOpen(false)}
+                className="px-4 py-[9px] rounded-[8px] text-sm text-zinc-600 hover:bg-zinc-50 hover:text-blue-600 transition-colors duration-100 whitespace-nowrap"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          {menuOpen && (
+            <div
+              className="absolute top-full left-1/2 -translate-x-1/2 w-[1040px] max-w-[calc(100vw-2rem)] z-50"
+              onMouseEnter={cancelClose}
+            >
+              <TalentMenu onClose={closeAll} />
+            </div>
+          )}
+        </div>
+
+        <div className="hidden md:block">
+          <PrimaryCtaLink href="/talent/book-session" color="#2935a3">
+            Book a Session
+          </PrimaryCtaLink>
+        </div>
+
+        <button
+          className="md:hidden p-1.5 text-zinc-700 hover:bg-zinc-50 rounded-[6px]"
+          onClick={() => setMobileOpen((v) => !v)}
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? <CloseIcon /> : <HamburgerIcon />}
+        </button>
+      </div>
+
+      {mobileOpen && (
+        <div className="md:hidden border-t border-blue-100 bg-white">
+          <div className="px-4 py-4 flex flex-col gap-0.5">
+            <p className="px-3 pt-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.07em] text-zinc-400">
+              Talent Solutions
+            </p>
+            {talentCategories.map((cat) => (
+              <div key={cat.label} className="px-3 py-2">
+                <p className="text-[13px] font-semibold text-zinc-800">{cat.label}</p>
+                <div className="mt-1 flex flex-col gap-0.5">
+                  {cat.items.map((item) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      onClick={closeAll}
+                      className="py-1 text-[13px] text-zinc-600 hover:text-blue-600 transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <div className="my-2 h-px bg-blue-100" />
+            {simpleLinks.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={closeAll}
+                className="px-3 py-[10px] rounded-[8px] text-[15px] font-medium text-zinc-700 hover:bg-zinc-50 transition-colors"
+              >
+                {item.label}
+              </Link>
+            ))}
+            <PrimaryCtaLink
+              href="/talent/book-session"
+              onClick={closeAll}
+              className="mt-3"
+              color="#2935a3"
+            >
+              Book a Session
+            </PrimaryCtaLink>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+}
