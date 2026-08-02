@@ -4,10 +4,8 @@ import React from "react";
 
 /**
  * TestimonialsCTA — Enterprise CTA section with contact-sales form.
- *
- * Font: Poppins (make sure it is loaded globally, e.g. via next/font/google).
- * Avatar images use remote placeholders — swap the URLs in AVATARS /
- * TESTIMONIAL_AVATAR for your own assets under /public when available.
+ * Avatar images use remote placeholders — swap the URLs in AVATARS
+ * for your own assets under /public when available.
  */
 
 const AVATARS = [
@@ -18,50 +16,46 @@ const AVATARS = [
   "https://randomuser.me/api/portraits/men/76.jpg",
 ];
 
-const TESTIMONIAL_AVATAR = "https://randomuser.me/api/portraits/women/47.jpg";
+const WHAT_HAPPENS_NEXT = [
+  {
+    step: "01",
+    title: "We review your enquiry",
+    description: "Your requirement is directed to the appropriate FyerX team.",
+  },
+  {
+    step: "02",
+    title: "We understand the context",
+    description: "A relevant team member connects to understand the business need.",
+  },
+  {
+    step: "03",
+    title: "We define the next step",
+    description: "You receive a clear recommendation on how to proceed.",
+  },
+] as const;
 
-// Same client roster as TrustBar.tsx, muted grayscale for this darker card background.
 const LOGOS = [
-  { name: "WeGoFin", img: "/trustbarlogos/trimmed/wegofin.png" },
-  { name: "Sayyam" },
   { name: "Adro", img: "/trustbarlogos/trimmed/adro.png" },
-  { name: "Saraogi", img: "/trustbarlogos/trimmed/sarogi.png" },
-  { name: "Codeus", img: "/trustbarlogos/trimmed/codeus.png" },
-  { name: "Bullsmart", img: "/trustbarlogos/trimmed/bullsmart.png" },
-  { name: "Onroadz", img: "/trustbarlogos/trimmed/onroad.png" },
-  { name: "KPRM" },
-  { name: "Kaypee Space", img: "/trustbarlogos/trimmed/kaypeespace.png" },
+  { name: "Ambience", img: "/trustbarlogos/trimmed/ambience.png" },
   { name: "Avekshaa", img: "/trustbarlogos/trimmed/avekshaa.png" },
-  { name: "Orihiro", img: "/trustbarlogos/trimmed/orihiro.png" },
-  { name: "Hoshitry" },
-  { name: "TrnDigital" },
-  { name: "Digitathya", img: "/trustbarlogos/trimmed/digitathya.png" },
+  { name: "Blummber", img: "/trustbarlogos/trimmed/blummber.png" },
+  { name: "Bullsmart", img: "/trustbarlogos/trimmed/bullsmart.png" },
   { name: "Cinepebble", img: "/trustbarlogos/trimmed/cinipebble.png" },
-  { name: "WinExch" },
+  { name: "Codeus", img: "/trustbarlogos/trimmed/codeus.png" },
+  { name: "Digitathya", img: "/trustbarlogos/trimmed/digitathya.png" },
+  { name: "Dyashin", img: "/trustbarlogos/trimmed/dyashin.png" },
+  { name: "Kaypee Space", img: "/trustbarlogos/trimmed/kaypeespace.png" },
+  { name: "Multimedia", img: "/trustbarlogos/trimmed/multimedia.png" },
+  { name: "Onroadz", img: "/trustbarlogos/trimmed/onroad.png" },
+  { name: "Orihiro", img: "/trustbarlogos/trimmed/orihiro.png" },
+  { name: "Saraogi", img: "/trustbarlogos/trimmed/sarogi.png" },
+  { name: "Silvercross", img: "/trustbarlogos/trimmed/silvercross.png" },
+  { name: "Solv", img: "/trustbarlogos/trimmed/solv.png" },
   { name: "SpinMatch", img: "/trustbarlogos/trimmed/spinmatch.png" },
+  { name: "WeGoFin", img: "/trustbarlogos/trimmed/wegofin.png" },
+  { name: "Workdays", img: "/trustbarlogos/trimmed/workdays.png" },
+  { name: "Zassets", img: "/trustbarlogos/trimmed/zassets.png" },
 ];
-
-function LogoSet() {
-  return (
-    <>
-      {LOGOS.map((logo) => (
-        <span key={logo.name} className="flex shrink-0 items-center">
-          {logo.img ? (
-            <img
-              src={logo.img}
-              alt={logo.name}
-              className="h-6 w-auto max-w-full object-contain grayscale opacity-60"
-            />
-          ) : (
-            <span className="text-[15px] font-bold tracking-tight text-[#77777e]">
-              {logo.name}
-            </span>
-          )}
-        </span>
-      ))}
-    </>
-  );
-}
 
 const inputBase =
   "w-full h-10 rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 text-[13px] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]";
@@ -126,36 +120,44 @@ export default function TestimonialsCTA() {
 
             {/* Logos strip — infinite scroll loop, pauses on hover */}
             <div className="group w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-              <div className="animate-marquee flex w-max items-center gap-10 group-hover:[animation-play-state:paused]">
-                <div className="flex shrink-0 items-center gap-10">
-                  <LogoSet />
-                </div>
-                <div className="flex shrink-0 items-center gap-10" aria-hidden="true">
-                  <LogoSet />
-                </div>
+              <div className="animate-marquee flex w-max items-center gap-x-8 sm:gap-x-10 lg:gap-x-12 group-hover:[animation-play-state:paused]">
+                {[...LOGOS, ...LOGOS].map((logo, i) => (
+                  <div
+                    key={`${logo.name}-${i}`}
+                    className="flex h-4 w-[88px] shrink-0 items-center justify-center px-2 sm:h-5 sm:w-[96px] lg:h-5 lg:w-[104px]"
+                  >
+                    <img
+                      src={logo.img}
+                      alt={logo.name}
+                      className="h-full w-full object-contain opacity-45 grayscale"
+                    />
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Testimonial card — placeholder, pending a verified client quote */}
+            {/* What happens next */}
             <div className="mt-7 max-w-[465px] rounded-[8px] border border-[#323338] p-6">
-              <p className="text-[14px] leading-[1.5] text-[#181b34]">
-                &ldquo;[Insert client quote, 15-25 words]&rdquo;
-              </p>
-              <div className="mt-5 flex items-center gap-4">
-                <img
-                  src={TESTIMONIAL_AVATAR}
-                  alt="[Client Name]"
-                  className="h-[54px] w-[54px] shrink-0 rounded-full object-cover"
-                />
-                <div>
-                  <p className="text-[15px] font-semibold leading-[1.4] text-[#181b34]">
-                    [Client Name]
-                  </p>
-                  <p className="text-[14px] leading-[1.4] text-[#181b34]">
-                    [Title] | [Company Name]
-                  </p>
-                </div>
-              </div>
+              <h3 className="text-[15px] font-semibold leading-[1.4] text-[#181b34]">
+                What happens next
+              </h3>
+              <ol className="mt-5 flex flex-col gap-5">
+                {WHAT_HAPPENS_NEXT.map((item) => (
+                  <li key={item.step} className="flex gap-4">
+                    <span className="shrink-0 text-[13px] font-semibold tabular-nums text-[#730031]">
+                      {item.step}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-[14px] font-semibold leading-[1.4] text-[#181b34]">
+                        {item.title}
+                      </p>
+                      <p className="mt-1 text-[14px] leading-[1.5] text-[#181b34]">
+                        {item.description}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
 
@@ -245,7 +247,8 @@ export default function TestimonialsCTA() {
                   <input
                     type="tel"
                     name="phone"
-                    placeholder="+91"
+                    placeholder="Phone number*"
+                    required
                     className="h-full w-full border-0 bg-white px-3.5 text-[13px] text-[#333333] placeholder-[#676879] outline-none"
                   />
                 </div>
@@ -261,12 +264,11 @@ export default function TestimonialsCTA() {
                   <div className="relative">
                     <select
                       name="companySize"
-                      required
                       defaultValue=""
                       className={selectBase}
                     >
                       <option value="" disabled>
-                        Company size*
+                        Company size
                       </option>
                       <option value="1-19">1-19</option>
                       <option value="20-49">20-49</option>
@@ -281,18 +283,41 @@ export default function TestimonialsCTA() {
 
                 <div className="relative">
                   <select
-                    name="explore"
+                    name="helpWith"
                     required
                     defaultValue=""
                     className={selectBase}
                   >
                     <option value="" disabled>
-                      What would you like to explore?*
+                      What can we help with?*
                     </option>
-                    <option value="work-management">Work management</option>
-                    <option value="crm">CRM</option>
-                    <option value="dev">Software development</option>
-                    <option value="service">Service management</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="talent-staffing">Talent &amp; Staffing</option>
+                    <option value="technology">Technology</option>
+                    <option value="learning-training">Learning &amp; Training</option>
+                    <option value="general">General Business Enquiry</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <Caret />
+                </div>
+
+                <div className="relative">
+                  <select
+                    name="priority"
+                    required
+                    defaultValue=""
+                    className={selectBase}
+                  >
+                    <option value="" disabled>
+                      What is your priority?*
+                    </option>
+                    <option value="generate-demand">Generate demand</option>
+                    <option value="build-brand">Build a brand</option>
+                    <option value="hire-talent">Hire talent</option>
+                    <option value="modernise-technology">Modernise technology</option>
+                    <option value="digital-product">Build a digital product</option>
+                    <option value="upskill-team">Upskill a team</option>
+                    <option value="partnership">Explore a partnership</option>
                     <option value="other">Other</option>
                   </select>
                   <Caret />
@@ -300,15 +325,16 @@ export default function TestimonialsCTA() {
 
                 <textarea
                   name="message"
-                  placeholder="Tell us more about your business and what you'd like support with"
+                  placeholder="Tell us more about your goals, timeline, or anything else that would help us prepare for the conversation."
                   className="h-[88px] w-full resize-none rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 py-2.5 text-[13px] leading-[1.5] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]"
                 />
 
                 <button
                   type="submit"
-                  className="mx-auto mt-3 h-10 w-24 rounded-full bg-[#6c6cff] text-[14px] font-normal text-white transition-colors duration-150 hover:bg-[#5b5bd6]"
+                  className="mx-auto mt-3 inline-flex h-10 items-center justify-center gap-1.5 rounded-full bg-[#730031] px-6 text-[14px] font-medium text-white transition-colors duration-150 hover:bg-[#5a0027]"
                 >
-                  Submit
+                  Send Enquiry
+                  <span aria-hidden="true">&rarr;</span>
                 </button>
 
                 <p className="mx-auto mt-1.5 max-w-[300px] text-center text-[10.5px] leading-[1.6] text-[#333333]">

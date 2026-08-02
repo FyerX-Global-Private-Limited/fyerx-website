@@ -265,6 +265,13 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
 
 const FORM_ORDER: FormKey[] = ["marketing", "talent", "technology", "job"];
 
+const EXPECTED_START_OPTIONS = [
+  "Immediately",
+  "Within 1–3 Months",
+  "Within 3–6 Months",
+  "Exploring for Later",
+] as const;
+
 /* ============================================================= */
 /* Form field primitives                                          */
 /* ============================================================= */
@@ -573,8 +580,29 @@ function ContactForm({ config, onBack }: { config: FormConfig; onBack: () => voi
                   required
                   className="mt-2 block w-full rounded-xl border border-dashed border-[#d6dae3] bg-[#f7f9fc] px-4 py-3 text-xs text-[#8b8fa3] file:mr-3 file:rounded-full file:border-0 file:bg-[#730031]/10 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-[#730031]"
                 />
-                <p className="mt-1.5 text-xs text-[#8b8fa3]">PDF, max 5MB</p>
+                <p className="mt-1.5 text-xs text-[#8b8fa3]">The PDF must be a maximum of 3 MB.</p>
               </div>
+            )}
+
+            {config.variant === "standard" && (
+              <label className="block">
+                <FieldLabel>Expected Start</FieldLabel>
+                <span className="relative block">
+                  <select name="expectedStart" defaultValue="" className={selectCls}>
+                    <option value="" disabled>
+                      Select expected start
+                    </option>
+                    {EXPECTED_START_OPTIONS.map((opt) => (
+                      <option key={opt} value={opt}>
+                        {opt}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[#8b8fa3]">
+                    <ChevronDownIcon />
+                  </span>
+                </span>
+              </label>
             )}
 
             <label className="block">

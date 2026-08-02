@@ -152,7 +152,6 @@ const capabilityCols: ConsultingCol[] = [
 
 const simpleLinks = [
   { label: "Blog", href: "/blog" },
-  { label: "Request a demo", href: "/contact" },
 ];
 
 type MenuCategory = {
@@ -554,14 +553,8 @@ export default function MainHeader() {
             ))}
           </nav>
 
-          {/* Desktop CTAs — Contact Now · Get Started */}
-          <div className="hidden md:flex items-center gap-[6px] ml-auto shrink-0">
-            <Link href="/contact" onClick={closeAll} onMouseEnter={() => setOpenMenu(null)}
-              className="h-[40px] flex items-center justify-center text-center gap-2 px-6 rounded-full border-[1.5px] border-[#5c4fe0]
-                         cursor-pointer text-[0.875rem] font-light leading-[100%] text-[#5c4fe0] hover:bg-[#eeecfc]
-                         transition-colors duration-100 whitespace-nowrap">
-              Contact Now
-            </Link>
+          {/* Desktop CTA — Get Started */}
+          <div className="hidden md:flex items-center ml-auto shrink-0">
             <PrimaryCtaLink href="/contact" onClick={closeAll} onMouseEnter={() => setOpenMenu(null)}
               className="h-[40px] whitespace-nowrap">
               Get Started
@@ -630,15 +623,10 @@ export default function MainHeader() {
                 {item.label}
               </Link>
             ))}
-            <div className="mt-3 pt-3 border-t border-[#e6e9ef] flex flex-col gap-2.5">
+            <div className="mt-3 pt-3 border-t border-[#e6e9ef]">
               <PrimaryCtaLink href="/contact" onClick={closeAll}>
                 Get Started
               </PrimaryCtaLink>
-              <Link href="/contact" onClick={closeAll}
-                className="flex items-center justify-center border-[1.5px] border-[#5c4fe0] text-[#5c4fe0]
-                           text-[15px] font-semibold px-4 py-3 rounded-full hover:bg-[#eeecfc] transition-colors">
-                Contact Now
-              </Link>
             </div>
           </div>
         </div>
