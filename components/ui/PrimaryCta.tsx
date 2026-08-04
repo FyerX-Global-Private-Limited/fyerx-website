@@ -50,10 +50,16 @@ export function PrimaryCtaLink({
   className = "",
   icon,
   color = DEFAULT_CTA_COLOR,
+  style,
   ...props
 }: PrimaryCtaLinkProps) {
   return (
-    <Link href={href} className={`${ctaClassName} ${className}`} style={ctaStyle(color)} {...props}>
+    <Link
+      href={href}
+      className={`${ctaClassName} ${className}`}
+      style={{ ...ctaStyle(color), ...style }}
+      {...props}
+    >
       {children}
       {icon === null ? null : (icon ?? <CtaArrowIcon />)}
     </Link>

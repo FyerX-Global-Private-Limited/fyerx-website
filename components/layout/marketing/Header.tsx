@@ -305,7 +305,7 @@ export default function MarketingHeader() {
       onMouseLeave={scheduleClose}
     >
       <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 h-16 flex items-center justify-between">
-        <Link href="/marketing" className="flex items-center" onClick={closeAll}>
+        <Link href="/" className="flex items-center" onClick={closeAll}>
           <Image
             src="/logo.webp"
             alt="Fyerx Marketing"

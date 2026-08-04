@@ -259,7 +259,7 @@ export default function TalentHeader() {
       onMouseLeave={scheduleClose}
     >
       <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 h-16 flex items-center justify-between">
-        <Link href="/talent" className="flex items-center" onClick={closeAll}>
+        <Link href="/" className="flex items-center" onClick={closeAll}>
           <Image
             src="/talentlogo.png"
             alt="Fyerx Talent"

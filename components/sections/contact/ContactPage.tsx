@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState, type FormEvent, type InputHTMLAttributes, type ReactNode } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 
 /* ============================================================= */
@@ -265,6 +265,13 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
 
 const FORM_ORDER: FormKey[] = ["marketing", "talent", "technology", "job"];
 
+const THANK_YOU_BY_FORM: Record<FormKey, string> = {
+  marketing: "/contact/thankyou-marketing",
+  talent: "/contact/thankyou-talent",
+  technology: "/contact/thankyou-technology",
+  job: "/contact/thankyou-career",
+};
+
 const EXPECTED_START_OPTIONS = [
   "Immediately",
   "Within 1–3 Months",
@@ -435,6 +442,7 @@ function ContactHub({ onSelect }: { onSelect: (key: FormKey) => void }) {
 /* ============================================================= */
 
 function ContactForm({ config, onBack }: { config: FormConfig; onBack: () => void }) {
+  const router = useRouter();
   const [selected, setSelected] = useState<string[]>([]);
   const [helpError, setHelpError] = useState(false);
 
@@ -458,6 +466,7 @@ function ContactForm({ config, onBack }: { config: FormConfig; onBack: () => voi
       return;
     }
     setHelpError(false);
+    router.push(THANK_YOU_BY_FORM[config.key]);
   };
 
   return (

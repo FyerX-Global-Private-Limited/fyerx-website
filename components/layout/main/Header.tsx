@@ -508,24 +508,22 @@ export default function MainHeader() {
       onMouseLeave={scheduleClose}
     >
       {/* ─── Header bar ────────────────────────────────────────────────── */}
-      <div className="h-[76px] flex items-center">
+      <div className="mx-auto flex h-[60px] w-full max-w-[1400px] items-center px-6 sm:px-10 lg:px-16">
 
-        {/* ── Logo column (content-width, hugs the left edge) ── */}
-        <div className="pl-10 shrink-0 flex items-center h-full">
-          <Link href="/" onClick={closeAll} className="flex items-center h-full">
-            <FyerxLogo />
-          </Link>
-        </div>
+        {/* Logo */}
+        <Link href="/" onClick={closeAll} className="flex shrink-0 items-center">
+          <FyerxLogo />
+        </Link>
 
-        {/* ── Nav + CTAs + Dropdown container ── */}
-        <div className="flex-1 relative flex items-center h-full pr-10">
+        {/* Nav + CTAs + Dropdown container */}
+        <div className="relative ml-6 flex min-w-0 flex-1 items-center sm:ml-8">
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-[2px] ml-8">
+          <nav className="hidden md:flex items-center gap-[2px]">
 
             {/* Marketing — icon-list mega-menu */}
             <div onMouseEnter={() => open("Marketing")}>
-              <Link href="/marketing" onClick={closeAll} className={`flex items-center justify-center text-center gap-2 px-4 py-[9px] rounded-[8px]
+              <Link href="/marketing" onClick={closeAll} className={`flex items-center justify-center text-center gap-2 px-3.5 py-[7px] rounded-[8px]
                 cursor-pointer text-[0.875rem] font-light leading-[100%] transition-colors duration-100
                 ${openMenu === "Marketing" ? "bg-[#eeecfc] text-[#5c4fe0]" : "bg-transparent text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"}`}>
                 Marketing <ChevronDown open={openMenu === "Marketing"} />
@@ -534,7 +532,7 @@ export default function MainHeader() {
 
             {/* Talent — column mega-menu */}
             <div onMouseEnter={() => open("Talent")}>
-              <Link href="/talent" onClick={closeAll} className={`flex items-center justify-center text-center gap-2 px-4 py-[9px] rounded-[8px]
+              <Link href="/talent" onClick={closeAll} className={`flex items-center justify-center text-center gap-2 px-3.5 py-[7px] rounded-[8px]
                 cursor-pointer text-[0.875rem] font-light leading-[100%] transition-colors duration-100
                 ${openMenu === "Talent" ? "bg-[#eeecfc] text-[#5c4fe0]" : "bg-transparent text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"}`}>
                 Talent <ChevronDown open={openMenu === "Talent"} />
@@ -545,7 +543,7 @@ export default function MainHeader() {
             {simpleLinks.map((item) => (
               <Link key={item.label} href={item.href} onClick={closeAll}
                 onMouseEnter={() => setOpenMenu(null)}
-                className="flex items-center justify-center text-center gap-2 px-4 py-[9px] rounded-[8px]
+                className="flex items-center justify-center text-center gap-2 px-3.5 py-[7px] rounded-[8px]
                            cursor-pointer text-[0.875rem] font-light leading-[100%] text-[rgb(83,87,104)] bg-transparent
                            hover:bg-[#f5f6f8] transition-colors duration-100 whitespace-nowrap">
                 {item.label}
@@ -556,7 +554,8 @@ export default function MainHeader() {
           {/* Desktop CTA — Get Started */}
           <div className="hidden md:flex items-center ml-auto shrink-0">
             <PrimaryCtaLink href="/contact" onClick={closeAll} onMouseEnter={() => setOpenMenu(null)}
-              className="h-[40px] whitespace-nowrap">
+              className="h-[36px] whitespace-nowrap text-[0.875rem]"
+              style={{ padding: "0.5rem 1.25rem" }}>
               Get Started
             </PrimaryCtaLink>
           </div>
@@ -569,7 +568,7 @@ export default function MainHeader() {
 
           {/* Dropdown — Marketing and Talent */}
           {openMenu === "Marketing" && (
-            <div className="absolute top-full left-0 right-10 max-w-[1040px] z-50"
+            <div className="absolute top-full left-0 right-0 z-50 max-w-[1040px]"
               onMouseEnter={cancelClose}>
               <CategoryMenu categories={marketingCategories} onClose={closeAll}
                 heading="MARKETING SERVICES"
@@ -579,7 +578,7 @@ export default function MainHeader() {
             </div>
           )}
           {openMenu === "Talent" && (
-            <div className="absolute top-full left-0 right-10 max-w-[1040px] z-50"
+            <div className="absolute top-full left-0 right-0 z-50 max-w-[1040px]"
               onMouseEnter={cancelClose}>
               <CategoryMenu categories={talentCategories} onClose={closeAll}
                 heading="TALENT SOLUTIONS"
@@ -594,7 +593,7 @@ export default function MainHeader() {
       {/* ─── Mobile drawer ─────────────────────────────────────────────── */}
       {mobileOpen && (
         <div className="md:hidden border-t border-[#e6e9ef] bg-white">
-          <div className="px-4 py-4 flex flex-col gap-0.5">
+          <div className="px-6 py-4 sm:px-10 lg:px-16 flex flex-col gap-0.5">
             <p className="px-3 pt-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.07em] text-[#8b8fa3]">
               Platform
             </p>

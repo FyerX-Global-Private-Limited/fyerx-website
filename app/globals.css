@@ -111,3 +111,71 @@ body {
     background-position: -350px center;
   }
 }
+
+/* Thank-you page — ambient motion + reduced-motion safe */
+@keyframes ty-glow-drift-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(20px, 14px) scale(1.08);
+  }
+}
+
+@keyframes ty-glow-drift-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-16px, -12px) scale(1.06);
+  }
+}
+
+@keyframes ty-dot-float {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(-5px);
+    opacity: 0.65;
+  }
+}
+
+@keyframes ty-icon-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-ty-glow-a {
+  animation: ty-glow-drift-a 9s ease-in-out infinite;
+}
+
+.animate-ty-glow-b {
+  animation: ty-glow-drift-b 11s ease-in-out infinite;
+}
+
+.animate-ty-dot {
+  animation: ty-dot-float 3.5s ease-in-out infinite;
+}
+
+.animate-ty-icon-float {
+  animation: ty-icon-float 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ty-glow-a,
+  .animate-ty-glow-b,
+  .animate-ty-dot,
+  .animate-ty-icon-float {
+    animation: none !important;
+  }
+}

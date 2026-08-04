@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 
 /**
  * TestimonialsCTA — Enterprise CTA section with contact-sales form.
@@ -86,6 +87,8 @@ function Caret({ className }: { className?: string }) {
 }
 
 export default function TestimonialsCTA() {
+  const router = useRouter();
+
   return (
     <section
       className="bg-white px-4 pb-2 sm:px-8 lg:px-[6%]"
@@ -183,7 +186,10 @@ export default function TestimonialsCTA() {
 
               <form
                 className="mt-4 flex flex-col gap-3"
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  router.push("/contact/thankyou-home");
+                }}
               >
                 <div className="grid grid-cols-2 gap-3">
                   <input
