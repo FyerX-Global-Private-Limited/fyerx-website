@@ -554,8 +554,7 @@ export default function MainHeader() {
           {/* Desktop CTA — Get Started */}
           <div className="hidden md:flex items-center ml-auto shrink-0">
             <PrimaryCtaLink href="/contact" onClick={closeAll} onMouseEnter={() => setOpenMenu(null)}
-              className="h-[36px] whitespace-nowrap text-[0.875rem]"
-              style={{ padding: "0.5rem 1.25rem" }}>
+              className="h-[40px] whitespace-nowrap">
               Get Started
             </PrimaryCtaLink>
           </div>

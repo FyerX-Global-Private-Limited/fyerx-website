@@ -35,13 +35,14 @@ function ctaStyle(color: string): CSSProperties {
   };
 }
 
-type PrimaryCtaLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className" | "style"> & {
+type PrimaryCtaLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className"> & {
   href: string;
   children: ReactNode;
   className?: string;
   icon?: ReactNode | null;
   /** Pill background color. Defaults to the site-wide magenta (#ab0549). */
   color?: string;
+  style?: CSSProperties;
 };
 
 export function PrimaryCtaLink({
