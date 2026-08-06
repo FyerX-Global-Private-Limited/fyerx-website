@@ -13,15 +13,14 @@
   --ink: #101014;
 }
 
-/* Shared section-heading typography — keep in sync with the reference style
-   used across all section titles (main/marketing/talent). */
+/* Shared section-heading typography — keep in sync across main/marketing/talent */
 .section-heading {
   letter-spacing: -0.02em;
   color: var(--ink);
   margin: 0;
-  font-size: 46px;
+  font-size: clamp(1.625rem, 5vw, 2.25rem);
   font-weight: 500;
-  line-height: 1.12;
+  line-height: 1.2;
   font-family: var(--font-poppins), -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Helvetica, Arial, sans-serif;
 }
@@ -178,4 +177,103 @@ body {
   .animate-ty-icon-float {
     animation: none !important;
   }
+}
+
+/* Homepage spacing — equal top, bottom, left, right rhythm */
+:root {
+  --section-space: 2.5rem;
+  --section-content-gap: 1.75rem;
+  --heading-sub-gap: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --section-space: 3.5rem;
+    --section-content-gap: 2.25rem;
+    --heading-sub-gap: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --section-space: 5rem;
+    --section-content-gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --section-space: 6rem;
+    --section-content-gap: 3rem;
+  }
+}
+
+.home-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-space);
+  padding: var(--section-space);
+  overflow-x: clip;
+}
+
+.home-section {
+  padding: 0;
+  min-width: 0;
+}
+
+.section-shell {
+  width: 100%;
+  max-width: 75rem;
+  margin-inline: auto;
+  min-width: 0;
+}
+
+.section-shell--wide {
+  max-width: 87.5rem;
+}
+
+.section-inset {
+  padding: clamp(1.25rem, 4vw, var(--section-content-gap));
+}
+
+.section-header--center {
+  text-align: center;
+}
+
+.section-heading--sm {
+  font-size: clamp(1.125rem, 3.5vw, 1.375rem);
+  line-height: 1.35;
+}
+
+.section-subheading {
+  margin: var(--heading-sub-gap) auto 0;
+  max-width: 42rem;
+  font-size: clamp(0.875rem, 2.5vw, 1.0625rem);
+  line-height: 1.6;
+  font-weight: 400;
+  color: #5a5f6b;
+}
+
+.section-subheading--wide {
+  max-width: 51.25rem;
+}
+
+.section-body,
+.section-content-offset {
+  margin-top: var(--section-content-gap);
+}
+
+@media (max-width: 767px) {
+  .section-header--center .section-subheading,
+  .section-subheading {
+    max-width: none;
+  }
+}
+
+.brand-gradient-text {
+  background: linear-gradient(90deg, #730031 0%, #CC0057 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }

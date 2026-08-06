@@ -14,6 +14,7 @@ type Card = {
   icon: React.ReactNode;
   title: React.ReactNode;
   body: string;
+  tint: "orange" | "purple" | "pink" | "green";
 };
 
 const CARDS: Card[] = [
@@ -21,51 +22,49 @@ const CARDS: Card[] = [
     icon: <GrowthPathIcon />,
     title: 'Growth initiatives',
     body: 'From new-market plans to demand creation, we help turn commercial priorities into focused action.',
+    tint: 'orange',
   },
   {
     icon: <PuzzleGapIcon />,
     title: 'Capability gaps',
     body: 'When internal capacity falls short, bring in the expertise needed to keep work progressing.',
+    tint: 'purple',
   },
   {
     icon: <ConnectedArrowsIcon />,
     title: 'Business change',
     body: 'New systems, new teams, or new direction require support that works with the wider business.',
+    tint: 'pink',
   },
   {
     icon: <ForwardArrowIcon />,
     title: 'Execution at pace',
     body: 'Move from decision to delivery with a team built to take responsibility for the work.',
+    tint: 'green',
   },
 ];
 
 export default function SecurityControl() {
   return (
-    <section className="sc">
-      <h2 className="sc__heading">
-        Built for businesses
-        <br />
-        <span
-          style={{
-            background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
-            backgroundClip: "text",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            color: "transparent",
-          }}
-        >
-          moving forward
-        </span>
-      </h2>
+    <section className="home-section sc">
+      <div className="section-shell">
+        <div className="section-header section-header--center mb-[var(--section-content-gap)]">
+          <h2 className="section-heading">
+            Built for businesses
+            <br />
+            <span className="brand-gradient-text">moving forward</span>
+          </h2>
+        </div>
 
-      <div className="sc__grid">
+        <div className="section-body mt-0 sc__grid">
         {CARDS.map((c, i) => (
           <article className="sc__card" key={i}>
             <h3 className="sc__cardTitle">{c.title}</h3>
-            <div className="sc__icon">{c.icon}</div>
+            <div className={`sc__icon sc__icon--${c.tint}`}>{c.icon}</div>
             <p className="sc__cardBody">{c.body}</p>
           </article>
         ))}
+        </div>
       </div>
 
       <style jsx>{`
@@ -75,38 +74,23 @@ export default function SecurityControl() {
           --line: #ececec;
           background: #ffffff;
           color: var(--ink);
-          padding: 40px 40px 80px;
           font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
             Roboto, Helvetica, Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
-        }
-
-        .sc__heading {
-          margin-left: auto;
-          margin-right: auto;
-          margin-bottom: 55px;
-          max-width: 29ch;
-          text-align: center;
-          font-family: var(--font-poppins), Arial, sans-serif;
-          font-size: 36px;
-          line-height: 1.25;
-          font-weight: 500;
-          letter-spacing: -0.02em;
-          color: var(--ink);
         }
 
         .sc__grid {
           max-width: 1320px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 24px;
+          grid-template-columns: 1fr;
+          gap: 16px;
         }
 
         .sc__card {
           border: 1px solid var(--line);
           border-radius: 22px;
-          padding: 44px 30px 40px;
+          padding: 28px 20px 32px;
           background: #fff;
           text-align: center;
           display: flex;
@@ -120,8 +104,8 @@ export default function SecurityControl() {
         }
 
         .sc__cardTitle {
-          margin: 0;
-          font-size: 1.5rem;
+          margin: 0 0 1.25rem;
+          font-size: 1.25rem;
           line-height: 1.25;
           font-weight: 500;
           letter-spacing: -0.01em;
@@ -129,44 +113,68 @@ export default function SecurityControl() {
         }
 
         .sc__icon {
-          height: 120px;
-          margin: 34px 0 30px;
+          height: 72px;
+          width: 72px;
+          margin: 0 0 1.5rem;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: var(--ink);
+          border-radius: 20px;
         }
+        .sc__icon--orange { background: #FFF0E6; color: #FDAB3D; }
+        .sc__icon--purple { background: #F3EEFF; color: #6161FF; }
+        .sc__icon--pink { background: #FFE8F5; color: #FF5AC4; }
+        .sc__icon--green { background: #E8F8EF; color: #00CA72; }
 
         .sc__cardBody {
-          margin: 0;
+          margin: 0 auto;
           max-width: 30ch;
-          font-size: 1rem;
+          font-size: 0.9375rem;
           font-weight: 400;
           line-height: 1.6;
           color: var(--muted);
+          text-align: center;
         }
 
         /* ---------- Responsive ---------- */
-        @media (max-width: 1080px) {
+        @media (min-width: 640px) {
           .sc__grid {
             grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
             max-width: 720px;
           }
-          .sc__heading {
-            font-size: 36px;
+          .sc__card {
+            padding: 36px 24px 32px;
+          }
+          .sc__cardTitle {
+            font-size: 1.375rem;
+          }
+          .sc__icon {
+            height: 84px;
+            width: 84px;
           }
         }
 
-        @media (max-width: 560px) {
-          .sc {
-            padding: 32px 20px 56px;
-          }
+        @media (min-width: 1080px) {
           .sc__grid {
-            grid-template-columns: 1fr;
-            max-width: 420px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            max-width: 1320px;
           }
-          .sc__heading {
-            font-size: 30px;
+          .sc__card {
+            padding: 44px 30px 40px;
+          }
+          .sc__cardTitle {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+          }
+          .sc__icon {
+            height: 96px;
+            width: 96px;
+            margin-bottom: 1.875rem;
+          }
+          .sc__cardBody {
+            font-size: 1rem;
           }
         }
       `}</style>

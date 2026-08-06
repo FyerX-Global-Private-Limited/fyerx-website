@@ -173,7 +173,10 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     accent: BRAND.yellow,
     onTint: "#111111",
     onTintMuted: "rgba(17, 17, 17, 0.78)",
-    image: { src: "/contact/contact-marketing.png", alt: "Marketing team collaborating on campaigns and growth strategy" },
+    image: {
+      src: "/contact/contact-marketing.png",
+      alt: "Indian marketing team collaborating on campaigns and growth strategy",
+    },
     hubDescription:
       "Speak with our marketing team about demand generation, campaigns, brand, content, and growth strategy.",
     helpLabel: "What are you looking for help with?",
@@ -205,7 +208,10 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     accent: BRAND.green,
     onTint: "#FFFFFF",
     onTintMuted: "rgba(255, 255, 255, 0.88)",
-    image: { src: "/contact/contact-talent.png", alt: "Talent team supporting staffing and recruitment" },
+    image: {
+      src: "/contact/contact-talent.png",
+      alt: "Indian talent team supporting staffing and recruitment",
+    },
     hubDescription:
       "Connect with our talent team for staffing, permanent hiring, executive search, or recruitment support.",
     helpLabel: "What are you looking for help with?",
@@ -231,7 +237,10 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     accent: BRAND.blue,
     onTint: "#FFFFFF",
     onTintMuted: "rgba(255, 255, 255, 0.88)",
-    image: { src: "/contact/contact-technology.png", alt: "Technology team working on cloud, data, and digital transformation" },
+    image: {
+      src: "/contact/contact-technology.png",
+      alt: "Indian technology team working on cloud, data, and digital transformation",
+    },
     hubDescription:
       "Engage our technology team for ServiceNow, transformation, data and AI, cloud, DevOps, or advisory requirements.",
     helpLabel: "What are you looking for help with?",
@@ -255,7 +264,10 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     accent: BRAND.crimson,
     onTint: "#FFFFFF",
     onTintMuted: "rgba(255, 255, 255, 0.88)",
-    image: { src: "/contact/contact-career.png", alt: "Professionals exploring career opportunities with FyerX" },
+    image: {
+      src: "/contact/contact-career.png",
+      alt: "Indian professionals exploring career opportunities with FyerX",
+    },
     hubDescription:
       "Submit your profile for opportunities with FyerX and roles across our client hiring network.",
     variant: "job",

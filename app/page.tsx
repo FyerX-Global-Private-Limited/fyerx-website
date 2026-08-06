@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <>
       <MainHeader />
-      <main className="flex-1">
+      <main className="home-main flex-1">
         <Hero />
         <TrustBar />
         <WhoWeAre />

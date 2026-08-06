@@ -516,14 +516,14 @@ export default function MainHeader() {
         </Link>
 
         {/* Nav + CTAs + Dropdown container */}
-        <div className="relative ml-6 flex min-w-0 flex-1 items-center sm:ml-8">
+        <div className="relative ml-8 flex min-w-0 flex-1 items-center sm:ml-10 lg:ml-12">
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-[2px]">
+          <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
 
             {/* Marketing — icon-list mega-menu */}
             <div onMouseEnter={() => open("Marketing")}>
-              <Link href="/marketing" onClick={closeAll} className={`flex items-center justify-center text-center gap-2 px-3.5 py-[7px] rounded-[8px]
+              <Link href="/marketing" onClick={closeAll} className={`flex items-center justify-center text-center gap-2 px-4 py-2 rounded-[8px]
                 cursor-pointer text-[0.875rem] font-light leading-[100%] transition-colors duration-100
                 ${openMenu === "Marketing" ? "bg-[#eeecfc] text-[#5c4fe0]" : "bg-transparent text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"}`}>
                 Marketing <ChevronDown open={openMenu === "Marketing"} />
@@ -532,7 +532,7 @@ export default function MainHeader() {
 
             {/* Talent — column mega-menu */}
             <div onMouseEnter={() => open("Talent")}>
-              <Link href="/talent" onClick={closeAll} className={`flex items-center justify-center text-center gap-2 px-3.5 py-[7px] rounded-[8px]
+              <Link href="/talent" onClick={closeAll} className={`flex items-center justify-center text-center gap-2 px-4 py-2 rounded-[8px]
                 cursor-pointer text-[0.875rem] font-light leading-[100%] transition-colors duration-100
                 ${openMenu === "Talent" ? "bg-[#eeecfc] text-[#5c4fe0]" : "bg-transparent text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"}`}>
                 Talent <ChevronDown open={openMenu === "Talent"} />
@@ -543,7 +543,7 @@ export default function MainHeader() {
             {simpleLinks.map((item) => (
               <Link key={item.label} href={item.href} onClick={closeAll}
                 onMouseEnter={() => setOpenMenu(null)}
-                className="flex items-center justify-center text-center gap-2 px-3.5 py-[7px] rounded-[8px]
+                className="flex items-center justify-center text-center gap-2 px-4 py-2 rounded-[8px]
                            cursor-pointer text-[0.875rem] font-light leading-[100%] text-[rgb(83,87,104)] bg-transparent
                            hover:bg-[#f5f6f8] transition-colors duration-100 whitespace-nowrap">
                 {item.label}
