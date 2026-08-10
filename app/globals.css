@@ -59,6 +59,29 @@ body {
   overflow-x: clip;
 }
 
+/* Pointer cursor on interactive controls site-wide */
+a[href],
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+label[for],
+select,
+summary,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+input[type="file"],
+.cursor-pointer {
+  cursor: pointer;
+}
+
+button:disabled,
+[disabled],
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
 /* Large section titles (≈46px desktop) — scales down on phone/tablet */
 .section-title-lg {
   margin: 0;

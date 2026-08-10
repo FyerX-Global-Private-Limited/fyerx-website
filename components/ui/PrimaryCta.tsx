@@ -34,7 +34,7 @@ function ctaStyle(color: string, textColor = "#ffffff"): CSSProperties {
 }
 
 const ctaClassName =
-  "relative inline-flex w-fit items-center justify-start gap-2 overflow-hidden text-[15px] font-semibold transition-opacity hover:opacity-95";
+  "relative inline-flex w-fit cursor-pointer items-center justify-start gap-2 overflow-hidden text-[15px] font-semibold transition-opacity hover:opacity-95";
 
 type PrimaryCtaLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className"> & {
   href: string;
