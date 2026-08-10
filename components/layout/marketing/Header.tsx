@@ -304,14 +304,14 @@ export default function MarketingHeader() {
       className="sticky top-0 z-50 w-full border-b border-blue-100 bg-white/80 backdrop-blur-md"
       onMouseLeave={scheduleClose}
     >
-      <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center" onClick={closeAll}>
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-10 lg:px-16">
+        <Link href="/marketing" className="flex items-center" onClick={closeAll}>
           <Image
-            src="/logo.webp"
-            alt="Fyerx Marketing"
-            width={140}
-            height={32}
-            className="h-8 w-auto object-contain"
+            src="/images/marketing/marketinglogo.png"
+            alt="FyerX Marketing"
+            width={160}
+            height={48}
+            className="h-8 w-auto object-contain sm:h-10"
           />
         </Link>
 

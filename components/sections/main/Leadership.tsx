@@ -22,7 +22,8 @@ const poppins = Poppins({
 
 const css = `
 .ldr-section{background:#fff;width:100%;overflow:hidden;}
-.ldr-grid{display:grid;grid-template-columns:1fr;gap:16px;border-radius:24px;}
+.ldr-section .section-shell{margin-inline:auto;width:100%;max-width:75rem;}
+.ldr-grid{display:grid;grid-template-columns:1fr;gap:16px;border-radius:24px;width:100%;}
 .ldr-card{border-radius:24px;border:1px solid rgb(195,198,212);background:#fff;padding:24px 20px;display:flex;flex-direction:column;}
 .ldr-icon{display:block;flex:none;width:52px;height:52px;}
 .ldr-card-title{margin:24px 0 0;padding-bottom:1.5rem;padding-right:0;font-weight:400;color:#000;font-size:clamp(1.5rem, 5vw, 2rem);line-height:1.2;letter-spacing:-0.02em;max-width:none;}
@@ -39,7 +40,7 @@ const css = `
   .ldr-icon{width:58px;height:58px;}
 }
 @media (min-width:1024px){
-  .ldr-grid{grid-template-columns:repeat(3,1fr);gap:0;}
+  .ldr-grid{grid-template-columns:repeat(3,1fr);gap:24px;}
   .ldr-card{padding:34px 37px 72px;}
   .ldr-card-image{min-height:0;border-radius:28px;}
   .ldr-br{display:inline;}

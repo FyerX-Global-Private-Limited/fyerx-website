@@ -46,10 +46,27 @@
   }
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-poppins), Arial, sans-serif;
+  min-width: 0;
+  overflow-x: clip;
+}
+
+/* Large section titles (≈46px desktop) — scales down on phone/tablet */
+.section-title-lg {
+  margin: 0;
+  font-size: clamp(1.75rem, 5vw, 2.875rem);
+  line-height: 1.12;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
 }
 
 @keyframes dropdown-enter {

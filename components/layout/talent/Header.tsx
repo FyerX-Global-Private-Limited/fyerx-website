@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { TALENT_ACCENT, TALENT_LOGO, TALENT_PRIMARY } from "@/lib/talent-brand";
 
 // ── Icons ──────────────────────────────────────────────────────────────────────
 function ChevronDown({ open }: { open: boolean }) {
@@ -189,8 +190,8 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
                   className="w-10 h-10 rounded-[10px] object-cover shrink-0"
                 />
                 <span
-                  className={`text-[0.875rem] font-normal leading-[1.3] transition-colors duration-100 group-hover:text-blue-600 ${
-                    active === i ? "text-blue-600" : "text-black"
+                  className={`text-[0.875rem] font-normal leading-[1.3] transition-colors duration-100 group-hover:text-[#11551C] ${
+                    active === i ? "text-[#11551C]" : "text-black"
                   }`}
                 >
                   {cat.label}
@@ -217,7 +218,7 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
                 <Link
                   href={item.href}
                   onClick={onClose}
-                  className="flex items-center gap-2 py-1 text-[0.875rem] font-normal leading-[1.4] text-black hover:text-blue-600 transition-colors duration-100"
+                  className="flex items-center gap-2 py-1 text-[0.875rem] font-normal leading-[1.4] text-black hover:text-[#11551C] transition-colors duration-100"
                 >
                   <span className="text-[#8b8fa3] shrink-0">
                     <Glyph name={item.icon} />
@@ -255,17 +256,17 @@ export default function TalentHeader() {
 
   return (
     <header
-      className="sticky top-0 z-50 w-full border-b border-blue-100 bg-white/80 backdrop-blur-md"
+      className="sticky top-0 z-50 w-full border-b border-[#9EEBAA]/40 bg-white/80 backdrop-blur-md"
       onMouseLeave={scheduleClose}
     >
-      <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center" onClick={closeAll}>
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-10 lg:px-16">
+        <Link href="/talent" className="flex items-center" onClick={closeAll}>
           <Image
-            src="/talentlogo.png"
-            alt="Fyerx Talent"
-            width={210}
+            src={TALENT_LOGO}
+            alt="FyerX Talent"
+            width={160}
             height={48}
-            className="h-12 w-auto object-contain"
+            className="h-10 w-auto object-contain"
           />
         </Link>
 
@@ -274,7 +275,7 @@ export default function TalentHeader() {
             <div onMouseEnter={openMenu}>
               <button
                 className={`flex items-center gap-2 px-4 py-[9px] rounded-[8px] cursor-pointer text-sm transition-colors duration-100 ${
-                  menuOpen ? "bg-blue-50 text-blue-600" : "text-zinc-600 hover:bg-zinc-50"
+                  menuOpen ? "bg-[#9EEBAA]/25 text-[#11551C]" : "text-zinc-600 hover:bg-zinc-50"
                 }`}
               >
                 Talent <ChevronDown open={menuOpen} />
@@ -287,7 +288,7 @@ export default function TalentHeader() {
                 href={item.href}
                 onClick={closeAll}
                 onMouseEnter={() => setMenuOpen(false)}
-                className="px-4 py-[9px] rounded-[8px] text-sm text-zinc-600 hover:bg-zinc-50 hover:text-blue-600 transition-colors duration-100 whitespace-nowrap"
+                className="px-4 py-[9px] rounded-[8px] text-sm text-zinc-600 hover:bg-zinc-50 hover:text-[#11551C] transition-colors duration-100 whitespace-nowrap"
               >
                 {item.label}
               </Link>
@@ -305,7 +306,7 @@ export default function TalentHeader() {
         </div>
 
         <div className="hidden md:block">
-          <PrimaryCtaLink href="/talent/book-session" color="#2935a3">
+          <PrimaryCtaLink href="/talent/book-session" color={TALENT_PRIMARY} textColor={TALENT_ACCENT}>
             Book a Session
           </PrimaryCtaLink>
         </div>
@@ -320,7 +321,7 @@ export default function TalentHeader() {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden border-t border-blue-100 bg-white">
+        <div className="md:hidden border-t border-[#9EEBAA]/40 bg-white">
           <div className="px-4 py-4 flex flex-col gap-0.5">
             <p className="px-3 pt-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.07em] text-zinc-400">
               Talent Solutions
@@ -334,7 +335,7 @@ export default function TalentHeader() {
                       key={item.label}
                       href={item.href}
                       onClick={closeAll}
-                      className="py-1 text-[13px] text-zinc-600 hover:text-blue-600 transition-colors"
+                      className="py-1 text-[13px] text-zinc-600 hover:text-[#11551C] transition-colors"
                     >
                       {item.label}
                     </Link>
@@ -342,7 +343,7 @@ export default function TalentHeader() {
                 </div>
               </div>
             ))}
-            <div className="my-2 h-px bg-blue-100" />
+            <div className="my-2 h-px bg-[#9EEBAA]/40" />
             {simpleLinks.map((item) => (
               <Link
                 key={item.label}
@@ -357,7 +358,8 @@ export default function TalentHeader() {
               href="/talent/book-session"
               onClick={closeAll}
               className="mt-3"
-              color="#2935a3"
+              color={TALENT_PRIMARY}
+              textColor={TALENT_ACCENT}
             >
               Book a Session
             </PrimaryCtaLink>

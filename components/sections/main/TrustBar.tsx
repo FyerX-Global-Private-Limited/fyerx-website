@@ -1,26 +1,6 @@
-const logos: { name: string; img: string; scale?: number }[] = [
-  { name: "Adro", img: "/trustbarlogos/trimmed/adro.png" },
-  { name: "Ambience", img: "/trustbarlogos/trimmed/ambience.png" },
-  { name: "Avekshaa", img: "/trustbarlogos/trimmed/avekshaa.png" },
-  { name: "Blummber", img: "/trustbarlogos/trimmed/blummber.png" },
-  { name: "Bullsmart", img: "/trustbarlogos/trimmed/bullsmart.png" },
-  { name: "Cinepebble", img: "/trustbarlogos/trimmed/cinipebble.png" },
-  { name: "Codeus", img: "/trustbarlogos/trimmed/codeus.png" },
-  { name: "Digitathya", img: "/trustbarlogos/trimmed/digitathya.png" },
-  { name: "TrnDigital", img: "/trustbarlogos/trndigital.png", scale: 1.65 },
-  { name: "Dyashin", img: "/trustbarlogos/trimmed/dyashin.png" },
-  { name: "Kaypee Space", img: "/trustbarlogos/trimmed/kaypeespace.png" },
-  { name: "Multimedia", img: "/trustbarlogos/trimmed/multimedia.png" },
-  { name: "Onroadz", img: "/trustbarlogos/trimmed/onroad.png" },
-  { name: "Orihiro", img: "/trustbarlogos/trimmed/orihiro.png" },
-  { name: "Saraogi", img: "/trustbarlogos/trimmed/sarogi.png" },
-  { name: "Silvercross", img: "/trustbarlogos/trimmed/silvercross.png" },
-  { name: "Solv", img: "/trustbarlogos/trimmed/solv.png" },
-  { name: "SpinMatch", img: "/trustbarlogos/trimmed/spinmatch.png" },
-  { name: "WeGoFin", img: "/trustbarlogos/trimmed/wegofin.png" },
-  { name: "Workdays", img: "/trustbarlogos/trimmed/workdays.png" },
-  { name: "Zassets", img: "/trustbarlogos/trimmed/zassets.png" },
-];
+import { TRUSTBAR_LOGOS } from "@/lib/trustbar-logos";
+
+const logos = TRUSTBAR_LOGOS;
 
 const LOGO_SLOT =
   "flex h-10 w-28 shrink-0 items-center justify-center p-2 sm:h-12 sm:w-36 sm:p-3 md:w-40";

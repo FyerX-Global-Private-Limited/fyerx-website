@@ -34,35 +34,35 @@ const cards = [
     top: (
       <PhotoTop
         src={IMG_AEO}
-        alt="Contract Staffing vs Permanent Hiring: What's Right for You?"
+        alt="Contract Staffing vs Permanent Hiring"
       />
     ),
-    title: "Contract Staffing vs Permanent Hiring: What's Right for You?",
-    body: "A practical breakdown of when contract talent makes sense and when it doesn't.",
-    link: "Learn More",
+    title: "Contract Staffing vs Permanent Hiring",
+    body: "How to choose the model that fits your timeline, budget structure, and ongoing capability need.",
+    link: "Read More",
   },
   {
-    top: <PhotoTop src={IMG_ABM} alt="What is RPO and When Does It Make Sense?" />,
-    title: "What is RPO and When Does It Make Sense?",
-    body: "How recruitment process outsourcing works, and the signs it's time to consider it.",
-    link: "See the Latest Updates",
+    top: <PhotoTop src={IMG_ABM} alt="What RPO Looks Like in Practice" />,
+    title: "What RPO Looks Like in Practice",
+    body: "When outsourced recruitment support is useful—and what the working model should include.",
+    link: "Read More",
   },
   {
-    top: <PhotoTop src={IMG_AGENTS} alt="A Guide to Hiring IT Talent in 2026" />,
-    title: "A Guide to Hiring IT Talent in 2026",
-    body: "What to look for when sourcing developers, data specialists, and cloud engineers.",
-    link: "Explore Our Blog",
+    top: <PhotoTop src={IMG_AGENTS} alt="How to Hire for Enterprise Platforms" />,
+    title: "How to Hire for Enterprise Platforms",
+    body: "What to clarify before hiring ServiceNow, Salesforce, SAP, and other platform specialists.",
+    link: "Read More",
   },
   {
     top: (
       <PhotoTop
         src={IMG_GEO}
-        alt="US Contract Staffing: What Indian Businesses Need to Know"
+        alt="Building a Distributed Technology Team"
       />
     ),
-    title: "US Contract Staffing: What Indian Businesses Need to Know",
-    body: "The compliance basics behind placing contract talent for US-based teams.",
-    link: "Check Our Latest Posts",
+    title: "Building a Distributed Technology Team",
+    body: "Key considerations for sourcing, engaging, and supporting remote talent across locations.",
+    link: "Read More",
   },
 ];
 
@@ -70,10 +70,7 @@ export default function ResourcesSection() {
   return (
     <section className="res">
       <div className="res__container">
-        <h2 className="res__heading">Resources to hit your hiring goals</h2>
-        <p className="res__subheading">
-          Straight talk on AI, demand generation, and B2B growth, no fluff.
-        </p>
+        <h2 className="res__heading">Practical thinking for smarter hiring</h2>
 
         <div className="res__grid">
           {cards.map((c) => (
@@ -93,7 +90,7 @@ export default function ResourcesSection() {
 
         <div className="res__cta-wrap">
           <button className="res__cta" type="button">
-            View All Posts
+            View All Resources
           </button>
         </div>
       </div>
@@ -120,14 +117,25 @@ export default function ResourcesSection() {
           max-width: 1260px;
           margin: 0 auto;
           background: #f4f4f5;
-          border-radius: 28px;
-          padding: 56px 48px 64px;
+          border-radius: 20px;
+          padding: 32px 20px 40px;
           box-sizing: border-box;
         }
+        @media (min-width: 640px) {
+          .res__container {
+            border-radius: 28px;
+            padding: 48px 32px 56px;
+          }
+        }
+        @media (min-width: 1024px) {
+          .res__container {
+            padding: 56px 48px 64px;
+          }
+        }
         .res__heading {
-          margin: 0;
+          margin: 0 0 32px;
           text-align: center;
-          font-size: 46px;
+          font-size: clamp(1.75rem, 5vw, 2.875rem);
           line-height: 1.12;
           font-weight: 500;
           letter-spacing: -0.02em;
@@ -188,7 +196,7 @@ export default function ResourcesSection() {
           justify-content: center;
         }
         .res__cta {
-          background: #0B2E59;
+          background: #11551C;
           color: #ffffff;
           border: none;
           border-radius: 999px;

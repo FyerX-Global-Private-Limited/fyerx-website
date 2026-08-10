@@ -95,31 +95,28 @@ export default function CampaignsSection() {
         <div className="relative rounded-[32px] bg-[#0B1D3A]">
           <div className="grid items-center gap-8 md:grid-cols-2">
             {/* Left: copy */}
-            <div className="px-8 py-12 sm:px-12 sm:py-16 lg:pl-16">
+            <div className="px-6 py-10 sm:px-12 sm:py-16 lg:pl-16">
               <span className="inline-flex w-fit items-center rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white">
                 FyerX Marketing
               </span>
 
-              <h2
-                className="mt-8 font-medium text-white"
-                style={{ fontSize: "46px", lineHeight: 1.12, letterSpacing: "-0.02em" }}
-              >
-                A marketing team that actually understands your business
-              </h2>
+          <h2 className="section-title-lg mt-8 text-white sm:mt-8">
+            Marketing should feel less fragmented.
+          </h2>
 
-              <p className="mt-6 max-w-sm text-sm font-medium leading-relaxed text-neutral-300">
-                We take the time to understand what you sell and who you sell to, so the
-                strategy fits your business instead of a generic playbook. One team, clear
-                reporting, and people who stay involved as your business grows.
+          <p className="mt-4 max-w-sm text-sm font-medium leading-relaxed text-neutral-300 sm:mt-6">
+                FyerX gives you a team that can think through the bigger picture and
+                take responsibility for the work that follows—without losing sight of
+                day-to-day delivery.
               </p>
 
-              <div className="mt-8 flex items-center gap-6">
-                <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Get Started</PrimaryCtaLink>
+              <div className="mt-6 flex flex-col items-stretch gap-4 sm:mt-8 sm:flex-row sm:items-center sm:gap-6">
+                <PrimaryCtaLink href="/contact" className="w-[234px] justify-center text-black!" color="#FFC900">Start a Conversation</PrimaryCtaLink>
                 <a
                   href="#"
                   className="text-sm font-medium text-white underline underline-offset-4 hover:text-neutral-200"
                 >
-                  Learn More
+                  See Our Capabilities
                 </a>
               </div>
             </div>

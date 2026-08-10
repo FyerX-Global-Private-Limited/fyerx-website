@@ -44,6 +44,82 @@ export const FOOTER_RESOURCES_LINKS: FooterLink[] = [
   { label: "Terms of Service", href: "/terms-of-service" },
 ];
 
+export const FOOTER_MARKETING_TAGLINE =
+  "Marketing built around business outcomes." as const;
+
+export const FOOTER_MARKETING_ADDRESS = "Bangalore, Karnataka, India" as const;
+
+export const FOOTER_MARKETING_SERVICES: FooterLink[] = [
+  { label: "Strategy & Consulting", href: "/marketing/services" },
+  { label: "Demand & Lead Generation", href: "/marketing/services" },
+  { label: "Search & AI Visibility", href: "/marketing/services" },
+  { label: "Social Media Marketing", href: "/marketing/services" },
+  { label: "Performance Marketing", href: "/marketing/services" },
+  { label: "Branding & Design", href: "/marketing/services" },
+];
+
+export const FOOTER_MARKETING_GROWTH_FOCUS: FooterLink[] = [
+  { label: "Go-to-Market Strategy", href: "/marketing/services" },
+  { label: "Account-Based Marketing", href: "/marketing/services" },
+  { label: "LinkedIn Lead Generation", href: "/marketing/services" },
+  { label: "SEO", href: "/marketing/services" },
+  { label: "Paid Search", href: "/marketing/services" },
+  { label: "Marketing Automation", href: "/marketing/services" },
+];
+
+export const FOOTER_MARKETING_EXPLORE_LINKS: FooterLink[] = [
+  { label: "Main Site", href: "/" },
+  { label: "Talent", href: "/talent" },
+  { label: "Technology", href: "/contact?form=technology" },
+  { label: "Learning", href: "/#capabilities" },
+  { label: "Contact", href: "/contact?form=marketing" },
+];
+
+export const FOOTER_MARKETING_RESOURCES_LINKS: FooterLink[] = [
+  { label: "Marketing Insights", href: "/blog" },
+  { label: "Case Studies", href: "/marketing/case-studies" },
+  { label: "Marketing FAQs", href: "/marketing#faqs" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms of Service", href: "/terms-of-service" },
+];
+
+export const FOOTER_TALENT_TAGLINE =
+  "The right people for the work ahead." as const;
+
+export const FOOTER_TALENT_ADDRESS = "Bangalore, Karnataka, India" as const;
+
+export const FOOTER_TALENT_SERVICES: FooterLink[] = [
+  { label: "Contract Staffing", href: "/talent" },
+  { label: "Recruitment Process Outsourcing", href: "/talent" },
+  { label: "Permanent Hiring", href: "/talent" },
+  { label: "Executive Search", href: "/talent" },
+  { label: "IT & Technology Talent", href: "/talent" },
+];
+
+export const FOOTER_TALENT_HIRING_NEEDS: FooterLink[] = [
+  { label: "IT Contract Staffing", href: "/talent" },
+  { label: "Project-Based Staffing", href: "/talent" },
+  { label: "Volume Hiring", href: "/talent" },
+  { label: "Remote Team Building", href: "/talent" },
+  { label: "Data & AI Talent", href: "/talent" },
+];
+
+export const FOOTER_TALENT_EXPLORE_LINKS: FooterLink[] = [
+  { label: "Main Site", href: "/" },
+  { label: "Marketing", href: "/marketing" },
+  { label: "Technology", href: "/contact?form=technology" },
+  { label: "Learning", href: "/#capabilities" },
+  { label: "Contact", href: "/contact?form=talent" },
+];
+
+export const FOOTER_TALENT_RESOURCES_LINKS: FooterLink[] = [
+  { label: "Talent Insights", href: "/blog" },
+  { label: "Hiring Guides", href: "/talent" },
+  { label: "Candidate FAQs", href: "/talent#faqs" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms of Service", href: "/terms-of-service" },
+];
+
 export const FOOTER_LEGAL_LINKS: FooterLink[] = [
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms of Service", href: "/terms-of-service" },

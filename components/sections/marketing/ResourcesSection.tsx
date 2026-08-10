@@ -31,28 +31,48 @@ function PhotoTop({ src, alt }: { src: string; alt: string }) {
 
 const cards = [
   {
-    top: <PhotoTop src={IMG_AEO} alt="Why AEO Matters More Than Traditional SEO in 2026" />,
-    title: "Why AEO Matters More Than Traditional SEO in 2026",
-    body: "How answer engines are changing what it means to rank.",
-    link: "Read more",
+    top: (
+      <PhotoTop
+        src={IMG_AEO}
+        alt="How to Build a Go-to-Market Plan That Teams Can Use"
+      />
+    ),
+    title: "How to Build a Go-to-Market Plan That Teams Can Use",
+    body: "A practical look at turning a launch idea into a workable marketing sequence.",
+    link: "Read More",
   },
   {
-    top: <PhotoTop src={IMG_ABM} alt="How to Build an ABM Program Without a Six-Figure Budget" />,
-    title: "How to Build an ABM Program Without a Six-Figure Budget",
-    body: "A lean, practical approach to account-based marketing.",
-    link: "Read more",
+    top: (
+      <PhotoTop
+        src={IMG_ABM}
+        alt="SEO, AEO, and GEO: What Changes and What Does Not"
+      />
+    ),
+    title: "SEO, AEO, and GEO: What Changes and What Does Not",
+    body: "How to strengthen visibility across search and AI-led discovery.",
+    link: "Read More",
   },
   {
-    top: <PhotoTop src={IMG_AGENTS} alt="The B2B Marketer's Guide to Marketing Automation Agents" />,
-    title: "The B2B Marketer's Guide to Marketing Automation Agents",
-    body: "What automation agents can — and can't — do for your funnel.",
-    link: "Read more",
+    top: (
+      <PhotoTop
+        src={IMG_AGENTS}
+        alt="From Campaign Click to Customer Conversation"
+      />
+    ),
+    title: "From Campaign Click to Customer Conversation",
+    body: "The essentials of a landing page and follow-up journey that does not drop intent.",
+    link: "Read More",
   },
   {
-    top: <PhotoTop src={IMG_GEO} alt="GEO Explained: Getting Your Brand Cited Inside AI Answers" />,
-    title: "GEO Explained: Getting Your Brand Cited Inside AI Answers",
-    body: "Understanding generative engine optimization and brand visibility.",
-    link: "Read more",
+    top: (
+      <PhotoTop
+        src={IMG_GEO}
+        alt="Where AI Actually Helps a Marketing Team"
+      />
+    ),
+    title: "Where AI Actually Helps a Marketing Team",
+    body: "Useful AI applications for research, content operations, creative testing, and automation.",
+    link: "Read More",
   },
 ];
 
@@ -60,10 +80,7 @@ export default function ResourcesSection() {
   return (
     <section className="res">
       <div className="res__container">
-        <h2 className="res__heading">Insights for Growth-Focused Marketing Teams</h2>
-        <p className="res__subheading">
-          Straight talk on AI, demand generation, and B2B growth, no fluff.
-        </p>
+        <h2 className="res__heading">Ideas, guides, and practical marketing thinking</h2>
 
         <div className="res__grid">
           {cards.map((c) => (
@@ -104,14 +121,25 @@ export default function ResourcesSection() {
           max-width: 1260px;
           margin: 0 auto;
           background: #f4f4f5;
-          border-radius: 28px;
-          padding: 56px 48px 64px;
+          border-radius: 20px;
+          padding: 32px 20px 40px;
           box-sizing: border-box;
         }
+        @media (min-width: 640px) {
+          .res__container {
+            border-radius: 28px;
+            padding: 48px 32px 56px;
+          }
+        }
+        @media (min-width: 1024px) {
+          .res__container {
+            padding: 56px 48px 64px;
+          }
+        }
         .res__heading {
-          margin: 0;
+          margin: 0 0 32px;
           text-align: center;
-          font-size: 46px;
+          font-size: clamp(1.75rem, 5vw, 2.875rem);
           line-height: 1.12;
           font-weight: 500;
           letter-spacing: -0.02em;

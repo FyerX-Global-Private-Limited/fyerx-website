@@ -9,6 +9,18 @@ import {
   FOOTER_EXPLORE_LINKS,
   FOOTER_FOR_BUSINESS_LINKS,
   FOOTER_LEGAL_LINKS,
+  FOOTER_MARKETING_ADDRESS,
+  FOOTER_MARKETING_EXPLORE_LINKS,
+  FOOTER_MARKETING_GROWTH_FOCUS,
+  FOOTER_MARKETING_RESOURCES_LINKS,
+  FOOTER_MARKETING_SERVICES,
+  FOOTER_MARKETING_TAGLINE,
+  FOOTER_TALENT_ADDRESS,
+  FOOTER_TALENT_EXPLORE_LINKS,
+  FOOTER_TALENT_HIRING_NEEDS,
+  FOOTER_TALENT_RESOURCES_LINKS,
+  FOOTER_TALENT_SERVICES,
+  FOOTER_TALENT_TAGLINE,
   FOOTER_RESOURCES_LINKS,
   FOOTER_SOCIALS,
   type FooterCapability,
@@ -30,19 +42,19 @@ const LOGO_BY_VARIANT: Record<
     className: "h-8 w-auto object-contain",
   },
   marketing: {
-    src: "/logo.webp",
+    src: "/images/marketing/marketinglogo.png",
     alt: "FyerX Marketing",
     href: "/marketing",
-    width: 140,
-    height: 32,
-    className: "h-8 w-auto object-contain",
+    width: 160,
+    height: 48,
+    className: "h-10 w-auto object-contain",
   },
   talent: {
-    src: "/talentlogo.png",
+    src: "/images/marketing/technologylogo.png",
     alt: "FyerX Talent",
     href: "/talent",
-    width: 175,
-    height: 40,
+    width: 160,
+    height: 48,
     className: "h-10 w-auto object-contain",
   },
 };
@@ -197,8 +209,22 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
               />
             </Link>
             <p className="mt-4 max-w-none text-[0.8125rem] font-light leading-[1.6] text-[rgb(88,89,101)] sm:max-w-[280px] lg:max-w-none">
-              {TAGLINE_BY_VARIANT[variant]}
+              {variant === "marketing"
+                ? FOOTER_MARKETING_TAGLINE
+                : variant === "talent"
+                  ? FOOTER_TALENT_TAGLINE
+                  : TAGLINE_BY_VARIANT[variant]}
             </p>
+            {(variant === "marketing" || variant === "talent") && (
+              <p className="mt-2 flex min-w-0 items-start gap-2.5 break-words text-[0.8125rem] font-light leading-[1.6] text-[rgb(88,89,101)]">
+                <ContactIcon type="address" />
+                <span>
+                  {variant === "marketing"
+                    ? FOOTER_MARKETING_ADDRESS
+                    : FOOTER_TALENT_ADDRESS}
+                </span>
+              </p>
+            )}
             <div className="mt-5 flex flex-col gap-1.5">
               <a href={FOOTER_CONTACT.phoneHref} className={contactCls}>
                 <ContactIcon type="phone" />
@@ -212,23 +238,71 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
           </div>
 
           {/* Link columns */}
-          <div className="grid min-w-0 flex-1 grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10 md:grid-cols-4 lg:gap-x-6 xl:gap-x-10">
+          <div
+            className={`grid min-w-0 flex-1 grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10 lg:gap-x-6 xl:gap-x-10 ${
+              variant === "marketing" || variant === "talent"
+                ? "md:grid-cols-3 xl:grid-cols-5"
+                : "md:grid-cols-4"
+            }`}
+          >
             <div>
               <h4 className={headingCls}>Capabilities</h4>
               <CapabilityLinks items={FOOTER_CAPABILITIES} />
             </div>
-            <div>
-              <h4 className={headingCls}>Explore FyerX</h4>
-              <FooterLinks items={FOOTER_EXPLORE_LINKS} />
-            </div>
-            <div>
-              <h4 className={headingCls}>For Business</h4>
-              <FooterLinks items={FOOTER_FOR_BUSINESS_LINKS} />
-            </div>
-            <div>
-              <h4 className={headingCls}>Resources</h4>
-              <FooterLinks items={FOOTER_RESOURCES_LINKS} />
-            </div>
+            {variant === "marketing" ? (
+              <>
+                <div>
+                  <h4 className={headingCls}>Marketing Services</h4>
+                  <FooterLinks items={FOOTER_MARKETING_SERVICES} />
+                </div>
+                <div>
+                  <h4 className={headingCls}>Growth Focus</h4>
+                  <FooterLinks items={FOOTER_MARKETING_GROWTH_FOCUS} />
+                </div>
+                <div>
+                  <h4 className={headingCls}>Explore FyerX</h4>
+                  <FooterLinks items={FOOTER_MARKETING_EXPLORE_LINKS} />
+                </div>
+                <div>
+                  <h4 className={headingCls}>Resources</h4>
+                  <FooterLinks items={FOOTER_MARKETING_RESOURCES_LINKS} />
+                </div>
+              </>
+            ) : variant === "talent" ? (
+              <>
+                <div>
+                  <h4 className={headingCls}>Talent Services</h4>
+                  <FooterLinks items={FOOTER_TALENT_SERVICES} />
+                </div>
+                <div>
+                  <h4 className={headingCls}>Hiring Needs</h4>
+                  <FooterLinks items={FOOTER_TALENT_HIRING_NEEDS} />
+                </div>
+                <div>
+                  <h4 className={headingCls}>Explore FyerX</h4>
+                  <FooterLinks items={FOOTER_TALENT_EXPLORE_LINKS} />
+                </div>
+                <div>
+                  <h4 className={headingCls}>Resources</h4>
+                  <FooterLinks items={FOOTER_TALENT_RESOURCES_LINKS} />
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <h4 className={headingCls}>Explore FyerX</h4>
+                  <FooterLinks items={FOOTER_EXPLORE_LINKS} />
+                </div>
+                <div>
+                  <h4 className={headingCls}>For Business</h4>
+                  <FooterLinks items={FOOTER_FOR_BUSINESS_LINKS} />
+                </div>
+                <div>
+                  <h4 className={headingCls}>Resources</h4>
+                  <FooterLinks items={FOOTER_RESOURCES_LINKS} />
+                </div>
+              </>
+            )}
           </div>
         </div>
 

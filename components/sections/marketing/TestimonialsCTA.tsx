@@ -6,8 +6,8 @@ import React from "react";
  * TestimonialsCTA — Enterprise CTA section with contact-sales form.
  *
  * Font: Poppins (make sure it is loaded globally, e.g. via next/font/google).
- * Avatar images use remote placeholders — swap the URLs in AVATARS /
- * TESTIMONIAL_AVATAR for your own assets under /public when available.
+ * Avatar images use remote placeholders — swap the URLs in AVATARS for your
+ * own assets under /public when available.
  */
 
 const AVATARS = [
@@ -17,48 +17,6 @@ const AVATARS = [
   "https://randomuser.me/api/portraits/men/85.jpg",
   "https://randomuser.me/api/portraits/men/76.jpg",
 ];
-
-const TESTIMONIAL_AVATAR = "https://randomuser.me/api/portraits/women/47.jpg";
-
-// Same client roster as TrustBar.tsx, muted grayscale for this darker card background.
-const LOGOS = [
-  { name: "Adro", img: "/trustbarlogos/trimmed/adro.png" },
-  { name: "Ambience", img: "/trustbarlogos/trimmed/ambience.png" },
-  { name: "Avekshaa", img: "/trustbarlogos/trimmed/avekshaa.png" },
-  { name: "Blummber", img: "/trustbarlogos/trimmed/blummber.png" },
-  { name: "Bullsmart", img: "/trustbarlogos/trimmed/bullsmart.png" },
-  { name: "Cinepebble", img: "/trustbarlogos/trimmed/cinipebble.png" },
-  { name: "Codeus", img: "/trustbarlogos/trimmed/codeus.png" },
-  { name: "Digitathya", img: "/trustbarlogos/trimmed/digitathya.png" },
-  { name: "Dyashin", img: "/trustbarlogos/trimmed/dyashin.png" },
-  { name: "Kaypee Space", img: "/trustbarlogos/trimmed/kaypeespace.png" },
-  { name: "Multimedia", img: "/trustbarlogos/trimmed/multimedia.png" },
-  { name: "Onroadz", img: "/trustbarlogos/trimmed/onroad.png" },
-  { name: "Orihiro", img: "/trustbarlogos/trimmed/orihiro.png" },
-  { name: "Saraogi", img: "/trustbarlogos/trimmed/sarogi.png" },
-  { name: "Silvercross", img: "/trustbarlogos/trimmed/silvercross.png" },
-  { name: "Solv", img: "/trustbarlogos/trimmed/solv.png" },
-  { name: "SpinMatch", img: "/trustbarlogos/trimmed/spinmatch.png" },
-  { name: "WeGoFin", img: "/trustbarlogos/trimmed/wegofin.png" },
-  { name: "Workdays", img: "/trustbarlogos/trimmed/workdays.png" },
-  { name: "Zassets", img: "/trustbarlogos/trimmed/zassets.png" },
-];
-
-function LogoSet() {
-  return (
-    <>
-      {LOGOS.map((logo) => (
-        <span key={logo.name} className="flex shrink-0 items-center">
-          <img
-            src={logo.img}
-            alt={logo.name}
-            className="h-6 w-auto max-w-full object-contain grayscale opacity-60"
-          />
-        </span>
-      ))}
-    </>
-  );
-}
 
 const inputBase =
   "w-full h-10 rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 text-[13px] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]";
@@ -94,55 +52,19 @@ export default function TestimonialsCTA() {
       className="bg-white px-4 pb-2 sm:px-8 lg:px-[6%]"
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
-      <div className="rounded-[24px] bg-[#d9d2f4] px-6 py-16 lg:py-[88px]">
-        <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-16 lg:flex-row lg:items-stretch lg:justify-between lg:gap-[120px]">
+      <div className="rounded-[20px] bg-[#fdce151a] px-4 py-10 sm:rounded-[24px] sm:px-6 sm:py-16 lg:py-[88px]">
+        <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-10 sm:gap-16 lg:flex-row lg:items-stretch lg:justify-between lg:gap-[120px]">
           {/* ------------------------------ Left column ------------------------------ */}
           <div className="flex min-w-0 flex-1 flex-col">
-            <h2 className="max-w-[470px] mt-0 mb-0 text-[46px] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)]">
-              Ready to see what FyerX can do for your business?
+            <h2 className="section-heading max-w-none lg:max-w-[470px]">
+              Ready to make marketing move with{" "}
+              <span className="brand-gradient-text">more purpose?</span>
             </h2>
 
-            <p className="mt-6 max-w-[400px] text-[18px] font-light leading-[140%] text-[#181b34]">
-              Share your goals with our team to explore the right approach and
-              pricing for your business.
+            <p className="section-subheading max-w-none lg:max-w-[400px]">
+              Tell us what you are building, fixing, launching, or trying to grow.
+              We will come back with a clear next step.
             </p>
-
-            {/* Spacer pushes logos + testimonial to the bottom of the column */}
-            <div className="min-h-[48px] flex-1" />
-
-            {/* Logos strip — infinite scroll loop, pauses on hover */}
-            <div className="group w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-              <div className="animate-marquee flex w-max items-center gap-10 group-hover:[animation-play-state:paused]">
-                <div className="flex shrink-0 items-center gap-10">
-                  <LogoSet />
-                </div>
-                <div className="flex shrink-0 items-center gap-10" aria-hidden="true">
-                  <LogoSet />
-                </div>
-              </div>
-            </div>
-
-            {/* Testimonial card — placeholder, pending a verified client quote */}
-            <div className="mt-7 max-w-[465px] rounded-[8px] border border-[#323338] p-6">
-              <p className="text-[14px] leading-[1.5] text-[#181b34]">
-                &ldquo;[Insert client quote, 15-25 words]&rdquo;
-              </p>
-              <div className="mt-5 flex items-center gap-4">
-                <img
-                  src={TESTIMONIAL_AVATAR}
-                  alt="[Client Name]"
-                  className="h-[54px] w-[54px] shrink-0 rounded-full object-cover"
-                />
-                <div>
-                  <p className="text-[15px] font-semibold leading-[1.4] text-[#181b34]">
-                    [Client Name]
-                  </p>
-                  <p className="text-[14px] leading-[1.4] text-[#181b34]">
-                    [Title] | [Company Name]
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* --------------------------- Right column (form) --------------------------- */}
@@ -160,16 +82,16 @@ export default function TestimonialsCTA() {
               ))}
             </div>
 
-            <div className="w-full rounded-[16px] bg-white px-6 py-7 shadow-[0px_6px_20px_rgba(29,37,45,0.05)] sm:px-9">
+            <div className="w-full rounded-[16px] bg-white px-4 py-6 shadow-[0px_6px_20px_rgba(29,37,45,0.05)] sm:px-9 sm:py-7">
               <h3 className="text-center text-[16px] font-semibold text-[#181b34]">
-                Contact our team
+                Talk to the FyerX Marketing Team
               </h3>
 
               <form
                 className="mt-4 flex flex-col gap-3"
                 onSubmit={(e) => e.preventDefault()}
               >
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3 min-[480px]:grid-cols-2">
                   <input
                     type="text"
                     name="firstName"
@@ -236,7 +158,7 @@ export default function TestimonialsCTA() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3 min-[480px]:grid-cols-2">
                   <input
                     type="text"
                     name="companyName"
@@ -273,7 +195,7 @@ export default function TestimonialsCTA() {
                     className={selectBase}
                   >
                     <option value="" disabled>
-                      What would you like to explore?*
+                      What would you like support with?*
                     </option>
                     <option value="work-management">Work management</option>
                     <option value="crm">CRM</option>
@@ -292,9 +214,9 @@ export default function TestimonialsCTA() {
 
                 <button
                   type="submit"
-                  className="mx-auto mt-3 h-10 w-24 rounded-full bg-[#FFC900] text-[14px] font-normal text-black transition-colors duration-150 hover:bg-[#e6b400]"
+                  className="mx-auto mt-3 h-10 w-[150px] rounded-full bg-[#FFC900] text-[14px] font-normal text-black transition-colors duration-150 hover:bg-[#e6b400]"
                 >
-                  Submit
+                  Submit Enquiry
                 </button>
 
                 <p className="mx-auto mt-1.5 max-w-[300px] text-center text-[10.5px] leading-[1.6] text-[#333333]">

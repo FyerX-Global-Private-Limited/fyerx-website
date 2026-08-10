@@ -79,51 +79,51 @@ type ServiceCard = {
 
 const SERVICE_CARDS: ServiceCard[] = [
   {
-    id: "one-team-not-five-vendors",
-    title: "One team, not five vendors",
+    id: "one-connected-team",
+    title: "One connected team",
     description:
-      "Strategy, content, SEO, and automation come from one team you can hold accountable, instead of juggling separate vendors yourself.",
-    alt: "One team, not five vendors — FyerX B2B marketing",
+      "Strategy, creative, performance, search, social, web, and automation work together instead of in silos.",
+    alt: "One connected team — FyerX Marketing",
     image: "/avatar/ai1.avif",
   },
   {
-    id: "built-for-longer-sales-cycles",
-    title: "Built for longer sales cycles",
+    id: "built-around-your-next-business-goal",
+    title: "Built around your next business goal",
     description:
-      "Our approach is built around how B2B buyers actually decide, not quick-conversion tactics borrowed from consumer marketing.",
-    alt: "Built for longer sales cycles — FyerX B2B marketing",
+      "We begin with what must change—launch, leads, visibility, conversion, or brand perception.",
+    alt: "Built around your next business goal — FyerX Marketing",
     image: "/avatar/ai2.avif",
   },
   {
-    id: "reporting-tied-to-revenue",
-    title: "Reporting tied to revenue",
+    id: "ideas-that-can-be-executed",
+    title: "Ideas that can be executed",
     description:
-      "Every campaign is measured against pipeline and closed deals, so you know what's actually working, not just what looks good on a dashboard.",
-    alt: "Reporting tied to revenue — FyerX B2B marketing",
+      "Recommendations are translated into campaigns, assets, pages, workflows, and clear next actions.",
+    alt: "Ideas that can be executed — FyerX Marketing",
     image: "/avatar/ai3.avif",
   },
   {
-    id: "ai-where-it-helps-people-where-it-matters",
-    title: "AI where it helps, people where it matters",
+    id: "creative-with-commercial-purpose",
+    title: "Creative with commercial purpose",
     description:
-      "We use AI to move faster on research and drafts, but every piece of work is reviewed by our team before it reaches your audience.",
-    alt: "AI where it helps, people where it matters — FyerX B2B marketing",
+      "Every design, message, and video is shaped to make the brand clearer and the audience response stronger.",
+    alt: "Creative with commercial purpose — FyerX Marketing",
     image: "/avatar/ai4.avif",
   },
   {
-    id: "no-rigid-annual-contracts",
-    title: "No rigid annual contracts",
+    id: "ai-used-with-judgement",
+    title: "AI used with judgement",
     description:
-      "Engagements scale up or down as your pipeline needs change, without locking you into a fixed yearly plan.",
-    alt: "No rigid annual contracts — FyerX B2B marketing",
+      "We use AI to accelerate research, production, testing, and automation; people remain accountable for the output.",
+    alt: "AI used with judgement — FyerX Marketing",
     image: "/avatar/ai5.avif",
   },
   {
-    id: "a-team-that-stays-close-to-the-work",
-    title: "A team that stays close to the work",
+    id: "clear-useful-reporting",
+    title: "Clear, useful reporting",
     description:
-      "You get a marketing team that understands your business and stays involved as things evolve, not a rotating cast of account handlers.",
-    alt: "A team that stays close to the work — FyerX B2B marketing",
+      "You see the measures that guide decisions: activity, response, lead quality, conversion, and commercial progress.",
+    alt: "Clear, useful reporting — FyerX Marketing",
     image: "/avatar/ai6.avif",
   },
 ];
@@ -162,16 +162,13 @@ export default function ServicesGrid() {
       <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
         {/* Heading */}
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-[46px] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)]">
-            Why B2B teams choose FyerX over a typical agency
-            <SparkleIcon className="ml-2 inline-block h-7 w-7 align-middle sm:h-8 sm:w-8" />
+          <h2 className="section-title-lg">
+            A practical marketing partner, built around the work
+            <SparkleIcon className="ml-2 inline-block h-6 w-6 align-middle sm:h-8 sm:w-8" />
           </h2>
 
           <div className="mt-8 flex flex-col items-center">
-            <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Get Started</PrimaryCtaLink>
-            <p className="mt-3 text-sm text-neutral-500">
-              Get full access, no commitment required
-            </p>
+            <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Explore How We Work</PrimaryCtaLink>
           </div>
         </div>
 

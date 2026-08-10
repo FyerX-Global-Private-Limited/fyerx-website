@@ -181,6 +181,14 @@ const css = `
     text-align:center;
   }
   .tr-hero *{margin:0;padding:0;box-sizing:border-box;}
+  .tr-hero .section-shell{
+    margin-inline:auto;
+    width:100%;
+    max-width:75rem;
+  }
+  .tr-hero .section-body{
+    width:100%;
+  }
   .tr-hero .tr-subheading{
     text-align:center;
     margin:17px auto var(--section-content-gap);

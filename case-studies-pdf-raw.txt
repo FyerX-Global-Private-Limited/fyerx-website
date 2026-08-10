@@ -1,0 +1,431 @@
+﻿N 8 N ┬╖ A I WO R K F LOW AU TO M AT I O N
+AI-Powered Marketing OperationsΓÇï
+
+Built for Real Marketing Teams
+Three confidential client implementations across lead operations, content operations and performanceΓÇï
+
+reporting ΓÇö built with n8n, AI and practical approval controls to reduce manual work without losing
+oversight.
+Real-Time Triggers 	AI Assistance 	Automated Reporting
+Prepared for: Pravin Pillai 	| 	Presented by: FyerX Global Private Limited
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	01
+
+-- 1 of 18 --
+
+AG E N DA
+What We'll Cover
+01 The Challenge
+The operational gaps addressed across our active client workflows
+02 Our Approach
+How we build n8n + AI workflows around real teams, tools and approvals
+03 Three Client Implementations
+Lead operations, content operations and performance reporting
+04 Why Partner With Us
+Our delivery approach, controls and implementation support
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	02
+
+-- 2 of 18 --
+
+T H E C H A L L E N G E
+Manual Operations Are Creating Avoidable Delays
+L e a d R e s p o n s e T i m e
+3h 47m
+Average first response before the lead-routing workflow
+Delayed follow-up reduces conversion opportunities
+C O N T E N T R E P U R P O S I N G
+5h 20m
+Time to turn one approved asset into ready-to-review channel drafts
+Manual workflows slow campaign execution
+P E R F O R M A N C E R E P O RT I N G
+7h 15m / Week
+Time spent assembling cross-platform performance reports
+Valuable analyst hours lost to repetitive reporting
+CA M PA I G N S P E N D R I S K
+12.6%
+Spend exposed to delayed action on underperforming campaigns
+Budget inefficiencies caused by slow visibility
+"Across the three implementations, the common issue was not effort aloneΓÇöit was fragmented data, slow hand-offs, and unclear ownership."
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	03
+
+-- 3 of 18 --
+
+O U R A P P R OAC H
+How We Build: n8n + AI, With Clear Controls
+Each workflow has a real trigger, a defined AI task, a system action and a named owner for approvals or exceptions.
+01 / Trigger
+Trigger
+Lead, approved asset,
+performance threshold or
+schedule
+02 / AI Engine
+AI Step
+Classifies, drafts or flags
+
+exceptions against agreed
+rules
+03 / Connect
+Integrate
+CRM, ad platforms, analytics,
+
+email and team alerts
+04 / Guardrail
+Human Check
+Owner review for customer-
+
+facing or budget-sensitive
+
+actions
+05 / Outcome
+Outcome
+Measured against an agreed
+
+client baseline
+Stack used across active builds:
+n8n 	OpenAI 	Claude 	HubSpot 	Salesforce 	Meta 	Google Ads APIs 	GA4 	Slack 	WhatsApp
+System Performance & Reliability Metrics
+30-day
+Stabilisation & monitoring period
+Continuous monitoring with proactive issue resolution
+14 min
+Lead-routing SLA after workflow activation
+Automated routing with enterprise-grade response SLAs
+Named
+owner + approval path for every workflow
+Human approval ensures compliance and operational control
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	04
+
+-- 4 of 18 --
+
+C o n f i d e n t i a l B 2 B S a a S C l i e n t	CASE STUDY 01
+Lead Qualification, Routing & Follow-Up
+THE PROBLEM
+Inbound leads were reaching sales after a couple of
+hours, with no consistent response ownership.
+Qualified lead is created in the CRM and assigned to
+the right sales owner.
+Sales reps manually checked every enquiry before
+deciding the next action
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved.
+THE N8N WORKFLOW
+1. Capture Lead
+New enquiry enters from website, LinkedIn Lead Ads or WhatsApp.
+2. Validate & De-duplicate
+n8n standardises source data, checks key fields and detects duplicates
+3. AI Classification
+AI labels intent, service interest, geography and urgency using agreed criteria
+4. Assign & Alert
+Qualified lead is created in the CRM and assigned to the right sales owner.
+5. Follow-Up Draft
+AI prepares a contextual WhatsApp/email draft for sales-owner review
+05
+
+-- 5 of 18 --
+
+Re s u l t s	CASE STUDY 01
+Faster First Response. Clearer Sales Ownership.
+L e a d R e s p o n s e T i m e
+14 minΓëê
+Median first response, down from 3h 47m
+96% faster response time
+Q UA L I F I E D L E A D C O N V E R S I O N
+32%Γëê
+Increase in qualified lead-to-meeting conversion
+Higher conversion through intelligent lead routing
+SA L E S P R O D U C T I V I T Y
+11.5 hrsΓëê
+Sales time released weekly from manual sorting and assignment
+More time focused on customer engagement
+DATA Q UA L I T Y I M P R OV E M E N T
+41%Γëê
+Reduction in duplicate or incomplete lead records
+Improved CRM accuracy and cleaner sales pipeline
+The lead volume was manageable. The issue was duplicate records and no clear owner once an enquiry came in.
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	06
+
+-- 6 of 18 --
+
+D E TA I L E D WO R K F LOW	CASE STUDY 01
+Lead Operations: System Flow
+From lead capture to sales ownershipΓÇödesigned for faster response times, cleaner data, and complete workflow visibility.
+E N D -TO - E N D WO R K F LOW
+FORMS
+Website
+AD
+LinkedIn
+CHAT
+WhatsApp
+SOURCE 	Lead origin
+MAP
+Standardise
+CHECK
+Duplicate
+N8N 	Orchestration
+TAG
+Intent
+AI 	Classification
+ASSIGN
+CRM Task
+Sales 	Human action
+DESIGN INTENT: 	The workflow automates hand-offs and checks; approvals, customer communication and high-impact decisions remain with named owners.
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	07
+
+-- 7 of 18 --
+
+E N G I N E E R I N G D E TA I L	CASE STUDY 01
+Lead Operations: Rules, Exceptions & Evidence
+The automation is built to make sales faster without turning qualification or communication into an unchecked black box.
+I M P L E M E N TAT I O N C O N T R O L S
+Lead schema DATA
+Every source maps to a common structure: name, contact, source,
+requirement, location and consent state.
+Duplicate rule QUALITY
+Email and phone checks prevent duplicate CRM creation; ambiguous
+matches are flagged for review.
+AI rule set AI
+The model may label intent, service interest, geography and urgency.
+It does not make a final sales decision.
+Exception queue FALLBACK
+Missing required fields, failed CRM writes or low-confidence
+classifications are routed to a named owner.
+D e l i v e ry A r t i fac t s 	Workflow map 	Field / data map 	Prompt & ruleset 	Test cases 	Owner runbook
+Implementation Note 	Client-specific rules, source systems and access permissions are finalised during implementation discovery and documented before go-live.
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	08
+
+-- 8 of 18 --
+
+C o n f i d e n t i a l D 2 C & Re t a i l C l i e n t	CASE STUDY 02
+Content Repurposing & Approval Operations
+THE PROBLEM
+One approved campaign asset took a significant amount
+of time to convert into ready-to-review channel drafts.
+Publishing slipped when drafting, feedback and
+scheduling were handled across separate tools.
+The team had no single view of what was drafted,
+approved, scheduled or awaiting assets.
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved.
+THE N8N WORKFLOW
+1. Approved Asset Added
+An approved brief, campaign asset or video enters the content workspace.
+2. Channel Drafts Created
+AI creates first drafts for LinkedIn, Instagram, email and Google Business Profile.
+3. Asset Checklist
+Workflow creates channel requirements and a creative-asset checklist.
+4. Approval Routing
+Drafts go to the content owner; feedback and approvals are logged in one place.
+5. Schedule & Learn
+Approved content moves to the calendar; engagement informs the next brief.
+09
+
+-- 9 of 18 --
+
+Re s u l t s	CASE STUDY 02
+A Faster, More Predictable Content Engine
+T u r n a r o u n d S p e e d
+48 minΓëê
+Average draft-and-approval cycle, down from 5h 20m
+Faster review and approval turnaround
+C O N T E N T O U T P U T
+2.4xΓëê
+Increase in weekly approved content output
+Increased publishing throughput
+AU D I E N C E E N GAG E M E N T
+27%Γëê
+Growth in saves, shares and meaningful comments
+Stronger audience engagement
+D E L I V E RY C O N S I ST E N C Y
+92%Γëê
+Content-calendar completion against planned dates
+Reliable campaign delivery
+Drafting helped, but routing approvals and knowing the asset status made the real operational difference.
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	10
+
+-- 10 of 18 --
+
+D E TA I L E D WO R K F LOW	CASE STUDY 02
+Content Operations: System Flow
+From approved input to reviewed channel drafts ΓÇö one visible flow for asset, copy, approvals and calendar status.
+E N D -TO - E N D WO R K F LOW
+BRIEF
+Campaign
+ASSET
+Video / copy
+INPUT 	Approved source
+READ
+Standardise
+PACKAGE
+Rules
+N8N 	Orchestration
+DRAFT
+Channel copy
+AI 	Drafting
+REVIEW
+Owner
+SCHEDULE
+Calendar
+TEAM 	Approval
+DESIGN INTENT: 	The workflow automates hand-offs and checks; approvals, customer communication and high-impact decisions remain with named owners.
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	11
+
+-- 11 of 18 --
+
+E N G I N E E R I N G D E TA I L	CASE STUDY 02
+Content Operations: Brand Controls & Approval Logic
+The workflow creates first drafts efficiently; it never substitutes a brand owner's judgement or publishing approval.
+I M P L E M E N TAT I O N C O N T R O L S
+Source gate INPUT
+The workflow starts only when an asset or brief is marked approved in
+the agreed workspace.
+Prompt pack AI
+Prompts include approved tone, CTA, format, audience context and
+prohibited claims by channel.
+Approval states
+Draft ΓåÆ needs changes ΓåÆ approved ΓåÆ scheduled. Each state has
+an owner and timestamp.
+Publishing rule CONTROL
+Only approved items can move into the calendar; rejected or
+incomplete drafts return for revision.
+WORKFLOW
+D e l i v e ry A r t i fac t s 	Workflow map 	Field / data map 	Prompt & ruleset 	Test cases 	Owner runbook
+Implementation Note 	Client-specific rules, source systems and access permissions are finalised during implementation discovery and documented before go-live.
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	12
+
+-- 12 of 18 --
+
+C o n f i d e n t i a l M u l t i - L o c a t i o n S e r v i c e s C l i e n t	CASE STUDY 03
+Performance Reporting & Spend Guardrails
+THE N8N WORKFLOW
+1. Scheduled Trigger
+n8n pulls fresh campaign and analytics data on a defined schedule.
+2. Pull & Merge Data
+Google Ads, Meta Ads and GA4 data is normalised into one reporting table.
+3. AI Insight Generation
+AI summarises material movement, anomalies and likely contributors for the media owner.
+4. Auto-Built Report
+A concise exception summary is sent to the owner via email and Slack.
+5. Overspend Alert & Review
+If a guardrail is breached twice, the owner receives an alert for reviewΓÇöno blind auto-
+pausing.
+THE PROBLEM
+The marketing team spent significant time each week
+manually pulling Google Ads, Meta Ads and GA4 data
+into reports.
+By the time reporting was ready, budget or CPA issues
+had often run for multiple days.
+No shared alert existed when CPA, spend or lead volume
+crossed agreed guardrails.
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	13
+
+-- 13 of 18 --
+
+Re s u l t s	CASE STUDY 03
+Earlier Visibility. Tighter Spend Control.
+R e p o rt i n g Ov e r h e a d
+22 minΓëê
+Weekly review preparation, down from 7h 15m
+Automated reporting saves operational time
+O p t i m i z at i o n V e lo c i t y
+4.1xΓëê
+Faster identification of campaigns outside agreed guardrails
+Faster campaign optimization decisions
+C PA I M P R OV E M E N T
+13.8%Γëê
+Reduction in CPA for the monitored campaign group
+Lower acquisition costs through early insights
+S P E N D P R OT E C T I O N
+3Γëê
+Potential overspend events flagged before the next daily review
+Reduced budget risk with proactive alerts
+The useful change was not just faster reports. It was having one visible decision trail for every spend exception.
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	14
+
+-- 14 of 18 --
+
+D E TA I L E D WO R K F LOW	CASE STUDY 03
+Performance Operations: System Flow
+From platform data to a decision-ready exception ΓÇö built to shorten time-to-awareness, not to automate media buying blindly.
+E N D -TO - E N D WO R K F LOW
+G ADS
+Spend / CPA
+META
+Spend / leads
+GA4
+Quality
+SOURCES 	Performance data
+PULL
+Schedule
+VALIDATE
+Freshness
+N8N 	Orchestration
+FLAG
+Guardrail
+AI 	Exception summary
+REVIEW
+Decision log
+MEDIA 	Owner decision
+DESIGN INTENT: 	The workflow automates hand-offs and checks; approvals, customer communication and high-impact decisions remain with named owners.
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	15
+
+-- 15 of 18 --
+
+E N G I N E E R I N G D E TA I L	CASE STUDY 03
+Performance Operations: Guardrails, Review & Audit
+The workflow provides timely context to the media owner. Budget changes remain deliberate, traceable decisions.
+I M P L E M E N TAT I O N C O N T R O L S
+KPI definition DATA
+CPA, spend, lead volume and conversion signals use agreed definitions
+and comparison periods.
+Alert condition RULE
+The workflow alerts only when the agreed threshold and reporting
+
+window rule are met.
+Data-quality check VALIDATE
+Missing platform data, stale API responses or unusual variance are
+
+flagged before an insight is generated.
+Decision record AUDIT
+The owner records review, action/no-action and rationale, creating a visible
+spend-exception trail.
+D e l i v e ry A r t i fac t s 	Workflow map 	Field / data map 	Prompt & ruleset 	Test cases 	Owner runbook
+Implementation Note 	Client-specific rules, source systems and access permissions are finalised during implementation discovery and documented before go-live.
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	16
+
+-- 16 of 18 --
+
+W H Y PA R T N E R W I T H U S
+Our Production Workflow Capabilities
+n8n Workflow Design
+Workflow mapping, field logic, error handling and delivery documentation
+AI Integration
+AI tasks configured with role prompts, guardrails and review rules
+Platform Integrations
+CRM, ad platforms, analytics, Slack / WhatsApp and Google Workspace
+Custom Dashboards
+Decision-ready reporting with thresholds, owners and escalation paths
+Human-in-the-Loop Design
+Approval controls for customer-facing and budget-sensitive actions
+Ongoing Optimization
+Monitoring, issue logs and optimisation during the stabilisation window
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	17
+
+-- 17 of 18 --
+
+N E X T S T E P S
+Let's Automate Your Marketing Workflows
+01
+Discovery Call
+We map your current channels, tools and biggest time-
+drains
+02
+Workflow Audit
+We identify the highest-impact automation
+opportunities
+03
+Pilot Build
+We deploy one n8n workflow using your data within
+weeks.
+FyerX Global Private Limited 	+91 7305669999 	hello@fyerx.com 	www.fyerx.com
+┬⌐ 2026 FyerX Global Private Limited. All rights reserved. 	18
+
+-- 18 of 18 --
+
+

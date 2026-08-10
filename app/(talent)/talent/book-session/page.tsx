@@ -12,19 +12,19 @@ export default function BookSessionPage() {
         <input
           type="text"
           placeholder="Full name"
-          className="border border-zinc-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-zinc-900"
+          className="border border-zinc-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#11551C]"
         />
         <input
           type="email"
           placeholder="Email address"
-          className="border border-zinc-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-zinc-900"
+          className="border border-zinc-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#11551C]"
         />
         <input
           type="tel"
           placeholder="Phone number"
-          className="border border-zinc-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-zinc-900"
+          className="border border-zinc-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#11551C]"
         />
-        <select className="border border-zinc-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-zinc-900 bg-white">
+        <select className="border border-zinc-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#11551C] bg-white">
           <option value="">Select session type</option>
           <option value="individual">Individual talent</option>
           <option value="group">Group Session</option>
@@ -33,11 +33,11 @@ export default function BookSessionPage() {
         <textarea
           placeholder="Brief reason for booking (optional)"
           rows={4}
-          className="border border-zinc-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-zinc-900 resize-none"
+          className="border border-zinc-200 rounded-lg px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#11551C] resize-none"
         />
         <button
           type="submit"
-          className="self-start rounded-full bg-[#0B2E59] text-white px-8 py-3 text-sm font-medium hover:bg-[#092547] transition-colors"
+          className="self-start rounded-full bg-[#11551C] text-[#9EEBAA] px-8 py-3 text-sm font-medium hover:bg-[#0d4216] transition-colors"
         >
           Request Session
         </button>
