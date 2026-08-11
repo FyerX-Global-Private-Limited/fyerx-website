@@ -11,7 +11,7 @@ export default function BookingCTA() {
           Book a session today and speak with a qualified talent specialist
           who&apos;s here to support you.
         </p>
-        <PrimaryCtaLink href="/talent/book-session" color="#2935a3">
+        <PrimaryCtaLink href="/talent/book-session" color="#11551C" textColor="#9EEBAA">
           Book a Session
         </PrimaryCtaLink>
       </div>

@@ -62,158 +62,158 @@ type TabContent = {
 
 const TAB_CONTENT: Record<string, TabContent> = {
   "Contract Staffing": {
-    heading: "Talent for exactly as long as you need it",
+    heading: "Add capability when the work cannot wait.",
     description:
-      "We place contract talent for specific roles and timelines, so you scale your team up or down without long-term overhead.",
+      "We help teams bring in qualified people for defined roles, projects, hiring spikes, and changing workload requirements.",
     subCards: [
       {
         icon: Code2,
         title: "IT & Tech Contract Roles",
         description:
-          "Short and mid-term contract hires for specific technical roles and skill gaps.",
+          "Specialists for short- and mid-term technical requirements.",
       },
       {
         icon: Briefcase,
         title: "Project-Based Staffing",
         description:
-          "Talent brought in for the duration of a defined project, scaled up or down as needed.",
+          "Teams or individuals aligned to a defined delivery window.",
       },
       {
         icon: Users,
-        title: "Volume/Bulk Staffing",
+        title: "Volume / Bulk Staffing",
         description:
-          "Fast hiring for multiple similar roles at once, without compromising on screening.",
+          "Structured sourcing and screening for multiple roles.",
       },
       {
         icon: Globe,
         title: "Cross-Border Contract Staffing (US)",
         description:
-          "Contract talent placed for US-based teams, handled end to end from India.",
+          "Contract talent support for US-facing requirements.",
       },
     ],
   },
   RPO: {
-    heading: "Recruitment run as an extension of your team",
+    heading: "Make recruitment an extension of your operation.",
     description:
-      "We take on part or all of your hiring process, so your internal team can focus on everything else.",
+      "We take ownership of the recruitment process at the level your internal team needs—from a focused hiring burst to an ongoing programme.",
     subCards: [
       {
         icon: Workflow,
         title: "End-to-End Recruitment Outsourcing",
         description:
-          "We run your entire hiring process, from sourcing to offer, as an extension of your team.",
+          "Role intake through offer coordination.",
       },
       {
         icon: Zap,
         title: "On-Demand RPO",
         description:
-          "Recruitment support scaled up temporarily for hiring spikes, without a long-term commitment.",
+          "Added recruitment capacity when demand rises.",
       },
       {
         icon: Building2,
         title: "Enterprise RPO",
         description:
-          "Ongoing recruitment partnership built for larger, sustained hiring volumes.",
+          "A scalable, process-led model for sustained hiring.",
       },
     ],
   },
   "Permanent Hiring & Executive Search": {
-    heading: "Long-term hires and leadership roles, handled differently",
+    heading: "Make important long-term hires with more focus.",
     description:
-      "Everyday roles and senior leadership searches both get a matched approach, not the same generic process.",
+      "We run targeted search for full-time roles and leadership appointments where capability, judgement, and fit all matter.",
     subCards: [
       {
         icon: UserSearch,
         title: "Permanent Hiring",
         description:
-          "Full-time hiring for roles across functions, matched on skill and long-term fit.",
+          "Full-time professionals matched to role requirements and long-term potential.",
       },
       {
         icon: Search,
         title: "Executive Search",
         description:
-          "Targeted search for leadership and senior roles that need a more discreet, focused process.",
+          "Focused, discreet search for senior and leadership roles.",
       },
     ],
   },
   "IT & Tech Talent": {
-    heading: "Technical hiring that understands the roles",
+    heading: "Source people who can contribute in the real environment.",
     description:
-      "We source developers, data specialists, and cloud engineers with the right technical screening upfront.",
+      "We recruit across product, engineering, enterprise platforms, cloud, data, AI, and quality engineering needs.",
     subCards: [
       {
         icon: Code2,
         title: "Software Development Roles",
         description:
-          "Engineers and developers across languages, frameworks, and experience levels.",
+          "Developers, engineers, testers, and product technology talent.",
       },
       {
         icon: Workflow,
         title: "ServiceNow & Enterprise Platform Talent",
         description:
-          "Specialists for ServiceNow, SAP, Salesforce, and similar enterprise platforms.",
+          "Specialists across ServiceNow and enterprise technology ecosystems.",
       },
       {
         icon: Sparkles,
         title: "Data & AI Talent",
         description:
-          "Data engineers, analysts, and AI/ML professionals for data-driven teams.",
+          "Data engineering, analytics, machine learning, and AI specialists.",
       },
       {
         icon: Cloud,
         title: "DevOps & Cloud Talent",
         description:
-          "Cloud and DevOps engineers experienced with modern infrastructure and deployment.",
+          "Infrastructure, platform, reliability, and cloud professionals.",
       },
     ],
   },
   "HR Advisory": {
-    heading: "The groundwork that makes hiring decisions safer",
+    heading: "Reduce uncertainty before the hire joins.",
     description:
-      "Assessments, background checks, and salary benchmarks give you the full picture before you commit to a hire.",
+      "Advisory support helps teams assess candidates, validate history, and make commercially sensible offers.",
     subCards: [
       {
         icon: ClipboardCheck,
         title: "Hiring Assessments",
         description:
-          "Structured tests and evaluations to validate skills before an offer goes out.",
+          "Structured role-relevant assessments and evaluations.",
       },
       {
         icon: ShieldCheck,
         title: "Background Verification",
         description:
-          "Employment, education, and reference checks completed before onboarding.",
+          "Employment, education, and reference validation.",
       },
       {
         icon: BarChart3,
         title: "Compensation Benchmarking",
         description:
-          "Market-rate salary data to help you make competitive, fair offers.",
+          "Market context for competitive, well-calibrated offers.",
       },
     ],
   },
   "Global Staffing": {
-    heading: "Hiring across borders, done correctly",
+    heading: "Build distributed capability with a clearer operating model.",
     description:
-      "We support US contract staffing and remote team building, with compliance handled at every step.",
+      "We support remote team building and cross-border staffing requirements, with attention to the practical compliance considerations.",
     subCards: [
       {
         icon: Globe,
         title: "US Contract Staffing",
         description:
-          "Contract hiring for US-based roles, managed with US compliance in mind.",
+          "Support for US-based contract requirements.",
       },
       {
         icon: Network,
         title: "Remote Team Building",
         description:
-          "Building distributed teams across locations without losing coordination.",
+          "Hiring distributed talent for effective delivery.",
       },
       {
         icon: FileText,
         title: "Cross-Border Compliance Support",
         description:
-          "Guidance on the legal and payroll requirements of hiring across borders.",
+          "Guidance on process, documentation, and workforce considerations.",
       },
     ],
   },
@@ -224,37 +224,26 @@ export default function AIPlatformHero() {
   const tabContent = TAB_CONTENT[activeTab];
 
   return (
-    <main className="min-h-screen bg-white">
-      <section className="mx-auto max-w-7xl px-6 py-8 sm:px-10 sm:py-10 lg:px-16">
-        {/* ---------- Heading ---------- */}
-        <h2
-          className="text-center"
-          style={{
-            fontSize: "46px",
-            fontWeight: 500,
-            lineHeight: 1.12,
-            letterSpacing: "-0.02em",
-            color: "var(--ink)",
-          }}
-        >
-          One talent team, every hiring need
+    <main className="bg-white">
+      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-10 sm:py-10 lg:px-16">
+        <h2 className="section-title-lg text-center">
+          One talent partner for immediate roles and long-term capacity
         </h2>
 
-        {/* ---------- Tabs ---------- */}
-        <nav className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-b border-gray-200 pb-3 md:gap-x-8">
+        <nav className="-mx-4 mt-6 flex items-center gap-x-4 gap-y-2 overflow-x-auto border-b border-gray-200 px-4 pb-3 sm:mx-0 sm:mt-8 sm:flex-wrap sm:justify-center sm:gap-x-6 sm:px-0 md:gap-x-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {TABS.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`relative flex-shrink-0 whitespace-nowrap pb-1 text-[14px] transition-colors ${
                 activeTab === tab
-                  ? "font-semibold text-black"
+                  ? "font-semibold text-[#11551C]"
                   : "font-medium text-gray-400 hover:text-gray-600"
               }`}
             >
               {tab}
               {activeTab === tab && (
-                <span className="absolute inset-x-0 -bottom-px h-[2px] rounded-full bg-black" />
+                <span className="absolute inset-x-0 -bottom-px h-[2px] rounded-full bg-[#11551C]" />
               )}
             </button>
           ))}
@@ -272,8 +261,8 @@ export default function AIPlatformHero() {
                 {tabContent.description}
               </p>
             </div>
-            <PrimaryCtaLink href="/talent/book-session" className="mt-6" color="#2935a3">
-              Get Started
+            <PrimaryCtaLink href="/talent/book-session" className="mt-6" color="#11551C" textColor="#9EEBAA">
+              Discuss This Talent Solution
             </PrimaryCtaLink>
           </div>
 

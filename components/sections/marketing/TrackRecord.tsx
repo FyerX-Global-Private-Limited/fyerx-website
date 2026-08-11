@@ -112,6 +112,15 @@ const ICONS: Record<string, ReactNode> = {
       <path d="M14 12.5h.01M14 24.5h.01" />
     </I>
   ),
+  rocket: (
+    <I>
+      <path d="M24 6c5 4 8 11 8 18 0 5-2 9-4 11l-4 4-4-4c-2-2-4-6-4-11 0-7 3-14 8-18z" />
+      <circle cx="24" cy="19" r="3" />
+      <path d="M16 30l-6 4 2-9" />
+      <path d="M32 30l6 4-2-9" />
+      <path d="M20 39v4m8-4v4" />
+    </I>
+  ),
 };
 
 /* ------------------------------------------------------------------ */
@@ -123,14 +132,14 @@ interface Industry {
 }
 
 const INDUSTRIES: Industry[] = [
-  { icon: "software", label: ["SaaS &", "Technology"] },
-  { icon: "briefcase", label: ["Professional", "Services"] },
-  { icon: "construction", label: ["Manufacturing &", "Industrial"] },
-  { icon: "financial", label: ["Financial", "Services"] },
-  { icon: "healthcare", label: ["Healthcare &", "MedTech"] },
-  { icon: "logistics", label: ["Logistics &", "Supply Chain"] },
-  { icon: "enterpriseit", label: ["Enterprise", "IT"] },
-  { icon: "other", label: ["Other"] },
+  { icon: "media", label: ["Build a sharper", "brand"] },
+  { icon: "rocket", label: ["Launch a product", "or service"] },
+  { icon: "briefcase", label: ["Generate more", "qualified enquiries"] },
+  { icon: "software", label: ["Improve search", "visibility"] },
+  { icon: "realestate", label: ["Create stronger", "content & creative"] },
+  { icon: "financial", label: ["Make paid media", "work harder"] },
+  { icon: "enterpriseit", label: ["Bring leads & CRM", "data together"] },
+  { icon: "other", label: ["Get an outside", "marketing view"] },
 ];
 
 export default function TrackRecord() {
@@ -148,9 +157,9 @@ export default function TrackRecord() {
      
 
       {/* ---------- Industry picker ---------- */}
-      <p className="tr-question">What would you like support with?</p>
+      <p className="tr-question">What are you trying to move forward?</p>
 
-      <div className="tr-cards" role="group" aria-label="What would you like support with?">
+      <div className="tr-cards" role="group" aria-label="What are you trying to move forward?">
         {INDUSTRIES.map((ind, i) => {
           const isOn = selected.has(i);
           return (
@@ -184,9 +193,9 @@ export default function TrackRecord() {
       </div>
 
       {/* ---------- CTA ---------- */}
-      <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Get Started</PrimaryCtaLink>
+      <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Tell Us Your Goal</PrimaryCtaLink>
 
-      <p className="tr-note">Free initial consultation, no commitment required</p>
+      <p className="tr-note">We work across industries and adapt the mix to your market, maturity, team, and sales motion.</p>
 
       {/* Embedded styles — self-contained, no external CSS needed. */}
       <style>{css}</style>
@@ -204,7 +213,7 @@ const css = `
     -webkit-font-smoothing:antialiased;
     background:#ffffff;
     text-align:center;
-    padding:48px 24px;
+    padding:40px 16px;
   }
   @media (min-width:640px){
     .tr-hero{padding:56px 40px;}
@@ -241,12 +250,13 @@ const css = `
   }
   /* ---------- Question ---------- */
   .tr-hero .tr-question{
-    font-size:20px;
+    font-size:clamp(1rem,3.5vw,1.25rem);
     line-height:120%;
     font-weight:600;
     color:var(--text);
     margin-top:24px;
-    margin-bottom:34px;
+    margin-bottom:28px;
+    padding-inline:8px;
   }
   /* ---------- Cards ---------- */
   .tr-hero .tr-cards{

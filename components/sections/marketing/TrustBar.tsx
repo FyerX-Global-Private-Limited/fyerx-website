@@ -11,7 +11,7 @@ const logos = [
   { name: "Avekshaa", img: "/avatar/avekshaa.png" },
   { name: "Orihiro" },
   { name: "Hoshitry" },
-  { name: "TrnDigital" },
+  { name: "TrnDigital", img: "/trustbarlogos/trndigital.png" },
   { name: "Digitathya", img: "/avatar/digitathya.png" },
   { name: "Cinepebble" },
   { name: "WinExch" },

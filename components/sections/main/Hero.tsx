@@ -3,41 +3,47 @@
 import { useState } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
+const BRAND = {
+  marketing: "#FFC900",
+  talent: "#11551C",
+  technology: "#20287A",
+  home: "#86013A",
+} as const;
+
 const pillars: {
   label: string;
   video: string;
-  activeClass: string;
-  hoverClass: string;
-  dotClass: string;
+  brandColor: string;
+  activeText: string;
+  checkText: string;
 }[] = [
   {
     label: "Marketing",
     video: "/marketing-video.mp4",
-    activeClass: "bg-[#ab0549]/10 text-[#ab0549]",
-    hoverClass: "hover:bg-[#ab0549]/10",
-    dotClass: "bg-[#ab0549]",
+    brandColor: BRAND.marketing,
+    activeText: "#111111",
+    checkText: "#111111",
   },
   {
     label: "Talent",
     video: "/talent.mp4",
-    activeClass: "bg-[#2563eb]/10 text-[#2563eb]",
-    hoverClass: "hover:bg-[#2563eb]/10",
-    dotClass: "bg-[#2563eb]",
+    brandColor: BRAND.talent,
+    activeText: BRAND.talent,
+    checkText: "#ffffff",
   },
-  // No dedicated clips yet for Technology/Learning — reuse existing videos.
   {
     label: "Technology",
     video: "/marketing-video.mp4",
-    activeClass: "bg-[#16a34a]/10 text-[#16a34a]",
-    hoverClass: "hover:bg-[#16a34a]/10",
-    dotClass: "bg-[#16a34a]",
+    brandColor: BRAND.technology,
+    activeText: BRAND.technology,
+    checkText: "#ffffff",
   },
   {
     label: "Learning",
     video: "/whowe.mp4",
-    activeClass: "bg-[#7c3aed]/10 text-[#7c3aed]",
-    hoverClass: "hover:bg-[#7c3aed]/10",
-    dotClass: "bg-[#7c3aed]",
+    brandColor: BRAND.home,
+    activeText: BRAND.home,
+    checkText: "#ffffff",
   },
 ];
 
@@ -53,40 +59,17 @@ export default function Hero() {
   const [active, setActive] = useState(0);
 
   return (
-    <section className="relative w-full bg-white overflow-hidden font-calibri">
-      <div
-        className="max-w-7xl mx-auto pl-6 lg:pl-10 items-stretch"
-        style={{
-          display: "flex",
-          width: "100%",
-          marginLeft: "auto",
-          marginRight: "auto",
-          columnGap: "2rem",
-          rowGap: "2rem",
-          paddingTop: "2rem",
-          paddingBottom: "3rem",
-        }}
-      >
-        {/* Left column */}
-        <div
-          className="text-left flex flex-col justify-start"
-          style={{
-            flexGrow: 1,
-            flexShrink: 0,
-            maxWidth: "23rem",
-            paddingTop: "3rem",
-            paddingBottom: "1rem",
-          }}
-        >
+    <section className="home-section relative w-full overflow-hidden bg-white font-calibri">
+      <div className="section-shell section-shell--wide">
+        <div className="flex flex-col items-stretch gap-8 lg:flex-row lg:gap-12">
+        <div className="flex max-w-none flex-col justify-start text-left lg:max-w-[23rem] lg:pt-4">
           <h1
             className="tracking-[-0.03em] text-black"
-            style={{ fontSize: "36px", lineHeight: 1.25, fontWeight: 500 }}
+            style={{ fontSize: "clamp(26px, 6vw, 36px)", lineHeight: 1.25, fontWeight: 500 }}
           >
             You{" "}
             <span
               style={{
-                fontSize: "36px",
-                lineHeight: 1.25,
                 background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
                 backgroundClip: "text",
                 WebkitBackgroundClip: "text",
@@ -96,39 +79,15 @@ export default function Hero() {
             >
               focus on growth.
             </span>
-            <br />We handle execution.
+            <br />
+            We handle execution.
           </h1>
 
-          <p
-            className="max-w-[44ch] text-black"
-            style={{
-              // Ref gaps: H1 → subtitle 40px → 28px; subtitle → pills 47px → 32px.
-              marginTop: "1.75rem",
-              marginBottom: "2rem",
-              fontSize: "15px",
-              lineHeight: 1.5,
-            }}
-          >
+          <p className="mt-5 max-w-[44ch] text-black sm:mt-7" style={{ fontSize: "clamp(14px, 3.5vw, 15px)", lineHeight: 1.5 }}>
             Where your business goals and our teams work together on one dependable partner.
           </p>
 
-          {/* Pillar toggle — selects which video leads the stack */}
-          <div
-            className="flex"
-            style={{
-              display: "flex",
-              flexFlow: "wrap",
-              // Ref pill gap 12px → 8px scaled.
-              columnGap: "0.5rem",
-              rowGap: "0.5rem",
-              order: 0,
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              maxWidth: "23rem",
-              marginTop: 0,
-              marginBottom: 0,
-            }}
-          >
+          <div className="mt-6 flex max-w-none flex-wrap gap-2 sm:mt-8 lg:max-w-[23rem]">
             {pillars.map((pillar, i) => {
               const isActive = active === i;
               return (
@@ -136,14 +95,35 @@ export default function Hero() {
                   key={pillar.label}
                   type="button"
                   onClick={() => setActive(i)}
-                  className={`inline-flex items-center gap-2 h-8 rounded-full px-3.5 text-sm cursor-pointer transition-colors duration-200 ${
-                    isActive
-                      ? `${pillar.activeClass} font-medium`
-                      : `bg-[#f2f3f5] text-slate font-normal ${pillar.hoverClass}`
+                  className={`inline-flex h-8 cursor-pointer items-center gap-2 rounded-full px-3.5 text-sm transition-all duration-200 ${
+                    isActive ? "font-medium shadow-sm" : "bg-[#f2f3f5] font-normal text-slate"
                   }`}
+                  style={
+                    isActive
+                      ? {
+                          backgroundColor: `${pillar.brandColor}1F`,
+                          color: pillar.activeText,
+                        }
+                      : undefined
+                  }
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.backgroundColor = `${pillar.brandColor}1F`;
+                      e.currentTarget.style.color = pillar.activeText;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.backgroundColor = "";
+                      e.currentTarget.style.color = "";
+                    }
+                  }}
                 >
                   {isActive && (
-                    <span className={`flex items-center justify-center w-4 h-4 rounded-full text-white ${pillar.dotClass}`}>
+                    <span
+                      className="flex h-4 w-4 items-center justify-center rounded-full"
+                      style={{ backgroundColor: pillar.brandColor, color: pillar.checkText }}
+                    >
                       <CheckIcon />
                     </span>
                   )}
@@ -153,29 +133,17 @@ export default function Hero() {
             })}
           </div>
 
-          {/* CTA — ref: pills → button 30px → 20px scaled */}
           <div className="mt-5">
-            <PrimaryCtaLink href="#contact">Get Started</PrimaryCtaLink>
+            <PrimaryCtaLink href="#contact" color={BRAND.home}>
+              Get Started
+            </PrimaryCtaLink>
             <p className="mt-3 text-xs text-slate">
-              Confidential consultation . Custom to your business
+              Confidential consultation · Custom to your business
             </p>
           </div>
         </div>
 
-        {/* Right column — bleeds flush to the container's right edge, no frame */}
-        <div
-          className="relative flex-1 lg:rounded-tl-[28px] overflow-hidden"
-          style={{
-            boxSizing: "border-box",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "relative",
-            // Ref visual ≈ 910×550 @1920 → keeps the column from collapsing
-            // shorter than the reference proportions on wide screens.
-            minHeight: "26rem",
-          }}
-        >
+        <div className="relative min-h-[14rem] flex-1 overflow-hidden rounded-2xl sm:min-h-[18rem] lg:min-h-[26rem] lg:rounded-tl-[28px] lg:rounded-tr-none lg:rounded-br-none lg:rounded-bl-none">
           {pillars.map((pillar, i) => (
             <video
               key={pillar.label}
@@ -185,20 +153,12 @@ export default function Hero() {
               loop
               playsInline
               preload="auto"
-              className={`absolute inset-0 transition-opacity duration-500 ${
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
                 active === i ? "opacity-100" : "opacity-0"
               }`}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                display: "block",
-                margin: 0,
-                border: "none",
-                outline: "none",
-              }}
             />
           ))}
+        </div>
         </div>
       </div>
     </section>

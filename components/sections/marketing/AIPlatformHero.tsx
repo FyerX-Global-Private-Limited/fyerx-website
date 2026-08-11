@@ -82,237 +82,257 @@ type TabContent = {
 
 const TAB_CONTENT: Record<string, TabContent> = {
   "Marketing Strategy & Consulting": {
-    heading: "A clear starting point before you spend on execution",
+    heading: "Decide the direction before scaling the activity.",
     description:
-      "We map your market, buyers, and positioning first, so campaigns start from a clear plan instead of guesswork.",
+      "We clarify where to play, who to prioritise, what to say, and what should happen first.",
     subCards: [
       {
         icon: Rocket,
         title: "Go-to-Market Strategy",
         description:
-          "Plans for launching a product, service, or new market entry with clear positioning and sequencing.",
+          "Launch plans with positioning, audiences, channels, and sequencing.",
       },
       {
         icon: Users,
         title: "ICP & Buyer Persona Definition",
         description:
-          "Defines who you should be selling to, based on account data rather than guesswork.",
+          "Practical audience profiles for sharper targeting and messaging.",
       },
       {
         icon: ClipboardCheck,
         title: "Marketing Audits",
         description:
-          "A review of current marketing efforts to identify gaps, waste, and quick wins.",
+          "An honest view of what is working, underperforming, or missing.",
       },
       {
         icon: Target,
         title: "Competitive Positioning",
         description:
-          "Maps where you stand against competitors and sharpens your message accordingly.",
+          "A clearer space to own in a crowded market.",
       },
     ],
   },
   "Demand & Lead Generation": {
-    heading: "Pipeline from accounts worth pursuing",
+    heading: "Create conversations worth having.",
     description:
-      "We focus outreach on the accounts and buyers most likely to convert, rather than chasing volume.",
+      "We connect targeted outreach, offers, nurture, events, and reporting so lead generation is more deliberate and measurable.",
     subCards: [
       {
         icon: Building2,
         title: "Account-Based Marketing",
         description:
-          "Targets specific high-value accounts with coordinated outreach across channels.",
+          "Coordinated programmes for priority accounts.",
       },
       {
         icon: UserSearch,
         title: "LinkedIn Lead Generation",
-        description: "Finds and engages decision-makers directly on LinkedIn.",
+        description: "Decision-maker outreach and relationship-building.",
       },
       {
         icon: Mail,
         title: "Outbound & Cold Outreach",
         description:
-          "Structured email and call outreach to open conversations with new prospects.",
+          "Structured email and multichannel prospecting.",
+      },
+      {
+        icon: RefreshCw,
+        title: "Email Nurture Sequences",
+        description: "Follow-up that keeps interest moving.",
       },
       {
         icon: CalendarDays,
         title: "Webinar & Event Marketing",
         description:
-          "Plans and promotes webinars and events that generate qualified leads.",
+          "Promotion and post-event conversion journeys.",
+      },
+      {
+        icon: BarChart3,
+        title: "Revenue Attribution & Pipeline Reporting",
+        description: "Visibility from activity to opportunity.",
       },
     ],
   },
   "Search & AI Visibility": {
-    heading: "Found by buyers already searching",
+    heading: "Be useful where people look for answers.",
     description:
-      "We help you show up in search results and AI-generated answers, right when buyers are looking for a solution.",
+      "We improve discoverability across traditional search, local intent, and emerging AI-led discovery journeys.",
     subCards: [
       {
         icon: Search,
         title: "SEO",
-        description: "Improves organic search rankings for terms your buyers are searching.",
+        description: "Technical, on-page, and content-led organic growth.",
       },
       {
         icon: MessageSquareText,
         title: "AEO",
-        description: "Optimises content to appear in AI-generated answers and summaries.",
+        description: "Content structured for answer-led search experiences.",
       },
       {
         icon: Sparkles,
         title: "GEO",
-        description: "Improves visibility within generative AI search results and assistants.",
+        description: "Visibility in generative search and AI responses.",
       },
       {
         icon: MapPin,
         title: "Local SEO",
-        description: "Improves visibility for location-based searches relevant to your business.",
+        description: "Stronger presence for location-based discovery.",
       },
     ],
   },
   "AI Marketing": {
-    heading: "Faster output, still reviewed by people",
+    heading: "Use AI to increase speed without losing the brand.",
     description:
-      "AI speeds up content and ad creative work, and our team checks everything before it goes live.",
+      "We build human-reviewed AI workflows for content, creative variation, personalisation, and conversations.",
     subCards: [
       {
         icon: FileText,
         title: "AI-Powered Content Generation",
-        description: "Uses AI to draft content faster, reviewed by our team before publishing.",
+        description: "Faster first drafts and production support.",
       },
       {
         icon: Wand2,
         title: "AI Ad Creative & Personalization",
-        description: "Generates and tailors ad creative variations using AI tools.",
+        description: "More relevant creative variants at scale.",
       },
       {
         icon: Bot,
         title: "Marketing Automation Agents",
-        description: "AI-driven agents that handle repetitive marketing tasks automatically.",
+        description: "Repeatable tasks handled with guardrails.",
       },
       {
         icon: MessageCircle,
         title: "Conversational AI",
-        description: "Chat-based tools that engage website visitors and qualify leads.",
+        description: "Website conversations that guide and qualify visitors.",
       },
     ],
   },
   "Social Media Marketing": {
-    heading: "A presence that stays consistent",
+    heading: "Stay visible, relevant, and responsive.",
     description:
-      "We keep your social channels active and on-brand, so buyers see a business that's actually paying attention.",
+      "We shape the channel plan, content rhythm, engagement, and paid support around how your audience uses social.",
     subCards: [
       {
         icon: Share2,
         title: "Social Media Strategy & Management",
-        description: "Plans and manages your ongoing social media presence.",
+        description: "Channel direction and ongoing execution.",
       },
       {
         icon: MessagesSquare,
         title: "Community Management",
-        description: "Responds to comments, messages, and community engagement daily.",
+        description: "Timely responses and active audience care.",
       },
       {
         icon: Megaphone,
         title: "Paid Social Campaigns",
-        description: "Runs paid campaigns across social platforms to reach target audiences.",
+        description: "Targeted distribution tied to a clear objective.",
       },
     ],
   },
   "Content & Creative Production": {
-    heading: "Content that holds up over a longer decision",
+    heading: "Make the message easier to understand and remember.",
     description:
-      "We produce the whitepapers, videos, and case studies that support a considered B2B buying process.",
+      "We plan and produce the written, visual, and video assets that carry your brand and campaigns forward.",
     subCards: [
       {
         icon: CalendarClock,
         title: "Content Strategy & Editorial Calendars",
-        description: "Plans what content to publish, where, and on what schedule.",
+        description: "A purposeful publishing rhythm.",
       },
       {
         icon: BookOpen,
         title: "Thought Leadership & Whitepapers",
-        description: "Produces in-depth content that builds credibility with B2B buyers.",
+        description: "Deeper assets that build authority.",
       },
       {
         icon: Video,
         title: "Video Production & Editing",
-        description: "Produces and edits video content for campaigns and brand use.",
+        description: "Stories, explainers, campaigns, and edits.",
       },
       {
         icon: Film,
         title: "Motion Graphics & Animation",
-        description: "Creates animated visuals for ads, explainers, and presentations.",
+        description: "Visual clarity for complex ideas.",
+      },
+      {
+        icon: FileText,
+        title: "Collaterals",
+        description: "Sales and marketing material teams can actually use.",
       },
     ],
   },
   "Performance Marketing": {
-    heading: "Paid campaigns measured the right way",
+    heading: "Turn media spend into learning and action.",
     description:
-      "We run paid search and social, and track results against pipeline and revenue, not just cost-per-click.",
+      "We manage paid acquisition and landing-page journeys with continuous testing, optimisation, and accountable measurement.",
     subCards: [
       {
         icon: MousePointerClick,
         title: "Paid Search",
-        description: "Manages search ad campaigns to capture high-intent buyer traffic.",
+        description: "Capture high-intent demand.",
       },
       {
         icon: Share2,
         title: "Paid Social",
-        description: "Manages paid campaigns across social platforms tied to specific goals.",
+        description: "Create and convert demand with targeted media.",
       },
       {
         icon: RefreshCw,
         title: "Retargeting & Conversion Optimization",
-        description: "Re-engages past visitors and improves how well pages convert.",
+        description: "Bring visitors back and improve response.",
+      },
+      {
+        icon: LayoutTemplate,
+        title: "Landing Page Design & Optimization",
+        description: "Clearer journeys from click to action.",
       },
       {
         icon: BarChart3,
         title: "Marketing Analytics & ROI Tracking",
-        description: "Tracks campaign data and ties it back to business results.",
+        description: "Make performance decisions with confidence.",
       },
     ],
   },
   "Branding & Design": {
-    heading: "A brand that holds credibility in bigger deals",
+    heading: "Make your business look as clear as it sounds.",
     description:
-      "We build the identity, positioning, and website that support you in front of serious enterprise buyers.",
+      "We build the strategy, identity, digital experience, and website that make a stronger first and lasting impression.",
     subCards: [
       {
         icon: Palette,
         title: "Brand Identity & Guidelines",
-        description: "Builds logos, colours, and usage rules for consistent brand presentation.",
+        description: "A usable visual system.",
       },
       {
         icon: Compass,
         title: "Brand Strategy & Positioning",
-        description: "Defines how your brand should be perceived and communicated.",
+        description: "The story and space your brand should own.",
       },
       {
         icon: LayoutTemplate,
         title: "UI/UX Design",
-        description: "Designs interfaces and user flows for digital products and sites.",
+        description: "Journeys that are intuitive and purposeful.",
       },
       {
         icon: Code2,
         title: "Website Design & Development",
-        description: "Builds and maintains websites that support your marketing goals.",
+        description: "High-performing digital foundations.",
       },
     ],
   },
   "Marketing Automation": {
-    heading: "Leads that keep moving without manual follow-up",
+    heading: "Make follow-up and data flow reliably.",
     description:
-      "We set up automation and CRM syncing so leads get nurtured and routed on their own.",
+      "We connect journeys, triggers, and CRM data so valuable leads do not depend on manual chasing.",
     subCards: [
       {
         icon: Workflow,
         title: "Marketing Automation",
-        description: "Sets up automated workflows that nurture and route leads.",
+        description: "Workflows for nurture, routing, and follow-up.",
       },
       {
         icon: Database,
         title: "CRM Integration",
-        description: "Connects your marketing tools with your CRM so data stays in sync.",
+        description: "Connected systems and cleaner marketing data.",
       },
     ],
   },
@@ -323,24 +343,15 @@ export default function AIPlatformHero() {
   const tabContent = TAB_CONTENT[activeTab];
 
   return (
-    <main className="min-h-screen bg-white">
-      <section className="mx-auto max-w-7xl px-6 py-8 sm:px-10 sm:py-10 lg:px-16">
+    <main className="bg-white">
+      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-10 sm:py-10 lg:px-16">
         {/* ---------- Heading ---------- */}
-        <h2
-          className="text-center"
-          style={{
-            fontSize: "46px",
-            fontWeight: 500,
-            lineHeight: 1.12,
-            letterSpacing: "-0.02em",
-            color: "var(--ink)",
-          }}
-        >
-          One B2B marketing team, every capability
+        <h2 className="section-title-lg text-center">
+          One team for the work that makes marketing move
         </h2>
 
         {/* ---------- Tabs ---------- */}
-        <nav className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-b border-gray-200 pb-3 md:gap-x-8">
+        <nav className="-mx-4 mt-6 flex items-center gap-x-4 gap-y-2 overflow-x-auto border-b border-gray-200 px-4 pb-3 sm:mx-0 sm:mt-8 sm:flex-wrap sm:justify-center sm:gap-x-6 sm:px-0 md:gap-x-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {TABS.map((tab) => (
             <button
               key={tab}
@@ -369,7 +380,7 @@ export default function AIPlatformHero() {
               </p>
             </div>
             <PrimaryCtaLink href="/contact" className="mt-6 text-black!" color="#FFC900">
-              Get Started
+              Discuss This Service
             </PrimaryCtaLink>
           </div>
 

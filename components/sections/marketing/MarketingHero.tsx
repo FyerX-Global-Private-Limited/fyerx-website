@@ -18,11 +18,11 @@ import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 /* ------------------------- rotating word config ------------------------- */
 
 const WORDS = [
-  { w: "Grow", bg: "#d8e9fb", dot: "#2383e2", text: "#15335a" },
-  { w: "Convert", bg: "#e8e0fb", dot: "#8b5cf6", text: "#3b2a6b" },
-  { w: "Scale", bg: "#d5eed3", dot: "#36a852", text: "#14351f" },
-  { w: "Compound", bg: "#fdeecc", dot: "#f2a33c", text: "#6b4a12" },
-  { w: "Close", bg: "#fde0d3", dot: "#ef7234", text: "#6b2f12" },
+  { w: "Clarity", bg: "#d8e9fb", dot: "#2383e2", text: "#15335a" },
+  { w: "Demand", bg: "#e8e0fb", dot: "#8b5cf6", text: "#3b2a6b" },
+  { w: "Visibility", bg: "#d5eed3", dot: "#36a852", text: "#14351f" },
+  { w: "Conversion", bg: "#fdeecc", dot: "#f2a33c", text: "#6b4a12" },
+  { w: "Growth", bg: "#fde0d3", dot: "#ef7234", text: "#6b2f12" },
 ] as const;
 
 const ROTATE_MS = 2000;
@@ -72,9 +72,8 @@ export default function MarketingHero() {
         </div>
 
         {/* Headline with rotating pill */}
-        <h1 className="mt-4 text-[46px] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)] sm:mt-5 sm:text-[48px] sm:leading-[1.2] sm:tracking-[-0.03em] md:text-[64px] lg:mt-[20px] lg:text-[96px] lg:leading-[1.26] lg:tracking-[-0.04em]">
-          Where B2B pipelines
-          <br />
+        <h1 className="mt-4 text-[clamp(1.625rem,7vw,6rem)] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)] sm:mt-5 sm:leading-[1.2] sm:tracking-[-0.03em] lg:mt-[20px] lg:leading-[1.26] lg:tracking-[-0.04em]">
+          Marketing built to create{" "}
           <span
             className="inline-flex h-[1.22em] -translate-y-[0.06em] items-center gap-[0.2em] rounded-full px-[0.36em] align-middle transition-colors duration-300"
             style={{ backgroundColor: bg }}
@@ -90,30 +89,38 @@ export default function MarketingHero() {
             >
               {w}
             </span>
-          </span>{" "}
-          faster.
+          </span>
+          .
         </h1>
 
         {/* Subtitle */}
         <p className="mt-4 text-[15px] leading-[1.5] text-[#191918] sm:mt-5 sm:text-[17px] lg:mt-[26px] lg:text-[20px]">
-          Strategy, demand generation, SEO, and content that moves B2B buyers
-          from first touch to signed deal.
+          From market strategy to campaigns, content, creative, search, and
+          automation—we build the work that helps businesses get found, earn
+          attention, and convert it into action.
         </p>
 
         {/* CTAs */}
         <div className="mt-6 flex w-full flex-col items-center justify-center gap-3 sm:mt-[30px] sm:w-auto sm:flex-row sm:gap-[22px]">
-          <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Get Started</PrimaryCtaLink>
+          <PrimaryCtaLink
+            href="/contact"
+            className="w-[234px] justify-center text-black!"
+            color="#FFC900"
+          >
+            Start a Conversation
+          </PrimaryCtaLink>
           <button
             type="button"
             className="inline-flex h-[44px] w-full items-center justify-center rounded-[10px] bg-[#FFC900] px-7 text-[16px] font-semibold text-black transition-colors duration-150 hover:bg-[#e6b400] sm:h-[47px] sm:w-auto sm:text-[18px]"
           >
-            Talk to Our Team
+            Explore Our Services
           </button>
         </div>
 
         {/* Reassurance line */}
         <p className="mt-3 text-[13px] text-[#5b5b58] sm:mt-4">
-          Free consultation, no long-term lock-in
+          Tell us what needs to move. We will recommend the right starting
+          point—not a one-size-fits-all package.
         </p>
       </div>
 

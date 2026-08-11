@@ -14,28 +14,31 @@ const IMAGE_SRC =
   "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=1200&q=80";
 
 const features = [
-  "Dedicated campaign support",
-  "Reporting tied to real results",
-  "Flexible engagement models",
-  "Quick turnaround on requests",
-];
+  "A team matched to the work",
+  "Clear scope and working rhythm",
+  "Flexible ways to engage",
+  "Practical recommendations, not sales pressure",
+] as const;
 
-function CheckIcon() {
+function FeatureCheck() {
   return (
-    <svg
-      className="ent-check__glyph"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M5 12.5l4.5 4.5L19 7.5"
-        stroke="#ffffff"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#111111]">
+      <svg
+        viewBox="0 0 24 24"
+        width={15}
+        height={15}
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M5 12.5l4.5 4.5L19 7.5"
+          stroke="#FFC900"
+          strokeWidth={2.6}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </span>
   );
 }
 
@@ -48,7 +51,7 @@ function CloverImage({ src }: { src: string }) {
       aria-label="Team collaborating"
     >
       <defs>
-        <clipPath id="cloverClip">
+        <clipPath id="marketingEntCloverClip">
           {/* four overlapping circles union into a quatrefoil */}
           <circle cx="62" cy="62" r="58" />
           <circle cx="138" cy="62" r="58" />
@@ -63,7 +66,7 @@ function CloverImage({ src }: { src: string }) {
         width="200"
         height="200"
         preserveAspectRatio="xMidYMid slice"
-        clipPath="url(#cloverClip)"
+        clipPath="url(#marketingEntCloverClip)"
       />
     </svg>
   );
@@ -74,26 +77,24 @@ export default function EnterpriseSection() {
     <section className="ent">
       <div className="ent__card">
         <div className="ent__left">
-          <h2 className="ent__title">Talk to an expert for B2B marketing</h2>
+          <h2 className="ent__title">Bring us the brief, the bottleneck, or the big question.</h2>
 
           <p className="ent__subtitle">
-            Get a clear view of what's possible for your pipeline, and the
-            right approach to get there, with support along the way.
+            Whether you need a full marketing partner or focused support on one
+            priority, we will help you identify a sensible next step.
           </p>
 
           <ul className="ent__list">
-            {features.map((f) => (
-              <li className="ent__item" key={f}>
-                <span className="ent__check">
-                  <CheckIcon />
-                </span>
-                <span className="ent__item-label">{f}</span>
+            {features.map((label) => (
+              <li className="ent__item" key={label}>
+                <FeatureCheck />
+                <span className="ent__item-label">{label}</span>
               </li>
             ))}
           </ul>
 
           <button className="ent__cta" type="button">
-            Contact Sales
+            Talk to Our Team
           </button>
         </div>
 
@@ -106,7 +107,7 @@ export default function EnterpriseSection() {
         .ent {
           width: 100%;
           background: #ffffff;
-          padding: 48px 24px;
+          padding: 40px 16px;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           box-sizing: border-box;
         }
@@ -124,79 +125,98 @@ export default function EnterpriseSection() {
           max-width: 1180px;
           margin: 0 auto;
           border: 1px solid #ececee;
-          border-radius: 24px;
-          padding: 56px 60px;
+          border-radius: 20px;
+          padding: 28px 20px;
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 48px;
+          grid-template-columns: 1fr;
+          gap: 28px;
           align-items: center;
           box-sizing: border-box;
+        }
+        @media (min-width: 861px) {
+          .ent__card {
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            border-radius: 24px;
+            padding: 56px 60px;
+          }
         }
         .ent__left {
           max-width: 460px;
         }
         .ent__title {
           margin: 0;
-          font-size: 46px;
+          font-size: clamp(1.75rem, 5vw, 2.875rem);
           line-height: 1.12;
           font-weight: 500;
           letter-spacing: -0.02em;
           color: var(--ink);
         }
         .ent__subtitle {
-          margin: 20px 0 0;
-          font-size: 15px;
+          margin: 16px 0 0;
+          font-size: clamp(0.875rem, 2.5vw, 0.9375rem);
           line-height: 1.55;
           color: #52525b;
           max-width: 400px;
         }
+        @media (min-width: 640px) {
+          .ent__subtitle {
+            margin-top: 20px;
+          }
+        }
         .ent__list {
           list-style: none;
-          margin: 30px 0 0;
+          margin: 24px 0 0;
           padding: 0;
           display: flex;
           flex-direction: column;
-          gap: 14px;
+          gap: 10px;
+        }
+        @media (min-width: 640px) {
+          .ent__list {
+            margin-top: 30px;
+            gap: 14px;
+          }
         }
         .ent__item {
           display: flex;
           align-items: center;
-          gap: 14px;
-          background: #f4f4f5;
+          gap: 12px;
+          background: #f6f7f7;
           border-radius: 999px;
-          padding: 14px 22px;
+          padding: 12px 16px;
         }
-        .ent__check {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          background: #1ec6c6;
-          flex-shrink: 0;
-        }
-        .ent__check__glyph,
-        .ent-check__glyph {
-          width: 15px;
-          height: 15px;
+        @media (min-width: 640px) {
+          .ent__item {
+            gap: 14px;
+            padding: 14px 22px;
+          }
         }
         .ent__item-label {
-          font-size: 15px;
+          font-size: clamp(0.8125rem, 2.5vw, 0.9375rem);
           font-weight: 500;
+          line-height: 1.35;
           color: #27272a;
         }
         .ent__cta {
-          margin-top: 30px;
+          margin-top: 24px;
+          width: 100%;
           background: #FFC900;
           color: #1a1a1a;
           border: none;
           border-radius: 999px;
-          padding: 15px 30px;
+          padding: 14px 24px;
           font-size: 15px;
           font-weight: 500;
           cursor: pointer;
           transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+        @media (min-width: 480px) {
+          .ent__cta {
+            width: auto;
+            margin-top: 30px;
+            padding: 15px 30px;
+          }
         }
         .ent__cta:hover {
           transform: translateY(-1px);
@@ -209,17 +229,22 @@ export default function EnterpriseSection() {
         }
         .ent-clover {
           width: 100%;
-          max-width: 480px;
+          max-width: 320px;
           height: auto;
           aspect-ratio: 1 / 1;
         }
+        @media (min-width: 640px) {
+          .ent-clover {
+            max-width: 400px;
+          }
+        }
+        @media (min-width: 861px) {
+          .ent-clover {
+            max-width: 480px;
+          }
+        }
 
         @media (max-width: 860px) {
-          .ent__card {
-            grid-template-columns: 1fr;
-            padding: 40px 28px;
-            gap: 36px;
-          }
           .ent__right {
             order: -1;
           }

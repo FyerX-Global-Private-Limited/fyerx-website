@@ -1,84 +1,47 @@
-const logos = [
-  { name: "Adro", img: "/trustbarlogos/trimmed/adro.png" },
-  { name: "Ambience", img: "/trustbarlogos/trimmed/ambience.png" },
-  { name: "Avekshaa", img: "/trustbarlogos/trimmed/avekshaa.png" },
-  { name: "Blummber", img: "/trustbarlogos/trimmed/blummber.png" },
-  { name: "Bullsmart", img: "/trustbarlogos/trimmed/bullsmart.png" },
-  { name: "Cinepebble", img: "/trustbarlogos/trimmed/cinipebble.png" },
-  { name: "Codeus", img: "/trustbarlogos/trimmed/codeus.png" },
-  { name: "Digitathya", img: "/trustbarlogos/trimmed/digitathya.png" },
-  { name: "Dyashin", img: "/trustbarlogos/trimmed/dyashin.png" },
-  { name: "Kaypee Space", img: "/trustbarlogos/trimmed/kaypeespace.png" },
-  { name: "Multimedia", img: "/trustbarlogos/trimmed/multimedia.png" },
-  { name: "Onroadz", img: "/trustbarlogos/trimmed/onroad.png" },
-  { name: "Orihiro", img: "/trustbarlogos/trimmed/orihiro.png" },
-  { name: "Saraogi", img: "/trustbarlogos/trimmed/sarogi.png" },
-  { name: "Silvercross", img: "/trustbarlogos/trimmed/silvercross.png" },
-  { name: "Solv", img: "/trustbarlogos/trimmed/solv.png" },
-  { name: "SpinMatch", img: "/trustbarlogos/trimmed/spinmatch.png" },
-  { name: "WeGoFin", img: "/trustbarlogos/trimmed/wegofin.png" },
-  { name: "Workdays", img: "/trustbarlogos/trimmed/workdays.png" },
-  { name: "Zassets", img: "/trustbarlogos/trimmed/zassets.png" },
-];
+import { TRUSTBAR_LOGOS } from "@/lib/trustbar-logos";
+
+const logos = TRUSTBAR_LOGOS;
+
+const LOGO_SLOT =
+  "flex h-10 w-28 shrink-0 items-center justify-center p-2 sm:h-12 sm:w-36 sm:p-3 md:w-40";
+const LOGO_IMG =
+  "block h-full w-full max-h-6 max-w-[6rem] object-contain object-center sm:max-h-7 sm:max-w-[7.5rem]";
 
 export default function TrustBar() {
   return (
     <section
-      className="w-full bg-white px-6 py-4 sm:px-10 lg:px-16 lg:py-6 overflow-hidden"
+      className="home-section w-full overflow-hidden bg-white"
       style={{
         fontFamily:
           "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <h2
-          className="text-black"
-          style={{
-            textAlign: "center",
-            textTransform: "none",
-            marginBottom: "2.5rem",
-            fontSize: "1.125rem",
-            lineHeight: "1.4",
-            fontWeight: 500,
-          }}
-        >
-          Organisations That Have{" "}
-          <span
-            style={{
-              background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
-              backgroundClip: "text",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              color: "transparent",
-            }}
-          >
-            Partnered With Us
-          </span>
-        </h2>
-      </div>
+      <div className="section-shell section-shell--wide">
+        <div className="section-header section-header--center">
+          <h2 className="section-heading section-heading--sm text-black">
+            Organisations That Have{" "}
+            <span className="brand-gradient-text">Partnered With Us</span>
+          </h2>
+        </div>
 
-      <div
-        className="group relative w-full [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
-        style={{ marginTop: "10px" }}
-      >
-        <div
-          className="animate-marquee group-hover:[animation-play-state:paused] flex items-center gap-x-14 sm:gap-x-16 lg:gap-x-20"
-          style={{
-            width: "max-content",
-          }}
-        >
-          {[...logos, ...logos].map((logo, i) => (
-            <div
-              key={`${logo.name}-${i}`}
-              className="shrink-0 flex items-center justify-center px-3 h-6 w-[132px] sm:h-7 sm:w-[154px] lg:h-8 lg:w-[176px]"
-            >
-              <img
-                src={logo.img}
-                alt={logo.name}
-                className="h-full w-full object-contain"
-              />
-            </div>
-          ))}
+        <div className="section-body group relative w-full [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+          <div className="animate-marquee flex w-max items-center gap-x-6 group-hover:[animation-play-state:paused] sm:gap-x-8">
+            {[...logos, ...logos].map((logo, i) => (
+              <div key={`${logo.name}-${i}`} className={LOGO_SLOT}>
+                <img
+                  src={logo.img}
+                  alt={logo.name}
+                  className={LOGO_IMG}
+                  loading="lazy"
+                  style={
+                    logo.scale
+                      ? { transform: `scale(${logo.scale})`, transformOrigin: "center" }
+                      : undefined
+                  }
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

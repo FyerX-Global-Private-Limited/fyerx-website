@@ -132,14 +132,14 @@ interface Industry {
 }
 
 const INDUSTRIES: Industry[] = [
-  { icon: "software", label: ["IT &", "Technology"] },
-  { icon: "briefcase", label: ["Professional", "Services"] },
-  { icon: "construction", label: ["Manufacturing &", "Industrial"] },
-  { icon: "financial", label: ["Financial", "Services"] },
-  { icon: "healthcare", label: ["Healthcare &", "MedTech"] },
-  { icon: "rocket", label: ["Startups &", "SaaS"] },
-  { icon: "enterpriseit", label: ["Enterprise &", "MNC"] },
-  { icon: "other", label: ["Other"] },
+  { icon: "software", label: ["A specialist for", "a live project"] },
+  { icon: "briefcase", label: ["A contract team", "that can scale"] },
+  { icon: "construction", label: ["Support across", "a hiring surge"] },
+  { icon: "enterpriseit", label: ["An extension to", "the internal team"] },
+  { icon: "financial", label: ["A permanent or", "leadership hire"] },
+  { icon: "media", label: ["Technology talent", "with specific skills"] },
+  { icon: "logistics", label: ["Hiring support", "across borders"] },
+  { icon: "healthcare", label: ["Better confidence", "before an offer"] },
 ];
 
 export default function TrackRecord() {
@@ -161,9 +161,9 @@ export default function TrackRecord() {
      
 
       {/* ---------- Industry picker ---------- */}
-      <p className="tr-question">What kind of hiring do you need support with?</p>
+      <p className="tr-question">What kind of hiring support do you need?</p>
 
-      <div className="tr-cards" role="group" aria-label="What kind of hiring do you need support with?">
+      <div className="tr-cards" role="group" aria-label="What kind of hiring support do you need?">
         {INDUSTRIES.map((ind, i) => {
           const isOn = selected.has(i);
           return (
@@ -197,9 +197,9 @@ export default function TrackRecord() {
       </div>
 
       {/* ---------- CTA ---------- */}
-      <PrimaryCtaLink href="/talent/book-session" color="#2935a3">Get Started</PrimaryCtaLink>
+      <PrimaryCtaLink href="/talent/book-session" color="#11551C" textColor="#9EEBAA">Tell Us What You Need</PrimaryCtaLink>
 
-      <p className="tr-note">Free initial consultation, no commitment required</p>
+      <p className="tr-note">FyerX Talent is being built by the team behind FyerX—bringing a delivery-led mindset to hiring.</p>
 
       {/* Embedded styles — self-contained, no external CSS needed. */}
       <style>{css}</style>
@@ -209,7 +209,8 @@ export default function TrackRecord() {
 
 const css = `
   .tr-hero{
-    --blue:#2E8EFF;
+    --talent:#11551C;
+    --talent-accent:#9EEBAA;
     --text:#111111;
     --gray:#9B9B9B;
     --border:#DCDEE3;
@@ -217,7 +218,7 @@ const css = `
     -webkit-font-smoothing:antialiased;
     background:#ffffff;
     text-align:center;
-    padding:48px 24px;
+    padding:40px 16px;
   }
   @media (min-width:640px){
     .tr-hero{padding:56px 40px;}
@@ -237,13 +238,13 @@ const css = `
     margin:0 auto 40px;
   }
   .tr-hero .tr-gradient{
-    background:linear-gradient(90deg,#8FE1F8 0%,#5FB9FA 55%,#2E8EFF 100%);
+    background:linear-gradient(90deg,#9EEBAA 0%,#6fd88a 55%,#11551C 100%);
     -webkit-background-clip:text;
     background-clip:text;
     -webkit-text-fill-color:transparent;
     color:transparent;
   }
-  .tr-hero .tr-blue{color:var(--blue);}
+  .tr-hero .tr-blue{color:var(--talent);}
   .tr-hero .tr-sub{
     max-width:40ch;
     font-size:1.125rem;
@@ -254,12 +255,13 @@ const css = `
   }
   /* ---------- Question ---------- */
   .tr-hero .tr-question{
-    font-size:20px;
+    font-size:clamp(1rem,3.5vw,1.25rem);
     line-height:120%;
     font-weight:600;
     color:var(--text);
     margin-top:24px;
-    margin-bottom:34px;
+    margin-bottom:28px;
+    padding-inline:8px;
   }
   /* ---------- Cards ---------- */
   .tr-hero .tr-cards{
@@ -305,8 +307,8 @@ const css = `
     box-shadow:0 4px 14px rgba(17,17,17,0.06);
   }
   .tr-hero .tr-card.selected{
-    border-color:var(--blue);
-    box-shadow:0 0 0 1px var(--blue);
+    border-color:var(--talent);
+    box-shadow:0 0 0 1px var(--talent);
   }
   .tr-hero .tr-check{
     position:absolute;
@@ -323,8 +325,8 @@ const css = `
     transition:background-color .2s ease,border-color .2s ease;
   }
   .tr-hero .tr-card.selected .tr-check{
-    background:var(--blue);
-    border-color:var(--blue);
+    background:var(--talent);
+    border-color:var(--talent);
   }
   .tr-hero .tr-check svg{width:12px;height:12px;}
   .tr-hero .tr-icon{
@@ -354,8 +356,8 @@ const css = `
     display:inline-flex;
     align-items:center;
     gap:10px;
-    background:#0B2E59;
-    color:#ffffff;
+    background:#11551C;
+    color:#9EEBAA;
     font-family:inherit;
     font-size:16px;
     font-weight:400;
@@ -368,7 +370,7 @@ const css = `
   @media (min-width:640px){
     .tr-hero .tr-cta{font-size:20px;gap:12px;padding:10px 30px;}
   }
-  .tr-hero .tr-cta:hover{background:#092547;}
+  .tr-hero .tr-cta:hover{background:#0d4216;}
   .tr-hero .tr-arrow{display:inline-flex;transition:transform .25s ease;}
   .tr-hero .tr-cta:hover .tr-arrow{transform:translateX(4px);}
   /* ---------- Note ---------- */

@@ -90,39 +90,39 @@ function StrategyDashboardMockup() {
 
 export default function CampaignsSection() {
   return (
-    <section className="w-full bg-white py-12 sm:py-16">
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-16">
-        <div className="relative rounded-[32px] bg-[#0B1D3A]">
+    <section className="w-full bg-white py-10 sm:py-16">
+      <div className="mx-auto max-w-6xl px-4 sm:px-10 lg:px-16">
+        <div className="relative rounded-[24px] bg-[#11551C] sm:rounded-[32px]">
           <div className="grid items-center gap-8 md:grid-cols-2">
-            {/* Left: copy */}
-            <div className="px-8 py-12 sm:px-12 sm:py-16 lg:pl-16">
+            <div className="px-6 py-10 sm:px-12 sm:py-16 lg:pl-16">
               <span className="inline-flex w-fit items-center rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white">
                 FyerX Talent
               </span>
 
-              <h2
-                className="mt-8 font-medium leading-[1.12] tracking-[-0.02em] text-white"
-                style={{ fontSize: "46px" }}
-              >
-                A hiring partner that actually understands your roles
+              <h2 className="section-title-lg mt-6 text-white sm:mt-8">
+                A talent partner that understands the pressure behind an open role.
               </h2>
 
-              <p className="mt-6 max-w-sm text-sm font-medium leading-relaxed text-neutral-300">
-                We take the time to understand the roles you&apos;re hiring for and the kind
-                of team you&apos;re building, so every profile we send is worth your time.
-                One point of contact, clear timelines, and support that continues past
-                the offer letter.
+              <p className="mt-4 max-w-sm text-sm font-medium leading-relaxed text-neutral-300 sm:mt-6">
+                When a role stays open, projects slow, teams stretch, and client
+                commitments get harder. FyerX Talent brings structure, specialist
+                sourcing, and clear ownership to the hiring work that needs to move.
               </p>
 
-              <div className="mt-8 flex items-center gap-6">
-                <PrimaryCtaLink href="/talent/book-session" color="#2935a3">
-                  Get Started
+              <div className="mt-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:gap-6">
+                <PrimaryCtaLink
+                  href="/talent/book-session"
+                  className="w-full justify-center sm:w-auto"
+                  color="#FFFBEB"
+                  textColor="#11551C"
+                >
+                  Discuss Your Hiring Need
                 </PrimaryCtaLink>
                 <a
                   href="#"
                   className="text-sm font-medium text-white underline underline-offset-4 hover:text-neutral-200"
                 >
-                  Learn More
+                  Explore Talent Solutions
                 </a>
               </div>
             </div>

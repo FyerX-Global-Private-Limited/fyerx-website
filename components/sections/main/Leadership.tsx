@@ -22,29 +22,28 @@ const poppins = Poppins({
 
 const css = `
 .ldr-section{background:#fff;width:100%;overflow:hidden;}
-.ldr-container{width:100%;max-width:80rem;margin-left:auto;margin-right:auto;padding:48px 16px;}
-.ldr-title{text-align:center;font-weight:500;color:var(--ink);font-family:var(--font-poppins), Arial, sans-serif;font-size:36px;line-height:1.25;letter-spacing:-0.02em;margin:0;}
-.ldr-grid{margin-top:56px;display:grid;grid-template-columns:1fr;gap:0px;border-radius:24px;}
-.ldr-card{border-radius:24px;border:1px solid rgb(195,198,212);background:#fff;padding:34px 37px;display:flex;flex-direction:column;}
-.ldr-icon{display:block;flex:none;}
-.ldr-card-title{margin:40px 0 0;padding-bottom:2.5rem;padding-right:2.5rem;font-weight:400;color:#000;font-size:2rem;line-height:1.2;letter-spacing:-0.02em;max-width:400px;}
-.ldr-card-body{margin-top:0px;margin-bottom:0px;color:#26292C;font-size:1rem;font-weight:400;line-height:1.3;max-width:420px;}
-.ldr-card-image{position:relative;border-radius:28px;overflow:hidden;min-height:320px;}
+.ldr-section .section-shell{margin-inline:auto;width:100%;max-width:75rem;}
+.ldr-grid{display:grid;grid-template-columns:1fr;gap:16px;border-radius:24px;width:100%;}
+.ldr-card{border-radius:24px;border:1px solid rgb(195,198,212);background:#fff;padding:24px 20px;display:flex;flex-direction:column;}
+.ldr-icon{display:block;flex:none;width:52px;height:52px;}
+.ldr-card-title{margin:24px 0 0;padding-bottom:1.5rem;padding-right:0;font-weight:400;color:#000;font-size:clamp(1.5rem, 5vw, 2rem);line-height:1.2;letter-spacing:-0.02em;max-width:none;}
+.ldr-card-body{margin-top:0px;margin-bottom:0px;color:#26292C;font-size:0.9375rem;font-weight:400;line-height:1.45;max-width:none;}
+.ldr-card-image{position:relative;border-radius:20px;overflow:hidden;min-height:240px;}
 .ldr-br{display:none;}
 
 @media (min-width:640px){
-  .ldr-container{padding:56px 24px;}
+  .ldr-grid{gap:20px;}
+  .ldr-card{padding:32px 28px;}
+  .ldr-card-title{margin-top:32px;padding-bottom:2rem;padding-right:1.5rem;max-width:400px;}
+  .ldr-card-body{font-size:1rem;line-height:1.3;max-width:420px;}
+  .ldr-card-image{min-height:280px;border-radius:24px;}
+  .ldr-icon{width:58px;height:58px;}
 }
 @media (min-width:1024px){
-  .ldr-grid{grid-template-columns:repeat(3,1fr);}
-  .ldr-card-image{min-height:0;}
+  .ldr-grid{grid-template-columns:repeat(3,1fr);gap:24px;}
+  .ldr-card{padding:34px 37px 72px;}
+  .ldr-card-image{min-height:0;border-radius:28px;}
   .ldr-br{display:inline;}
-  .ldr-container{padding:64px 32px;}
-}
-@media (max-width:639px){
-  .ldr-title{font-size:36px;}
-  .ldr-card{padding:36px 32px 72px;}
-  .ldr-card-title{font-size:30px;}
 }
 `;
 
@@ -108,26 +107,18 @@ function FeatureCard({ icon, title, body }: FeatureCardProps) {
 
 export default function Leadership() {
   return (
-    <section className={`ldr-section ${poppins.className}`}>
+    <section className={`home-section ldr-section ${poppins.className}`}>
       <style dangerouslySetInnerHTML={{ __html: css }} />
 
-      <div className="ldr-container">
-        <h2 className="ldr-title">
-          From first conversation to{" "}
-          <span
-            style={{
-              background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
-              backgroundClip: "text",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              color: "transparent",
-            }}
-          >
-            long-term partner
-          </span>
-        </h2>
+      <div className="section-shell">
+        <div className="section-header section-header--center">
+          <h2 className="section-heading">
+            From first conversation to{" "}
+            <span className="brand-gradient-text">long-term partner</span>
+          </h2>
+        </div>
 
-        <div className="ldr-grid">
+        <div className="section-body ldr-grid">
           <FeatureCard
             icon={<ArrowIcon />}
             title="Every stage, connected"

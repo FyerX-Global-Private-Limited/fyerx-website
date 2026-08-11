@@ -1,120 +1,108 @@
 "use client";
 
-/**
- * TrackRecord — "The only AI-first CRM your team will love" hero section.
- *
- * Path: components/sections/main/TrackRecord.tsx
- *
- * Usage (App Router):
- *   import TrackRecord from "@/components/sections/main/TrackRecord";
- *   export default function Page() { return <TrackRecord />; }
- *
- * Self-contained: styles are embedded, no external CSS or dependencies.
- * Industry cards are multi-select toggles; layout never shifts.
- */
-
 import { useState, type ReactNode } from "react";
 import { PrimaryCtaButton } from "@/components/ui/PrimaryCta";
 
-/* ------------------------------------------------------------------ */
-/* Icons — 40x40 outline SVGs, stroke inherits currentColor            */
-/* ------------------------------------------------------------------ */
-const I = ({ children }: { children: ReactNode }) => (
-  <svg
-    className="tr-icon"
-    viewBox="0 0 48 48"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.4"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    {children}
-  </svg>
-);
+const ICON_COLORS = ["#6161FF", "#FF5AC4", "#00CA72", "#FDAB3D", "#E2445C", "#A25DDC", "#0086C0", "#579BFC"];
 
-const ICONS: Record<string, ReactNode> = {
-  growth: (
-    <I>
-      <path d="M6 40h36" />
-      <path d="M10 32l8-10 7 6 13-16" />
-      <path d="M30 6h8v8" />
-    </I>
+function ColorIcon({ color, children }: { color: string; children: ReactNode }) {
+  return (
+    <span
+      className="tr-iconWrap"
+      style={{ backgroundColor: `${color}18`, color }}
+      aria-hidden="true"
+    >
+      {children}
+    </span>
+  );
+}
+
+const ICONS: Record<string, (color: string) => ReactNode> = {
+  growth: (c) => (
+    <ColorIcon color={c}>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 40h36" />
+        <path d="M10 32l8-10 7 6 13-16" />
+        <path d="M30 6h8v8" />
+      </svg>
+    </ColorIcon>
   ),
-  target: (
-    <I>
-      <circle cx="24" cy="24" r="16" />
-      <circle cx="24" cy="24" r="9" />
-      <circle cx="24" cy="24" r="2" />
-    </I>
+  brand: (c) => (
+    <ColorIcon color={c}>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="24" cy="24" r="16" />
+        <circle cx="24" cy="24" r="9" />
+        <circle cx="24" cy="24" r="2" fill="currentColor" />
+      </svg>
+    </ColorIcon>
   ),
-  team: (
-    <I>
-      <circle cx="16" cy="17" r="6" />
-      <path d="M4 39v-2a9 9 0 019-9h6a9 9 0 019 9v2" />
-      <circle cx="34" cy="15" r="5" />
-      <path d="M26 39v-1a8 8 0 018-8h1a8 8 0 018 8v1" />
-    </I>
+  hiring: (c) => (
+    <ColorIcon color={c}>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="16" cy="17" r="6" />
+        <path d="M4 39v-2a9 9 0 019-9h6a9 9 0 019 9v2" />
+        <circle cx="34" cy="15" r="5" />
+        <path d="M26 39v-1a8 8 0 018-8h1a8 8 0 018 8v1" />
+      </svg>
+    </ColorIcon>
   ),
-  digital: (
-    <I>
-      <rect x="10" y="10" width="28" height="18" rx="2" />
-      <path d="M4 34h40l-3 5H7l-3-5z" />
-      <path d="M18 19a6 6 0 0110-4m2 4a6 6 0 01-10 4" />
-      <path d="M28 13l2 2-2 2M20 25l-2-2 2-2" />
-    </I>
+  specialist: (c) => (
+    <ColorIcon color={c}>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M24 10L4 20l20 10 20-10-20-10z" />
+        <path d="M14 24v10c0 3 5 6 10 6s10-3 10-6V24" />
+      </svg>
+    </ColorIcon>
   ),
-  megaphone: (
-    <I>
-      <path d="M6 20v8a2 2 0 002 2h2l18 8V10L10 18H8a2 2 0 00-2 2z" />
-      <path d="M28 16a9 9 0 010 16" />
-      <path d="M14 30l2 8h5l-2-8" />
-    </I>
+  tech: (c) => (
+    <ColorIcon color={c}>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="10" y="10" width="28" height="18" rx="2" />
+        <path d="M4 34h40l-3 5H7l-3-5z" />
+        <path d="M18 19a6 6 0 0110-4" />
+      </svg>
+    </ColorIcon>
   ),
-  operations: (
-    <I>
-      <circle cx="10" cy="12" r="4" />
-      <circle cx="38" cy="12" r="4" />
-      <circle cx="24" cy="26" r="4" />
-      <circle cx="10" cy="40" r="4" />
-      <circle cx="38" cy="40" r="4" />
-      <path d="M13 15l8 8m14-11l-8 8M20 30l-8 7m22-7l8 7" />
-    </I>
+  ai: (c) => (
+    <ColorIcon color={c}>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="24" cy="24" r="8" />
+        <path d="M24 4v6M24 38v6M4 24h6M38 24h6M9.9 9.9l4.2 4.2M33.9 33.9l4.2 4.2M9.9 38.1l4.2-4.2M33.9 14.1l4.2-4.2" />
+      </svg>
+    </ColorIcon>
   ),
-  capability: (
-    <I>
-      <path d="M24 10L4 20l20 10 20-10-20-10z" />
-      <path d="M14 24v10c0 3 5 6 10 6s10-3 10-6V24" />
-      <path d="M40 20v12" />
-    </I>
+  cloud: (c) => (
+    <ColorIcon color={c}>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 36h22a8 8 0 000-16 10 10 0 00-19.2-3.2A7 7 0 0014 36z" />
+      </svg>
+    </ColorIcon>
   ),
-  other: (
-    <I>
-      <circle cx="15" cy="13" r="5" />
-      <path d="M31 8l8 10h-16l8-10z" transform="translate(0,1)" />
-      <path d="M12 30l8 8m0-8l-8 8" />
-      <rect x="29" y="30" width="9" height="9" rx="1.5" />
-    </I>
+  skills: (c) => (
+    <ColorIcon color={c}>
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M8 38V18l16-10 16 10v20" />
+        <path d="M18 38V26h12v12" />
+        <path d="M8 18l16 10 16-10" />
+      </svg>
+    </ColorIcon>
   ),
 };
 
-/* ------------------------------------------------------------------ */
-/* Card data                                                           */
-/* ------------------------------------------------------------------ */
 interface Industry {
   icon: keyof typeof ICONS;
-  label: [string, string?]; // one or two lines, matching the reference
+  label: string;
 }
 
 const INDUSTRIES: Industry[] = [
-  { icon: "growth", label: ["Revenue", "Growth"] },
-  { icon: "target", label: ["Market", "Expansion"] },
-  { icon: "team", label: ["Team", "Building"] },
-  { icon: "digital", label: ["Digital", "Transformation"] },
-  { icon: "megaphone", label: ["Brand", "Building"] },
-  { icon: "operations", label: ["Business", "Operations"] },
-  { icon: "capability", label: ["Capability", "Development"] },
-  { icon: "other", label: ["Something", "Else"] },
+  { icon: "growth", label: "Growth & Demand" },
+  { icon: "brand", label: "Brand & Market Presence" },
+  { icon: "hiring", label: "Hiring & Workforce" },
+  { icon: "specialist", label: "Specialist Talent" },
+  { icon: "tech", label: "Technology Modernization" },
+  { icon: "ai", label: "Data, AI & Automation" },
+  { icon: "cloud", label: "Cloud & Enterprise Platforms" },
+  { icon: "skills", label: "Skills & Capability Building" },
 ];
 
 export default function TrackRecord() {
@@ -123,79 +111,62 @@ export default function TrackRecord() {
   const toggle = (i: number) =>
     setSelected((prev) => {
       const next = new Set(prev);
-      if (next.has(i)) {
-        next.delete(i);
-      } else {
-        next.add(i);
-      }
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
       return next;
     });
 
   return (
-    <section className="tr-hero">
-      {/* ---------- Heading ---------- */}
-      <h1 className="tr-title">
-      Built around what
-your {" "}
-        <span
-          style={{
-            background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
-            backgroundClip: "text",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            color: "transparent",
-          }}
-        >
-         business needs next
-        </span>
-      </h1>
+    <section className="home-section tr-hero">
+      <div className="section-shell">
+        <div className="section-header section-header--center">
+          <h2 className="section-heading">
+            Built around what your{" "}
+            <span className="brand-gradient-text">business needs next</span>
+          </h2>
+          <p className="section-subheading tr-subheading">
+            Select the priority in front of you. We will help identify the right way forward.
+          </p>
+        </div>
 
-      <p className="tr-sub">
-     Select the priority in front of you. We will help identify the right way forward.
-      </p>
-
-      {/* ---------- Industry picker ---------- */}
-    
-
-      <div className="tr-cards" role="group" aria-label="What would you like to manage?">
+      <div className="section-body mt-0 flex flex-col items-center gap-[calc(var(--section-content-gap)+1.5rem)]">
+        <div className="tr-cards" role="group" aria-label="What would you like to manage?">
         {INDUSTRIES.map((ind, i) => {
           const isOn = selected.has(i);
+          const color = ICON_COLORS[i % ICON_COLORS.length];
           return (
             <button
-              key={ind.label.join(" ")}
+              key={ind.label}
               type="button"
               className={`tr-card${isOn ? " selected" : ""}`}
+              style={isOn ? { borderColor: color, boxShadow: `0 0 0 1px ${color}` } : undefined}
               aria-pressed={isOn}
               onClick={() => toggle(i)}
             >
-              <span className="tr-check" aria-hidden="true">
+              <span
+                className="tr-check"
+                aria-hidden="true"
+                style={isOn ? { background: color, borderColor: color } : undefined}
+              >
                 {isOn && (
                   <svg viewBox="0 0 16 16" fill="none">
                     <path d="M3.5 8.5l3 3 6-7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 )}
               </span>
-              {ICONS[ind.icon]}
-              <span className="tr-label">
-                {ind.label[0]}
-                {ind.label[1] && (
-                  <>
-                    <br />
-                    {ind.label[1]}
-                  </>
-                )}
-              </span>
+              {ICONS[ind.icon](color)}
+              <span className="tr-label">{ind.label}</span>
             </button>
           );
         })}
+        </div>
+
+        <div className="tr-cta-wrap">
+          <PrimaryCtaButton>Get Started</PrimaryCtaButton>
+        </div>
+      </div>
       </div>
 
-      {/* ---------- CTA ---------- */}
-      <PrimaryCtaButton>Get Started</PrimaryCtaButton>
-
-      
-
-      {/* Embedded styles — self-contained, no external CSS needed. */}
       <style>{css}</style>
     </section>
   );
@@ -203,93 +174,67 @@ your {" "}
 
 const css = `
   .tr-hero{
-    --blue:#2E8EFF;
-    --text:#111111;
-    --gray:#9B9B9B;
     --border:#DCDEE3;
     font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
     -webkit-font-smoothing:antialiased;
     background:#ffffff;
     text-align:center;
-    padding:56px 24px 72px;
   }
   .tr-hero *{margin:0;padding:0;box-sizing:border-box;}
-  /* ---------- Heading ---------- */
-  .tr-hero .tr-title{
-    max-width:22ch;
-    font-family:var(--font-poppins), Arial, sans-serif;
-    font-size:36px;
-    line-height:1.25;
-    font-weight:500;
-    color:var(--ink);
-    letter-spacing:-0.02em;
-    margin:0 auto 40px;
+  .tr-hero .section-shell{
+    margin-inline:auto;
+    width:100%;
+    max-width:75rem;
   }
-  .tr-hero .tr-gradient{
-    background:linear-gradient(90deg,#8FE1F8 0%,#5FB9FA 55%,#2E8EFF 100%);
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color:transparent;
-    color:transparent;
+  .tr-hero .section-body{
+    width:100%;
   }
-  .tr-hero .tr-blue{color:var(--blue);}
-  .tr-hero .tr-sub{
-    max-width:40ch;
-    font-size:1.125rem;
-    line-height:1.5;
-    font-weight:300;
-    color:#333333;
-    margin:1.75rem auto 2rem;
+  .tr-hero .tr-subheading{
+    text-align:center;
+    margin:17px auto var(--section-content-gap);
+    max-width:42rem;
+    padding-inline:0.5rem;
+    font-size:clamp(0.875rem, 2.5vw, 1.0625rem);
+    line-height:1.6;
+    font-weight:400;
+    color:#5a5f6b;
   }
-  /* ---------- Question ---------- */
-  .tr-hero .tr-question{
-    font-size:.75rem;
-    line-height:120%;
-    font-weight:600;
-    color:var(--text);
-    margin-top:33px;
-    margin-bottom:20px;
-  }
-  /* ---------- Cards ---------- */
   .tr-hero .tr-cards{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:8px;
+    width:100%;
+    max-width:920px;
+    margin:0 auto 0;
+  }
+  .tr-hero .tr-cta-wrap{
     display:flex;
-    flex-flow:row;
-    align-items:stretch;
     justify-content:center;
-    width:85%;
-    max-width:100%;
-    gap:12px;
-    margin:0 auto 46px;
   }
   .tr-hero .tr-card{
     position:relative;
-    width:100%;
-    height:115px;
+    min-height:108px;
     background:#ffffff;
     border:1px solid var(--border);
-    border-radius:4px;
+    border-radius:8px;
     cursor:pointer;
     font-family:inherit;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:0px;
-    padding:16px 10px;
+    gap:6px;
+    padding:14px 8px;
     transition:border-color .2s ease,box-shadow .2s ease;
   }
   .tr-hero .tr-card:hover{
     border-color:#B9BDC7;
     box-shadow:0 4px 14px rgba(17,17,17,0.06);
   }
-  .tr-hero .tr-card.selected{
-    border-color:var(--blue);
-    box-shadow:0 0 0 1px var(--blue);
-  }
   .tr-hero .tr-check{
     position:absolute;
-    top:14px;
-    left:14px;
+    top:10px;
+    left:10px;
     width:18px;
     height:18px;
     border:1px solid #C9CCD4;
@@ -300,38 +245,43 @@ const css = `
     justify-content:center;
     transition:background-color .2s ease,border-color .2s ease;
   }
-  .tr-hero .tr-card.selected .tr-check{
-    background:var(--blue);
-    border-color:var(--blue);
-  }
   .tr-hero .tr-check svg{width:12px;height:12px;}
-  .tr-hero .tr-icon{
-    width:42px;
-    height:42px;
-    color:#555A64;
+  .tr-hero .tr-iconWrap{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:40px;
+    height:40px;
+    border-radius:10px;
   }
+  .tr-hero .tr-iconWrap svg{width:24px;height:24px;}
   .tr-hero .tr-label{
-    position:relative;
     text-align:center;
-    margin-top:.5rem;
-    margin-left:auto;
-    margin-right:auto;
-    font-size:.75rem;
-    line-height:1.4;
-    font-weight:400;
+    font-size:0.6875rem;
+    line-height:1.35;
+    font-weight:500;
     color:#333333;
+    padding:0 2px;
   }
-  /* ---------- Note ---------- */
-  .tr-hero .tr-note{
-    font-size:18px;
-    font-weight:300;
-    color:var(--gray);
-    margin-top:14px;
+  @media (min-width:640px){
+    .tr-hero .tr-cards{gap:10px;}
+    .tr-hero .tr-card{min-height:115px;padding:16px 10px;}
+    .tr-hero .tr-iconWrap{width:44px;height:44px;}
+    .tr-hero .tr-iconWrap svg{width:28px;height:28px;}
+    .tr-hero .tr-label{font-size:0.72rem;padding:0 4px;}
   }
-  /* ---------- Responsive ---------- */
-  @media (max-width:640px){
-    .tr-hero .tr-title{font-size:34px;}
-    .tr-hero .tr-title br{display:none;}
-    .tr-hero .tr-sub br{display:none;}
+  @media (min-width:768px){
+    .tr-hero .tr-cards{grid-template-columns:repeat(3, minmax(0, 1fr));gap:12px;max-width:760px;}
+    .tr-hero .tr-label{font-size:0.75rem;}
+  }
+  @media (min-width:1024px){
+    .tr-hero .tr-cards{
+      display:flex;
+      flex-flow:row wrap;
+      justify-content:center;
+      max-width:100%;
+      gap:12px;
+    }
+    .tr-hero .tr-card{flex:1 1 calc(12.5% - 12px);min-width:110px;max-width:140px;}
   }
 `;

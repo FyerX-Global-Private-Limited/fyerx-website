@@ -17,16 +17,14 @@ function CtaArrowIcon() {
   );
 }
 
-const ctaClassName =
-  "relative inline-flex w-fit items-center justify-start gap-2 overflow-hidden text-[15px] font-semibold text-white transition-opacity hover:opacity-95";
+const DEFAULT_CTA_COLOR = "#86013A";
 
-const DEFAULT_CTA_COLOR = "#ab0549";
-
-function ctaStyle(color: string): CSSProperties {
+function ctaStyle(color: string, textColor = "#ffffff"): CSSProperties {
   return {
     padding: "0.8125rem 1.75rem",
     borderRadius: "10rem",
     backgroundColor: color,
+    color: textColor,
     backgroundImage:
       "radial-gradient(circle closest-side, rgba(254, 155, 11, 0.85) 0%, rgba(255, 129, 228, 0.85) 50%, rgba(97, 97, 255, 0) 100%)",
     backgroundSize: "350px 350px",
@@ -35,13 +33,19 @@ function ctaStyle(color: string): CSSProperties {
   };
 }
 
-type PrimaryCtaLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className" | "style"> & {
+const ctaClassName =
+  "relative inline-flex w-fit cursor-pointer items-center justify-start gap-2 overflow-hidden text-[15px] font-semibold transition-opacity hover:opacity-95";
+
+type PrimaryCtaLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className"> & {
   href: string;
   children: ReactNode;
   className?: string;
   icon?: ReactNode | null;
-  /** Pill background color. Defaults to the site-wide magenta (#ab0549). */
+  /** Pill background color. Defaults to the site-wide home burgundy (#86013A). */
   color?: string;
+  /** Text color on the pill. Defaults to white; use dark text on light buttons (e.g. Marketing yellow). */
+  textColor?: string;
+  style?: CSSProperties;
 };
 
 export function PrimaryCtaLink({
@@ -50,22 +54,32 @@ export function PrimaryCtaLink({
   className = "",
   icon,
   color = DEFAULT_CTA_COLOR,
+  textColor = "#ffffff",
+  style,
   ...props
 }: PrimaryCtaLinkProps) {
   return (
-    <Link href={href} className={`${ctaClassName} ${className}`} style={ctaStyle(color)} {...props}>
+    <Link
+      href={href}
+      className={`${ctaClassName} ${className}`}
+      style={{ ...ctaStyle(color, textColor), ...style }}
+      {...props}
+    >
       {children}
       {icon === null ? null : (icon ?? <CtaArrowIcon />)}
     </Link>
   );
 }
 
-type PrimaryCtaButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className" | "style"> & {
+type PrimaryCtaButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className"> & {
   children: ReactNode;
   className?: string;
   icon?: ReactNode | null;
-  /** Pill background color. Defaults to the site-wide magenta (#ab0549). */
+  /** Pill background color. Defaults to the site-wide home burgundy (#86013A). */
   color?: string;
+  /** Text color on the pill. Defaults to white. */
+  textColor?: string;
+  style?: CSSProperties;
 };
 
 export function PrimaryCtaButton({
@@ -73,11 +87,13 @@ export function PrimaryCtaButton({
   className = "",
   icon,
   color = DEFAULT_CTA_COLOR,
+  textColor = "#ffffff",
+  style,
   type = "button",
   ...props
 }: PrimaryCtaButtonProps) {
   return (
-    <button type={type} className={`${ctaClassName} ${className}`} style={ctaStyle(color)} {...props}>
+    <button type={type} className={`${ctaClassName} ${className}`} style={{ ...ctaStyle(color, textColor), ...style }} {...props}>
       {children}
       {icon === null ? null : (icon ?? <CtaArrowIcon />)}
     </button>
