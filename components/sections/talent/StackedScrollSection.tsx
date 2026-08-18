@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { TALENT_HOME } from "@/lib/talent-home-palette";
 import {
   TALENT_CASE_STUDIES,
   type TalentCaseStudy,
@@ -36,17 +37,19 @@ function MetricsMockup({
   study,
   metrics,
   accentColor,
+  peekColor,
 }: {
   study: TalentCaseStudy;
   metrics: TalentCaseStudyMetric[];
   accentColor: string;
+  peekColor: string;
 }) {
   return (
     <div className="relative flex h-full min-h-[360px] w-full items-center justify-center p-3 sm:min-h-[420px] sm:p-4">
       <div
         className="absolute inset-2 rounded-2xl sm:inset-3"
         style={{
-          background: `linear-gradient(145deg, ${accentColor} 0%, #11551C 100%)`,
+          background: `linear-gradient(145deg, ${peekColor} 0%, #ffffff 100%)`,
         }}
         aria-hidden="true"
       />
@@ -57,7 +60,7 @@ function MetricsMockup({
             <img src={study.logoSrc} alt={study.clientName} className="h-6 w-auto object-contain" />
           </div>
         ) : (
-          <div className="absolute -left-2 top-6 z-20 w-[168px] rounded-xl border border-white/50 bg-white/95 p-4 shadow-lg backdrop-blur-sm sm:-left-4">
+          <div className="absolute -left-2 top-6 z-20 w-[168px] rounded-xl border border-[#E6E9EF] bg-white p-4 shadow-lg sm:-left-4">
             <p className="text-3xl font-bold tracking-tight text-[var(--ink)]">
               {metrics[0]?.value ?? "—"}
             </p>
@@ -67,12 +70,12 @@ function MetricsMockup({
           </div>
         )}
 
-        <div className="w-full overflow-hidden rounded-2xl bg-white shadow-2xl">
+        <div className="w-full overflow-hidden rounded-2xl border border-[#E6E9EF] bg-white shadow-xl">
           <div className="flex items-center justify-between border-b border-[#E6E9EF] px-5 py-3.5">
             <p className="text-sm font-semibold text-[var(--ink)]">{study.clientName}</p>
             <span
               className="rounded-full px-2.5 py-1 text-xs font-semibold"
-              style={{ backgroundColor: `${accentColor}18`, color: accentColor }}
+              style={{ backgroundColor: `${accentColor}14`, color: accentColor }}
             >
               {study.categoryLabel.split(" ")[0]}
             </span>
@@ -115,7 +118,7 @@ function StackedCaseStudyCard({ study, index }: { study: TalentCaseStudy; index:
   return (
     <div className="sticky" style={{ top: `${STACK_TOP + index * PEEK}px` }}>
       <div
-        className="mb-8 overflow-hidden rounded-[28px] shadow-[0_20px_60px_-24px_rgba(17,85,28,0.25)]"
+        className="mb-8 overflow-hidden rounded-[28px] border border-[#E6E9EF] shadow-[0_20px_60px_-24px_rgba(17,24,39,0.12)]"
         style={{ backgroundColor: study.peekColor }}
       >
         <div className="m-[3px] overflow-hidden rounded-[25px] bg-white">
@@ -147,7 +150,8 @@ function StackedCaseStudyCard({ study, index }: { study: TalentCaseStudy; index:
               </div>
               <Link
                 href={`/talent/case-studies/${study.slug}`}
-                className="mt-8 inline-flex w-fit items-center gap-2 rounded-full bg-[var(--ink)] px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                className="mt-8 inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                style={{ backgroundColor: TALENT_HOME.primary, color: TALENT_HOME.accent }}
               >
                 Explore This Requirement
                 <span aria-hidden="true">→</span>
@@ -155,7 +159,12 @@ function StackedCaseStudyCard({ study, index }: { study: TalentCaseStudy; index:
             </div>
 
             <div className="border-t border-[#EEF1F6] bg-white md:min-h-[420px] md:border-t-0 md:border-l">
-              <MetricsMockup study={study} metrics={study.metrics} accentColor={study.accentColor} />
+              <MetricsMockup
+                study={study}
+                metrics={study.metrics}
+                accentColor={study.accentColor}
+                peekColor={study.peekColor}
+              />
             </div>
           </div>
         </div>
@@ -166,11 +175,11 @@ function StackedCaseStudyCard({ study, index }: { study: TalentCaseStudy; index:
 
 export default function StackedScrollSection() {
   return (
-    <section className="w-full bg-white">
+    <section className="w-full overflow-x-clip bg-[#F6F7FB]">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-10 lg:px-12">
         <div className="flex flex-col gap-6 pt-12 sm:flex-row sm:items-start sm:justify-between sm:pt-16">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[#11551C]">
+            <p className="text-sm font-semibold uppercase tracking-[0.14em]" style={{ color: TALENT_HOME.primary }}>
               Featured hiring scenarios
             </p>
             <h2 className="section-heading mt-3">
@@ -178,7 +187,7 @@ export default function StackedScrollSection() {
               <span className="brand-gradient-text">affect delivery</span>
             </h2>
           </div>
-          <PrimaryCtaLink href="/talent/book-session" className="shrink-0" color="#11551C" textColor="#9EEBAA">
+          <PrimaryCtaLink href="/talent/book-session" className="shrink-0" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
             Explore Talent Solutions
           </PrimaryCtaLink>
         </div>

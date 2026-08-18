@@ -1043,38 +1043,87 @@ const DETAIL_ITEMS = [
 
 function ContactDetailsMap() {
   return (
-    <section className={`w-full overflow-x-clip bg-gradient-to-b from-white via-[#fafafa] to-[#f5f5f5] py-8 sm:py-12 md:py-14 ${sectionPad}`}>
+    <section className={`w-full overflow-x-clip bg-gradient-to-b from-[#E8F1FB] via-white to-[#F6F7FB] py-12 sm:py-16 md:py-20 ${sectionPad}`}>
       <div className={containerCls}>
-        <div className="mx-auto max-w-xl text-center">
-          <h2 className="text-2xl font-bold tracking-tight text-[#181b34] sm:text-3xl md:text-4xl">
-            Contact Details
-          </h2>
-          <p className="mt-2 text-sm leading-relaxed text-[#3d4a5c] sm:text-base">
-            Prefer to reach us directly? Here&rsquo;s how to find us.
-          </p>
-        </div>
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-14">
+          <div className="min-w-0 text-center lg:text-left">
+            <h2 className="text-[clamp(1.75rem,4vw,2.75rem)] font-medium leading-[1.12] tracking-[-0.02em] text-[#0B2E59]">
+              Prefer a direct conversation?
+            </h2>
+            <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-[#3d4a5c] sm:text-base lg:mx-0">
+              Reach our team directly for staffing, technology hiring, marketing, or career enquiries.
+              We respond with clarity on next steps and the right contact path.
+            </p>
 
-        <div className="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:grid-cols-3 sm:gap-4">
-          {DETAIL_ITEMS.map((item) => (
-            <div
-              key={item.key}
-              className="flex min-w-0 flex-col items-start rounded-2xl border border-[#e6e9ef] bg-white p-4 sm:p-5"
-            >
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl text-white sm:h-11 sm:w-11" style={{ background: BRAND.crimson }}>
-                {item.icon}
-              </span>
-              <p className={`mt-3 ${footerHeadingCls}`}>{item.label}</p>
-              <p className="mt-1 break-words text-sm leading-relaxed text-[#3d4a5c]">{item.value}</p>
-              <a
-                href={item.href}
-                target={item.href.startsWith("http") ? "_blank" : undefined}
-                rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="mt-4 inline-flex min-h-[40px] items-center justify-center rounded-full border border-[#d6dae3] px-4 py-2 text-xs font-semibold text-[#181b34] transition-colors hover:border-[#730031] hover:text-[#730031]"
-              >
-                {item.actionLabel}
-              </a>
+            <div className="mt-8 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 lg:gap-4">
+              {DETAIL_ITEMS.map((item) => (
+                <div
+                  key={item.key}
+                  className="flex min-w-0 flex-col items-start rounded-2xl border border-[#E6E9EF] bg-white p-4 text-left shadow-sm sm:p-5"
+                >
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E8F1FB] text-[#1F5C99] sm:h-11 sm:w-11">
+                    {item.icon}
+                  </span>
+                  <p className={`mt-3 ${footerHeadingCls}`}>{item.label}</p>
+                  <p className="mt-1 break-words text-sm leading-relaxed text-[#3d4a5c]">{item.value}</p>
+                  <a
+                    href={item.href}
+                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                    rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="mt-4 inline-flex min-h-[40px] items-center justify-center rounded-full border border-[#C3D4E8] px-4 py-2 text-xs font-semibold text-[#0B2E59] transition-colors hover:border-[#1F5C99] hover:text-[#1F5C99]"
+                  >
+                    {item.actionLabel}
+                  </a>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          <div className="min-w-0">
+            <div className="overflow-hidden rounded-3xl border border-[#E6E9EF] bg-white p-6 shadow-sm sm:p-8">
+              <div className="rounded-2xl bg-gradient-to-br from-[#E8F1FB] to-[#F3F0FF] p-6 sm:p-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#1F5C99]">
+                  FyerX Delivery Hub
+                </p>
+                <h3 className="mt-3 text-xl font-semibold text-[#0B2E59] sm:text-2xl">
+                  One partner across talent, technology, and marketing
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-[#52525b]">
+                  Whether you need specialist hiring support, platform delivery, or growth execution,
+                  our teams work with structured ownership and clear communication.
+                </p>
+                <ul className="mt-5 space-y-2.5 text-sm text-[#3d4a5c]">
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1F5C99]" aria-hidden="true" />
+                    Dedicated point of contact for every enquiry
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1F5C99]" aria-hidden="true" />
+                    Clear next steps after your first conversation
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1F5C99]" aria-hidden="true" />
+                    Bengaluru HQ with remote delivery support
+                  </li>
+                </ul>
+              </div>
+              <div className="mt-5 grid grid-cols-3 gap-3">
+                {[
+                  { label: "Talent", color: "#E8F1FB" },
+                  { label: "Technology", color: "#F3F0FF" },
+                  { label: "Marketing", color: "#FFF7ED" },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="rounded-xl border border-[#EEF1F6] px-3 py-4 text-center"
+                    style={{ backgroundColor: item.color }}
+                  >
+                    <p className="text-xs font-semibold text-[#0B2E59]">{item.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

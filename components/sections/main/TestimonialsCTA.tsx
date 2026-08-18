@@ -3,6 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { PrimaryCtaButton } from "@/components/ui/PrimaryCta";
+import { TRUSTBAR_LOGOS } from "@/lib/trustbar-logos";
 
 const AVATARS = [
   {
@@ -27,111 +28,11 @@ const AVATARS = [
   },
 ];
 
-const WHAT_HAPPENS_NEXT = [
-  {
-    step: "01",
-    color: "#730031",
-    icon: "review" as const,
-    title: "We review your enquiry",
-    description: "Your requirement is directed to the appropriate FyerX team.",
-  },
-  {
-    step: "02",
-    color: "#6161FF",
-    icon: "context" as const,
-    title: "We understand the context",
-    description: "A relevant team member connects to understand the business need.",
-  },
-  {
-    step: "03",
-    color: "#00CA72",
-    icon: "next" as const,
-    title: "We define the next step",
-    description: "You receive a clear recommendation on how to proceed.",
-  },
-] as const;
-
-const LOGOS = [
-  { name: "Adro", img: "/trustbarlogos/trimmed/adro.png" },
-  { name: "Ambience", img: "/trustbarlogos/trimmed/ambience.png" },
-  { name: "Avekshaa", img: "/trustbarlogos/trimmed/avekshaa.png" },
-  { name: "Blummber", img: "/trustbarlogos/trimmed/blummber.png" },
-  { name: "Bullsmart", img: "/trustbarlogos/trimmed/bullsmart.png" },
-  { name: "Cinepebble", img: "/trustbarlogos/trimmed/cinipebble.png" },
-  { name: "Codeus", img: "/trustbarlogos/trimmed/codeus.png" },
-  { name: "Digitathya", img: "/trustbarlogos/trimmed/digitathya.png" },
-  { name: "TrnDigital", img: "/trustbarlogos/trndigital.png" },
-  { name: "Dyashin", img: "/trustbarlogos/trimmed/dyashin.png" },
-  { name: "Kaypee Space", img: "/trustbarlogos/trimmed/kaypeespace.png" },
-  { name: "Multimedia", img: "/trustbarlogos/trimmed/multimedia.png" },
-  { name: "Onroadz", img: "/trustbarlogos/trimmed/onroad.png" },
-  { name: "Orihiro", img: "/trustbarlogos/trimmed/orihiro.png" },
-  { name: "Saraogi", img: "/trustbarlogos/trimmed/sarogi.png" },
-  { name: "Silvercross", img: "/trustbarlogos/trimmed/silvercross.png" },
-  { name: "Solv", img: "/trustbarlogos/trimmed/solv.png" },
-  { name: "SpinMatch", img: "/trustbarlogos/trimmed/spinmatch.png" },
-  { name: "WeGoFin", img: "/trustbarlogos/trimmed/wegofin.png" },
-  { name: "Workdays", img: "/trustbarlogos/trimmed/workdays.png" },
-  { name: "Zassets", img: "/trustbarlogos/trimmed/zassets.png" },
-];
-
 const inputBase =
   "w-full h-10 rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 text-[13px] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]";
 
 const selectBase =
   "w-full h-10 rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 pr-9 text-[13px] text-[#676879] outline-none appearance-none cursor-pointer transition-colors duration-150 focus:border-[#6161ff]";
-
-function StepIcon({ type, color }: { type: (typeof WHAT_HAPPENS_NEXT)[number]["icon"]; color: string }) {
-  const common = {
-    width: 18,
-    height: 18,
-    viewBox: "0 0 24 24",
-    fill: "none" as const,
-    stroke: "currentColor",
-    strokeWidth: 2,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-    "aria-hidden": true as const,
-  };
-
-  let icon: React.ReactNode;
-  switch (type) {
-    case "review":
-      icon = (
-        <svg {...common}>
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-          <path d="M14 2v6h6" />
-          <path d="M9 13h6" />
-          <path d="M9 17h4" />
-        </svg>
-      );
-      break;
-    case "context":
-      icon = (
-        <svg {...common}>
-          <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
-        </svg>
-      );
-      break;
-    case "next":
-      icon = (
-        <svg {...common}>
-          <path d="M9 11l3 3L22 4" />
-          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-        </svg>
-      );
-      break;
-  }
-
-  return (
-    <span
-      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px]"
-      style={{ backgroundColor: `${color}18`, color }}
-    >
-      {icon}
-    </span>
-  );
-}
 
 function Caret({ className }: { className?: string }) {
   return (
@@ -165,8 +66,8 @@ export default function TestimonialsCTA() {
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
       <div className="section-shell section-shell--wide">
-        <div className="section-inset rounded-2xl bg-[#ab05491a] sm:rounded-[24px]">
-        <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-8 sm:gap-[var(--section-content-gap)] lg:flex-row lg:items-stretch lg:justify-between">
+        <div className="section-inset rounded-2xl border border-[#E6E9EF] bg-[#F6F7FB] sm:rounded-[24px]">
+        <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-8 sm:gap-[var(--section-content-gap)] lg:flex-row lg:items-start lg:justify-between">
           <div className="flex min-w-0 flex-1 flex-col">
             <h2 className="section-heading max-w-none lg:max-w-[470px]">
               Ready to see what FyerX can do for{" "}
@@ -178,67 +79,30 @@ export default function TestimonialsCTA() {
               pricing for your business.
             </p>
 
-            <div className="hidden min-h-[32px] flex-1 sm:block" />
-
-            <div className="group w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-              <div className="animate-marquee flex w-max items-center gap-x-8 sm:gap-x-10 lg:gap-x-12 group-hover:[animation-play-state:paused]">
-                {[...LOGOS, ...LOGOS].map((logo, i) => (
+            <div className="mt-8 w-full max-w-none lg:max-w-[520px]">
+              <p className="text-sm font-medium text-[#676879]">
+                Organisations that have partnered with us
+              </p>
+              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+                {TRUSTBAR_LOGOS.map((logo) => (
                   <div
-                    key={`${logo.name}-${i}`}
-                    className="flex h-4 w-[88px] shrink-0 items-center justify-center px-2 sm:h-5 sm:w-[96px] lg:h-5 lg:w-[104px]"
+                    key={logo.name}
+                    className="flex h-14 items-center justify-center rounded-xl border border-[#E6E9EF] bg-white px-3 py-2 sm:h-16 sm:px-4"
                   >
                     <img
                       src={logo.img}
                       alt={logo.name}
-                      className="h-full w-full object-contain opacity-45 grayscale"
+                      className="max-h-7 w-full object-contain sm:max-h-8"
+                      loading="lazy"
+                      style={
+                        logo.scale
+                          ? { transform: `scale(${logo.scale})`, transformOrigin: "center" }
+                          : undefined
+                      }
                     />
                   </div>
                 ))}
               </div>
-            </div>
-
-            <div className="mt-6 w-full max-w-none rounded-[8px] border border-[#323338] p-4 sm:mt-7 sm:max-w-[465px] sm:p-6">
-              <h3 className="flex flex-wrap items-center gap-2 text-[14px] font-semibold leading-[1.4] text-[#181b34] sm:gap-2.5 sm:text-[15px]">
-                <span
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[8px]"
-                  style={{
-                    background: "linear-gradient(135deg, #730031 0%, #CC0057 100%)",
-                    color: "#ffffff",
-                  }}
-                  aria-hidden="true"
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 3v3" />
-                    <path d="M12 18v3" />
-                    <path d="M3 12h3" />
-                    <path d="M18 12h3" />
-                    <path d="M5.6 5.6 7.7 7.7" />
-                    <path d="M16.3 16.3l2.1 2.1" />
-                    <path d="M5.6 18.4 7.7 16.3" />
-                    <path d="M16.3 7.7l2.1-2.1" />
-                  </svg>
-                </span>
-                What happens{" "}
-                <span className="brand-gradient-text">next:</span>
-              </h3>
-              <ol className="mt-5 flex flex-col gap-5">
-                {WHAT_HAPPENS_NEXT.map((item) => (
-                  <li key={item.step} className="flex gap-3.5">
-                    <StepIcon type={item.icon} color={item.color} />
-                    <div className="min-w-0">
-                      <p className="text-[14px] font-semibold leading-[1.4] text-[#181b34]">
-                        <span className="mr-1.5 text-[12px] font-semibold tabular-nums" style={{ color: item.color }}>
-                          {item.step}
-                        </span>
-                        {item.title}
-                      </p>
-                      <p className="mt-1 text-[14px] leading-[1.5] text-[#181b34]">
-                        {item.description}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
             </div>
           </div>
 
