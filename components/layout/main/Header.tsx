@@ -158,14 +158,43 @@ type MenuCategory = {
   label: string;
   subtitle?: string;
   avatar: string;
+  icon?: IconName;
+  tint?: string;
+  iconColor?: string;
   items: { label: string; href: string; icon: IconName }[];
 };
+
+function CategoryThumb({ cat }: { cat: MenuCategory }) {
+  if (cat.icon && cat.tint) {
+    return (
+      <span
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] shadow-[0_2px_8px_rgba(20,20,43,0.08)]"
+        style={{ backgroundColor: cat.tint, color: cat.iconColor ?? "#6161FF" }}
+      >
+        <Glyph name={cat.icon} />
+      </span>
+    );
+  }
+
+  return (
+    <Image
+      src={cat.avatar}
+      alt=""
+      width={40}
+      height={40}
+      className="h-10 w-10 shrink-0 rounded-[10px] object-cover"
+    />
+  );
+}
 
 const marketingCategories: MenuCategory[] = [
   {
     label: "Marketing & Consulting",
     subtitle: "Planning & positioning",
     avatar: "/avatar/1.avif",
+    icon: "chart",
+    tint: "#FFF6E6",
+    iconColor: "#FDAB3D",
     items: [
       { label: "Go-to-Market Strategy", icon: "chart", href: "#" },
       { label: "ICP & Buyer Persona Definition", icon: "personPlus", href: "#" },
@@ -177,6 +206,9 @@ const marketingCategories: MenuCategory[] = [
     label: "Demand Generation",
     subtitle: "Leads & pipeline",
     avatar: "/avatar/2.avif",
+    icon: "funnel",
+    tint: "#F3EEFF",
+    iconColor: "#6161FF",
     items: [
       { label: "Account-Based Marketing", icon: "funnel", href: "#" },
       { label: "LinkedIn Lead Generation", icon: "link", href: "#" },
@@ -190,6 +222,9 @@ const marketingCategories: MenuCategory[] = [
     label: "Search & AI Visibility",
     subtitle: "Search & discovery",
     avatar: "/avatar/3.avif",
+    icon: "search",
+    tint: "#E8F4FF",
+    iconColor: "#579BFC",
     items: [
       { label: "SEO", icon: "search", href: "#" },
       { label: "AEO", icon: "sparkle", href: "#" },
@@ -201,6 +236,9 @@ const marketingCategories: MenuCategory[] = [
     label: "AI Marketing",
     subtitle: "Automation & insights",
     avatar: "/avatar/4.avif",
+    icon: "sparkle",
+    tint: "#FFE8F5",
+    iconColor: "#FF5AC4",
     items: [
       { label: "AI-Powered Content Generation", icon: "sparkle", href: "#" },
       { label: "AI Ad Creative & Personalization", icon: "heart", href: "#" },
@@ -212,6 +250,9 @@ const marketingCategories: MenuCategory[] = [
     label: "Social Media Marketing",
     subtitle: "Content & community",
     avatar: "/avatar/5.avif",
+    icon: "megaphone",
+    tint: "#E8F8EF",
+    iconColor: "#00CA72",
     items: [
       { label: "Social Media Strategy & Management", icon: "megaphone", href: "#" },
       { label: "Community Management", icon: "personPlus", href: "#" },
@@ -222,6 +263,9 @@ const marketingCategories: MenuCategory[] = [
     label: "Content Production",
     subtitle: "Videos & storytelling",
     avatar: "/avatar/6.avif",
+    icon: "doc",
+    tint: "#FFE8E6",
+    iconColor: "#E2445C",
     items: [
       { label: "Content Strategy & Editorial Calendars", icon: "doc", href: "#" },
       { label: "Thought Leadership & Whitepapers", icon: "formEdit", href: "#" },
@@ -234,6 +278,9 @@ const marketingCategories: MenuCategory[] = [
     label: "Performance Marketing",
     subtitle: "Ads & conversions",
     avatar: "/avatar/1.avif",
+    icon: "chart",
+    tint: "#FFF0E6",
+    iconColor: "#FDAB3D",
     items: [
       { label: "Paid Search", icon: "search", href: "#" },
       { label: "Paid Social", icon: "megaphone", href: "#" },
@@ -246,6 +293,9 @@ const marketingCategories: MenuCategory[] = [
     label: "Branding & Design",
     subtitle: "Identity & design",
     avatar: "/avatar/2.avif",
+    icon: "heart",
+    tint: "#F3EEFF",
+    iconColor: "#A25DDC",
     items: [
       { label: "Brand Identity & Guidelines", icon: "tag", href: "#" },
       { label: "Brand Strategy & Positioning", icon: "clipboardCheck", href: "#" },
@@ -257,6 +307,9 @@ const marketingCategories: MenuCategory[] = [
     label: "Marketing Automation",
     subtitle: "Workflows & CRM",
     avatar: "/avatar/3.avif",
+    icon: "robot",
+    tint: "#E8F4FF",
+    iconColor: "#0086C0",
     items: [
       { label: "Marketing Automation", icon: "robot", href: "#" },
       { label: "CRM Integration", icon: "database", href: "#" },
@@ -358,11 +411,9 @@ function CategoryMenu({ categories, onClose, heading, headingSubtitle, headingIc
                   key={cat.label}
                   type="button"
                   onClick={() => setActive(i)}
-                  onMouseEnter={() => setActive(i)}
                   className="flex items-center gap-3 text-left group"
                 >
-                  <Image src={cat.avatar} alt="" width={40} height={40}
-                    className="w-10 h-10 rounded-[10px] object-cover shrink-0" />
+                  <CategoryThumb cat={cat} />
                   <span className="flex flex-col gap-[0.35rem]">
                     <span className={`text-[0.875rem] font-normal leading-[1] transition-colors duration-100 group-hover:text-[#5c4fe0]
                       ${active === i ? "text-[#5c4fe0]" : "text-black"}`}>
@@ -433,11 +484,9 @@ function CategoryMenu({ categories, onClose, heading, headingSubtitle, headingIc
               key={cat.label}
               type="button"
               onClick={() => setActive(i)}
-              onMouseEnter={() => setActive(i)}
               className="flex items-center gap-3 text-left group"
             >
-              <Image src={cat.avatar} alt="" width={40} height={40}
-                className="w-10 h-10 rounded-[10px] object-cover shrink-0" />
+              <CategoryThumb cat={cat} />
               <span className="flex flex-col leading-tight">
                 <span className={`text-[15px] font-medium whitespace-nowrap transition-colors duration-100 group-hover:text-[#5c4fe0]
                   ${active === i ? "text-[#5c4fe0]" : "text-[#323338]"}`}>
@@ -508,7 +557,7 @@ export default function MainHeader() {
       onMouseLeave={scheduleClose}
     >
       {/* ─── Header bar ────────────────────────────────────────────────── */}
-      <div className="mx-auto flex h-[60px] w-full max-w-[1400px] items-center px-6 sm:px-10 lg:px-16">
+      <div className="mx-auto flex h-[56px] w-full max-w-[1400px] items-center px-4 sm:h-[60px] sm:px-6 lg:px-16">
 
         {/* Logo */}
         <Link href="/" onClick={closeAll} className="flex shrink-0 items-center">
@@ -520,6 +569,14 @@ export default function MainHeader() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
+
+            <Link href="/" onClick={closeAll}
+              onMouseEnter={() => setOpenMenu(null)}
+              className="flex items-center justify-center text-center gap-2 px-4 py-2 rounded-[8px]
+                         cursor-pointer text-[0.875rem] font-light leading-[100%] text-[rgb(83,87,104)] bg-transparent
+                         hover:bg-[#f5f6f8] transition-colors duration-100 whitespace-nowrap">
+              Visit Home
+            </Link>
 
             {/* Marketing — icon-list mega-menu */}
             <div onMouseEnter={() => open("Marketing")}>
@@ -592,7 +649,7 @@ export default function MainHeader() {
       {/* ─── Mobile drawer ─────────────────────────────────────────────── */}
       {mobileOpen && (
         <div className="md:hidden border-t border-[#e6e9ef] bg-white">
-          <div className="px-6 py-4 sm:px-10 lg:px-16 flex flex-col gap-0.5">
+          <div className="px-4 py-4 sm:px-6 lg:px-16 flex flex-col gap-0.5">
             <p className="px-3 pt-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.07em] text-[#8b8fa3]">
               Platform
             </p>
@@ -615,6 +672,10 @@ export default function MainHeader() {
               </Link>
             ))}
             <div className="my-2 h-px bg-[#e6e9ef]" />
+            <Link href="/" onClick={closeAll}
+              className="px-3 py-[10px] rounded-[8px] text-[15px] font-medium text-[#323338] hover:bg-[#f5f6f8] transition-colors">
+              Visit Home
+            </Link>
             {simpleLinks.map((item) => (
               <Link key={item.label} href={item.href} onClick={closeAll}
                 className="px-3 py-[10px] rounded-[8px] text-[15px] font-medium text-[#323338] hover:bg-[#f5f6f8] transition-colors">

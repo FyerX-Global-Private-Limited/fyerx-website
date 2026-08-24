@@ -174,7 +174,7 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     onTint: "#111111",
     onTintMuted: "rgba(17, 17, 17, 0.78)",
     image: {
-      src: "/contact/contact-marketing.png",
+      src: "/contact/contact-marketing.webp",
       alt: "Indian marketing team collaborating on campaigns and growth strategy",
     },
     hubDescription:
@@ -209,7 +209,7 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     onTint: "#FFFFFF",
     onTintMuted: "rgba(255, 255, 255, 0.88)",
     image: {
-      src: "/contact/contact-talent.png",
+      src: "/contact/contact-talent.webp",
       alt: "Indian talent team supporting staffing and recruitment",
     },
     hubDescription:
@@ -238,7 +238,7 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     onTint: "#FFFFFF",
     onTintMuted: "rgba(255, 255, 255, 0.88)",
     image: {
-      src: "/contact/contact-technology.png",
+      src: "/contact/contact-technology.webp",
       alt: "Indian technology team working on cloud, data, and digital transformation",
     },
     hubDescription:
@@ -265,7 +265,7 @@ const FORM_CONFIG: Record<FormKey, FormConfig> = {
     onTint: "#FFFFFF",
     onTintMuted: "rgba(255, 255, 255, 0.88)",
     image: {
-      src: "/contact/contact-career.png",
+      src: "/contact/contact-career.webp",
       alt: "Indian professionals exploring career opportunities with FyerX",
     },
     hubDescription:

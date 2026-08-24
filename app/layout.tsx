@@ -35,6 +35,12 @@ export const metadata: Metadata = {
   description: "Marketing, consulting, and growth solutions by Fyerx.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

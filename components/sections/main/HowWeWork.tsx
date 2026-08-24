@@ -53,7 +53,7 @@ export default function HowWeWork() {
 
   return (
     <section className="home-section hww-hero">
-      <div className="section-shell">
+      <div className="section-shell section-shell--wide">
         <div className="section-header section-header--center mb-[var(--section-content-gap)]">
           <h2 className="section-heading">
             Support that moves with{" "}
@@ -149,7 +149,7 @@ const css = `
   .hww-hero .section-shell{
     margin-inline:auto;
     width:100%;
-    max-width:75rem;
+    max-width:87.5rem;
   }
   .hww-hero .section-header{
     margin-bottom:var(--section-content-gap);
@@ -215,13 +215,15 @@ const css = `
   }
   @media (max-width:767px){
     .hww-hero .section-header{margin-bottom:1.5rem;}
-    .hww-hero .tabbar{margin-top:0;}
+    .hww-hero .tabbar-wrap{padding-inline:0;}
+    .hww-hero .tabbar{margin-top:0;width:100%;border-radius:16px;padding:6px;gap:3px;}
+    .hww-hero .tab{flex:1 1 calc(50% - 3px);min-width:0;padding:0.45rem 0.65rem;font-size:0.75rem;white-space:normal;text-align:center;line-height:1.2;}
     .hww-hero .board-card{padding:12px;}
     .hww-hero .board-video{min-height:200px;}
     .hww-hero .board{min-height:200px;}
   }
   @media (max-width:640px){
-    .hww-hero .tabbar{border-radius:20px;padding:6px;}
-    .hww-hero .tab{padding:0.45rem 1rem;font-size:0.8125rem;}
+    .hww-hero .tabbar{border-radius:14px;padding:5px;}
+    .hww-hero .tab{padding:0.4rem 0.5rem;font-size:0.6875rem;}
   }
 `;

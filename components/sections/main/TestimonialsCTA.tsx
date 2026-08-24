@@ -4,29 +4,9 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { PrimaryCtaButton } from "@/components/ui/PrimaryCta";
 import { TRUSTBAR_LOGOS } from "@/lib/trustbar-logos";
+import { CONTACT_TEAM_AVATARS } from "@/lib/contact-team-avatars";
 
-const AVATARS = [
-  {
-    src: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&h=120&fit=crop&crop=face",
-    alt: "Indian professional",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?w=120&h=120&fit=crop&crop=face",
-    alt: "Indian professional",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1627895157647-004c07cf388b?w=120&h=120&fit=crop&crop=face",
-    alt: "Indian professional",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1573497019940-1c28c88b3491?w=120&h=120&fit=crop&crop=face",
-    alt: "Indian professional",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&crop=face",
-    alt: "Indian professional",
-  },
-];
+const AVATARS = CONTACT_TEAM_AVATARS;
 
 const inputBase =
   "w-full h-10 rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 text-[13px] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]";
@@ -67,7 +47,7 @@ export default function TestimonialsCTA() {
     >
       <div className="section-shell section-shell--wide">
         <div className="section-inset rounded-2xl border border-[#E6E9EF] bg-[#F6F7FB] sm:rounded-[24px]">
-        <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-8 sm:gap-[var(--section-content-gap)] lg:flex-row lg:items-start lg:justify-between">
+        <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-6 sm:gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-[var(--section-content-gap)]">
           <div className="flex min-w-0 flex-1 flex-col">
             <h2 className="section-heading max-w-none lg:max-w-[470px]">
               Ready to see what FyerX can do for{" "}
@@ -89,17 +69,23 @@ export default function TestimonialsCTA() {
                     key={logo.name}
                     className="flex h-14 items-center justify-center rounded-xl border border-[#E6E9EF] bg-white px-3 py-2 sm:h-16 sm:px-4"
                   >
-                    <img
-                      src={logo.img}
-                      alt={logo.name}
-                      className="max-h-7 w-full object-contain sm:max-h-8"
-                      loading="lazy"
-                      style={
-                        logo.scale
-                          ? { transform: `scale(${logo.scale})`, transformOrigin: "center" }
-                          : undefined
-                      }
-                    />
+                    {logo.badge ? (
+                      <span className="text-center text-xs font-semibold leading-tight text-[#323338] sm:text-sm">
+                        {logo.name}
+                      </span>
+                    ) : (
+                      <img
+                        src={logo.img}
+                        alt={logo.name}
+                        className="max-h-7 w-full object-contain sm:max-h-8"
+                        loading="lazy"
+                        style={
+                          logo.scale
+                            ? { transform: `scale(${logo.scale})`, transformOrigin: "center" }
+                            : undefined
+                        }
+                      />
+                    )}
                   </div>
                 ))}
               </div>

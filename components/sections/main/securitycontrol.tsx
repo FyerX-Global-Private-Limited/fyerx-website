@@ -3,7 +3,7 @@
 import React from 'react';
 
 /**
- * "Built for businesses moving forward" section — single-file Next.js + React.
+ * "Capability for Every Stage of Growth" section — single-file Next.js + React.
  * Drop this in as app/page.tsx (App Router) or pages/index.tsx (Pages Router),
  * or import <SecurityControl /> anywhere.
  * Fully self-contained: no Tailwind, no icon library, no extra dependencies.
@@ -50,9 +50,8 @@ export default function SecurityControl() {
       <div className="section-shell">
         <div className="section-header section-header--center mb-[var(--section-content-gap)]">
           <h2 className="section-heading">
-            Built for businesses
-            <br />
-            <span className="brand-gradient-text">moving forward</span>
+            Capability for Every Stage of{" "}
+            <span className="brand-gradient-text">Growth</span>
           </h2>
         </div>
 
@@ -137,6 +136,23 @@ export default function SecurityControl() {
         }
 
         /* ---------- Responsive ---------- */
+        @media (max-width: 559px) {
+          .sc__card {
+            padding: 22px 16px 26px;
+          }
+          .sc__cardTitle {
+            font-size: 1.125rem;
+          }
+          .sc__cardBody {
+            max-width: none;
+            font-size: 0.875rem;
+          }
+          .sc__icon {
+            height: 64px;
+            width: 64px;
+          }
+        }
+
         @media (min-width: 640px) {
           .sc__grid {
             grid-template-columns: repeat(2, 1fr);

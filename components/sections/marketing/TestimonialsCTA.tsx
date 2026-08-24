@@ -1,22 +1,13 @@
 "use client";
 
 import React from "react";
+import { CONTACT_TEAM_AVATARS } from "@/lib/contact-team-avatars";
 
 /**
  * TestimonialsCTA — Enterprise CTA section with contact-sales form.
- *
- * Font: Poppins (make sure it is loaded globally, e.g. via next/font/google).
- * Avatar images use remote placeholders — swap the URLs in AVATARS for your
- * own assets under /public when available.
  */
 
-const AVATARS = [
-  "https://randomuser.me/api/portraits/women/68.jpg",
-  "https://randomuser.me/api/portraits/women/44.jpg",
-  "https://randomuser.me/api/portraits/men/32.jpg",
-  "https://randomuser.me/api/portraits/men/85.jpg",
-  "https://randomuser.me/api/portraits/men/76.jpg",
-];
+const AVATARS = CONTACT_TEAM_AVATARS.map((avatar) => avatar.src);
 
 const inputBase =
   "w-full h-10 rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 text-[13px] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]";

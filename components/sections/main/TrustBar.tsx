@@ -28,17 +28,23 @@ export default function TrustBar() {
           <div className="animate-marquee flex w-max items-center gap-x-6 group-hover:[animation-play-state:paused] sm:gap-x-8">
             {[...logos, ...logos].map((logo, i) => (
               <div key={`${logo.name}-${i}`} className={LOGO_SLOT}>
-                <img
-                  src={logo.img}
-                  alt={logo.name}
-                  className={LOGO_IMG}
-                  loading="lazy"
-                  style={
-                    logo.scale
-                      ? { transform: `scale(${logo.scale})`, transformOrigin: "center" }
-                      : undefined
-                  }
-                />
+                {logo.badge ? (
+                  <span className="text-center text-[11px] font-semibold leading-tight text-[#323338] sm:text-xs">
+                    {logo.name}
+                  </span>
+                ) : (
+                  <img
+                    src={logo.img}
+                    alt={logo.name}
+                    className={LOGO_IMG}
+                    loading="lazy"
+                    style={
+                      logo.scale
+                        ? { transform: `scale(${logo.scale})`, transformOrigin: "center" }
+                        : undefined
+                    }
+                  />
+                )}
               </div>
             ))}
           </div>
