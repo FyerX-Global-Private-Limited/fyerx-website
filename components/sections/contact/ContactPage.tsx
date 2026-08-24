@@ -1,8 +1,16 @@
 "use client";
 
-import { useEffect, useMemo, useState, type FormEvent, type InputHTMLAttributes, type ReactNode } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useMemo, useState, type ReactNode } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
+import {
+  BRAND,
+  ContactEnquiryForm,
+  FORM_CONFIG,
+  FORM_ORDER,
+  type FormConfig,
+  type FormKey,
+} from "@/components/sections/contact/ContactEnquiryForm";
 
 /* ============================================================= */
 /* Icons — 20x20 stroke line icons, colour set via currentColor  */
@@ -23,48 +31,6 @@ function IconBase({ children, size = 20 }: { children: ReactNode; size?: number 
     >
       {children}
     </svg>
-  );
-}
-
-function MegaphoneIcon() {
-  return (
-    <IconBase>
-      <path d="M3 10v4h2l1 5h2l-1-5h1l10 4V6L8 10H3z" />
-      <line x1="18" y1="9" x2="18" y2="15" />
-    </IconBase>
-  );
-}
-
-function BriefcaseIcon() {
-  return (
-    <IconBase>
-      <rect x="3" y="7" width="18" height="13" rx="2" />
-      <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-      <line x1="3" y1="13" x2="21" y2="13" />
-    </IconBase>
-  );
-}
-
-function LaptopCodeIcon() {
-  return (
-    <IconBase>
-      <rect x="3" y="4" width="18" height="12" rx="2" />
-      <path d="M2 20h20" />
-      <path d="M9.5 8.5 7.5 10.5 9.5 12.5" />
-      <path d="M14.5 8.5 16.5 10.5 14.5 12.5" />
-    </IconBase>
-  );
-}
-
-function BadgeCheckIcon() {
-  return (
-    <IconBase>
-      <rect x="4" y="4" width="14" height="17" rx="2.5" />
-      <circle cx="11" cy="10" r="2.4" />
-      <path d="M7 18c.5-2.2 2-3.4 4-3.4s3.5 1.2 4 3.4" />
-      <circle cx="18.5" cy="17" r="3" fill="white" />
-      <path d="M17.1 17l1 1 1.7-1.9" />
-    </IconBase>
   );
 }
 
@@ -94,11 +60,14 @@ function EnvelopeIcon() {
   );
 }
 
-function ChevronDownIcon() {
+function GlobeIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <polyline points="6 9 12 15 18 9" />
-    </svg>
+    <IconBase>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18" />
+      <path d="M12 3a15 15 0 0 1 0 18" />
+      <path d="M12 3a15 15 0 0 0 0 18" />
+    </IconBase>
   );
 }
 
@@ -119,257 +88,13 @@ function ArrowLeftIcon() {
   );
 }
 
-function ArrowRightIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
-  );
-}
-
 /* ============================================================= */
-/* Brand colours — logo palette                                   */
-/* ============================================================= */
-
-const BRAND = {
-  crimson: "#730031",
-  blue: "#2A35A1",
-  green: "#003335",
-  yellow: "#FFC900",
-} as const;
-
-/* ============================================================= */
-/* Form field data                                                */
-/* ============================================================= */
-
-type FormKey = "marketing" | "talent" | "technology" | "job";
-
-type FormConfig = {
-  key: FormKey;
-  icon: ReactNode;
-  tabLabel: string;
-  badgeLabel: string;
-  tint: string;
-  accent: string;
-  onTint: string;
-  onTintMuted: string;
-  image: { src: string; alt: string };
-  hubDescription: string;
-  helpLabel?: string;
-  helpOptions?: string[];
-  budgetOptions?: string[];
-  variant: "standard" | "job";
-  submitLabel: string;
-};
-
-const FORM_CONFIG: Record<FormKey, FormConfig> = {
-  marketing: {
-    key: "marketing",
-    icon: <MegaphoneIcon />,
-    tabLabel: "Marketing",
-    badgeLabel: "Marketing Enquiry",
-    tint: BRAND.yellow,
-    accent: BRAND.yellow,
-    onTint: "#111111",
-    onTintMuted: "rgba(17, 17, 17, 0.78)",
-    image: {
-      src: "/contact/contact-marketing.webp",
-      alt: "Indian marketing team collaborating on campaigns and growth strategy",
-    },
-    hubDescription:
-      "Speak with our marketing team about demand generation, campaigns, brand, content, and growth strategy.",
-    helpLabel: "What are you looking for help with?",
-    helpOptions: [
-      "Demand & Lead Generation",
-      "SEO & AI Search Visibility",
-      "Content & Creative Production",
-      "Performance Marketing",
-      "Marketing Automation & CRM",
-      "Branding & Website Design",
-      "Marketing Strategy & Consulting",
-      "Other",
-    ],
-    budgetOptions: [
-      "₹1,00,000 - ₹1,99,999",
-      "₹2,00,000 - ₹4,99,999",
-      "₹5,00,000 - ₹9,99,999",
-      "Above ₹10,00,000",
-    ],
-    variant: "standard",
-    submitLabel: "Submit",
-  },
-  talent: {
-    key: "talent",
-    icon: <BriefcaseIcon />,
-    tabLabel: "Talent",
-    badgeLabel: "Talent Enquiry",
-    tint: BRAND.green,
-    accent: BRAND.green,
-    onTint: "#FFFFFF",
-    onTintMuted: "rgba(255, 255, 255, 0.88)",
-    image: {
-      src: "/contact/contact-talent.webp",
-      alt: "Indian talent team supporting staffing and recruitment",
-    },
-    hubDescription:
-      "Connect with our talent team for staffing, permanent hiring, executive search, or recruitment support.",
-    helpLabel: "What are you looking for help with?",
-    helpOptions: [
-      "Contract Staffing",
-      "Permanent Hiring",
-      "Executive Search",
-      "RPO",
-      "IT & Tech Talent",
-      "Global Staffing",
-      "HR Advisory",
-      "Other",
-    ],
-    variant: "standard",
-    submitLabel: "Submit",
-  },
-  technology: {
-    key: "technology",
-    icon: <LaptopCodeIcon />,
-    tabLabel: "Technology",
-    badgeLabel: "Technology Enquiry",
-    tint: BRAND.blue,
-    accent: BRAND.blue,
-    onTint: "#FFFFFF",
-    onTintMuted: "rgba(255, 255, 255, 0.88)",
-    image: {
-      src: "/contact/contact-technology.webp",
-      alt: "Indian technology team working on cloud, data, and digital transformation",
-    },
-    hubDescription:
-      "Engage our technology team for ServiceNow, transformation, data and AI, cloud, DevOps, or advisory requirements.",
-    helpLabel: "What are you looking for help with?",
-    helpOptions: [
-      "ServiceNow",
-      "Digital Transformation",
-      "Data & AI",
-      "Cloud & DevOps",
-      "Technology Consulting",
-      "Other",
-    ],
-    variant: "standard",
-    submitLabel: "Submit",
-  },
-  job: {
-    key: "job",
-    icon: <BadgeCheckIcon />,
-    tabLabel: "Careers",
-    badgeLabel: "Career Enquiry",
-    tint: BRAND.crimson,
-    accent: BRAND.crimson,
-    onTint: "#FFFFFF",
-    onTintMuted: "rgba(255, 255, 255, 0.88)",
-    image: {
-      src: "/contact/contact-career.webp",
-      alt: "Indian professionals exploring career opportunities with FyerX",
-    },
-    hubDescription:
-      "Submit your profile for opportunities with FyerX and roles across our client hiring network.",
-    variant: "job",
-    submitLabel: "Submit Application",
-  },
-};
-
-const FORM_ORDER: FormKey[] = ["marketing", "talent", "technology", "job"];
-
-const THANK_YOU_BY_FORM: Record<FormKey, string> = {
-  marketing: "/contact/thankyou-marketing",
-  talent: "/contact/thankyou-talent",
-  technology: "/contact/thankyou-technology",
-  job: "/contact/thankyou-career",
-};
-
-const EXPECTED_START_OPTIONS = [
-  "Immediately",
-  "Within 1–3 Months",
-  "Within 3–6 Months",
-  "Exploring for Later",
-] as const;
-
-const marketingInputBase =
-  "w-full h-10 rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 text-[13px] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]";
-
-const marketingSelectBase =
-  "w-full h-10 rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 pr-9 text-[13px] text-[#676879] outline-none appearance-none cursor-pointer transition-colors duration-150 focus:border-[#6161ff]";
-
-function MarketingFormCaret({ className }: { className?: string }) {
-  return (
-    <svg
-      className={
-        className ??
-        "pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#676879]"
-      }
-      viewBox="0 0 20 20"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M5 7.5L10 12.5L15 7.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-/* ============================================================= */
-/* Form field primitives                                          */
+/* Layout helpers                                                 */
 /* ============================================================= */
 
 const sectionPad = "px-4 sm:px-6";
 const containerCls = "mx-auto w-full min-w-0 max-w-6xl";
-
-const inputCls =
-  "w-full min-w-0 rounded-xl border border-transparent bg-[#f7f9fc] px-4 py-3 text-base text-[#181b34] placeholder-[#8b8fa3] outline-none transition-colors focus:border-[#730031] focus:bg-white sm:text-sm [-webkit-appearance:none]";
-const selectCls = `${inputCls} appearance-none cursor-pointer bg-[#f7f9fc] pr-9`;
-const labelCls = "mb-1.5 block text-sm font-semibold text-[#181b34]";
 const footerHeadingCls = "text-sm font-medium text-[rgb(88,89,101)]";
-
-function RequiredMark() {
-  return (
-    <span className="ml-0.5 font-semibold" style={{ color: BRAND.crimson }} aria-hidden="true">
-      *
-    </span>
-  );
-}
-
-function FieldLabel({
-  children,
-  required = false,
-  className = labelCls,
-}: {
-  children: ReactNode;
-  required?: boolean;
-  className?: string;
-}) {
-  return (
-    <span className={className}>
-      {children}
-      {required && <RequiredMark />}
-    </span>
-  );
-}
-
-function Field({
-  label,
-  className = "",
-  required,
-  ...props
-}: { label: string; className?: string; required?: boolean } & InputHTMLAttributes<HTMLInputElement>) {
-  return (
-    <label className={`block ${className}`}>
-      <FieldLabel required={required}>{label}</FieldLabel>
-      <input {...props} required={required} className={inputCls} />
-    </label>
-  );
-}
 
 /* ============================================================= */
 /* Hero                                                           */
@@ -388,10 +113,10 @@ function HeroSection() {
         <div className="max-w-xl">
           <p className="text-sm font-semibold" style={{ color: BRAND.crimson }}>Get in Touch</p>
           <h1 className="mt-2 text-2xl font-bold tracking-tight text-[#181b34] sm:text-3xl md:text-4xl">
-            Let&rsquo;s Talk, Reach Out to Us
+            Ready to Get Started? Let&rsquo;s Talk.
           </h1>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-[#3d4a5c] sm:text-base">
-            Our team is ready to help — whether you&rsquo;re hiring, marketing, building, or
+            Our team is ready to work with you, whether you&rsquo;re hiring, marketing, building, or
             exploring a career at FyerX.
           </p>
         </div>
@@ -415,7 +140,7 @@ function ContactHub({ onSelect }: { onSelect: (key: FormKey) => void }) {
             Get in Touch
           </h2>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-[#3d4a5c]">
-            Select the area relevant to your enquiry, and our team will take it from there.
+            Tell us what you need, and we&rsquo;ll route you to the right team.
           </p>
 
           <div className="mt-5 flex flex-col gap-3 sm:mt-7 sm:gap-4">
@@ -437,7 +162,7 @@ function ContactHub({ onSelect }: { onSelect: (key: FormKey) => void }) {
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block text-sm font-semibold sm:text-base" style={{ color: cfg.onTint }}>
-                      {cfg.tabLabel}
+                      {cfg.hubCardTitle}
                     </span>
                     <span className="mt-1 block text-xs leading-relaxed sm:text-sm" style={{ color: cfg.onTintMuted }}>
                       {cfg.hubDescription}
@@ -482,37 +207,9 @@ function ContactHub({ onSelect }: { onSelect: (key: FormKey) => void }) {
 /* ============================================================= */
 
 function ContactForm({ config, onBack }: { config: FormConfig; onBack: () => void }) {
-  const router = useRouter();
-  const [selected, setSelected] = useState<string[]>([]);
-  const [helpError, setHelpError] = useState(false);
-
-  useEffect(() => {
-    setSelected([]);
-    setHelpError(false);
-  }, [config.key]);
-
-  const toggleOption = (opt: string) => {
-    setSelected((prev) => {
-      const next = prev.includes(opt) ? prev.filter((o) => o !== opt) : [...prev, opt];
-      if (next.length > 0) setHelpError(false);
-      return next;
-    });
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!["marketing", "talent"].includes(config.key) && config.helpOptions && selected.length === 0) {
-      setHelpError(true);
-      return;
-    }
-    setHelpError(false);
-    router.push(THANK_YOU_BY_FORM[config.key]);
-  };
-
   return (
     <section className={`w-full overflow-x-clip bg-white py-8 sm:py-12 md:py-14 ${sectionPad}`}>
       <div className={`${containerCls} grid grid-cols-1 overflow-hidden rounded-2xl border border-[#e6e9ef] shadow-[0_12px_40px_rgba(11,46,89,0.06)] sm:rounded-[28px] sm:shadow-[0_20px_60px_rgba(11,46,89,0.08)] lg:grid-cols-2`}>
-        {/* Form — first on mobile */}
         <div className="order-1 min-w-0 p-4 sm:p-6 lg:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <button
@@ -529,450 +226,19 @@ function ContactForm({ config, onBack }: { config: FormConfig; onBack: () => voi
               style={{ background: config.tint, color: config.onTint }}
             >
               <span className="shrink-0">{config.icon}</span>
-              <span className="truncate">{config.tabLabel}</span>
+              <span className="truncate">{config.formHeader}</span>
             </span>
           </div>
 
           <p className="mt-3 max-w-md text-sm leading-relaxed text-[#3d4a5c]">
-            {config.hubDescription}
+            {config.formSubheading}
           </p>
 
           <div className="mt-5 border-t border-[#e6e9ef]" />
 
-          <form key={config.key} className="mt-5 flex min-w-0 flex-col gap-4" onSubmit={handleSubmit}>
-            {config.key === "marketing" ? (
-              <>
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    type="text"
-                    name="firstName"
-                    placeholder="First name*"
-                    required
-                    className={marketingInputBase}
-                  />
-                  <input
-                    type="text"
-                    name="lastName"
-                    placeholder="Last name*"
-                    required
-                    className={marketingInputBase}
-                  />
-                </div>
-
-                <input
-                  type="email"
-                  name="workEmail"
-                  placeholder="Work email*"
-                  required
-                  className={marketingInputBase}
-                />
-
-                <input
-                  type="text"
-                  name="jobTitle"
-                  placeholder="Job title"
-                  className={marketingInputBase}
-                />
-
-                <div className="flex h-10 w-full overflow-hidden rounded-[8px] border border-[#c3c6d4] bg-white transition-colors duration-150 focus-within:border-[#6161ff]">
-                  <button
-                    type="button"
-                    className="flex h-full w-11 shrink-0 items-center justify-center gap-[3px] border-r border-[#c3c6d4] bg-white"
-                    aria-label="Select country code"
-                  >
-                    <img
-                      src="https://flagcdn.com/w20/in.png"
-                      alt="India"
-                      className="h-3 w-[18px] object-cover"
-                    />
-                    <svg
-                      className="h-2.5 w-2.5 text-[#676879]"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M5 7.5L10 12.5L15 7.5"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="+91"
-                    className="h-full w-full border-0 bg-white px-3.5 text-[13px] text-[#333333] placeholder-[#676879] outline-none"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    type="text"
-                    name="companyName"
-                    placeholder="Company name*"
-                    required
-                    className={marketingInputBase}
-                  />
-                  <div className="relative">
-                    <select
-                      name="companySize"
-                      required
-                      defaultValue=""
-                      className={marketingSelectBase}
-                    >
-                      <option value="" disabled>
-                        Company size*
-                      </option>
-                      <option value="1-19">1-19</option>
-                      <option value="20-49">20-49</option>
-                      <option value="50-99">50-99</option>
-                      <option value="100-250">100-250</option>
-                      <option value="251-1500">251-1500</option>
-                      <option value="1500+">1500+</option>
-                    </select>
-                    <MarketingFormCaret />
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <select
-                    name="explore"
-                    required
-                    defaultValue=""
-                    className={marketingSelectBase}
-                  >
-                    <option value="" disabled>
-                      What would you like to explore?*
-                    </option>
-                    <option value="work-management">Work management</option>
-                    <option value="crm">CRM</option>
-                    <option value="dev">Software development</option>
-                    <option value="service">Service management</option>
-                    <option value="other">Other</option>
-                  </select>
-                  <MarketingFormCaret />
-                </div>
-
-                <textarea
-                  name="message"
-                  placeholder="Tell us more about your business and what you'd like support with"
-                  className="h-[88px] w-full resize-none rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 py-2.5 text-[13px] leading-[1.5] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]"
-                />
-
-                <button
-                  type="submit"
-                  className="mx-auto mt-3 h-10 w-24 rounded-full bg-[#FFC900] text-[14px] font-normal text-black transition-colors duration-150 hover:bg-[#e6b400]"
-                >
-                  Submit
-                </button>
-
-                <p className="mx-auto mt-1.5 max-w-[300px] text-center text-[10.5px] leading-[1.6] text-[#333333]">
-                  By submitting this form, you accept FyerX&rsquo;s{" "}
-                  <a href="/privacy-policy" className="underline">
-                    Privacy Policy
-                  </a>{" "}
-                  and consent to be contacted regarding your enquiry.
-                </p>
-              </>
-            ) : config.key === "talent" ? (
-              <>
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    type="text"
-                    name="firstName"
-                    placeholder="First name*"
-                    required
-                    className={marketingInputBase}
-                  />
-                  <input
-                    type="text"
-                    name="lastName"
-                    placeholder="Last name*"
-                    required
-                    className={marketingInputBase}
-                  />
-                </div>
-
-                <input
-                  type="email"
-                  name="workEmail"
-                  placeholder="Work email*"
-                  required
-                  className={marketingInputBase}
-                />
-
-                <input
-                  type="text"
-                  name="jobTitle"
-                  placeholder="Job title"
-                  className={marketingInputBase}
-                />
-
-                <div className="flex h-10 w-full overflow-hidden rounded-[8px] border border-[#c3c6d4] bg-white transition-colors duration-150 focus-within:border-[#6161ff]">
-                  <button
-                    type="button"
-                    className="flex h-full w-11 shrink-0 items-center justify-center gap-[3px] border-r border-[#c3c6d4] bg-white"
-                    aria-label="Select country code"
-                  >
-                    <img
-                      src="https://flagcdn.com/w20/in.png"
-                      alt="India"
-                      className="h-3 w-[18px] object-cover"
-                    />
-                    <svg
-                      className="h-2.5 w-2.5 text-[#676879]"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M5 7.5L10 12.5L15 7.5"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="+91"
-                    className="h-full w-full border-0 bg-white px-3.5 text-[13px] text-[#333333] placeholder-[#676879] outline-none"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    type="text"
-                    name="companyName"
-                    placeholder="Company name*"
-                    required
-                    className={marketingInputBase}
-                  />
-                  <div className="relative">
-                    <select
-                      name="companySize"
-                      required
-                      defaultValue=""
-                      className={marketingSelectBase}
-                    >
-                      <option value="" disabled>
-                        Company size*
-                      </option>
-                      <option value="1-19">1-19</option>
-                      <option value="20-49">20-49</option>
-                      <option value="50-99">50-99</option>
-                      <option value="100-250">100-250</option>
-                      <option value="251-1500">251-1500</option>
-                      <option value="1500+">1500+</option>
-                    </select>
-                    <MarketingFormCaret />
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <select
-                    name="rolesToFill"
-                    required
-                    defaultValue=""
-                    className={marketingSelectBase}
-                  >
-                    <option value="" disabled>
-                      What roles are you looking to fill?*
-                    </option>
-                    <option value="contract-staffing">Contract Staffing</option>
-                    <option value="rpo">RPO</option>
-                    <option value="permanent-executive">
-                      Permanent Hiring &amp; Executive Search
-                    </option>
-                    <option value="it-tech-talent">IT &amp; Tech Talent</option>
-                    <option value="hr-advisory">HR Advisory</option>
-                    <option value="global-staffing">Global Staffing</option>
-                    <option value="other">Other</option>
-                  </select>
-                  <MarketingFormCaret />
-                </div>
-
-                <textarea
-                  name="message"
-                  placeholder="Tell us more about your hiring needs"
-                  className="h-[88px] w-full resize-none rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 py-2.5 text-[13px] leading-[1.5] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]"
-                />
-
-                <button
-                  type="submit"
-                  className="mx-auto mt-3 h-10 w-24 rounded-full bg-[#0B2E59] text-[14px] font-normal text-white transition-colors duration-150 hover:bg-[#092547]"
-                >
-                  Submit
-                </button>
-
-                <p className="mx-auto mt-1.5 max-w-[300px] text-center text-[10.5px] leading-[1.6] text-[#333333]">
-                  By submitting this form, you accept FyerX&rsquo;s{" "}
-                  <a href="/privacy-policy" className="underline">
-                    Privacy Policy
-                  </a>{" "}
-                  and consent to be contacted regarding your enquiry.
-                </p>
-              </>
-            ) : (
-              <>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Field label="First Name" type="text" required />
-              <Field label="Last Name" type="text" required />
-            </div>
-
-            {config.variant === "job" ? (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <Field label="Current Job Title" type="text" required />
-                <Field label="Years of Experience" type="text" required />
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <Field label="Job Title" type="text" required />
-                <Field label="Company" type="text" required />
-              </div>
-            )}
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Field label="Email" type="email" required />
-              <Field label="Phone Number" type="tel" required />
-            </div>
-
-            {config.variant === "job" && (
-              <>
-                <Field label="LinkedIn Profile (URL)" type="url" placeholder="https://linkedin.com/in/your-profile" required />
-                <Field label="What type of role are you looking for?" type="text" required />
-              </>
-            )}
-
-            {config.budgetOptions && (
-              <label className="block">
-                <FieldLabel required>Monthly Marketing Budget</FieldLabel>
-                <span className="relative block">
-                  <select defaultValue="" className={selectCls} required>
-                    <option value="" disabled>
-                      Select a range
-                    </option>
-                    {config.budgetOptions.map((opt) => (
-                      <option key={opt} value={opt}>
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[#8b8fa3]">
-                    <ChevronDownIcon />
-                  </span>
-                </span>
-              </label>
-            )}
-
-            {config.helpOptions && (
-              <div>
-                <FieldLabel required>{config.helpLabel}</FieldLabel>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {config.helpOptions.map((opt) => {
-                    const isSelected = selected.includes(opt);
-                    return (
-                      <button
-                        key={opt}
-                        type="button"
-                        onClick={() => toggleOption(opt)}
-                        aria-pressed={isSelected}
-                        className="cursor-pointer rounded-full border px-3 py-2 text-[11px] font-medium transition-colors sm:px-3.5 sm:py-2 sm:text-xs"
-                        style={
-                          isSelected
-                            ? { background: config.accent, borderColor: config.accent, color: config.onTint === "#111111" ? "#111111" : "#fff" }
-                            : { background: "#f7f9fc", borderColor: "transparent", color: "#3d4a5c" }
-                        }
-                      >
-                        {opt}
-                      </button>
-                    );
-                  })}
-                </div>
-                {helpError && (
-                  <p className="mt-1.5 text-xs" style={{ color: BRAND.crimson }}>Please select at least one option.</p>
-                )}
-              </div>
-            )}
-
-            {config.variant === "job" && (
-              <div>
-                <label className="block cursor-pointer">
-                  <FieldLabel required>Resume Upload</FieldLabel>
-                  <input
-                    type="file"
-                    accept=".pdf"
-                    required
-                    className="mt-2 block w-full cursor-pointer rounded-xl border border-dashed border-[#d6dae3] bg-[#f7f9fc] px-4 py-3 text-xs text-[#8b8fa3] file:mr-3 file:cursor-pointer file:rounded-full file:border-0 file:bg-[#730031]/10 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-[#730031]"
-                  />
-                </label>
-                <p className="mt-1.5 text-xs text-[#8b8fa3]">The PDF must be a maximum of 3 MB.</p>
-              </div>
-            )}
-
-            {config.variant === "standard" && (
-              <label className="block">
-                <FieldLabel>Expected Start</FieldLabel>
-                <span className="relative block">
-                  <select name="expectedStart" defaultValue="" className={selectCls}>
-                    <option value="" disabled>
-                      Select expected start
-                    </option>
-                    {EXPECTED_START_OPTIONS.map((opt) => (
-                      <option key={opt} value={opt}>
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[#8b8fa3]">
-                    <ChevronDownIcon />
-                  </span>
-                </span>
-              </label>
-            )}
-
-            <label className="block">
-              <FieldLabel>Message</FieldLabel>
-              <textarea rows={4} className={`${inputCls} resize-none`} />
-            </label>
-
-            {config.variant === "job" && (
-              <label className="flex cursor-pointer items-start gap-2.5">
-                <input
-                  type="checkbox"
-                  required
-                  className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-[#d6dae3]"
-                  style={{ accentColor: BRAND.crimson }}
-                />
-                <span className="text-xs leading-relaxed text-[#3d4a5c]">
-                  <RequiredMark /> By submitting this form, you accept FyerX&rsquo;s{" "}
-                  <a href="/privacy-policy" className="underline hover:opacity-80" style={{ color: BRAND.crimson }}>
-                    Privacy Policy
-                  </a>{" "}
-                  and consent to be contacted regarding your application.
-                </span>
-              </label>
-            )}
-
-            <button
-              type="submit"
-              className="mt-2 inline-flex w-full min-h-[44px] cursor-pointer items-center justify-center gap-2 rounded-full px-7 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:w-fit"
-              style={{ background: BRAND.crimson }}
-            >
-              {config.submitLabel}
-              <ArrowRightIcon />
-            </button>
-              </>
-            )}
-          </form>
+          <ContactEnquiryForm formKey={config.key} className="mt-5 flex min-w-0 flex-col gap-4" />
         </div>
 
-        {/* Image — below form on mobile, right column on desktop */}
         <div className="order-2 p-4 sm:p-6 lg:p-8" style={{ background: config.tint }}>
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl sm:aspect-[5/4] sm:rounded-2xl lg:aspect-auto lg:min-h-[420px] lg:h-full">
             <Image
@@ -1039,23 +305,48 @@ const DETAIL_ITEMS = [
     actionLabel: "Email us",
     href: "mailto:hello@fyerx.com",
   },
+  {
+    key: "website",
+    icon: <GlobeIcon />,
+    label: "Website",
+    value: "www.fyerx.com",
+    actionLabel: "Visit website",
+    href: "https://www.fyerx.com",
+  },
 ];
+
+const MAP_EMBED_SRC =
+  "https://maps.google.com/maps?q=HSR+Layout,+Bengaluru,+Karnataka+560102&z=14&output=embed";
 
 function ContactDetailsMap() {
   return (
     <section className={`w-full overflow-x-clip bg-gradient-to-b from-[#E8F1FB] via-white to-[#F6F7FB] py-12 sm:py-16 md:py-20 ${sectionPad}`}>
       <div className={containerCls}>
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-14">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.05fr_1fr] lg:items-start lg:gap-14">
+          <div className="min-w-0 overflow-hidden rounded-3xl border border-[#E6E9EF] bg-white shadow-sm">
+            <iframe
+              title="FyerX office location — HSR Layout, Bengaluru"
+              src={MAP_EMBED_SRC}
+              className="aspect-[4/3] w-full border-0 sm:aspect-[5/4] lg:aspect-auto lg:min-h-[420px]"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
+
           <div className="min-w-0 text-center lg:text-left">
-            <h2 className="text-[clamp(1.75rem,4vw,2.75rem)] font-medium leading-[1.12] tracking-[-0.02em] text-[#0B2E59]">
-              Prefer a direct conversation?
+            <p className="text-xs font-semibold uppercase tracking-[0.12em]" style={{ color: BRAND.crimson }}>
+              Get in Touch
+            </p>
+            <h2 className="mt-2 text-[clamp(1.75rem,4vw,2.75rem)] font-medium leading-[1.12] tracking-[-0.02em] text-[#0B2E59]">
+              Contact Details
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-[#3d4a5c] sm:text-base lg:mx-0">
-              Reach our team directly for staffing, technology hiring, marketing, or career enquiries.
-              We respond with clarity on next steps and the right contact path.
+              Reach our team directly for staffing, technology, marketing, or career enquiries. We respond with
+              clarity on next steps and the right contact path.
             </p>
 
-            <div className="mt-8 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 lg:gap-4">
+            <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:gap-4">
               {DETAIL_ITEMS.map((item) => (
                 <div
                   key={item.key}
@@ -1076,52 +367,6 @@ function ContactDetailsMap() {
                   </a>
                 </div>
               ))}
-            </div>
-          </div>
-
-          <div className="min-w-0">
-            <div className="overflow-hidden rounded-3xl border border-[#E6E9EF] bg-white p-6 shadow-sm sm:p-8">
-              <div className="rounded-2xl bg-gradient-to-br from-[#E8F1FB] to-[#F3F0FF] p-6 sm:p-8">
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#1F5C99]">
-                  FyerX Delivery Hub
-                </p>
-                <h3 className="mt-3 text-xl font-semibold text-[#0B2E59] sm:text-2xl">
-                  One partner across talent, technology, and marketing
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-[#52525b]">
-                  Whether you need specialist hiring support, platform delivery, or growth execution,
-                  our teams work with structured ownership and clear communication.
-                </p>
-                <ul className="mt-5 space-y-2.5 text-sm text-[#3d4a5c]">
-                  <li className="flex items-start gap-2">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1F5C99]" aria-hidden="true" />
-                    Dedicated point of contact for every enquiry
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1F5C99]" aria-hidden="true" />
-                    Clear next steps after your first conversation
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1F5C99]" aria-hidden="true" />
-                    Bengaluru HQ with remote delivery support
-                  </li>
-                </ul>
-              </div>
-              <div className="mt-5 grid grid-cols-3 gap-3">
-                {[
-                  { label: "Talent", color: "#E8F1FB" },
-                  { label: "Technology", color: "#F3F0FF" },
-                  { label: "Marketing", color: "#FFF7ED" },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="rounded-xl border border-[#EEF1F6] px-3 py-4 text-center"
-                    style={{ backgroundColor: item.color }}
-                  >
-                    <p className="text-xs font-semibold text-[#0B2E59]">{item.label}</p>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </div>
