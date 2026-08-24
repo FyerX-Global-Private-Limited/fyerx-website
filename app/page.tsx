@@ -22,8 +22,8 @@ export default function Home() {
         <WhoWeAre />
         <HowWeWork />
         <Capabilities />
-        <AiHiring />
         <TrackRecord />
+        <AiHiring />
         <Leadership />
         {/* <Trust /> */}
         <SecurityControl />

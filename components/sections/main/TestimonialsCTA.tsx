@@ -46,7 +46,7 @@ export default function TestimonialsCTA() {
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
       <div className="section-shell section-shell--wide">
-        <div className="section-inset rounded-2xl border border-[#E6E9EF] bg-[#F6F7FB] sm:rounded-[24px]">
+        <div className="section-inset rounded-2xl border border-[#E6E9EF] bg-[#b0064817] sm:rounded-[24px]">
         <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-6 sm:gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-[var(--section-content-gap)]">
           <div className="flex min-w-0 flex-1 flex-col">
             <h2 className="section-heading max-w-none lg:max-w-[470px]">

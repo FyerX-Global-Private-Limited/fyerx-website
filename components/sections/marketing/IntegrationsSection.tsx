@@ -4,7 +4,8 @@ import React from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { splitTrustBarLogos, type TrustBarLogo } from "@/lib/trustbar-logos";
 
-const [rowOne, rowTwo] = splitTrustBarLogos(2);
+const [rowOne, rowTwoRaw] = splitTrustBarLogos(2);
+const rowTwo = rowTwoRaw.filter((item) => !item.badge);
 
 function LogoChip({ name, img, scale }: TrustBarLogo) {
   return (

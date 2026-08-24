@@ -381,8 +381,30 @@ const talentCategories: MenuCategory[] = [
 // a caller into the Platform dropdown's exact layout (header nested in the
 // left column, no shared top bar) while leaving the default layout — used by
 // Talent — untouched.
-function CategoryMenu({ categories, onClose, heading, headingSubtitle, headingIcon = "megaphone", platformStyle = false }: {
-  categories: MenuCategory[]; onClose: () => void; heading?: string; headingSubtitle?: string; headingIcon?: IconName; platformStyle?: boolean;
+function CategoryMenu({
+  categories,
+  onClose,
+  heading,
+  headingSubtitle,
+  headingIcon = "megaphone",
+  platformStyle = false,
+  hoverColor = "#5c4fe0",
+  visitHomeHref,
+  visitHomeLabel = "Visit Homepage",
+  visitHomeColor = "#86013A",
+  visitHomeTextColor = "#ffffff",
+}: {
+  categories: MenuCategory[];
+  onClose: () => void;
+  heading?: string;
+  headingSubtitle?: string;
+  headingIcon?: IconName;
+  platformStyle?: boolean;
+  hoverColor?: string;
+  visitHomeHref?: string;
+  visitHomeLabel?: string;
+  visitHomeColor?: string;
+  visitHomeTextColor?: string;
 }) {
   const [active, setActive] = useState(0);
   const category = categories[active];
@@ -393,13 +415,27 @@ function CategoryMenu({ categories, onClose, heading, headingSubtitle, headingIc
         <div className="flex px-10 pt-6 pb-6">
 
           {/* Left — heading + main headings, 2 per row */}
-          <div className="w-[560px] pr-8">
+          <div className="w-[560px] pr-8" style={{ ["--menu-hover" as string]: hoverColor }}>
             {heading && (
-              <div className="flex items-center gap-3 text-[#9a9ea8]">
-                <Glyph name={headingIcon} />
-                <span className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">
-                  {heading}
-                </span>
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3 text-[#9a9ea8]">
+                  <Glyph name={headingIcon} />
+                  <span className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">
+                    {heading}
+                  </span>
+                </div>
+                {visitHomeHref && (
+                  <PrimaryCtaLink
+                    href={visitHomeHref}
+                    onClick={onClose}
+                    icon={null}
+                    color={visitHomeColor}
+                    textColor={visitHomeTextColor}
+                    className="!min-h-[36px] shrink-0 !px-4 !py-2 text-[0.875rem] font-medium"
+                  >
+                    {visitHomeLabel}
+                  </PrimaryCtaLink>
+                )}
               </div>
             )}
             {headingSubtitle && (
@@ -411,12 +447,15 @@ function CategoryMenu({ categories, onClose, heading, headingSubtitle, headingIc
                   key={cat.label}
                   type="button"
                   onClick={() => setActive(i)}
-                  className="flex items-center gap-3 text-left group"
+                  aria-pressed={active === i}
+                  className="flex cursor-pointer items-center gap-3 text-left group"
                 >
                   <CategoryThumb cat={cat} />
                   <span className="flex flex-col gap-[0.35rem]">
-                    <span className={`text-[0.875rem] font-normal leading-[1] transition-colors duration-100 group-hover:text-[#5c4fe0]
-                      ${active === i ? "text-[#5c4fe0]" : "text-black"}`}>
+                    <span
+                      className="text-[0.875rem] font-normal leading-[1] transition-colors duration-100"
+                      style={{ color: active === i ? hoverColor : "#000000" }}
+                    >
                       {cat.label}
                     </span>
                     {cat.subtitle && (
@@ -433,8 +472,8 @@ function CategoryMenu({ categories, onClose, heading, headingSubtitle, headingIc
           {/* Divider */}
           <div className="w-px bg-[#eef0f4] mx-2" />
 
-          {/* Right — Service Details, sub-headed by the active main heading */}
-          <div className="flex-1 pl-8">
+          {/* Right — Visit Homepage + Service Details */}
+          <div className="flex-1 pl-8" style={{ ["--menu-hover" as string]: hoverColor }}>
             <p className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">Service Details</p>
             <p className="mt-[1.125rem] mb-[1.125rem] text-[0.75rem] leading-[1.6] text-[#676879] whitespace-nowrap">{category.label}</p>
             <ul className="flex flex-col gap-1">
@@ -442,10 +481,9 @@ function CategoryMenu({ categories, onClose, heading, headingSubtitle, headingIc
                 <li key={item.label}>
                   <Link
                     href={item.href} onClick={onClose}
-                    className="flex items-center gap-2 py-1 text-[0.875rem] font-normal leading-[1.4] text-black
-                               hover:text-[#5c4fe0] transition-colors duration-100"
+                    className="flex items-center gap-2 py-1 text-[0.875rem] font-normal leading-[1.4] text-black transition-colors duration-100 hover:text-[var(--menu-hover)]"
                   >
-                    <span className="text-[#8b8fa3] shrink-0">
+                    <span className="text-[#8b8fa3] shrink-0 group-hover:text-[var(--menu-hover)]">
                       <Glyph name={item.icon} />
                     </span>
                     {item.label}
@@ -484,7 +522,8 @@ function CategoryMenu({ categories, onClose, heading, headingSubtitle, headingIc
               key={cat.label}
               type="button"
               onClick={() => setActive(i)}
-              className="flex items-center gap-3 text-left group"
+              aria-pressed={active === i}
+              className="flex cursor-pointer items-center gap-3 text-left group"
             >
               <CategoryThumb cat={cat} />
               <span className="flex flex-col leading-tight">
@@ -570,19 +609,11 @@ export default function MainHeader() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
 
-            <Link href="/" onClick={closeAll}
-              onMouseEnter={() => setOpenMenu(null)}
-              className="flex items-center justify-center text-center gap-2 px-4 py-2 rounded-[8px]
-                         cursor-pointer text-[0.875rem] font-light leading-[100%] text-[rgb(83,87,104)] bg-transparent
-                         hover:bg-[#f5f6f8] transition-colors duration-100 whitespace-nowrap">
-              Visit Home
-            </Link>
-
             {/* Marketing — icon-list mega-menu */}
             <div onMouseEnter={() => open("Marketing")}>
               <Link href="/marketing" onClick={closeAll} className={`flex items-center justify-center text-center gap-2 px-4 py-2 rounded-[8px]
                 cursor-pointer text-[0.875rem] font-light leading-[100%] transition-colors duration-100
-                ${openMenu === "Marketing" ? "bg-[#eeecfc] text-[#5c4fe0]" : "bg-transparent text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"}`}>
+                ${openMenu === "Marketing" ? "bg-[#fce8ef] text-[#730031]" : "bg-transparent text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"}`}>
                 Marketing <ChevronDown open={openMenu === "Marketing"} />
               </Link>
             </div>
@@ -630,7 +661,10 @@ export default function MainHeader() {
                 heading="MARKETING SERVICES"
                 headingSubtitle="An overview of what we offer"
                 headingIcon="megaphone"
-                platformStyle />
+                platformStyle
+                hoverColor="#730031"
+                visitHomeHref="/marketing"
+                visitHomeLabel="Visit Homepage" />
             </div>
           )}
           {openMenu === "Talent" && (
@@ -672,10 +706,6 @@ export default function MainHeader() {
               </Link>
             ))}
             <div className="my-2 h-px bg-[#e6e9ef]" />
-            <Link href="/" onClick={closeAll}
-              className="px-3 py-[10px] rounded-[8px] text-[15px] font-medium text-[#323338] hover:bg-[#f5f6f8] transition-colors">
-              Visit Home
-            </Link>
             {simpleLinks.map((item) => (
               <Link key={item.label} href={item.href} onClick={closeAll}
                 className="px-3 py-[10px] rounded-[8px] text-[15px] font-medium text-[#323338] hover:bg-[#f5f6f8] transition-colors">

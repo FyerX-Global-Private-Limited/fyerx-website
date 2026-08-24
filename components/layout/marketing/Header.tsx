@@ -198,6 +198,8 @@ const simpleLinks = [
   { label: "Contact", href: "/contact?form=marketing" },
 ];
 
+const MARKETING_CRIMSON = "#730031";
+
 // ── Services mega-menu — left = clickable categories (avatar + label), 2 per
 // row; right = sub-items for whichever category is active.
 function ServicesMenu({ onClose }: { onClose: () => void }) {
@@ -208,12 +210,24 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
     <div className="animate-dropdown bg-white border-t border-[#e6e9ef] rounded-b-[12px] shadow-[0_16px_36px_rgba(20,20,43,0.12),0_2px_8px_rgba(20,20,43,0.06)]">
       <div className="flex px-10 pt-6 pb-6">
         {/* Left — heading + main headings, 2 per row */}
-        <div className="w-[560px] pr-8">
-          <div className="flex items-center gap-3 text-[#9a9ea8]">
-            <Glyph name="megaphone" />
-            <span className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">
-              Services
-            </span>
+        <div className="w-[560px] pr-8" style={{ ["--menu-hover" as string]: MARKETING_CRIMSON }}>
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3 text-[#9a9ea8]">
+              <Glyph name="megaphone" />
+              <span className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">
+                Services
+              </span>
+            </div>
+            <PrimaryCtaLink
+              href="/marketing"
+              onClick={onClose}
+              icon={null}
+              color="#FFC900"
+              textColor="#111111"
+              className="!min-h-[36px] shrink-0 !px-4 !py-2 text-[0.875rem] font-medium text-black!"
+            >
+              Visit Homepage
+            </PrimaryCtaLink>
           </div>
           <p className="mt-[1.125rem] mb-[1.125rem] text-[0.75rem] leading-[1.6] text-[#676879]">
             An overview of what we offer
@@ -224,8 +238,8 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
                 key={cat.label}
                 type="button"
                 onClick={() => setActive(i)}
-                onMouseEnter={() => setActive(i)}
-                className="flex items-center gap-3 text-left group"
+                aria-pressed={active === i}
+                className="flex cursor-pointer items-center gap-3 text-left group"
               >
                 <Image
                   src={cat.avatar}
@@ -235,9 +249,8 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
                   className="w-10 h-10 rounded-[10px] object-cover shrink-0"
                 />
                 <span
-                  className={`text-[0.875rem] font-normal leading-[1.3] transition-colors duration-100 group-hover:text-blue-600 ${
-                    active === i ? "text-blue-600" : "text-black"
-                  }`}
+                  className="text-[0.875rem] font-normal leading-[1.3] transition-colors duration-100"
+                  style={{ color: active === i ? MARKETING_CRIMSON : "#000000" }}
                 >
                   {cat.label}
                 </span>
@@ -249,8 +262,8 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
         {/* Divider */}
         <div className="w-px bg-[#eef0f4] mx-2" />
 
-        {/* Right — sub-items for the active category */}
-        <div className="flex-1 pl-8">
+        {/* Right — Visit Homepage + sub-items for the active category */}
+        <div className="flex-1 pl-8" style={{ ["--menu-hover" as string]: MARKETING_CRIMSON }}>
           <p className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">
             Service Details
           </p>
@@ -263,7 +276,7 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
                 <Link
                   href={item.href}
                   onClick={onClose}
-                  className="flex items-center gap-2 py-1 text-[0.875rem] font-normal leading-[1.4] text-black hover:text-blue-600 transition-colors duration-100"
+                  className="flex items-center gap-2 py-1 text-[0.875rem] font-normal leading-[1.4] text-black transition-colors duration-100 hover:text-[var(--menu-hover)]"
                 >
                   <span className="text-[#8b8fa3] shrink-0">
                     <Glyph name={item.icon} />
@@ -320,7 +333,7 @@ export default function MarketingHeader() {
             <div onMouseEnter={openServices}>
               <button
                 className={`flex items-center gap-2 px-4 py-[9px] rounded-[8px] cursor-pointer text-sm transition-colors duration-100 ${
-                  servicesOpen ? "bg-blue-50 text-blue-600" : "text-zinc-600 hover:bg-zinc-50"
+                  servicesOpen ? "bg-[#fce8ef] text-[#730031]" : "text-zinc-600 hover:bg-zinc-50"
                 }`}
               >
                 Services <ChevronDown open={servicesOpen} />

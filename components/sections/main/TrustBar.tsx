@@ -1,6 +1,6 @@
 import { TRUSTBAR_LOGOS } from "@/lib/trustbar-logos";
 
-const logos = TRUSTBAR_LOGOS;
+const logos = TRUSTBAR_LOGOS.filter((logo) => !logo.badge);
 
 const LOGO_SLOT =
   "flex h-10 w-28 shrink-0 items-center justify-center p-2 sm:h-12 sm:w-36 sm:p-3 md:w-40";
