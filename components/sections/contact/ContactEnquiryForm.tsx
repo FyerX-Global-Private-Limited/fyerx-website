@@ -2,6 +2,9 @@
 
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import type { CountryCode } from "libphonenumber-js";
+import { DEFAULT_PHONE_COUNTRY, PhoneInput } from "@/components/ui/PhoneInput";
+import { validateEmail, validatePhone } from "@/lib/form-validation";
 
 export const BRAND = {
   crimson: "#730031",
@@ -286,28 +289,8 @@ function RequiredMark() {
   );
 }
 
-function CompactPhoneInput() {
-  return (
-    <div className="flex h-10 w-full overflow-hidden rounded-[8px] border border-[#c3c6d4] bg-white transition-colors duration-150 focus-within:border-[#6161ff]">
-      <button
-        type="button"
-        className="flex h-full w-11 shrink-0 items-center justify-center gap-[3px] border-r border-[#c3c6d4] bg-white"
-        aria-label="Select country code"
-      >
-        <img src="https://flagcdn.com/w20/in.png" alt="India" className="h-3 w-[18px] object-cover" />
-        <svg className="h-2.5 w-2.5 text-[#676879]" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
-      <input
-        type="tel"
-        name="phone"
-        placeholder="Your Phone Number*"
-        required
-        className="h-full w-full border-0 bg-white px-3.5 text-[13px] text-[#333333] placeholder-[#676879] outline-none"
-      />
-    </div>
-  );
+function inputClassName(hasError?: boolean) {
+  return `${inputBase}${hasError ? " border-[#730031]" : ""}`;
 }
 
 function CompactExpectedStartSelect() {
@@ -400,10 +383,20 @@ export function ContactEnquiryForm({
   const config = FORM_CONFIG[formKey];
   const [selected, setSelected] = useState<string[]>([]);
   const [helpError, setHelpError] = useState(false);
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [phoneCountry, setPhoneCountry] = useState<CountryCode>(DEFAULT_PHONE_COUNTRY);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
 
   useEffect(() => {
     setSelected([]);
     setHelpError(false);
+    setEmail("");
+    setPhone("");
+    setPhoneCountry(DEFAULT_PHONE_COUNTRY);
+    setEmailError(null);
+    setPhoneError(null);
   }, [formKey]);
 
   const toggleOption = (opt: string) => {
@@ -417,11 +410,22 @@ export function ContactEnquiryForm({
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const choiceOptions = config.teamOptions ?? config.helpOptions;
+    const nextEmailError = validateEmail(email);
+    const nextPhoneError = validatePhone(phone, phoneCountry);
+
     if (choiceOptions && selected.length === 0) {
       setHelpError(true);
+    } else {
+      setHelpError(false);
+    }
+
+    setEmailError(nextEmailError);
+    setPhoneError(nextPhoneError);
+
+    if ((choiceOptions && selected.length === 0) || nextEmailError || nextPhoneError) {
       return;
     }
-    setHelpError(false);
+
     router.push(THANK_YOU_BY_FORM[formKey]);
   };
 
@@ -449,9 +453,42 @@ export function ContactEnquiryForm({
           </div>
         )}
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <input type="email" name="email" placeholder="Your Email*" required className={inputBase} />
-          <CompactPhoneInput />
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+          <div>
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (emailError) setEmailError(null);
+              }}
+              placeholder="Your Email*"
+              required
+              inputMode="email"
+              autoComplete="email"
+              aria-invalid={emailError ? true : undefined}
+              className={inputClassName(!!emailError)}
+            />
+            {emailError && (
+              <p className="mt-1.5 text-xs text-[#730031]" role="alert">
+                {emailError}
+              </p>
+            )}
+          </div>
+          <PhoneInput
+            country={phoneCountry}
+            onCountryChange={(next) => {
+              setPhoneCountry(next);
+              if (phoneError) setPhoneError(null);
+            }}
+            value={phone}
+            onChange={(next) => {
+              setPhone(next);
+              if (phoneError) setPhoneError(null);
+            }}
+            error={phoneError}
+          />
         </div>
 
         {config.variant === "job" && (

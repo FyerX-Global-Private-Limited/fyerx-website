@@ -62,7 +62,7 @@ export default function Hero() {
     <section className="home-section relative w-full bg-white font-calibri">
       <div className="section-shell section-shell--wide">
         <div className="flex flex-col gap-6 sm:gap-8 lg:flex-row lg:items-center lg:gap-12">
-          <div className="flex w-full min-w-0 flex-col justify-start text-left lg:max-w-[23rem] lg:shrink-0 lg:pt-4">
+          <div className="order-2 flex w-full min-w-0 flex-col justify-start text-left lg:order-1 lg:max-w-[23rem] lg:shrink-0 lg:pt-4">
             <h1 className="text-balance text-[clamp(1.375rem,5.5vw,2.25rem)] font-medium leading-[1.2] tracking-[-0.03em] text-black">
               You{" "}
               <span
@@ -140,7 +140,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="relative aspect-[4/3] w-full min-w-0 flex-1 overflow-hidden rounded-2xl sm:aspect-[16/10] lg:aspect-auto lg:min-h-[26rem] lg:rounded-tl-[28px] lg:rounded-tr-none lg:rounded-br-none lg:rounded-bl-none">
+          <div className="relative order-1 aspect-[4/3] w-full min-w-0 flex-1 overflow-hidden rounded-2xl sm:aspect-[16/10] lg:order-2 lg:aspect-auto lg:min-h-[26rem] lg:rounded-tl-[28px] lg:rounded-tr-none lg:rounded-br-none lg:rounded-bl-none">
             {pillars.map((pillar, i) => (
               <video
                 key={pillar.label}

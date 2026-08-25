@@ -1,8 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import type { CountryCode } from "libphonenumber-js";
 import { PrimaryCtaButton } from "@/components/ui/PrimaryCta";
+import { DEFAULT_PHONE_COUNTRY, PhoneInput } from "@/components/ui/PhoneInput";
+import { validateEmail, validatePhone } from "@/lib/form-validation";
 import { TRUSTBAR_LOGOS } from "@/lib/trustbar-logos";
 import { CONTACT_TEAM_AVATARS } from "@/lib/contact-team-avatars";
 
@@ -10,6 +13,10 @@ const AVATARS = CONTACT_TEAM_AVATARS;
 
 const inputBase =
   "w-full h-10 rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 text-[13px] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]";
+
+function inputClassName(hasError?: boolean) {
+  return `${inputBase}${hasError ? " border-[#730031]" : ""}`;
+}
 
 const selectBase =
   "w-full h-10 rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 pr-9 text-[13px] text-[#676879] outline-none appearance-none cursor-pointer transition-colors duration-150 focus:border-[#6161ff]";
@@ -38,6 +45,21 @@ function Caret({ className }: { className?: string }) {
 
 export default function TestimonialsCTA() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [phoneCountry, setPhoneCountry] = useState<CountryCode>(DEFAULT_PHONE_COUNTRY);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const nextEmailError = validateEmail(email);
+    const nextPhoneError = validatePhone(phone, phoneCountry);
+    setEmailError(nextEmailError);
+    setPhoneError(nextPhoneError);
+    if (nextEmailError || nextPhoneError) return;
+    router.push("/contact/thankyou-home");
+  };
 
   return (
     <section
@@ -110,40 +132,50 @@ export default function TestimonialsCTA() {
                 Contact our team
               </h3>
 
-              <form
-                className="mt-4 flex flex-col gap-3"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  router.push("/contact/thankyou-home");
-                }}
-              >
+              <form className="mt-4 flex flex-col gap-3" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <input type="text" name="firstName" placeholder="First name*" required className={inputBase} />
                   <input type="text" name="lastName" placeholder="Last name*" required className={inputBase} />
                 </div>
 
-                <input type="email" name="workEmail" placeholder="Work email*" required className={inputBase} />
+                <div>
+                  <input
+                    type="email"
+                    name="workEmail"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (emailError) setEmailError(null);
+                    }}
+                    placeholder="Work email*"
+                    required
+                    inputMode="email"
+                    autoComplete="email"
+                    aria-invalid={emailError ? true : undefined}
+                    className={inputClassName(!!emailError)}
+                  />
+                  {emailError && (
+                    <p className="mt-1.5 text-xs text-[#730031]" role="alert">
+                      {emailError}
+                    </p>
+                  )}
+                </div>
                 <input type="text" name="jobTitle" placeholder="Job title" className={inputBase} />
 
-                <div className="flex h-10 w-full overflow-hidden rounded-[8px] border border-[#c3c6d4] bg-white transition-colors duration-150 focus-within:border-[#6161ff]">
-                  <button
-                    type="button"
-                    className="flex h-full w-11 shrink-0 items-center justify-center gap-[3px] border-r border-[#c3c6d4] bg-white"
-                    aria-label="Select country code"
-                  >
-                    <img src="https://flagcdn.com/w20/in.png" alt="India" className="h-3 w-[18px] object-cover" />
-                    <svg className="h-2.5 w-2.5 text-[#676879]" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                      <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </button>
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="Phone number*"
-                    required
-                    className="h-full w-full border-0 bg-white px-3.5 text-[13px] text-[#333333] placeholder-[#676879] outline-none"
-                  />
-                </div>
+                <PhoneInput
+                  country={phoneCountry}
+                  onCountryChange={(next) => {
+                    setPhoneCountry(next);
+                    if (phoneError) setPhoneError(null);
+                  }}
+                  value={phone}
+                  onChange={(next) => {
+                    setPhone(next);
+                    if (phoneError) setPhoneError(null);
+                  }}
+                  error={phoneError}
+                  placeholder="Phone number*"
+                />
 
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <input type="text" name="companyName" placeholder="Company name*" required className={inputBase} />
