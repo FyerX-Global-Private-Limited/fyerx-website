@@ -57,7 +57,7 @@ function ChevronIcon({ open }: { open: boolean }) {
     >
       <path
         d="M6 9l6 6 6-6"
-        stroke="#730031"
+        stroke="#B8860B"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

@@ -7,7 +7,13 @@ const LOGO_SLOT =
 const LOGO_IMG =
   "block h-full w-full max-h-6 max-w-[6rem] object-contain object-center sm:max-h-7 sm:max-w-[7.5rem]";
 
-export default function TrustBar() {
+type TrustBarProps = {
+  highlightClassName?: string;
+};
+
+export default function TrustBar({
+  highlightClassName = "brand-gradient-text",
+}: TrustBarProps) {
   return (
     <section
       className="home-section w-full overflow-hidden bg-white"
@@ -20,7 +26,7 @@ export default function TrustBar() {
         <div className="section-header section-header--center">
           <h2 className="section-heading section-heading--sm text-black">
             Organisations That Have{" "}
-            <span className="brand-gradient-text">Partnered With Us</span>
+            <span className={highlightClassName}>Partnered With Us</span>
           </h2>
         </div>
 

@@ -1,14 +1,7 @@
 "use client";
 
-import React from "react";
-
-/**
- * "Talk to an expert for enterprise solutions" section.
- * Exact copy + design replication. No external dependencies.
- *
- * Swap IMAGE_SRC for your own asset (e.g. "/images/team.jpg").
- * The photo is masked into a 4-petal clover (quatrefoil) via an inline SVG clipPath.
- */
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { MARKETING_HOME } from "@/lib/marketing-home-palette";
 
 const IMAGE_SRC =
   "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=1200&q=80";
@@ -22,17 +15,14 @@ const features = [
 
 function FeatureCheck() {
   return (
-    <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#111111]">
-      <svg
-        viewBox="0 0 24 24"
-        width={15}
-        height={15}
-        fill="none"
-        aria-hidden="true"
-      >
+    <span
+      className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md"
+      style={{ backgroundColor: MARKETING_HOME.primary }}
+    >
+      <svg viewBox="0 0 24 24" width={12} height={12} fill="none" aria-hidden="true">
         <path
           d="M5 12.5l4.5 4.5L19 7.5"
-          stroke="#FFC900"
+          stroke="#1a1a1a"
           strokeWidth={2.6}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -42,217 +32,61 @@ function FeatureCheck() {
   );
 }
 
-function CloverImage({ src }: { src: string }) {
-  return (
-    <svg
-      className="ent-clover"
-      viewBox="0 0 200 200"
-      role="img"
-      aria-label="Team collaborating"
-    >
-      <defs>
-        <clipPath id="marketingEntCloverClip">
-          {/* four overlapping circles union into a quatrefoil */}
-          <circle cx="62" cy="62" r="58" />
-          <circle cx="138" cy="62" r="58" />
-          <circle cx="62" cy="138" r="58" />
-          <circle cx="138" cy="138" r="58" />
-        </clipPath>
-      </defs>
-      <image
-        href={src}
-        x="0"
-        y="0"
-        width="200"
-        height="200"
-        preserveAspectRatio="xMidYMid slice"
-        clipPath="url(#marketingEntCloverClip)"
-      />
-    </svg>
-  );
-}
-
 export default function EnterpriseSection() {
   return (
-    <section className="ent">
-      <div className="ent__card">
-        <div className="ent__left">
-          <h2 className="ent__title">Bring us the brief, the bottleneck, or the big question.</h2>
+    <section className="overflow-x-clip bg-white px-4 py-12 sm:px-10 sm:py-16 lg:px-16">
+      <div className="mx-auto max-w-7xl">
+        <div
+          className="grid items-center gap-8 overflow-hidden rounded-3xl border p-6 sm:p-10 lg:grid-cols-2 lg:gap-12 lg:p-14"
+          style={{
+            borderColor: `${MARKETING_HOME.primary}40`,
+            background: `linear-gradient(135deg, ${MARKETING_HOME.paleYellow} 0%, #ffffff 45%, ${MARKETING_HOME.paleAmber} 100%)`,
+          }}
+        >
+          <div className="order-2 min-w-0 lg:order-1">
+            <h2 className="section-title-lg max-w-md">
+              Bring us the brief, the bottleneck, or the{" "}
+              <span className="marketing-gradient-text">big question</span>.
+            </h2>
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-[#52525b] sm:text-base">
+              Whether you need a full marketing partner or focused support on one
+              priority, we will help you identify a sensible next step.
+            </p>
 
-          <p className="ent__subtitle">
-            Whether you need a full marketing partner or focused support on one
-            priority, we will help you identify a sensible next step.
-          </p>
+            <ul className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:mt-8">
+              {features.map((label) => (
+                <li
+                  key={label}
+                  className="flex items-center gap-2.5 rounded-xl border border-[#E6E9EF] bg-white/90 px-3.5 py-2.5 text-[13px] font-medium text-[#27272a] shadow-sm"
+                >
+                  <FeatureCheck />
+                  <span className="leading-snug">{label}</span>
+                </li>
+              ))}
+            </ul>
 
-          <ul className="ent__list">
-            {features.map((label) => (
-              <li className="ent__item" key={label}>
-                <FeatureCheck />
-                <span className="ent__item-label">{label}</span>
-              </li>
-            ))}
-          </ul>
+            <div className="mt-7">
+              <PrimaryCtaLink
+                href="/contact"
+                className="text-black!"
+                color={MARKETING_HOME.primary}
+              >
+                Talk to Our Team
+              </PrimaryCtaLink>
+            </div>
+          </div>
 
-          <button className="ent__cta" type="button">
-            Talk to Our Team
-          </button>
-        </div>
-
-        <div className="ent__right">
-          <CloverImage src={IMAGE_SRC} />
+          <div className="order-1 flex justify-center lg:order-2">
+            <div className="relative aspect-square w-full max-w-[360px] overflow-hidden rounded-3xl border border-white shadow-lg sm:max-w-[400px]">
+              <img
+                src={IMAGE_SRC}
+                alt="Team collaborating on marketing plans"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
         </div>
       </div>
-
-      <style jsx>{`
-        .ent {
-          width: 100%;
-          background: #ffffff;
-          padding: 40px 16px;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-          box-sizing: border-box;
-        }
-        @media (min-width: 640px) {
-          .ent {
-            padding: 56px 40px;
-          }
-        }
-        @media (min-width: 1024px) {
-          .ent {
-            padding: 64px 64px;
-          }
-        }
-        .ent__card {
-          max-width: 1180px;
-          margin: 0 auto;
-          border: 1px solid #ececee;
-          border-radius: 20px;
-          padding: 28px 20px;
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 28px;
-          align-items: center;
-          box-sizing: border-box;
-        }
-        @media (min-width: 861px) {
-          .ent__card {
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
-            border-radius: 24px;
-            padding: 56px 60px;
-          }
-        }
-        .ent__left {
-          max-width: 460px;
-        }
-        .ent__title {
-          margin: 0;
-          font-size: clamp(1.75rem, 5vw, 2.875rem);
-          line-height: 1.12;
-          font-weight: 500;
-          letter-spacing: -0.02em;
-          color: var(--ink);
-        }
-        .ent__subtitle {
-          margin: 16px 0 0;
-          font-size: clamp(0.875rem, 2.5vw, 0.9375rem);
-          line-height: 1.55;
-          color: #52525b;
-          max-width: 400px;
-        }
-        @media (min-width: 640px) {
-          .ent__subtitle {
-            margin-top: 20px;
-          }
-        }
-        .ent__list {
-          list-style: none;
-          margin: 24px 0 0;
-          padding: 0;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-        @media (min-width: 640px) {
-          .ent__list {
-            margin-top: 30px;
-            gap: 14px;
-          }
-        }
-        .ent__item {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          background: #f6f7f7;
-          border-radius: 999px;
-          padding: 12px 16px;
-        }
-        @media (min-width: 640px) {
-          .ent__item {
-            gap: 14px;
-            padding: 14px 22px;
-          }
-        }
-        .ent__item-label {
-          font-size: clamp(0.8125rem, 2.5vw, 0.9375rem);
-          font-weight: 500;
-          line-height: 1.35;
-          color: #27272a;
-        }
-        .ent__cta {
-          margin-top: 24px;
-          width: 100%;
-          background: #FFC900;
-          color: #1a1a1a;
-          border: none;
-          border-radius: 999px;
-          padding: 14px 24px;
-          font-size: 15px;
-          font-weight: 500;
-          cursor: pointer;
-          transition: transform 0.15s ease, opacity 0.15s ease;
-        }
-        @media (min-width: 480px) {
-          .ent__cta {
-            width: auto;
-            margin-top: 30px;
-            padding: 15px 30px;
-          }
-        }
-        .ent__cta:hover {
-          transform: translateY(-1px);
-          opacity: 0.9;
-        }
-        .ent__right {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        .ent-clover {
-          width: 100%;
-          max-width: 320px;
-          height: auto;
-          aspect-ratio: 1 / 1;
-        }
-        @media (min-width: 640px) {
-          .ent-clover {
-            max-width: 400px;
-          }
-        }
-        @media (min-width: 861px) {
-          .ent-clover {
-            max-width: 480px;
-          }
-        }
-
-        @media (max-width: 860px) {
-          .ent__right {
-            order: -1;
-          }
-          .ent__left {
-            max-width: 100%;
-          }
-        }
-      `}</style>
     </section>
   );
 }

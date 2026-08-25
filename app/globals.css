@@ -259,6 +259,11 @@ button:disabled,
   min-width: 0;
 }
 
+.home-section--contact {
+  padding-inline: max(var(--section-space), env(safe-area-inset-left, 0px))
+    max(var(--section-space), env(safe-area-inset-right, 0px));
+}
+
 .section-shell {
   width: 100%;
   max-width: 75rem;
@@ -323,6 +328,14 @@ button:disabled,
 
 .talent-gradient-text {
   background: linear-gradient(90deg, #11551c 0%, #36a852 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.marketing-gradient-text {
+  background: linear-gradient(90deg, #b8860b 0%, #ffc900 50%, #ffd633 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

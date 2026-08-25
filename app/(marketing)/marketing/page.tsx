@@ -26,7 +26,7 @@ export default function MarketingPage() {
       
       <MarketingHero />
       <TrackRecord />
-         <TrustBar />
+         <TrustBar highlightClassName="marketing-gradient-text" />
       <ServicesGrid />
       <AIPlatformHero />
       <StackedScrollSection />

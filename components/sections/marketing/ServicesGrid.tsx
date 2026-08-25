@@ -32,9 +32,9 @@ function SparkleIcon({ className = "" }: { className?: string }) {
     >
       <defs>
         <linearGradient id={gradientId} x1="0" y1="0" x2="24" y2="24">
-          <stop offset="0%" stopColor="#5B8DFF" />
-          <stop offset="50%" stopColor="#B45CF2" />
-          <stop offset="100%" stopColor="#F45FA0" />
+          <stop offset="0%" stopColor="#FFC900" />
+          <stop offset="50%" stopColor="#F59E0B" />
+          <stop offset="100%" stopColor="#E6A800" />
         </linearGradient>
       </defs>
       <path

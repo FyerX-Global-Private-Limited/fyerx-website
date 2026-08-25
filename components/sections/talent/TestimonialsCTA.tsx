@@ -11,7 +11,7 @@ export default function TestimonialsCTA() {
   return (
     <section
       id="contact"
-      className="home-section bg-white"
+      className="home-section home-section--contact bg-white"
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
       <div className="section-shell section-shell--wide">

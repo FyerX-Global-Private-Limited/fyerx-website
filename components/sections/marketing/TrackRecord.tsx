@@ -195,8 +195,6 @@ export default function TrackRecord() {
       {/* ---------- CTA ---------- */}
       <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Tell Us Your Goal</PrimaryCtaLink>
 
-      <p className="tr-note">We work across industries and adapt the mix to your market, maturity, team, and sales motion.</p>
-
       {/* Embedded styles — self-contained, no external CSS needed. */}
       <style>{css}</style>
     </section>
@@ -261,7 +259,7 @@ const css = `
   /* ---------- Cards ---------- */
   .tr-hero .tr-cards{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:1fr;
     align-items:stretch;
     width:100%;
     max-width:520px;
@@ -280,22 +278,32 @@ const css = `
   .tr-hero .tr-card{
     position:relative;
     width:100%;
-    height:96px;
+    min-height:72px;
+    height:auto;
     background:#ffffff;
     border:1px solid var(--border);
-    border-radius:4px;
+    border-radius:8px;
     cursor:pointer;
     font-family:inherit;
     display:flex;
-    flex-direction:column;
+    flex-direction:row;
     align-items:center;
-    justify-content:center;
-    gap:0px;
-    padding:12px 8px;
+    justify-content:flex-start;
+    gap:12px;
+    padding:12px 14px 12px 44px;
     transition:border-color .2s ease,box-shadow .2s ease;
   }
-  @media (min-width:640px){
-    .tr-hero .tr-card{height:115px;padding:16px 10px;}
+  @media (min-width:480px){
+    .tr-hero .tr-card{
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:0;
+      min-height:115px;
+      height:115px;
+      padding:16px 10px;
+      border-radius:4px;
+    }
   }
   .tr-hero .tr-card:hover{
     border-color:#B9BDC7;
@@ -334,17 +342,23 @@ const css = `
   }
   .tr-hero .tr-label{
     position:relative;
-    text-align:center;
-    margin-top:.5rem;
-    margin-left:auto;
-    margin-right:auto;
-    font-size:.6875rem;
+    text-align:left;
+    margin-top:0;
+    margin-left:0;
+    margin-right:0;
+    font-size:.8125rem;
     line-height:1.35;
     font-weight:400;
     color:#333333;
   }
-  @media (min-width:640px){
-    .tr-hero .tr-label{font-size:.75rem;}
+  @media (min-width:480px){
+    .tr-hero .tr-label{
+      text-align:center;
+      margin-top:.5rem;
+      margin-left:auto;
+      margin-right:auto;
+      font-size:.75rem;
+    }
   }
   /* ---------- CTA ---------- */
   .tr-hero .tr-cta{
