@@ -4,6 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { TALENT_ACCENT, TALENT_PRIMARY } from "@/lib/talent-brand";
+
+const MARKETING_CRIMSON = "#730031";
 
 // ── Logo ───────────────────────────────────────────────────────────────────────
 function FyerxLogo() {
@@ -622,7 +625,7 @@ export default function MainHeader() {
             <div onMouseEnter={() => open("Talent")}>
               <Link href="/talent" onClick={closeAll} className={`flex items-center justify-center text-center gap-2 px-4 py-2 rounded-[8px]
                 cursor-pointer text-[0.875rem] font-light leading-[100%] transition-colors duration-100
-                ${openMenu === "Talent" ? "bg-[#eeecfc] text-[#5c4fe0]" : "bg-transparent text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"}`}>
+                ${openMenu === "Talent" ? "bg-[#9EEBAA]/25 text-[#11551C]" : "bg-transparent text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"}`}>
                 Talent <ChevronDown open={openMenu === "Talent"} />
               </Link>
             </div>
@@ -662,9 +665,11 @@ export default function MainHeader() {
                 headingSubtitle="An overview of what we offer"
                 headingIcon="megaphone"
                 platformStyle
-                hoverColor="#730031"
+                hoverColor={MARKETING_CRIMSON}
                 visitHomeHref="/marketing"
-                visitHomeLabel="Visit Homepage" />
+                visitHomeLabel="Visit Homepage"
+                visitHomeColor="#FFC900"
+                visitHomeTextColor="#111111" />
             </div>
           )}
           {openMenu === "Talent" && (
@@ -674,7 +679,12 @@ export default function MainHeader() {
                 heading="TALENT SOLUTIONS"
                 headingSubtitle="An overview of what we offer"
                 headingIcon="personPlus"
-                platformStyle />
+                platformStyle
+                hoverColor={TALENT_PRIMARY}
+                visitHomeHref="/talent"
+                visitHomeLabel="Visit Homepage"
+                visitHomeColor={TALENT_PRIMARY}
+                visitHomeTextColor={TALENT_ACCENT} />
             </div>
           )}
         </div>

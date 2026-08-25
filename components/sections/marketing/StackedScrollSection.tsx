@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import {
@@ -90,9 +91,21 @@ function MetricsMockup({
   );
 }
 
-function StackedCaseStudyCard({ study, index }: { study: CaseStudy; index: number }) {
+function StackedCaseStudyCard({
+  study,
+  index,
+  stackEnabled,
+}: {
+  study: CaseStudy;
+  index: number;
+  stackEnabled: boolean;
+}) {
   return (
-    <div className="sticky" style={{ top: `${STACK_TOP + index * PEEK}px` }}>
+    <div
+      className={stackEnabled ? "sticky" : undefined}
+      style={stackEnabled ? { top: `${STACK_TOP + index * PEEK}px` } : undefined}
+      suppressHydrationWarning
+    >
       <div
         className="mb-8 overflow-hidden rounded-[28px] shadow-[0_20px_60px_-24px_rgba(11,46,89,0.35)]"
         style={{ backgroundColor: study.peekColor }}
@@ -149,6 +162,12 @@ function StackedCaseStudyCard({ study, index }: { study: CaseStudy; index: numbe
 }
 
 export default function StackedScrollSection() {
+  const [stackEnabled, setStackEnabled] = useState(false);
+
+  useEffect(() => {
+    setStackEnabled(true);
+  }, []);
+
   return (
     <section className="w-full bg-white">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-10 lg:px-12">
@@ -169,7 +188,12 @@ export default function StackedScrollSection() {
 
         <div className="relative mt-12 pb-[20vh]">
           {MARKETING_CASE_STUDIES.map((study, index) => (
-            <StackedCaseStudyCard key={study.slug} study={study} index={index} />
+            <StackedCaseStudyCard
+              key={study.slug}
+              study={study}
+              index={index}
+              stackEnabled={stackEnabled}
+            />
           ))}
         </div>
       </div>

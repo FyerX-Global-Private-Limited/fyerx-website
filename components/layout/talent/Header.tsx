@@ -153,6 +153,8 @@ const simpleLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
+const TALENT_MENU_HOVER = TALENT_PRIMARY;
+
 // ── Talent mega-menu — left = clickable categories (avatar + label), 2 per
 // row; right = sub-items for whichever category is active.
 function TalentMenu({ onClose }: { onClose: () => void }) {
@@ -163,12 +165,24 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
     <div className="animate-dropdown bg-white border-t border-[#e6e9ef] rounded-b-[12px] shadow-[0_16px_36px_rgba(20,20,43,0.12),0_2px_8px_rgba(20,20,43,0.06)]">
       <div className="flex px-10 pt-6 pb-6">
         {/* Left — heading + main headings, 2 per row */}
-        <div className="w-[560px] pr-8">
-          <div className="flex items-center gap-3 text-[#9a9ea8]">
-            <Glyph name="personPlus" />
-            <span className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">
-              Talent Solutions
-            </span>
+        <div className="w-[560px] pr-8" style={{ ["--menu-hover" as string]: TALENT_MENU_HOVER }}>
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3 text-[#9a9ea8]">
+              <Glyph name="personPlus" />
+              <span className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">
+                Talent Solutions
+              </span>
+            </div>
+            <PrimaryCtaLink
+              href="/"
+              onClick={onClose}
+              icon={null}
+              color={TALENT_PRIMARY}
+              textColor={TALENT_ACCENT}
+              className="!min-h-[36px] shrink-0 !px-4 !py-2 text-[0.875rem] font-medium"
+            >
+              Visit Homepage
+            </PrimaryCtaLink>
           </div>
           <p className="mt-[1.125rem] mb-[1.125rem] text-[0.75rem] leading-[1.6] text-[#676879]">
             An overview of what we offer
@@ -179,8 +193,8 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
                 key={cat.label}
                 type="button"
                 onClick={() => setActive(i)}
-                onMouseEnter={() => setActive(i)}
-                className="flex items-center gap-3 text-left group"
+                aria-pressed={active === i}
+                className="flex cursor-pointer items-center gap-3 text-left group"
               >
                 <Image
                   src={cat.avatar}
@@ -190,9 +204,8 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
                   className="w-10 h-10 rounded-[10px] object-cover shrink-0"
                 />
                 <span
-                  className={`text-[0.875rem] font-normal leading-[1.3] transition-colors duration-100 group-hover:text-[#11551C] ${
-                    active === i ? "text-[#11551C]" : "text-black"
-                  }`}
+                  className="text-[0.875rem] font-normal leading-[1.3] transition-colors duration-100"
+                  style={{ color: active === i ? TALENT_MENU_HOVER : "#000000" }}
                 >
                   {cat.label}
                 </span>
@@ -205,7 +218,7 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
         <div className="w-px bg-[#eef0f4] mx-2" />
 
         {/* Right — sub-items for the active category */}
-        <div className="flex-1 pl-8">
+        <div className="flex-1 pl-8" style={{ ["--menu-hover" as string]: TALENT_MENU_HOVER }}>
           <p className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">
             Service Details
           </p>
@@ -218,7 +231,7 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
                 <Link
                   href={item.href}
                   onClick={onClose}
-                  className="flex items-center gap-2 py-1 text-[0.875rem] font-normal leading-[1.4] text-black hover:text-[#11551C] transition-colors duration-100"
+                  className="flex items-center gap-2 py-1 text-[0.875rem] font-normal leading-[1.4] text-black transition-colors duration-100 hover:text-[var(--menu-hover)]"
                 >
                   <span className="text-[#8b8fa3] shrink-0">
                     <Glyph name={item.icon} />
@@ -274,6 +287,8 @@ export default function TalentHeader() {
           <nav className="flex items-center gap-1">
             <div onMouseEnter={openMenu}>
               <button
+                type="button"
+                aria-expanded={menuOpen}
                 className={`flex items-center gap-2 px-4 py-[9px] rounded-[8px] cursor-pointer text-sm transition-colors duration-100 ${
                   menuOpen ? "bg-[#9EEBAA]/25 text-[#11551C]" : "text-zinc-600 hover:bg-zinc-50"
                 }`}
@@ -288,7 +303,7 @@ export default function TalentHeader() {
                 href={item.href}
                 onClick={closeAll}
                 onMouseEnter={() => setMenuOpen(false)}
-                className="px-4 py-[9px] rounded-[8px] text-sm text-zinc-600 hover:bg-zinc-50 hover:text-[#11551C] transition-colors duration-100 whitespace-nowrap"
+                className="inline-flex items-center px-4 py-[9px] rounded-[8px] text-sm text-zinc-600 hover:bg-zinc-50 hover:text-[#11551C] transition-colors duration-100 whitespace-nowrap"
               >
                 {item.label}
               </Link>
@@ -343,6 +358,17 @@ export default function TalentHeader() {
                 </div>
               </div>
             ))}
+            <div className="my-2 h-px bg-[#9EEBAA]/40" />
+            <PrimaryCtaLink
+              href="/"
+              onClick={closeAll}
+              icon={null}
+              color={TALENT_PRIMARY}
+              textColor={TALENT_ACCENT}
+              className="mx-3 !min-h-[36px] !px-4 !py-2 text-[0.875rem] font-medium"
+            >
+              Visit Homepage
+            </PrimaryCtaLink>
             <div className="my-2 h-px bg-[#9EEBAA]/40" />
             {simpleLinks.map((item) => (
               <Link

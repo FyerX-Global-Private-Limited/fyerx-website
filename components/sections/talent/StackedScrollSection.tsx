@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { TALENT_HOME } from "@/lib/talent-home-palette";
 import {
@@ -114,11 +115,23 @@ function MetricsMockup({
   );
 }
 
-function StackedCaseStudyCard({ study, index }: { study: TalentCaseStudy; index: number }) {
+function StackedCaseStudyCard({
+  study,
+  index,
+  stackEnabled,
+}: {
+  study: TalentCaseStudy;
+  index: number;
+  stackEnabled: boolean;
+}) {
   const palette = CARD_PALETTES[index % CARD_PALETTES.length];
 
   return (
-    <div className="sticky" style={{ top: `${STACK_TOP + index * PEEK}px` }}>
+    <div
+      className={stackEnabled ? "sticky" : undefined}
+      style={stackEnabled ? { top: `${STACK_TOP + index * PEEK}px` } : undefined}
+      suppressHydrationWarning
+    >
       <div
         className="mb-8 overflow-hidden rounded-[28px] shadow-[0_24px_64px_-28px_rgba(16,16,20,0.22)]"
         style={{ backgroundColor: palette.cardBg }}
@@ -175,6 +188,12 @@ function StackedCaseStudyCard({ study, index }: { study: TalentCaseStudy; index:
 }
 
 export default function StackedScrollSection() {
+  const [stackEnabled, setStackEnabled] = useState(false);
+
+  useEffect(() => {
+    setStackEnabled(true);
+  }, []);
+
   return (
     <section className="w-full overflow-x-clip bg-white">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-10 lg:px-12">
@@ -190,7 +209,12 @@ export default function StackedScrollSection() {
 
         <div className="relative mt-12 pb-[20vh]">
           {TALENT_CASE_STUDIES.map((study, index) => (
-            <StackedCaseStudyCard key={study.slug} study={study} index={index} />
+            <StackedCaseStudyCard
+              key={study.slug}
+              study={study}
+              index={index}
+              stackEnabled={stackEnabled}
+            />
           ))}
         </div>
       </div>
