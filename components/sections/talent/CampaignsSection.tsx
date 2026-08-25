@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TALENT_HOME } from "@/lib/talent-home-palette";
 
@@ -12,7 +11,7 @@ function HiringDashboardMockup() {
   ];
 
   return (
-    <div className="relative w-full max-w-[320px] overflow-hidden rounded-2xl border border-[#E6E9EF] bg-white shadow-lg">
+    <div className="relative w-full max-w-[320px] overflow-hidden rounded-2xl border border-[#C5E8CA] bg-white shadow-lg">
       <div className="flex items-center justify-between border-b border-[#EEF1F6] px-5 py-3">
         <p className="text-[13px] font-semibold text-[var(--ink)]">Hiring Pipeline</p>
         <span className="rounded-full bg-[#F0FAF2] px-2 py-0.5 text-[10px] font-semibold text-[#11551C]">
@@ -38,7 +37,7 @@ function HiringDashboardMockup() {
 
 function StatCard() {
   return (
-    <div className="absolute -left-4 bottom-12 z-10 w-[170px] rounded-2xl border border-[#E6E9EF] bg-white p-4 shadow-xl sm:-left-6">
+    <div className="absolute -left-4 bottom-12 z-10 w-[170px] rounded-2xl border border-[#C5E8CA] bg-white p-4 shadow-xl sm:-left-6">
       <p className="text-3xl font-bold tracking-tight" style={{ color: TALENT_HOME.primary }}>
         24–48h
       </p>
@@ -49,20 +48,24 @@ function StatCard() {
 
 export default function CampaignsSection() {
   return (
-    <section className="w-full overflow-x-clip bg-[#F6F7FB] py-10 sm:py-16">
+    <section className="w-full overflow-x-clip bg-white py-10 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-10 lg:px-16">
-        <div className="relative rounded-[24px] border border-[#E6E9EF] bg-gradient-to-br from-[#E8F1FB] via-white to-[#F3F0FF] sm:rounded-[32px]">
+        <div
+          className="relative rounded-[24px] border border-[#C5E8CA] sm:rounded-[32px]"
+          style={{ background: "linear-gradient(135deg, #EEF6EF 0%, #F0FAF2 50%, #E8F5EA 100%)" }}
+        >
           <div className="grid items-center gap-8 md:grid-cols-2">
             <div className="px-6 py-10 sm:px-12 sm:py-16 lg:pl-16">
               <span
                 className="inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-medium"
-                style={{ backgroundColor: TALENT_HOME.paleGreen, color: TALENT_HOME.primary }}
+                style={{ backgroundColor: "rgba(255,255,255,0.85)", color: TALENT_HOME.primary }}
               >
                 FyerX Talent
               </span>
 
               <h2 className="section-title-lg mt-6 text-[var(--ink)] sm:mt-8">
-                A talent partner that understands the pressure behind an open role.
+                A talent partner that understands the pressure behind an{" "}
+                <span className="talent-gradient-text">open role</span>.
               </h2>
 
               <p className="mt-4 max-w-sm text-sm font-medium leading-relaxed text-[#52525b] sm:mt-6">
@@ -71,22 +74,15 @@ export default function CampaignsSection() {
                 sourcing, and clear ownership to the hiring work that needs to move.
               </p>
 
-              <div className="mt-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:gap-6">
+              <div className="mt-8">
                 <PrimaryCtaLink
-                  href="/talent/book-session"
+                  href="/contact"
                   className="w-full justify-center sm:w-auto"
                   color={TALENT_HOME.primary}
                   textColor={TALENT_HOME.accent}
                 >
-                  Discuss Your Hiring Need
+                  Contact Us
                 </PrimaryCtaLink>
-                <Link
-                  href="/talent/book-session"
-                  className="text-sm font-medium underline underline-offset-4 hover:opacity-80"
-                  style={{ color: TALENT_HOME.primary }}
-                >
-                  Explore Talent Solutions
-                </Link>
               </div>
             </div>
 

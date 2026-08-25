@@ -15,9 +15,9 @@ import React from "react";
 const IMG_AEO =
   "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80";
 const IMG_ABM =
-  "https://images.unsplash.com/photo-1611926653458-09294b3142bf?auto=format&fit=crop&w=800&q=80";
+  "https://www.globalcoachcenter.com/wp-content/uploads/2024/09/Overcoming-Communication-Issues-When-Working-With-Indian-Team-1024x656.jpg";
 const IMG_AGENTS =
-  "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80";
+  "https://cdn.prod.website-files.com/6491b0d1d31f1324881f1205/6785274bb4842c03eabe203b_Custom%20enterprise%20software%20development.png";
 const IMG_GEO =
   "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80";
 
@@ -70,7 +70,10 @@ export default function ResourcesSection() {
   return (
     <section className="res">
       <div className="res__container">
-        <h2 className="res__heading">Practical thinking for smarter hiring</h2>
+        <h2 className="res__heading">
+          Practical thinking for{" "}
+          <span className="talent-gradient-text">smarter hiring</span>
+        </h2>
 
         <div className="res__grid">
           {cards.map((c) => (
@@ -199,8 +202,8 @@ export default function ResourcesSection() {
           background: #11551C;
           color: #ffffff;
           border: none;
-          border-radius: 999px;
-          padding: 15px 30px;
+          border-radius: 12px;
+          padding: 12px 24px;
           font-size: 15px;
           font-weight: 500;
           cursor: pointer;

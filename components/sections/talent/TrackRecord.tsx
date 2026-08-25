@@ -142,7 +142,7 @@ export default function TrackRecord() {
       </div>
 
       <PrimaryCtaLink href="/talent/book-session" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
-        Tell Us What You Need
+        Get Started
       </PrimaryCtaLink>
 
       <style>{css}</style>
@@ -174,29 +174,27 @@ const css = `
     padding-inline:8px;
   }
   .tr-hero .tr-cards{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    align-items:stretch;
-    width:100%;
-    max-width:520px;
+    display:flex;
     gap:10px;
+    width:100%;
+    max-width:100%;
     margin:0 auto 32px;
+    overflow-x:auto;
+    padding-bottom:4px;
+    scroll-snap-type:x mandatory;
+    -ms-overflow-style:none;
+    scrollbar-width:none;
   }
-  @media (min-width:480px){ .tr-hero .tr-cards{grid-template-columns:repeat(4,1fr);max-width:600px;} }
-  @media (min-width:768px){ .tr-hero .tr-cards{max-width:900px;gap:12px;} }
-  @media (min-width:1024px){
-    .tr-hero .tr-cards{grid-template-columns:repeat(4,1fr);width:100%;max-width:960px;margin-bottom:40px;}
-  }
-  @media (min-width:1280px){
-    .tr-hero .tr-cards{grid-template-columns:repeat(8,1fr);max-width:1120px;}
-  }
+  .tr-hero .tr-cards::-webkit-scrollbar{display:none;}
   .tr-hero .tr-card{
     position:relative;
-    width:100%;
-    min-height:108px;
+    flex:0 0 132px;
+    min-width:132px;
+    scroll-snap-align:start;
+    min-height:96px;
     background:#ffffff;
     border:1px solid var(--border);
-    border-radius:12px;
+    border-radius:14px;
     cursor:pointer;
     font-family:inherit;
     display:flex;
@@ -204,10 +202,30 @@ const css = `
     align-items:center;
     justify-content:center;
     gap:4px;
-    padding:28px 8px 12px;
+    padding:24px 8px 10px;
     transition:border-color .2s ease,box-shadow .2s ease;
   }
-  @media (min-width:640px){ .tr-hero .tr-card{min-height:120px;padding:30px 10px 14px;} }
+  @media (min-width:768px){
+    .tr-hero .tr-cards{
+      display:grid;
+      grid-template-columns:repeat(8,1fr);
+      gap:12px;
+      max-width:1120px;
+      overflow-x:visible;
+      padding-bottom:0;
+      scroll-snap-type:none;
+    }
+    .tr-hero .tr-card{
+      flex:unset;
+      min-width:0;
+      width:100%;
+      min-height:104px;
+      padding:26px 6px 12px;
+    }
+  }
+  @media (min-width:1024px){
+    .tr-hero .tr-cards{margin-bottom:40px;}
+  }
   .tr-hero .tr-card:hover{border-color:#B9BDC7;box-shadow:0 4px 14px rgba(17,17,17,0.06);}
   .tr-hero .tr-card.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);}
   .tr-hero .tr-check{
@@ -220,9 +238,9 @@ const css = `
   .tr-hero .tr-check svg{width:10px;height:10px;}
   .tr-hero .tr-icon-wrap{
     display:inline-flex;align-items:center;justify-content:center;
-    width:44px;height:44px;border-radius:12px;margin-bottom:2px;
+    width:38px;height:38px;border-radius:10px;margin-bottom:2px;
   }
-  @media (min-width:640px){ .tr-hero .tr-icon-wrap{width:48px;height:48px;} }
+  @media (min-width:640px){ .tr-hero .tr-icon-wrap{width:42px;height:42px;} }
   .tr-hero .tr-icon{width:24px;height:24px;}
   .tr-hero .tr-label{
     text-align:center;margin-top:.25rem;

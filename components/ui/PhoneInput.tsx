@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { CountryCode } from "libphonenumber-js";
 import {
   DEFAULT_PHONE_COUNTRY,
@@ -39,6 +39,11 @@ export function PhoneInput({
   const options = useMemo(() => getCountryPhoneOptions(), []);
   const selected = options.find((opt) => opt.code === country);
   const borderColor = error ? "#730031" : "#c3c6d4";
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div className="min-w-0 w-full">
@@ -73,12 +78,17 @@ export function PhoneInput({
             onChange={(e) => onCountryChange(e.target.value as CountryCode)}
             aria-label="Country code"
             className="absolute inset-0 z-20 h-full w-full cursor-pointer opacity-0"
+            suppressHydrationWarning
           >
-            {options.map((opt) => (
-              <option key={opt.code} value={opt.code}>
-                {opt.dialCode} {opt.name}
-              </option>
-            ))}
+            {mounted ? (
+              options.map((opt) => (
+                <option key={opt.code} value={opt.code}>
+                  {opt.dialCode} {opt.name}
+                </option>
+              ))
+            ) : (
+              <option value={country}>{selected?.dialCode ?? "+91"}</option>
+            )}
           </select>
         </div>
         <input

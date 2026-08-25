@@ -4,9 +4,32 @@ import type { ReactNode } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TALENT_HOME } from "@/lib/talent-home-palette";
 
-const STATS = [
-  { value: "24–48 hrs", label: "Initial profiles" },
-  { value: "8 areas", label: "Technology talent coverage" },
+const PILLARS = [
+  {
+    title: "Specialist talent",
+    subtitle: "For critical technology roles",
+    iconBg: "#E8F5EA",
+    iconColor: TALENT_HOME.primary,
+    icon: (
+      <>
+        <circle cx="12" cy="9" r="3.5" />
+        <path d="M5 20c1.2-3.5 3.8-5.5 7-5.5s5.8 2 7 5.5" />
+      </>
+    ),
+  },
+  {
+    title: "Flexible hiring",
+    subtitle: "Contract, permanent, or project teams",
+    iconBg: "#E8F1FB",
+    iconColor: "#1F5C99",
+    icon: (
+      <>
+        <path d="M8 9l-2 3 2 3" />
+        <path d="M16 9l2 3-2 3" />
+        <path d="M13 7l-2 10" />
+      </>
+    ),
+  },
 ] as const;
 
 function CapabilityCard({
@@ -22,7 +45,7 @@ function CapabilityCard({
     <div
       className={`absolute flex items-center gap-1.5 rounded-xl border border-white/90 bg-white px-2.5 py-1.5 shadow-md sm:gap-2 sm:px-3 sm:py-2 ${className}`}
     >
-      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#E8F1FB] text-[#1F5C99] sm:h-7 sm:w-7">
+      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#E8F5EA] text-[#11551C] sm:h-7 sm:w-7">
         {icon}
       </span>
       <span className="text-[10px] font-semibold text-[#0B2E59] sm:text-[11px]">{label}</span>
@@ -31,11 +54,11 @@ function CapabilityCard({
 }
 
 function AvatarBubble({ className, tone }: { className: string; tone: "a" | "b" }) {
-  const bg = tone === "a" ? "#1F5C99" : "#0B2E59";
+  const bg = tone === "a" ? TALENT_HOME.primary : "#0d4216";
   return (
     <div
       className={`absolute flex h-11 w-11 items-center justify-center rounded-full border-2 border-white shadow-lg sm:h-14 sm:w-14 ${className}`}
-      style={{ background: `linear-gradient(145deg, ${bg}, #5B8DFF)` }}
+      style={{ background: `linear-gradient(145deg, ${bg}, #6fd88a)` }}
     >
       <svg viewBox="0 0 24 24" className="h-5 w-5 text-white sm:h-6 sm:w-6" fill="currentColor" aria-hidden="true">
         <circle cx="12" cy="9" r="3.5" opacity="0.95" />
@@ -67,14 +90,14 @@ function TalentGlobeVisual() {
       <div
         className="absolute inset-[6%] rounded-full"
         style={{
-          background: "radial-gradient(circle at 35% 30%, #ffffff 0%, #E8F1FB 45%, #C5DAF5 100%)",
+          background: "radial-gradient(circle at 35% 30%, #ffffff 0%, #E8F5EA 45%, #C5E8CA 100%)",
         }}
       />
 
       <svg viewBox="0 0 400 400" className="absolute inset-0 h-full w-full">
-        <circle cx="200" cy="200" r="130" fill="none" stroke="#1F5C99" strokeWidth="1.2" strokeDasharray="3 7" opacity="0.28" />
-        <circle cx="200" cy="200" r="95" fill="none" stroke="#0B2E59" strokeWidth="1" strokeDasharray="2 6" opacity="0.22" />
-        <circle cx="200" cy="200" r="58" fill="#1F5C99" opacity="0.08" />
+        <circle cx="200" cy="200" r="130" fill="none" stroke={TALENT_HOME.primary} strokeWidth="1.2" strokeDasharray="3 7" opacity="0.28" />
+        <circle cx="200" cy="200" r="95" fill="none" stroke="#0d4216" strokeWidth="1" strokeDasharray="2 6" opacity="0.22" />
+        <circle cx="200" cy="200" r="58" fill={TALENT_HOME.primary} opacity="0.08" />
         {[
           [200, 118],
           [278, 158],
@@ -84,7 +107,7 @@ function TalentGlobeVisual() {
           [108, 238],
           [122, 158],
         ].map(([x, y], i) => (
-          <line key={i} x1="200" y1="200" x2={x} y2={y} stroke="#B8CCE0" strokeWidth="1" strokeDasharray="2 4" />
+          <line key={i} x1="200" y1="200" x2={x} y2={y} stroke="#B8D4BC" strokeWidth="1" strokeDasharray="2 4" />
         ))}
         <circle cx="200" cy="200" r="34" fill="#11551C" />
         <text x="200" y="196" textAnchor="middle" fill="white" fontSize="8" fontWeight="600" fontFamily="Poppins, sans-serif">
@@ -161,20 +184,47 @@ function TalentGlobeVisual() {
   );
 }
 
+function PillarCard({
+  title,
+  subtitle,
+  iconBg,
+  iconColor,
+  icon,
+}: (typeof PILLARS)[number]) {
+  return (
+    <div className="flex min-w-[200px] flex-1 items-start gap-3 rounded-2xl border border-[#E6E9EF] bg-gradient-to-br from-white to-[#F0FAF2] px-4 py-4 shadow-[0_8px_24px_-12px_rgba(17,85,28,0.15)] sm:gap-4 sm:px-5 sm:py-5">
+      <span
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl sm:h-11 sm:w-11"
+        style={{ backgroundColor: iconBg, color: iconColor }}
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 24 24" width={20} height={20} fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+          {icon}
+        </svg>
+      </span>
+      <div className="min-w-0 text-left">
+        <p className="text-sm font-semibold text-[var(--ink)] sm:text-[15px]">{title}</p>
+        <p className="mt-0.5 text-xs leading-relaxed text-[#52525b] sm:text-[13px]">{subtitle}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function MarketingHero() {
   return (
     <section className="overflow-x-clip bg-white px-4 py-10 sm:px-10 sm:py-14 lg:px-16 lg:py-16">
       <div className="mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-16">
-        <div className="min-w-0 text-center lg:text-left">
+        <div className="order-2 min-w-0 text-center lg:order-1 lg:text-left">
           <span
-            className="inline-flex rounded-full px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.12em]"
+            className="inline-flex rounded-full px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
             style={{ backgroundColor: TALENT_HOME.paleGreen, color: TALENT_HOME.primary }}
           >
-            IT Staffing & Recruitment Company
+            Technology Recruitment & Delivery
           </span>
 
           <h1 className="mt-4 text-[clamp(1.875rem,5.5vw,3.25rem)] font-medium leading-[1.1] tracking-[-0.03em] text-[var(--ink)] sm:mt-5">
-            Hire Technology Talent for Critical Roles
+            Hire Technology Talent for{" "}
+            <span className="talent-gradient-text">Critical Roles</span>
           </h1>
 
           <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-[#3d4a5c] sm:mt-5 sm:text-[17px] lg:mx-0">
@@ -183,14 +233,9 @@ export default function MarketingHero() {
             more.
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-6 sm:gap-10 lg:justify-start">
-            {STATS.map((stat) => (
-              <div key={stat.label} className="text-center lg:text-left">
-                <p className="text-2xl font-semibold tracking-tight sm:text-[1.75rem]" style={{ color: TALENT_HOME.primary }}>
-                  {stat.value}
-                </p>
-                <p className="mt-0.5 text-xs font-medium text-[#676879] sm:text-sm">{stat.label}</p>
-              </div>
+          <div className="mt-6 flex flex-col gap-3 sm:mt-7 sm:flex-row sm:gap-4 lg:justify-start">
+            {PILLARS.map((pillar) => (
+              <PillarCard key={pillar.title} {...pillar} />
             ))}
           </div>
 
@@ -201,7 +246,7 @@ export default function MarketingHero() {
           </div>
         </div>
 
-        <div className="flex min-w-0 justify-center lg:justify-end">
+        <div className="order-1 flex min-w-0 justify-center lg:order-2 lg:justify-end">
           <TalentGlobeVisual />
         </div>
       </div>

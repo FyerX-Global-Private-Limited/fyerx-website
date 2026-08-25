@@ -51,15 +51,17 @@ const CARDS: ResourceCard[] = [
   },
   {
     href: "#",
-    image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&q=80",
-    alt: "Professionals collaborating on hiring and team planning",
+    image:
+      "https://www.globalcoachcenter.com/wp-content/uploads/2024/09/Overcoming-Communication-Issues-When-Working-With-Indian-Team-1024x656.jpg",
+    alt: "Team collaborating on hiring and workforce planning",
     title: "Hiring for what comes next",
     body: "How to build teams with the skills your business needs to grow.",
   },
   {
     href: "#",
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80",
-    alt: "Technology infrastructure and data systems in a modern workspace",
+    image:
+      "https://cdn.prod.website-files.com/6491b0d1d31f1324881f1205/6785274bb4842c03eabe203b_Custom%20enterprise%20software%20development.png",
+    alt: "Enterprise software development and technology delivery",
     title: "Making technology work harder",
     body: "Where to focus when systems, data, and operations need to move forward.",
   },

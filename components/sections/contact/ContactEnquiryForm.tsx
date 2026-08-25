@@ -371,6 +371,7 @@ type ContactEnquiryFormProps = {
   className?: string;
   title?: string;
   nameGridClassName?: string;
+  submitLabel?: string;
 };
 
 export function ContactEnquiryForm({
@@ -378,6 +379,7 @@ export function ContactEnquiryForm({
   className = "flex min-w-0 flex-col gap-4",
   title,
   nameGridClassName = "grid grid-cols-2 gap-3",
+  submitLabel,
 }: ContactEnquiryFormProps) {
   const router = useRouter();
   const config = FORM_CONFIG[formKey];
@@ -556,7 +558,7 @@ export function ContactEnquiryForm({
             color: config.onTint === "#111111" ? "#111111" : "#ffffff",
           }}
         >
-          {config.submitLabel}
+          {submitLabel ?? config.submitLabel}
           <ArrowRightIcon />
         </button>
 

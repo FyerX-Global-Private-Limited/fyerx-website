@@ -92,7 +92,10 @@ export default function FaqSection() {
       />
       <div className="faq__inner">
         <div className="faq__left">
-          <h2 className="faq__heading">Frequently Asked Questions</h2>
+          <h2 className="faq__heading">
+            Frequently Asked{" "}
+            <span className="talent-gradient-text">Questions</span>
+          </h2>
         </div>
 
         <div className="faq__right">

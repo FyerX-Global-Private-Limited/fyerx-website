@@ -320,3 +320,11 @@ button:disabled,
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
+
+.talent-gradient-text {
+  background: linear-gradient(90deg, #11551c 0%, #36a852 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
