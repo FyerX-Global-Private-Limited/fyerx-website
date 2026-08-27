@@ -91,8 +91,8 @@ export default function TalentCapabilitySection() {
   const theme = TAB_THEMES[activeIndex] ?? TAB_THEMES[0];
 
   return (
-    <section className="overflow-x-clip bg-white px-4 py-12 sm:px-10 sm:py-16 lg:px-16">
-      <div className="mx-auto max-w-7xl">
+    <section className="overflow-x-clip bg-white">
+      <div className="mx-auto max-w-[1400px]">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="section-title-lg">
             Technology talent for every{" "}

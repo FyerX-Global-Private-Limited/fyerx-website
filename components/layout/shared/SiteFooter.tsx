@@ -9,13 +9,11 @@ import {
   FOOTER_EXPLORE_LINKS,
   FOOTER_FOR_BUSINESS_LINKS,
   FOOTER_LEGAL_LINKS,
-  FOOTER_MARKETING_ADDRESS,
   FOOTER_MARKETING_EXPLORE_LINKS,
   FOOTER_MARKETING_GROWTH_FOCUS,
   FOOTER_MARKETING_RESOURCES_LINKS,
   FOOTER_MARKETING_SERVICES,
   FOOTER_MARKETING_TAGLINE,
-  FOOTER_TALENT_ADDRESS,
   FOOTER_TALENT_EXPLORE_LINKS,
   FOOTER_TALENT_HIRING_NEEDS,
   FOOTER_TALENT_RESOURCES_LINKS,
@@ -66,12 +64,12 @@ const TAGLINE_BY_VARIANT: Record<SiteFooterVariant, string> = {
 };
 
 const headingCls =
-  "mb-4 text-sm font-medium text-[rgb(88,89,101)]";
+  "mb-4 min-h-[2.5rem] text-left text-sm font-medium leading-snug text-[rgb(88,89,101)]";
 const linkCls =
-  "block min-w-0 break-words py-1 text-[0.8125rem] font-light leading-snug text-[rgb(88,89,101)] no-underline transition-colors hover:text-[#323338]";
-const listCls = "flex min-w-0 flex-col gap-0.5";
+  "block min-w-0 break-words py-1 text-left text-[0.8125rem] font-light leading-snug text-[rgb(88,89,101)] no-underline transition-colors hover:text-[#323338]";
+const listCls = "flex min-w-0 flex-col gap-0.5 text-left";
 const contactCls =
-  "flex min-w-0 items-start gap-2.5 break-words py-1 text-[0.8125rem] font-light leading-[1.6] text-[rgb(88,89,101)] transition-colors hover:text-[#323338]";
+  "flex min-w-0 items-start gap-2.5 break-words py-1 text-left text-[0.8125rem] font-light leading-[1.6] text-[rgb(88,89,101)] transition-colors hover:text-[#323338]";
 
 const iconLinkCls =
   "flex min-w-0 items-center gap-2.5 break-words py-1 text-[0.8125rem] font-light leading-snug text-[rgb(88,89,101)] no-underline transition-colors hover:text-[#323338]";
@@ -149,7 +147,7 @@ function CapabilityLinks({ items }: { items: FooterCapability[] }) {
   );
 }
 
-function ContactIcon({ type }: { type: "address" | "phone" | "email" }) {
+function ContactIcon({ type }: { type: "phone" | "email" }) {
   const common = {
     width: 16,
     height: 16,
@@ -170,19 +168,10 @@ function ContactIcon({ type }: { type: "address" | "phone" | "email" }) {
     );
   }
 
-  if (type === "email") {
-    return (
-      <svg {...common}>
-        <rect x="3" y="5" width="18" height="14" rx="2" />
-        <path d="M3 7l9 6 9-6" />
-      </svg>
-    );
-  }
-
   return (
     <svg {...common}>
-      <path d="M12 21s-7-5.7-7-11a7 7 0 0 1 14 0c0 5.3-7 11-7 11z" />
-      <circle cx="12" cy="10" r="2.5" />
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="M3 7l9 6 9-6" />
     </svg>
   );
 }
@@ -195,10 +184,16 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
       className="w-full overflow-x-clip bg-white pb-[max(2rem,env(safe-area-inset-bottom))] pt-12 sm:pt-16 md:pt-20"
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
-      <div className="mx-auto w-full max-w-[1296px] px-4 sm:px-6 md:px-10 lg:px-12">
-        <div className="flex min-w-0 flex-col gap-10 sm:gap-12 lg:flex-row lg:items-start lg:gap-8 xl:gap-14">
-          {/* Brand + contact */}
-          <div className="min-w-0 w-full shrink-0 sm:max-w-none lg:max-w-[200px] lg:w-[200px] xl:max-w-[220px] xl:w-[220px]">
+      <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 md:px-10 lg:px-16">
+        <div
+          className={`grid min-w-0 grid-cols-2 items-start gap-x-6 gap-y-8 text-left sm:grid-cols-3 sm:gap-x-8 sm:gap-y-10 lg:gap-x-8 xl:gap-x-10 ${
+            variant === "marketing" || variant === "talent"
+              ? "lg:grid-cols-[minmax(200px,1.15fr)_repeat(5,minmax(0,1fr))]"
+              : "lg:grid-cols-[minmax(200px,1.15fr)_repeat(4,minmax(0,1fr))]"
+          }`}
+        >
+          {/* Brand + contact — left column */}
+          <div className="col-span-2 min-w-0 sm:col-span-3 lg:col-span-1">
             <Link href={logo.href} className="inline-flex h-10 items-center">
               <Image
                 src={logo.src}
@@ -208,23 +203,13 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
                 className={logo.className}
               />
             </Link>
-            <p className="mt-4 max-w-none text-[0.8125rem] font-light leading-[1.6] text-[rgb(88,89,101)] sm:max-w-[280px] lg:max-w-none">
+            <p className="mt-4 max-w-none text-left text-[0.8125rem] font-light leading-[1.6] text-[rgb(88,89,101)] sm:max-w-[280px] lg:max-w-none">
               {variant === "marketing"
                 ? FOOTER_MARKETING_TAGLINE
                 : variant === "talent"
                   ? FOOTER_TALENT_TAGLINE
                   : TAGLINE_BY_VARIANT[variant]}
             </p>
-            {(variant === "marketing" || variant === "talent") && (
-              <p className="mt-2 flex min-w-0 items-start gap-2.5 break-words text-[0.8125rem] font-light leading-[1.6] text-[rgb(88,89,101)]">
-                <ContactIcon type="address" />
-                <span>
-                  {variant === "marketing"
-                    ? FOOTER_MARKETING_ADDRESS
-                    : FOOTER_TALENT_ADDRESS}
-                </span>
-              </p>
-            )}
             <div className="mt-5 flex flex-col gap-1.5">
               <a href={FOOTER_CONTACT.phoneHref} className={contactCls}>
                 <ContactIcon type="phone" />
@@ -237,79 +222,70 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
             </div>
           </div>
 
-          {/* Link columns */}
-          <div
-            className={`grid min-w-0 flex-1 grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10 lg:gap-x-6 xl:gap-x-10 ${
-              variant === "marketing" || variant === "talent"
-                ? "md:grid-cols-3 xl:grid-cols-5"
-                : "md:grid-cols-4"
-            }`}
-          >
-            <div>
-              <h4 className={headingCls}>Capabilities</h4>
-              <CapabilityLinks items={FOOTER_CAPABILITIES} />
-            </div>
-            {variant === "marketing" ? (
-              <>
-                <div>
-                  <h4 className={headingCls}>Marketing Services</h4>
-                  <FooterLinks items={FOOTER_MARKETING_SERVICES} />
-                </div>
-                <div>
-                  <h4 className={headingCls}>Growth Focus</h4>
-                  <FooterLinks items={FOOTER_MARKETING_GROWTH_FOCUS} />
-                </div>
-                <div>
-                  <h4 className={headingCls}>Explore FyerX</h4>
-                  <FooterLinks items={FOOTER_MARKETING_EXPLORE_LINKS} />
-                </div>
-                <div>
-                  <h4 className={headingCls}>Resources</h4>
-                  <FooterLinks items={FOOTER_MARKETING_RESOURCES_LINKS} />
-                </div>
-              </>
-            ) : variant === "talent" ? (
-              <>
-                <div>
-                  <h4 className={headingCls}>Talent Services</h4>
-                  <FooterLinks items={FOOTER_TALENT_SERVICES} />
-                </div>
-                <div>
-                  <h4 className={headingCls}>Hiring Needs</h4>
-                  <FooterLinks items={FOOTER_TALENT_HIRING_NEEDS} />
-                </div>
-                <div>
-                  <h4 className={headingCls}>Explore FyerX</h4>
-                  <FooterLinks items={FOOTER_TALENT_EXPLORE_LINKS} />
-                </div>
-                <div>
-                  <h4 className={headingCls}>Resources</h4>
-                  <FooterLinks items={FOOTER_TALENT_RESOURCES_LINKS} />
-                </div>
-              </>
-            ) : (
-              <>
-                <div>
-                  <h4 className={headingCls}>Explore FyerX</h4>
-                  <FooterLinks items={FOOTER_EXPLORE_LINKS} />
-                </div>
-                <div>
-                  <h4 className={headingCls}>For Business</h4>
-                  <FooterLinks items={FOOTER_FOR_BUSINESS_LINKS} />
-                </div>
-                <div>
-                  <h4 className={headingCls}>Resources</h4>
-                  <FooterLinks items={FOOTER_RESOURCES_LINKS} />
-                </div>
-              </>
-            )}
+          <div className="min-w-0">
+            <h4 className={headingCls}>Capabilities</h4>
+            <CapabilityLinks items={FOOTER_CAPABILITIES} />
           </div>
+          {variant === "marketing" ? (
+            <>
+              <div className="min-w-0">
+                <h4 className={headingCls}>Marketing Services</h4>
+                <FooterLinks items={FOOTER_MARKETING_SERVICES} />
+              </div>
+              <div className="min-w-0">
+                <h4 className={headingCls}>Growth Focus</h4>
+                <FooterLinks items={FOOTER_MARKETING_GROWTH_FOCUS} />
+              </div>
+              <div className="min-w-0">
+                <h4 className={headingCls}>Explore FyerX</h4>
+                <FooterLinks items={FOOTER_MARKETING_EXPLORE_LINKS} />
+              </div>
+              <div className="min-w-0">
+                <h4 className={headingCls}>Resources</h4>
+                <FooterLinks items={FOOTER_MARKETING_RESOURCES_LINKS} />
+              </div>
+            </>
+          ) : variant === "talent" ? (
+            <>
+              <div className="min-w-0">
+                <h4 className={headingCls}>Talent Services</h4>
+                <FooterLinks items={FOOTER_TALENT_SERVICES} />
+              </div>
+              <div className="min-w-0">
+                <h4 className={headingCls}>Hiring Needs</h4>
+                <FooterLinks items={FOOTER_TALENT_HIRING_NEEDS} />
+              </div>
+              <div className="min-w-0">
+                <h4 className={headingCls}>Explore FyerX</h4>
+                <FooterLinks items={FOOTER_TALENT_EXPLORE_LINKS} />
+              </div>
+              <div className="min-w-0">
+                <h4 className={headingCls}>Resources</h4>
+                <FooterLinks items={FOOTER_TALENT_RESOURCES_LINKS} />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="min-w-0">
+                <h4 className={headingCls}>Explore FyerX</h4>
+                <FooterLinks items={FOOTER_EXPLORE_LINKS} />
+              </div>
+              <div className="min-w-0">
+                <h4 className={headingCls}>For Business</h4>
+                <FooterLinks items={FOOTER_FOR_BUSINESS_LINKS} />
+              </div>
+              <div className="min-w-0">
+                <h4 className={headingCls}>Resources</h4>
+                <FooterLinks items={FOOTER_RESOURCES_LINKS} />
+              </div>
+            </>
+          )}
         </div>
 
         <hr className="mt-10 border-0 border-t border-[#d0d4e4] sm:mt-12 md:mt-14" />
 
-        <div className="flex min-w-0 flex-col-reverse gap-5 pt-6 sm:flex-row sm:items-end sm:justify-between sm:pt-8 md:pt-10">
-          <div className="min-w-0">
+        <div className="flex min-w-0 flex-col-reverse gap-5 pt-6 sm:flex-row sm:items-center sm:justify-between sm:pt-8 md:pt-10">
+          <div className="min-w-0 text-left">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 text-[12px] text-[#323338] sm:text-[13px]">
               {FOOTER_LEGAL_LINKS.map((item, i) => (
                 <React.Fragment key={item.label}>
@@ -325,7 +301,7 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
             </p>
           </div>
 
-          <div className="flex shrink-0 items-center gap-5 text-[#43454d] sm:gap-[22px]">
+          <div className="flex shrink-0 items-center gap-3 text-[#43454d] sm:gap-4">
             {FOOTER_SOCIALS.map((social) => (
               <a
                 key={social.label}
@@ -333,7 +309,7 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
-                className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center transition-opacity hover:opacity-70"
+                className="inline-flex h-11 w-11 items-center justify-center sm:h-8 sm:w-8 transition-opacity hover:opacity-70"
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d={social.path} />

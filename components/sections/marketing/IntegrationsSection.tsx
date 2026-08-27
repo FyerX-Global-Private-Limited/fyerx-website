@@ -62,18 +62,18 @@ export default function IntegrationsSection() {
         .integrations {
           width: 100%;
           background: #ffffff;
-          padding: 40px 16px;
+          padding: 0 16px;
           overflow: hidden;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
         @media (min-width: 640px) {
           .integrations {
-            padding: 56px 40px;
+            padding: 0 40px;
           }
         }
         @media (min-width: 1024px) {
           .integrations {
-            padding: 64px 64px;
+            padding: 0 64px;
           }
         }
         .integrations__inner {

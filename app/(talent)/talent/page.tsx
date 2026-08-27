@@ -4,6 +4,7 @@ import FoundationSection from "@/components/sections/talent/FoundationSection";
 import TrackRecord from "@/components/sections/talent/TrackRecord";
 import TalentCapabilitySection from "@/components/sections/talent/TalentCapabilitySection";
 import StackedScrollSection from "@/components/sections/talent/StackedScrollSection";
+import IndustriesSection from "@/components/sections/talent/IndustriesSection";
 import CampaignsSection from "@/components/sections/talent/CampaignsSection";
 import EnterpriseSection from "@/components/sections/talent/EnterpriseSection";
 import ResourcesSection from "@/components/sections/talent/ResourcesSection";
@@ -21,16 +22,17 @@ export default function TalentHomePage() {
   return (
     <>
       <MarketingHero />
-      <FoundationSection />
+      <TalentClosingSection />
       <TrackRecord />
+      <FoundationSection />
       <TalentCapabilitySection />
       <StackedScrollSection />
+      <IndustriesSection />
       <CampaignsSection />
       <EnterpriseSection />
       <ResourcesSection />
       <TestimonialsCTA />
       <FaqSection />
-      <TalentClosingSection />
     </>
   );
 }

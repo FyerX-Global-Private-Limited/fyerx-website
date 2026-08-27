@@ -34,8 +34,8 @@ function FeatureCheck() {
 
 export default function EnterpriseSection() {
   return (
-    <section className="overflow-x-clip bg-white px-4 py-12 sm:px-10 sm:py-16 lg:px-16">
-      <div className="mx-auto max-w-7xl">
+    <section className="w-full overflow-x-clip bg-white">
+      <div className="mx-auto w-full max-w-[1400px]">
         <div
           className="grid items-center gap-8 overflow-hidden rounded-3xl border p-6 sm:p-10 lg:grid-cols-2 lg:gap-12 lg:p-14"
           style={{

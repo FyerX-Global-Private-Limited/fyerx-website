@@ -27,7 +27,7 @@ export default function TalentClosingSection() {
 
   return (
     <section
-      className="overflow-x-clip bg-white px-6 pt-6 pb-10 sm:px-10 sm:pt-8 sm:pb-14 lg:px-16 lg:pb-16"
+      className="overflow-x-clip bg-white"
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
       <style>{`

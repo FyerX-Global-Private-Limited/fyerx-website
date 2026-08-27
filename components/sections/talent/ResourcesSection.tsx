@@ -102,19 +102,9 @@ export default function ResourcesSection() {
         .res {
           width: 100%;
           background: #ffffff;
-          padding: 48px 24px;
+          padding: 0;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           box-sizing: border-box;
-        }
-        @media (min-width: 640px) {
-          .res {
-            padding: 56px 40px;
-          }
-        }
-        @media (min-width: 1024px) {
-          .res {
-            padding: 64px 64px;
-          }
         }
         .res__container {
           max-width: 1260px;

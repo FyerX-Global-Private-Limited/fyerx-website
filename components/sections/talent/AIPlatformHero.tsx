@@ -64,7 +64,7 @@ export default function AIPlatformHero() {
 
   return (
     <section id="talent-services" className="overflow-x-clip bg-[#F6F7FB] px-4 py-12 sm:px-10 sm:py-16 lg:px-16">
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-[1400px]">
         <h2 className="section-title-lg text-center">
           One talent partner for immediate roles and long-term capacity
         </h2>

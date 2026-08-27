@@ -60,13 +60,12 @@ function EnvelopeIcon() {
   );
 }
 
-function GlobeIcon() {
+function LinkedInIcon() {
   return (
     <IconBase>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M3 12h18" />
-      <path d="M12 3a15 15 0 0 1 0 18" />
-      <path d="M12 3a15 15 0 0 0 0 18" />
+      <rect x="3" y="3" width="18" height="18" rx="3" />
+      <path d="M8 10v7M8 7.5v.01" strokeWidth={2.2} />
+      <path d="M12 10v7M12 13c0-1.5 1-2.5 2.5-2.5S17 11.5 17 13v4" />
     </IconBase>
   );
 }
@@ -287,7 +286,7 @@ const DETAIL_ITEMS = [
     label: "Address",
     value: "HSR Layout, Bengaluru, Karnataka – 560102",
     actionLabel: "Get directions",
-    href: "https://maps.google.com/?q=HSR+Layout,+Bengaluru,+Karnataka+560102",
+    href: "https://maps.app.goo.gl/meBMGbVpLetWKUqy6",
   },
   {
     key: "phone",
@@ -306,35 +305,35 @@ const DETAIL_ITEMS = [
     href: "mailto:hello@fyerx.com",
   },
   {
-    key: "website",
-    icon: <GlobeIcon />,
-    label: "Website",
-    value: "www.fyerx.com",
-    actionLabel: "Visit website",
-    href: "https://www.fyerx.com",
+    key: "linkedin",
+    icon: <LinkedInIcon />,
+    label: "LinkedIn",
+    value: "FyerX Global Private Limited",
+    actionLabel: "Visit Page",
+    href: "https://www.linkedin.com/company/fyerx/",
   },
 ];
 
 const MAP_EMBED_SRC =
-  "https://maps.google.com/maps?q=HSR+Layout,+Bengaluru,+Karnataka+560102&z=14&output=embed";
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.826155497647!2d77.6515039!3d12.918892399999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae157b4e431207%3A0x3d3f8f103b4f1795!2sFyerX%20Global%20Private%20Limited!5e0!3m2!1sen!2sin!4v1787816413986!5m2!1sen!2sin";
 
 function ContactDetailsMap() {
   return (
     <section className={`w-full overflow-x-clip bg-gradient-to-b from-[#E8F1FB] via-white to-[#F6F7FB] py-12 sm:py-16 md:py-20 ${sectionPad}`}>
       <div className={containerCls}>
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.05fr_1fr] lg:items-start lg:gap-14">
-          <div className="min-w-0 overflow-hidden rounded-3xl border border-[#E6E9EF] bg-white shadow-sm">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-12">
+          <div className="flex min-h-0 min-w-0 flex-col overflow-hidden rounded-3xl border border-[#E6E9EF] bg-white shadow-sm">
             <iframe
-              title="FyerX office location — HSR Layout, Bengaluru"
+              title="FyerX Global Private Limited office location"
               src={MAP_EMBED_SRC}
-              className="aspect-[4/3] w-full border-0 sm:aspect-[5/4] lg:aspect-auto lg:min-h-[420px]"
+              className="min-h-[280px] w-full flex-1 border-0 sm:min-h-[360px] lg:min-h-[480px]"
               loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
+              referrerPolicy="strict-origin-when-cross-origin"
               allowFullScreen
             />
           </div>
 
-          <div className="min-w-0 text-center lg:text-left">
+          <div className="flex min-w-0 flex-col justify-center text-center lg:text-left">
             <p className="text-xs font-semibold uppercase tracking-[0.12em]" style={{ color: BRAND.crimson }}>
               Get in Touch
             </p>
@@ -346,11 +345,11 @@ function ContactDetailsMap() {
               clarity on next steps and the right contact path.
             </p>
 
-            <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:gap-4">
+            <div className="mt-8 grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
               {DETAIL_ITEMS.map((item) => (
                 <div
                   key={item.key}
-                  className="flex min-w-0 flex-col items-start rounded-2xl border border-[#E6E9EF] bg-white p-4 text-left shadow-sm sm:p-5"
+                  className="flex h-full min-h-[168px] min-w-0 flex-col items-start rounded-2xl border border-[#E6E9EF] bg-white p-4 text-left shadow-sm sm:min-h-[180px] sm:p-5"
                 >
                   <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E8F1FB] text-[#1F5C99] sm:h-11 sm:w-11">
                     {item.icon}

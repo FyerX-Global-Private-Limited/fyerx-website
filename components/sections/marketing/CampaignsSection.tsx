@@ -67,8 +67,8 @@ function StrategyDashboardMockup() {
 
 export default function CampaignsSection() {
   return (
-    <section className="w-full bg-white py-12 sm:py-16">
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-16">
+    <section className="w-full bg-white">
+      <div className="mx-auto w-full max-w-[1400px]">
         <div
           className="relative rounded-[32px] border border-[#FFC900]/25"
           style={{ backgroundColor: MARKETING_HOME.paleYellow }}

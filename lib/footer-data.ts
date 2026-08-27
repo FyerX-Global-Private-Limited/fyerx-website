@@ -47,8 +47,6 @@ export const FOOTER_RESOURCES_LINKS: FooterLink[] = [
 export const FOOTER_MARKETING_TAGLINE =
   "Marketing built around business outcomes." as const;
 
-export const FOOTER_MARKETING_ADDRESS = "Bangalore, Karnataka, India" as const;
-
 export const FOOTER_MARKETING_SERVICES: FooterLink[] = [
   { label: "Strategy & Consulting", href: "/marketing/services" },
   { label: "Demand & Lead Generation", href: "/marketing/services" },
@@ -85,8 +83,6 @@ export const FOOTER_MARKETING_RESOURCES_LINKS: FooterLink[] = [
 
 export const FOOTER_TALENT_TAGLINE =
   "The right people for the work ahead." as const;
-
-export const FOOTER_TALENT_ADDRESS = "Bangalore, Karnataka, India" as const;
 
 export const FOOTER_TALENT_SERVICES: FooterLink[] = [
   { label: "Contract Staffing", href: "/talent" },

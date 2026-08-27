@@ -237,7 +237,7 @@ export const FORM_CONFIG: Record<FormKey, FormConfig> = {
   },
 };
 
-export const FORM_ORDER: FormKey[] = ["marketing", "talent", "technology", "job"];
+export const FORM_ORDER: FormKey[] = ["technology", "talent", "marketing", "job"];
 
 export const THANK_YOU_BY_FORM: Record<FormKey, string> = {
   marketing: "/contact/thankyou-marketing",
@@ -293,12 +293,12 @@ function inputClassName(hasError?: boolean) {
   return `${inputBase}${hasError ? " border-[#730031]" : ""}`;
 }
 
-function CompactExpectedStartSelect() {
+function CompactExpectedStartSelect({ error }: { error?: boolean }) {
   return (
     <div className="relative">
-      <select name="expectedStart" defaultValue="" className={selectBase}>
+      <select name="expectedStart" required defaultValue="" className={`${selectBase}${error ? " border-[#730031]" : ""}`}>
         <option value="" disabled>
-          Expected Start
+          Expected Start*
         </option>
         {EXPECTED_START_OPTIONS.map((opt) => (
           <option key={opt} value={opt}>
@@ -390,6 +390,7 @@ export function ContactEnquiryForm({
   const [phoneCountry, setPhoneCountry] = useState<CountryCode>(DEFAULT_PHONE_COUNTRY);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [phoneError, setPhoneError] = useState<string | null>(null);
+  const [expectedStartError, setExpectedStartError] = useState(false);
 
   useEffect(() => {
     setSelected([]);
@@ -399,6 +400,7 @@ export function ContactEnquiryForm({
     setPhoneCountry(DEFAULT_PHONE_COUNTRY);
     setEmailError(null);
     setPhoneError(null);
+    setExpectedStartError(false);
   }, [formKey]);
 
   const toggleOption = (opt: string) => {
@@ -411,9 +413,12 @@ export function ContactEnquiryForm({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    const expectedStart = (form.elements.namedItem("expectedStart") as HTMLSelectElement).value;
     const choiceOptions = config.teamOptions ?? config.helpOptions;
     const nextEmailError = validateEmail(email);
     const nextPhoneError = validatePhone(phone, phoneCountry);
+    const nextExpectedStartError = !expectedStart;
 
     if (choiceOptions && selected.length === 0) {
       setHelpError(true);
@@ -423,8 +428,14 @@ export function ContactEnquiryForm({
 
     setEmailError(nextEmailError);
     setPhoneError(nextPhoneError);
+    setExpectedStartError(nextExpectedStartError);
 
-    if ((choiceOptions && selected.length === 0) || nextEmailError || nextPhoneError) {
+    if (
+      (choiceOptions && selected.length === 0) ||
+      nextEmailError ||
+      nextPhoneError ||
+      nextExpectedStartError
+    ) {
       return;
     }
 
@@ -546,7 +557,12 @@ export function ContactEnquiryForm({
           </div>
         )}
 
-        <CompactExpectedStartSelect />
+        <CompactExpectedStartSelect error={expectedStartError} />
+        {expectedStartError && (
+          <p className="text-xs text-[#730031]" role="alert">
+            Please select when you would like to get started.
+          </p>
+        )}
 
         <textarea name="message" placeholder="Type your message..." className={textareaBase} />
 

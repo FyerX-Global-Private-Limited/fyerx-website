@@ -2,46 +2,41 @@
 
 import React from "react";
 import Image from "next/image";
+import { Poppins } from "next/font/google";
 
-/* ------------------------------------------------------------------ */
-/*  Leadership — "From pre- to post-sales, in one place" section       */
-/*                                                                     */
-/*  Fully self-contained: no Tailwind required. All styles are         */
-/*  scoped under the .ldr- prefix in the <style> tag below.            */
-/*                                                                     */
-/*  Place the photo at:  public/images/pre-post-sales.jpg              */
-/*  (two colleagues looking at a laptop)                               */
-/* ------------------------------------------------------------------ */
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
 
 const css = `
-.ldr-section{background:#fff;width:100%;overflow:hidden;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
-.ldr-container{width:100%;max-width:80rem;margin-left:auto;margin-right:auto;padding:2.8rem 24px;}
-@media (min-width:640px){.ldr-container{padding:2.8rem 40px;}}
-@media (min-width:1024px){.ldr-container{padding:2.8rem 64px;}}
-.ldr-title{text-align:center;font-weight:500;color:var(--ink);font-size:clamp(1.75rem,5vw,2.875rem);line-height:1.12;letter-spacing:-0.02em;margin:0;}
-.ldr-grid{margin-top:36px;display:grid;grid-template-columns:1fr;gap:0px;border-radius:24px;}
-@media (min-width:640px){.ldr-grid{margin-top:48px;}}
-.ldr-card{border-radius:24px;border:1px solid rgb(195,198,212);background:#fff;padding:28px 24px 48px;display:flex;flex-direction:column;}
-@media (min-width:640px){.ldr-card{padding:34px 37px;}}
-.ldr-icon{display:block;flex:none;}
-.ldr-card-title{margin:28px 0 0;padding-bottom:1.5rem;padding-right:0;font-weight:400;color:#000;font-size:clamp(1.375rem,4vw,2rem);line-height:1.2;letter-spacing:-0.02em;max-width:400px;}
-@media (min-width:640px){.ldr-card-title{margin-top:40px;padding-bottom:2.5rem;padding-right:2.5rem;}}
-.ldr-card-body{margin-top:0px;margin-bottom:0px;color:#26292C;font-size:clamp(0.9375rem,2.5vw,1rem);font-weight:400;line-height:1.3;max-width:420px;}
-.ldr-card-image{position:relative;border-radius:28px;overflow:hidden;min-height:280px;}
+.ldr-section{background:#fff;width:100%;overflow:hidden;}
+.ldr-section .section-shell{margin-inline:auto;width:100%;max-width:87.5rem;}
+.ldr-grid{display:grid;grid-template-columns:1fr;gap:16px;border-radius:24px;width:100%;margin-top:1.5rem;}
+.ldr-card{border-radius:24px;border:1px solid rgb(195,198,212);background:#fff;padding:20px 18px 22px;display:flex;flex-direction:column;}
+.ldr-icon{display:block;flex:none;width:44px;height:44px;}
+.ldr-card-title{margin:14px 0 0;padding-bottom:0.75rem;padding-right:0;font-weight:400;color:#000;font-size:clamp(1.25rem, 4vw, 1.5rem);line-height:1.25;letter-spacing:-0.02em;max-width:none;}
+.ldr-card-body{margin-top:0;margin-bottom:0;color:#26292C;font-size:0.875rem;font-weight:400;line-height:1.4;max-width:none;}
+.ldr-card-image{position:relative;border-radius:20px;overflow:hidden;min-height:300px;}
 .ldr-br{display:none;}
 
-@media (min-width:1024px){
-  .ldr-grid{grid-template-columns:repeat(3,1fr);}
-  .ldr-card-image{min-height:0;}
-  .ldr-br{display:inline;}
+@media (min-width:640px){
+  .ldr-grid{gap:20px;margin-top:1.75rem;}
+  .ldr-card{padding:24px 24px 26px;}
+  .ldr-card-title{margin-top:16px;padding-bottom:0.85rem;padding-right:1rem;max-width:400px;}
+  .ldr-card-body{font-size:0.9375rem;line-height:1.4;max-width:420px;}
+  .ldr-card-image{min-height:220px;border-radius:24px;}
+  .ldr-icon{width:48px;height:48px;}
 }
-@media (max-width:639px){
-  .ldr-container{padding:2rem 16px;}
-  .ldr-card-image{min-height:240px;}
+@media (min-width:1024px){
+  .ldr-grid{grid-template-columns:repeat(3,1fr);gap:24px;}
+  .ldr-card{padding:28px 28px 30px;}
+  .ldr-card-image{min-height:0;border-radius:28px;}
+  .ldr-br{display:inline;}
 }
 `;
 
-/* Chunky rounded arrow-up icon (teal) */
 function ArrowIcon() {
   return (
     <svg
@@ -65,7 +60,6 @@ function ArrowIcon() {
   );
 }
 
-/* Two stacked rounded pills (pink) */
 function PillsIcon() {
   return (
     <svg
@@ -83,13 +77,15 @@ function PillsIcon() {
   );
 }
 
-type FeatureCardProps = {
+function FeatureCard({
+  icon,
+  title,
+  body,
+}: {
   icon: React.ReactNode;
   title: React.ReactNode;
   body: string;
-};
-
-function FeatureCard({ icon, title, body }: FeatureCardProps) {
+}) {
   return (
     <div className="ldr-card">
       {icon}
@@ -101,11 +97,16 @@ function FeatureCard({ icon, title, body }: FeatureCardProps) {
 
 export default function Leadership() {
   return (
-    <section className="ldr-section">
+    <section className={`home-section ldr-section ${poppins.className}`}>
       <style dangerouslySetInnerHTML={{ __html: css }} />
 
-      <div className="ldr-container">
-        <h2 className="ldr-title">From the first question to ongoing momentum</h2>
+      <div className="section-shell">
+        <div className="section-header section-header--center">
+          <h2 className="section-heading">
+            From the first question to{" "}
+            <span className="marketing-gradient-text">ongoing momentum</span>
+          </h2>
+        </div>
 
         <div className="ldr-grid">
           <FeatureCard
@@ -120,7 +121,6 @@ export default function Leadership() {
             body="Campaigns, content, design, search, paid media, and systems support one another rather than competing for attention."
           />
 
-          {/* Image card */}
           <div className="ldr-card-image">
             <Image
               src="/leadership.avif"

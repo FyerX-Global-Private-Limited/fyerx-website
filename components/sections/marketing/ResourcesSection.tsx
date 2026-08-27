@@ -18,8 +18,6 @@ const IMG_ABM =
   "https://www.globalcoachcenter.com/wp-content/uploads/2024/09/Overcoming-Communication-Issues-When-Working-With-Indian-Team-1024x656.jpg";
 const IMG_AGENTS =
   "https://cdn.prod.website-files.com/6491b0d1d31f1324881f1205/6785274bb4842c03eabe203b_Custom%20enterprise%20software%20development.png";
-const IMG_GEO =
-  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80";
 
 function PhotoTop({ src, alt }: { src: string; alt: string }) {
   return (
@@ -63,24 +61,16 @@ const cards = [
     body: "The essentials of a landing page and follow-up journey that does not drop intent.",
     link: "Read More",
   },
-  {
-    top: (
-      <PhotoTop
-        src={IMG_GEO}
-        alt="Where AI Actually Helps a Marketing Team"
-      />
-    ),
-    title: "Where AI Actually Helps a Marketing Team",
-    body: "Useful AI applications for research, content operations, creative testing, and automation.",
-    link: "Read More",
-  },
 ];
 
 export default function ResourcesSection() {
   return (
     <section className="res">
       <div className="res__container">
-        <h2 className="res__heading">Ideas, guides, and practical marketing thinking</h2>
+        <h2 className="res__heading">
+          Ideas, guides, and practical{" "}
+          <span className="marketing-gradient-text">marketing thinking</span>
+        </h2>
 
         <div className="res__grid">
           {cards.map((c) => (
@@ -103,44 +93,33 @@ export default function ResourcesSection() {
         .res {
           width: 100%;
           background: #ffffff;
-          padding: 48px 24px;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           box-sizing: border-box;
         }
-        @media (min-width: 640px) {
-          .res {
-            padding: 56px 40px;
-          }
-        }
-        @media (min-width: 1024px) {
-          .res {
-            padding: 64px 64px;
-          }
-        }
         .res__container {
-          max-width: 1260px;
+          max-width: 87.5rem;
           margin: 0 auto;
           background: #f4f4f5;
           border-radius: 20px;
-          padding: 32px 20px 40px;
+          padding: 32px 28px 40px;
           box-sizing: border-box;
         }
         @media (min-width: 640px) {
           .res__container {
             border-radius: 28px;
-            padding: 48px 32px 56px;
+            padding: 48px 40px 56px;
           }
         }
         @media (min-width: 1024px) {
           .res__container {
-            padding: 56px 48px 64px;
+            padding: 56px 56px 64px;
           }
         }
         .res__heading {
           margin: 0 0 32px;
           text-align: center;
-          font-size: clamp(1.75rem, 5vw, 2.875rem);
-          line-height: 1.12;
+          font-size: clamp(1.375rem, 4vw, 2.125rem);
+          line-height: 1.2;
           font-weight: 500;
           letter-spacing: -0.02em;
           color: var(--ink);
@@ -154,7 +133,7 @@ export default function ResourcesSection() {
         }
         .res__grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(3, 1fr);
           gap: 28px;
         }
         .res__card {

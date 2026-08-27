@@ -130,19 +130,9 @@ export default function FaqSection() {
         .faq {
           width: 100%;
           background: #ffffff;
-          padding: 40px 16px;
+          padding: 0;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           box-sizing: border-box;
-        }
-        @media (min-width: 640px) {
-          .faq {
-            padding: 56px 40px;
-          }
-        }
-        @media (min-width: 1024px) {
-          .faq {
-            padding: 64px 64px;
-          }
         }
         .faq__inner {
           max-width: 1180px;

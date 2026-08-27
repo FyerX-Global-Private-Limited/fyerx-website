@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PrimaryCtaButton } from "@/components/ui/PrimaryCta";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 interface TabData {
   label: string;
@@ -11,6 +11,13 @@ interface TabData {
   activeBg: string;
   activeColor: string;
 }
+
+const TAB_LINKS = [
+  "/contact?form=technology",
+  "/contact?form=talent",
+  "/contact?form=marketing",
+  "/contact",
+] as const;
 
 const TABS: TabData[] = [
   {
@@ -99,7 +106,8 @@ export default function HowWeWork() {
           <div className="panel-left fade-swap" key={`left-${active}`}>
             <h2>{t.label}</h2>
             <p>{t.para}</p>
-            <PrimaryCtaButton
+            <PrimaryCtaLink
+              href={TAB_LINKS[active]}
               className="panel-cta"
               color={
                 t.label === "Marketing"
@@ -113,7 +121,7 @@ export default function HowWeWork() {
               textColor={t.label === "Marketing" ? "#111111" : "#ffffff"}
             >
               {t.cta}
-            </PrimaryCtaButton>
+            </PrimaryCtaLink>
           </div>
 
           <div className="board-card">

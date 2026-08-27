@@ -131,7 +131,7 @@ export default function Hero() {
             </div>
 
             <div className="mt-5 sm:mt-6">
-              <PrimaryCtaLink href="#contact" color={BRAND.home} className="w-full justify-center sm:w-fit">
+              <PrimaryCtaLink href="/contact" color={BRAND.home} className="w-full justify-center sm:w-fit">
                 Get Started
               </PrimaryCtaLink>
               <p className="mt-3 text-xs leading-relaxed text-slate">

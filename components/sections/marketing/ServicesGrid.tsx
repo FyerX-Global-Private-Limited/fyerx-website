@@ -2,7 +2,6 @@
 
 import { useId, useRef, useState } from "react";
 import Image from "next/image";
-import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 /**
  * ServicesGrid — "Why B2B teams choose FyerX over a typical agency" section.
@@ -158,18 +157,14 @@ export default function ServicesGrid() {
   };
 
   return (
-    <section className="w-full bg-white py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
+    <section className="w-full bg-white">
+      <div className="mx-auto w-full max-w-[1400px]">
         {/* Heading */}
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="section-title-lg">
             A practical marketing partner, built around the work
             <SparkleIcon className="ml-2 inline-block h-6 w-6 align-middle sm:h-8 sm:w-8" />
           </h2>
-
-          <div className="mt-8 flex flex-col items-center">
-            <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Explore How We Work</PrimaryCtaLink>
-          </div>
         </div>
 
         {/* Scrollable cards */}

@@ -48,8 +48,8 @@ function StatCard() {
 
 export default function CampaignsSection() {
   return (
-    <section className="w-full overflow-x-clip bg-white py-10 sm:py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-10 lg:px-16">
+    <section className="w-full overflow-x-clip bg-white">
+      <div className="mx-auto w-full max-w-[1400px]">
         <div
           className="relative rounded-[24px] border border-[#C5E8CA] sm:rounded-[32px]"
           style={{ background: "linear-gradient(135deg, #EEF6EF 0%, #F0FAF2 50%, #E8F5EA 100%)" }}

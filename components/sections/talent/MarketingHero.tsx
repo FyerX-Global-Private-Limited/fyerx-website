@@ -192,9 +192,9 @@ function PillarCard({
   icon,
 }: (typeof PILLARS)[number]) {
   return (
-    <div className="flex min-w-[200px] flex-1 items-start gap-3 rounded-2xl border border-[#E6E9EF] bg-gradient-to-br from-white to-[#F0FAF2] px-4 py-4 shadow-[0_8px_24px_-12px_rgba(17,85,28,0.15)] sm:gap-4 sm:px-5 sm:py-5">
+    <div className="flex h-full w-full items-start gap-3 rounded-2xl border border-[#E6E9EF] bg-white px-4 py-4 shadow-[0_8px_24px_-12px_rgba(17,85,28,0.12)] sm:gap-3.5 sm:px-4 sm:py-[18px]">
       <span
-        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl sm:h-11 sm:w-11"
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full sm:h-11 sm:w-11"
         style={{ backgroundColor: iconBg, color: iconColor }}
         aria-hidden="true"
       >
@@ -203,8 +203,8 @@ function PillarCard({
         </svg>
       </span>
       <div className="min-w-0 text-left">
-        <p className="text-sm font-semibold text-[var(--ink)] sm:text-[15px]">{title}</p>
-        <p className="mt-0.5 text-xs leading-relaxed text-[#52525b] sm:text-[13px]">{subtitle}</p>
+        <p className="text-sm font-semibold leading-snug text-[var(--ink)] sm:text-[15px]">{title}</p>
+        <p className="mt-0.5 text-xs leading-snug text-[#52525b] sm:text-[13px]">{subtitle}</p>
       </div>
     </div>
   );
@@ -212,9 +212,9 @@ function PillarCard({
 
 export default function MarketingHero() {
   return (
-    <section className="overflow-x-clip bg-white px-4 py-10 sm:px-10 sm:py-14 lg:px-16 lg:py-16">
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-16">
-        <div className="order-2 min-w-0 text-center lg:order-1 lg:text-left">
+    <section className="overflow-x-clip bg-white pt-6 lg:pt-0">
+      <div className="mx-auto grid w-full max-w-[1400px] items-start gap-8 lg:grid-cols-2 lg:gap-16 xl:gap-20">
+        <div className="order-2 flex min-w-0 flex-col items-start text-left lg:order-1">
           <span
             className="inline-flex rounded-full px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
             style={{ backgroundColor: TALENT_HOME.paleGreen, color: TALENT_HOME.primary }}
@@ -222,31 +222,31 @@ export default function MarketingHero() {
             Technology Recruitment & Delivery
           </span>
 
-          <h1 className="mt-4 text-[clamp(1.875rem,5.5vw,3.25rem)] font-medium leading-[1.1] tracking-[-0.03em] text-[var(--ink)] sm:mt-5">
+          <h1 className="mt-4 max-w-[18ch] text-[clamp(1.875rem,5vw,3.25rem)] font-medium leading-[1.12] tracking-[-0.03em] text-[var(--ink)] sm:mt-5">
             Hire Technology Talent for{" "}
             <span className="talent-gradient-text">Critical Roles</span>
           </h1>
 
-          <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-[#3d4a5c] sm:mt-5 sm:text-[17px] lg:mx-0">
+          <p className="mt-4 max-w-[32rem] text-[15px] leading-relaxed text-[#3d4a5c] sm:mt-5 sm:text-[17px]">
             Hire contract professionals, permanent employees, and project teams
             across ServiceNow, SAP, Salesforce, Data & AI, Cloud, DevOps, and
             more.
           </p>
 
-          <div className="mt-6 flex flex-col gap-3 sm:mt-7 sm:flex-row sm:gap-4 lg:justify-start">
+          <div className="mt-8 grid w-full max-w-[34rem] grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
             {PILLARS.map((pillar) => (
               <PillarCard key={pillar.title} {...pillar} />
             ))}
           </div>
 
-          <div className="mt-7 flex justify-center lg:justify-start">
+          <div className="mt-7">
             <PrimaryCtaLink href="/talent/book-session" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
               Talk to Our Team
             </PrimaryCtaLink>
           </div>
         </div>
 
-        <div className="order-1 flex min-w-0 justify-center lg:order-2 lg:justify-end">
+        <div className="order-1 flex min-w-0 items-start justify-center lg:order-2 lg:justify-end">
           <TalentGlobeVisual />
         </div>
       </div>

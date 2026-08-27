@@ -103,47 +103,53 @@ export default function TrackRecord() {
     });
 
   return (
-    <section id="talent-services" className="tr-hero">
-      <p className="tr-question">What kind of hiring support do you need?</p>
+    <section id="talent-services" className="home-section tr-hero">
+      <div className="section-shell">
+        <p className="tr-question">What kind of hiring support do you need?</p>
 
-      <div className="tr-cards" role="group" aria-label="What kind of hiring support do you need?">
-        {STAFFING_SERVICES.map((service, i) => {
-          const isOn = selected.has(i);
-          return (
-            <button
-              key={service.label.join(" ")}
-              type="button"
-              className={`tr-card${isOn ? " selected" : ""}`}
-              aria-pressed={isOn}
-              onClick={() => toggle(i)}
-            >
-              <span className="tr-check" aria-hidden="true">
-                {isOn && (
-                  <svg viewBox="0 0 16 16" fill="none">
-                    <path d="M3.5 8.5l3 3 6-7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                )}
-              </span>
-              <span className="tr-icon-wrap" style={{ backgroundColor: service.iconBg, color: service.iconColor }}>
-                {ICONS[service.icon]}
-              </span>
-              <span className="tr-label">
-                {service.label[0]}
-                {service.label[1] && (
-                  <>
-                    <br />
-                    {service.label[1]}
-                  </>
-                )}
-              </span>
-            </button>
-          );
-        })}
+        <div className="section-body mt-0 flex flex-col items-center gap-8">
+          <div className="tr-cards" role="group" aria-label="What kind of hiring support do you need?">
+            {STAFFING_SERVICES.map((service, i) => {
+              const isOn = selected.has(i);
+              return (
+                <button
+                  key={service.label.join(" ")}
+                  type="button"
+                  className={`tr-card${isOn ? " selected" : ""}`}
+                  aria-pressed={isOn}
+                  onClick={() => toggle(i)}
+                >
+                  <span className="tr-check" aria-hidden="true">
+                    {isOn && (
+                      <svg viewBox="0 0 16 16" fill="none">
+                        <path d="M3.5 8.5l3 3 6-7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    )}
+                  </span>
+                  <span className="tr-iconWrap" style={{ backgroundColor: service.iconBg, color: service.iconColor }}>
+                    {ICONS[service.icon]}
+                  </span>
+                  <span className="tr-label">
+                    {service.label[0]}
+                    {service.label[1] && (
+                      <>
+                        <br />
+                        {service.label[1]}
+                      </>
+                    )}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="tr-cta-wrap">
+            <PrimaryCtaLink href="/talent/book-session" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
+              Get Started
+            </PrimaryCtaLink>
+          </div>
+        </div>
       </div>
-
-      <PrimaryCtaLink href="/talent/book-session" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
-        Get Started
-      </PrimaryCtaLink>
 
       <style>{css}</style>
     </section>
@@ -159,92 +165,111 @@ const css = `
     -webkit-font-smoothing:antialiased;
     background:#ffffff;
     text-align:center;
-    padding:40px 16px 48px;
-    overflow-x:clip;
   }
-  @media (min-width:640px){ .tr-hero{padding:56px 40px 64px;} }
-  @media (min-width:1024px){ .tr-hero{padding:64px 64px 72px;} }
   .tr-hero *{margin:0;padding:0;box-sizing:border-box;}
+  .tr-hero .section-shell{
+    margin-inline:auto;
+    width:100%;
+    max-width:75rem;
+  }
+  .tr-hero .section-body{width:100%;}
   .tr-hero .tr-question{
     font-size:clamp(1rem,3.5vw,1.25rem);
     line-height:120%;
     font-weight:600;
     color:var(--text);
-    margin-bottom:28px;
-    padding-inline:8px;
+    margin:0 auto 20px;
+    padding-inline:0.5rem;
   }
   .tr-hero .tr-cards{
-    display:flex;
-    gap:10px;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:8px;
     width:100%;
-    max-width:100%;
-    margin:0 auto 32px;
-    overflow-x:auto;
-    padding-bottom:4px;
-    scroll-snap-type:x mandatory;
-    -ms-overflow-style:none;
-    scrollbar-width:none;
+    max-width:920px;
+    margin:0 auto;
   }
-  .tr-hero .tr-cards::-webkit-scrollbar{display:none;}
+  .tr-hero .tr-cta-wrap{
+    display:flex;
+    justify-content:center;
+  }
   .tr-hero .tr-card{
     position:relative;
-    flex:0 0 132px;
-    min-width:132px;
-    scroll-snap-align:start;
-    min-height:96px;
+    min-height:120px;
     background:#ffffff;
     border:1px solid var(--border);
-    border-radius:14px;
+    border-radius:8px;
     cursor:pointer;
     font-family:inherit;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:4px;
-    padding:24px 8px 10px;
+    gap:8px;
+    padding:18px 8px 14px;
     transition:border-color .2s ease,box-shadow .2s ease;
-  }
-  @media (min-width:768px){
-    .tr-hero .tr-cards{
-      display:grid;
-      grid-template-columns:repeat(8,1fr);
-      gap:12px;
-      max-width:1120px;
-      overflow-x:visible;
-      padding-bottom:0;
-      scroll-snap-type:none;
-    }
-    .tr-hero .tr-card{
-      flex:unset;
-      min-width:0;
-      width:100%;
-      min-height:104px;
-      padding:26px 6px 12px;
-    }
-  }
-  @media (min-width:1024px){
-    .tr-hero .tr-cards{margin-bottom:40px;}
   }
   .tr-hero .tr-card:hover{border-color:#B9BDC7;box-shadow:0 4px 14px rgba(17,17,17,0.06);}
   .tr-hero .tr-card.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);}
   .tr-hero .tr-check{
-    position:absolute;top:10px;left:10px;width:16px;height:16px;
-    border:1px solid #C9CCD4;border-radius:4px;background:#ffffff;
-    display:flex;align-items:center;justify-content:center;
+    position:absolute;
+    top:10px;
+    left:10px;
+    width:18px;
+    height:18px;
+    border:1px solid #C9CCD4;
+    border-radius:4px;
+    background:#ffffff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     transition:background-color .2s ease,border-color .2s ease;
   }
   .tr-hero .tr-card.selected .tr-check{background:var(--accent);border-color:var(--accent);}
-  .tr-hero .tr-check svg{width:10px;height:10px;}
-  .tr-hero .tr-icon-wrap{
-    display:inline-flex;align-items:center;justify-content:center;
-    width:38px;height:38px;border-radius:10px;margin-bottom:2px;
+  .tr-hero .tr-check svg{width:12px;height:12px;}
+  .tr-hero .tr-iconWrap{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:52px;
+    height:52px;
+    border-radius:999px;
+    box-shadow:0 6px 16px rgba(20,20,43,0.12);
+    flex-shrink:0;
   }
-  @media (min-width:640px){ .tr-hero .tr-icon-wrap{width:42px;height:42px;} }
-  .tr-hero .tr-icon{width:24px;height:24px;}
+  .tr-hero .tr-icon{width:28px;height:28px;}
   .tr-hero .tr-label{
-    text-align:center;margin-top:.25rem;
-    font-size:.6875rem;line-height:1.35;font-weight:500;color:#333333;
+    text-align:center;
+    font-size:0.6875rem;
+    line-height:1.35;
+    font-weight:500;
+    color:#333333;
+    padding:0 2px;
   }
-  @media (min-width:640px){ .tr-hero .tr-label{font-size:.75rem;} }
+  @media (max-width:380px){
+    .tr-hero .tr-card{min-height:108px;padding:14px 6px 12px;gap:6px;}
+    .tr-hero .tr-iconWrap{width:44px;height:44px;}
+    .tr-hero .tr-icon{width:24px;height:24px;}
+    .tr-hero .tr-label{font-size:0.625rem;}
+  }
+  @media (min-width:640px){
+    .tr-hero .tr-cards{gap:10px;}
+    .tr-hero .tr-card{min-height:128px;padding:18px 10px 14px;}
+    .tr-hero .tr-iconWrap{width:56px;height:56px;}
+    .tr-hero .tr-label{font-size:0.75rem;padding:0 4px;}
+  }
+  @media (min-width:768px){
+    .tr-hero .tr-cards{grid-template-columns:repeat(3, minmax(0, 1fr));gap:12px;max-width:760px;}
+  }
+  @media (min-width:1024px){
+    .tr-hero .tr-cards{
+      display:flex;
+      flex-flow:row wrap;
+      justify-content:center;
+      max-width:100%;
+      gap:12px;
+    }
+    .tr-hero .tr-card{flex:1 1 calc(12.5% - 12px);min-width:110px;max-width:140px;}
+    .tr-hero .tr-iconWrap{width:58px;height:58px;}
+  }
 `;

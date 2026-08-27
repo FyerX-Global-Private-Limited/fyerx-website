@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { PrimaryCtaButton } from "@/components/ui/PrimaryCta";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 const ICON_COLORS = ["#6161FF", "#FF5AC4", "#00CA72", "#FDAB3D", "#E2445C", "#A25DDC", "#0086C0", "#579BFC"];
 
@@ -163,7 +163,7 @@ export default function TrackRecord() {
         </div>
 
         <div className="tr-cta-wrap">
-          <PrimaryCtaButton>Get Started</PrimaryCtaButton>
+          <PrimaryCtaLink href="/contact">Get Started</PrimaryCtaLink>
         </div>
       </div>
       </div>

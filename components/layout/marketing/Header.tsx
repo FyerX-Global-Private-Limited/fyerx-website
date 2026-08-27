@@ -2,8 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { MenuDetailIcon, MenuGlyphBold } from "@/components/ui/MenuGlyph";
+import {
+  CategoryThumb,
+  MobileMegaMenuSection,
+} from "@/components/layout/shared/MobileMegaMenuSection";
+import { MARKETING_MENU_CATEGORIES } from "@/lib/marketing-menu";
 
 // ── Icons ──────────────────────────────────────────────────────────────────────
 function ChevronDown({ open }: { open: boolean }) {
@@ -43,162 +50,15 @@ function CloseIcon() {
   );
 }
 
-type IconName =
-  | "clipboardCheck" | "megaphone" | "gear" | "headset" | "personPlus" | "funnel"
-  | "link" | "sparkle" | "heart" | "chart" | "doc" | "formEdit" | "plug" | "robot" | "database" | "tag" | "search";
-
-function Glyph({ name }: { name: IconName }) {
-  const c = {
-    width: 18, height: 18, viewBox: "0 0 24 24", fill: "none",
-    stroke: "currentColor", strokeWidth: 1.6,
-    strokeLinecap: "round" as const, strokeLinejoin: "round" as const,
-  };
-  switch (name) {
-    case "clipboardCheck":
-      return <svg {...c}><rect x="5.5" y="4" width="13" height="17" rx="2" /><rect x="9" y="2.5" width="6" height="3" rx="1" /><polyline points="9 12.5 11 14.5 15 10.5" /></svg>;
-    case "megaphone":
-      return <svg {...c}><path d="M3 10v4h2l1 5h2l-1-5h1l10 4V6L8 10H3z" /><line x1="18" y1="9" x2="18" y2="15" /></svg>;
-    case "gear":
-      return <svg {...c}><circle cx="12" cy="12" r="3" /><path d="M12 3v2.4M12 18.6V21M21 12h-2.4M5.4 12H3M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7M18.4 18.4l-1.7-1.7M7.3 7.3 5.6 5.6" /></svg>;
-    case "headset":
-      return <svg {...c}><path d="M4 13.5v-1.5a8 8 0 0 1 16 0v1.5" /><rect x="3" y="13" width="4" height="6" rx="1.5" /><rect x="17" y="13" width="4" height="6" rx="1.5" /><path d="M20 19.5v.5a3 3 0 0 1-3 3h-3" /></svg>;
-    case "personPlus":
-      return <svg {...c}><circle cx="10" cy="8" r="3.5" /><path d="M3.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6" /><line x1="18" y1="7" x2="18" y2="13" /><line x1="15" y1="10" x2="21" y2="10" /></svg>;
-    case "funnel":
-      return <svg {...c}><polygon points="4 4 20 4 14 12 14 19 10 21 10 12 4 4" /></svg>;
-    case "link":
-      return <svg {...c}><path d="M10 14 14 10" /><path d="M8.5 12.5 6 15a3 3 0 0 0 4.2 4.2l2.5-2.5" /><path d="M15.5 11.5 18 9a3 3 0 0 0-4.2-4.2L11.3 7.3" /></svg>;
-    case "sparkle":
-      return <svg {...c}><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18" /></svg>;
-    case "heart":
-      return <svg {...c}><path d="M12 20s-7-4.3-9.3-8.8A5 5 0 0 1 12 6a5 5 0 0 1 9.3 5.2C19 15.7 12 20 12 20z" /></svg>;
-    case "chart":
-      return <svg {...c}><line x1="5" y1="19" x2="5" y2="12" /><line x1="12" y1="19" x2="12" y2="6" /><line x1="19" y1="19" x2="19" y2="15" /></svg>;
-    case "doc":
-      return <svg {...c}><rect x="5.5" y="3" width="13" height="18" rx="1.8" /><line x1="8.5" y1="8" x2="15.5" y2="8" /><line x1="8.5" y1="12" x2="15.5" y2="12" /><line x1="8.5" y1="16" x2="13" y2="16" /></svg>;
-    case "formEdit":
-      return <svg {...c}><rect x="5" y="3" width="12" height="18" rx="1.8" /><line x1="7.5" y1="8" x2="14.5" y2="8" /><line x1="7.5" y1="12" x2="14.5" y2="12" /><path d="M15 19.3 20 14.3l1.7 1.7-5 5-2.2.5z" /></svg>;
-    case "plug":
-      return <svg {...c}><path d="M9 2.5v4M15 2.5v4M6 6.5h12v4a6 6 0 0 1-12 0z" /><path d="M9 16.5v5M15 16.5v5" /></svg>;
-    case "robot":
-      return <svg {...c}><rect x="5" y="8" width="14" height="11" rx="2.5" /><circle cx="9.5" cy="13.2" r="1.1" fill="currentColor" stroke="none" /><circle cx="14.5" cy="13.2" r="1.1" fill="currentColor" stroke="none" /><line x1="12" y1="8" x2="12" y2="4.5" /><circle cx="12" cy="3" r="1.3" /><line x1="3" y1="12" x2="5" y2="12" /><line x1="19" y1="12" x2="21" y2="12" /></svg>;
-    case "database":
-      return <svg {...c}><ellipse cx="12" cy="5.5" rx="7" ry="2.5" /><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13" /><path d="M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5" /></svg>;
-    case "tag":
-      return <svg {...c}><path d="M11.7 3.5H5.8a2.3 2.3 0 0 0-2.3 2.3v5.9l10.8 10.8 8.2-8.2L11.7 3.5z" /><circle cx="8.3" cy="8.3" r="1.3" fill="currentColor" stroke="none" /></svg>;
-    case "search":
-      return <svg {...c}><circle cx="10.8" cy="10.8" r="6.8" /><line x1="15.8" y1="15.8" x2="21" y2="21" /></svg>;
-  }
-}
-
-// ── Data ───────────────────────────────────────────────────────────────────────
-type MenuCategory = {
-  label: string;
-  avatar: string;
-  items: { label: string; href: string; icon: IconName }[];
-};
-
-const servicesCategories: MenuCategory[] = [
-  {
-    label: "Marketing Strategy & Consulting",
-    avatar: "/avatar/1.avif",
-    items: [
-      { label: "Go-to-Market Strategy", icon: "chart", href: "#" },
-      { label: "ICP & Buyer Persona Definition", icon: "personPlus", href: "#" },
-      { label: "Marketing Audits", icon: "clipboardCheck", href: "#" },
-      { label: "Competitive Positioning", icon: "tag", href: "#" },
-    ],
-  },
-  {
-    label: "Demand & Lead Generation",
-    avatar: "/avatar/2.avif",
-    items: [
-      { label: "Account-Based Marketing", icon: "funnel", href: "#" },
-      { label: "LinkedIn Lead Generation", icon: "link", href: "#" },
-      { label: "Outbound & Cold Outreach", icon: "headset", href: "#" },
-      { label: "Email Nurture Sequences", icon: "doc", href: "#" },
-      { label: "Webinar & Event Marketing", icon: "megaphone", href: "#" },
-      { label: "Revenue Attribution & Pipeline Reporting", icon: "chart", href: "#" },
-    ],
-  },
-  {
-    label: "Search & AI Visibility",
-    avatar: "/avatar/3.avif",
-    items: [
-      { label: "SEO", icon: "search", href: "#" },
-      { label: "AEO", icon: "sparkle", href: "#" },
-      { label: "GEO", icon: "robot", href: "#" },
-      { label: "Local SEO", icon: "search", href: "#" },
-    ],
-  },
-  {
-    label: "AI Marketing",
-    avatar: "/avatar/4.avif",
-    items: [
-      { label: "AI-Powered Content Generation", icon: "sparkle", href: "#" },
-      { label: "AI Ad Creative & Personalization", icon: "heart", href: "#" },
-      { label: "Marketing Automation Agents", icon: "robot", href: "#" },
-      { label: "Conversational AI", icon: "headset", href: "#" },
-    ],
-  },
-  {
-    label: "Social Media Marketing",
-    avatar: "/avatar/5.avif",
-    items: [
-      { label: "Social Media Strategy & Management", icon: "megaphone", href: "#" },
-      { label: "Community Management", icon: "personPlus", href: "#" },
-      { label: "Paid Social Campaigns", icon: "chart", href: "#" },
-    ],
-  },
-  {
-    label: "Content & Creative Production",
-    avatar: "/avatar/6.avif",
-    items: [
-      { label: "Content Strategy & Editorial Calendars", icon: "doc", href: "#" },
-      { label: "Thought Leadership & Whitepapers", icon: "formEdit", href: "#" },
-      { label: "Video Production & Editing", icon: "sparkle", href: "#" },
-      { label: "Motion Graphics & Animation", icon: "heart", href: "#" },
-      { label: "Collaterals", icon: "tag", href: "#" },
-    ],
-  },
-  {
-    label: "Performance Marketing",
-    avatar: "/avatar/1.avif",
-    items: [
-      { label: "Paid Search", icon: "search", href: "#" },
-      { label: "Paid Social", icon: "megaphone", href: "#" },
-      { label: "Retargeting & Conversion Optimization", icon: "funnel", href: "#" },
-      { label: "Landing Page Design & Optimization", icon: "formEdit", href: "#" },
-      { label: "Marketing Analytics & ROI Tracking", icon: "chart", href: "#" },
-    ],
-  },
-  {
-    label: "Branding & Design",
-    avatar: "/avatar/2.avif",
-    items: [
-      { label: "Brand Identity & Guidelines", icon: "tag", href: "#" },
-      { label: "Brand Strategy & Positioning", icon: "clipboardCheck", href: "#" },
-      { label: "UI/UX Design", icon: "gear", href: "#" },
-      { label: "Website Design & Development", icon: "doc", href: "#" },
-    ],
-  },
-  {
-    label: "Marketing Automation",
-    avatar: "/avatar/3.avif",
-    items: [
-      { label: "Marketing Automation", icon: "robot", href: "#" },
-      { label: "CRM Integration", icon: "database", href: "#" },
-    ],
-  },
-];
+const servicesCategories = MARKETING_MENU_CATEGORIES;
 
 const simpleLinks = [
   { label: "Our Work", href: "/marketing/case-studies" },
   { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact?form=marketing" },
 ];
 
 const MARKETING_CRIMSON = "#730031";
+const MARKETING_ACTIVE_BG = "#fce8ef";
 
 // ── Services mega-menu — left = clickable categories (avatar + label), 2 per
 // row; right = sub-items for whichever category is active.
@@ -213,9 +73,9 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
         <div className="w-[560px] pr-8" style={{ ["--menu-hover" as string]: MARKETING_CRIMSON }}>
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 text-[#9a9ea8]">
-              <Glyph name="megaphone" />
+              <MenuGlyphBold name="megaphone" color="#8b8fa3" size={20} />
               <span className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">
-                Services
+                MARKETING SERVICES
               </span>
             </div>
             <PrimaryCtaLink
@@ -239,20 +99,24 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
                 type="button"
                 onClick={() => setActive(i)}
                 aria-pressed={active === i}
-                className="flex cursor-pointer items-center gap-3 text-left group"
+                className={`flex w-full cursor-pointer items-center gap-3 rounded-[8px] px-2.5 py-2.5 text-left transition-colors duration-100 ${
+                  active === i ? "" : "hover:bg-[#f5f6f8]"
+                }`}
+                style={active === i ? { backgroundColor: MARKETING_ACTIVE_BG } : undefined}
               >
-                <Image
-                  src={cat.avatar}
-                  alt=""
-                  width={40}
-                  height={40}
-                  className="w-10 h-10 rounded-[10px] object-cover shrink-0"
-                />
-                <span
-                  className="text-[0.875rem] font-normal leading-[1.3] transition-colors duration-100"
-                  style={{ color: active === i ? MARKETING_CRIMSON : "#000000" }}
-                >
-                  {cat.label}
+                <CategoryThumb cat={cat} />
+                <span className="flex flex-col gap-[0.35rem]">
+                  <span
+                    className="text-[0.875rem] font-normal leading-[1] transition-colors duration-100"
+                    style={{ color: active === i ? MARKETING_CRIMSON : "#000000" }}
+                  >
+                    {cat.label}
+                  </span>
+                  {cat.subtitle && (
+                    <span className="text-[0.75rem] font-normal leading-[1.3] text-[#676879]">
+                      {cat.subtitle}
+                    </span>
+                  )}
                 </span>
               </button>
             ))}
@@ -278,9 +142,7 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
                   onClick={onClose}
                   className="flex items-center gap-2 py-1 text-[0.875rem] font-normal leading-[1.4] text-black transition-colors duration-100 hover:text-[var(--menu-hover)]"
                 >
-                  <span className="text-[#8b8fa3] shrink-0">
-                    <Glyph name={item.icon} />
-                  </span>
+                  <MenuDetailIcon name={item.icon} />
                   {item.label}
                 </Link>
               </li>
@@ -293,9 +155,28 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
 }
 
 export default function MarketingHeader() {
+  const pathname = usePathname();
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileServicesExpanded, setMobileServicesExpanded] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const isActive = (href: string) =>
+    href === "/marketing"
+      ? pathname === "/marketing"
+      : pathname === href || pathname.startsWith(`${href}/`);
+
+  const navLinkClass = (href: string, activeBg = "bg-[#fce8ef] text-[#730031]") =>
+    `px-4 py-2 rounded-[8px] text-[0.875rem] font-light transition-colors duration-100 whitespace-nowrap ${
+      isActive(href) ? activeBg : "text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"
+    }`;
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 4);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const openServices = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -310,30 +191,35 @@ export default function MarketingHeader() {
   const closeAll = () => {
     setServicesOpen(false);
     setMobileOpen(false);
+    setMobileServicesExpanded(false);
   };
 
   return (
     <header
-      className="sticky top-0 z-50 w-full border-b border-blue-100 bg-white/80 backdrop-blur-md"
+      className={`sticky top-0 z-50 w-full bg-white transition-shadow duration-150 ${
+        scrolled ? "shadow-[0_1px_0_#e6e9ef,0_2px_16px_rgba(20,20,43,0.07)]" : "border-b border-[#e6e9ef]"
+      }`}
+      style={{ fontFamily: "Poppins, Arial, sans-serif" }}
       onMouseLeave={scheduleClose}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-10 lg:px-16">
-        <Link href="/marketing" className="flex items-center" onClick={closeAll}>
+      <div className="mx-auto flex h-[56px] w-full max-w-[1400px] items-center px-4 sm:h-[60px] sm:px-6 lg:px-16">
+        <Link href="/marketing" className="flex shrink-0 items-center" onClick={closeAll}>
           <Image
             src="/images/marketing/marketinglogo.png"
             alt="FyerX Marketing"
-            width={160}
-            height={48}
-            className="h-8 w-auto object-contain sm:h-10"
+            width={140}
+            height={32}
+            className="h-8 w-auto object-contain"
+            priority
           />
         </Link>
 
-        <div className="hidden md:flex flex-1 items-center justify-center relative">
-          <nav className="flex items-center gap-1">
+        <div className="relative ml-8 flex min-w-0 flex-1 items-center sm:ml-10 lg:ml-12">
+          <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
             <div onMouseEnter={openServices}>
               <button
-                className={`flex items-center gap-2 px-4 py-[9px] rounded-[8px] cursor-pointer text-sm transition-colors duration-100 ${
-                  servicesOpen ? "bg-[#fce8ef] text-[#730031]" : "text-zinc-600 hover:bg-zinc-50"
+                className={`flex items-center gap-2 px-4 py-2 rounded-[8px] cursor-pointer text-[0.875rem] font-light transition-colors duration-100 whitespace-nowrap ${
+                  servicesOpen ? "bg-[#fce8ef] text-[#730031]" : "text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"
                 }`}
               >
                 Services <ChevronDown open={servicesOpen} />
@@ -346,80 +232,72 @@ export default function MarketingHeader() {
                 href={item.href}
                 onClick={closeAll}
                 onMouseEnter={() => setServicesOpen(false)}
-                className="px-4 py-[9px] rounded-[8px] text-sm text-zinc-600 hover:bg-zinc-50 hover:text-blue-600 transition-colors duration-100 whitespace-nowrap"
+                className={navLinkClass(item.href)}
               >
                 {item.label}
               </Link>
             ))}
           </nav>
 
+          <div className="hidden md:flex ml-auto shrink-0 items-center">
+            <PrimaryCtaLink href="/contact" onClick={closeAll} onMouseEnter={() => setServicesOpen(false)} className="h-[40px] whitespace-nowrap text-black!" color="#FFC900">
+              Get Started
+            </PrimaryCtaLink>
+          </div>
+
+          <button
+            className="md:hidden ml-auto p-1.5 text-[#323338] hover:bg-[#f5f6f8] rounded-[6px]"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <CloseIcon /> : <HamburgerIcon />}
+          </button>
+
           {servicesOpen && (
             <div
-              className="absolute top-full left-1/2 -translate-x-1/2 w-[1040px] max-w-[calc(100vw-2rem)] z-50"
+              className="absolute top-full left-0 right-0 z-50 max-w-[1040px]"
               onMouseEnter={cancelClose}
             >
               <ServicesMenu onClose={closeAll} />
             </div>
           )}
         </div>
-
-        <div className="hidden md:block">
-          <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">
-            Get Started
-          </PrimaryCtaLink>
-        </div>
-
-        <button
-          className="md:hidden p-1.5 text-zinc-700 hover:bg-zinc-50 rounded-[6px]"
-          onClick={() => setMobileOpen((v) => !v)}
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <CloseIcon /> : <HamburgerIcon />}
-        </button>
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden border-t border-blue-100 bg-white">
-          <div className="px-4 py-4 flex flex-col gap-0.5">
-            <p className="px-3 pt-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.07em] text-zinc-400">
-              Services
-            </p>
-            {servicesCategories.map((cat) => (
-              <div key={cat.label} className="px-3 py-2">
-                <p className="text-[13px] font-semibold text-zinc-800">{cat.label}</p>
-                <div className="mt-1 flex flex-col gap-0.5">
-                  {cat.items.map((item) => (
-                    <Link
-                      key={item.label}
-                      href={item.href}
-                      onClick={closeAll}
-                      className="py-1 text-[13px] text-zinc-600 hover:text-blue-600 transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
-            <div className="my-2 h-px bg-blue-100" />
+        <div className="md:hidden max-h-[calc(100dvh-60px)] overflow-y-auto border-t border-[#e6e9ef] bg-white">
+          <div className="flex flex-col px-4 py-4 sm:px-6 lg:px-16">
+            <MobileMegaMenuSection
+              label="Services"
+              expanded={mobileServicesExpanded}
+              onToggle={() => setMobileServicesExpanded((current) => !current)}
+              activeClass="bg-[#fce8ef] text-[#730031]"
+              activeItemBg={MARKETING_ACTIVE_BG}
+              categories={servicesCategories}
+              hoverColor={MARKETING_CRIMSON}
+              visitHomeHref="/marketing"
+              visitHomeLabel="Visit Homepage"
+              visitHomeColor="#FFC900"
+              visitHomeTextColor="#111111"
+              onClose={closeAll}
+            />
+
             {simpleLinks.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
                 onClick={closeAll}
-                className="px-3 py-[10px] rounded-[8px] text-[15px] font-medium text-zinc-700 hover:bg-zinc-50 transition-colors"
+                className={`${navLinkClass(item.href)} border-b border-[#e6e9ef] px-3 py-[10px]`}
               >
                 {item.label}
               </Link>
             ))}
-            <PrimaryCtaLink
-              href="/contact"
-              onClick={closeAll}
-              className="mt-3 text-black!"
-              color="#FFC900"
-            >
-              Get Started
-            </PrimaryCtaLink>
+
+            <div className="mt-3 pt-3">
+              <PrimaryCtaLink href="/contact" onClick={closeAll} className="text-black!" color="#FFC900">
+                Get Started
+              </PrimaryCtaLink>
+            </div>
           </div>
         </div>
       )}

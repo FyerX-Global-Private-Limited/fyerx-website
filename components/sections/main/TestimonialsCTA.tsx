@@ -114,7 +114,7 @@ export default function TestimonialsCTA() {
             </div>
           </div>
 
-          <div className="relative w-full lg:w-[462px] lg:shrink-0">
+          <div className="relative mt-8 w-full sm:mt-10 lg:mt-0 lg:w-[462px] lg:shrink-0">
             <div className="absolute -top-[22px] left-1/2 z-10 flex -translate-x-1/2 -space-x-[6px]">
               {AVATARS.map((avatar, i) => (
                 <img

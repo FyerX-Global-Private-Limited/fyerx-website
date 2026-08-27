@@ -12,14 +12,14 @@ import {
 const STACK_TOP = 88;
 const PEEK = 26;
 
-/** Monday-style pastel card fills — purple, blue, pink, yellow. */
+/** Monday-style pastel card fills — varied palette. */
 const CARD_PALETTES = [
   { cardBg: "#E6E0FF", panelBg: "#F0EDFF", accent: "#7c3aed" },
   { cardBg: "#C5DAF5", panelBg: "#D8E9FB", accent: "#1F5C99" },
-  { cardBg: "#FCE7F3", panelBg: "#FFF0F7", accent: "#db2777" },
+  { cardBg: "#FFE8E6", panelBg: "#FFF0EE", accent: "#E2445C" },
+  { cardBg: "#E8F5EA", panelBg: "#F0FAF2", accent: "#00CA72" },
   { cardBg: "#FFF8E1", panelBg: "#FEF9C3", accent: MARKETING_HOME.primaryDark },
-  { cardBg: "#E6E0FF", panelBg: "#F0EDFF", accent: "#8b5cf6" },
-  { cardBg: "#C5DAF5", panelBg: "#D8E9FB", accent: "#2383e2" },
+  { cardBg: "#FCE7F3", panelBg: "#FFF0F7", accent: "#db2777" },
 ] as const;
 
 function CaseStudyBadge({
@@ -117,11 +117,11 @@ function StackedCaseStudyCard({
       suppressHydrationWarning
     >
       <div
-        className="mb-8 overflow-hidden rounded-[28px] shadow-[0_24px_64px_-28px_rgba(16,16,20,0.22)]"
+        className="mb-6 overflow-hidden rounded-[20px] shadow-[0_24px_64px_-28px_rgba(16,16,20,0.22)] sm:mb-8 sm:rounded-[28px]"
         style={{ backgroundColor: palette.cardBg }}
       >
         <div className="grid md:grid-cols-2">
-          <div className="flex flex-col p-8 sm:p-10 md:p-12" style={{ backgroundColor: palette.cardBg }}>
+          <div className="flex flex-col p-6 sm:p-10 md:p-12" style={{ backgroundColor: palette.cardBg }}>
             <CaseStudyBadge
               label={study.label}
               clientName={study.clientName}
@@ -176,13 +176,17 @@ export default function StackedScrollSection() {
   const [stackEnabled, setStackEnabled] = useState(false);
 
   useEffect(() => {
-    setStackEnabled(true);
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setStackEnabled(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
   }, []);
 
   return (
     <section className="w-full overflow-x-clip bg-white">
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-10 lg:px-12">
-        <div className="max-w-2xl pt-12 sm:pt-16">
+      <div className="mx-auto w-full max-w-[1400px]">
+        <div className="max-w-2xl">
           <p
             className="text-sm font-semibold uppercase tracking-[0.14em]"
             style={{ color: MARKETING_HOME.primaryDark }}
@@ -195,7 +199,7 @@ export default function StackedScrollSection() {
           </h2>
         </div>
 
-        <div className="relative mt-12 pb-[20vh]">
+        <div className="relative mt-8 pb-2 md:mt-12 md:pb-[20vh]">
           {MARKETING_CASE_STUDIES.map((study, index) => (
             <StackedCaseStudyCard
               key={study.slug}

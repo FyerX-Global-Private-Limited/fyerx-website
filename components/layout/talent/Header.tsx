@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TALENT_ACCENT, TALENT_LOGO, TALENT_PRIMARY } from "@/lib/talent-brand";
+import { MobileMegaMenuSection } from "@/components/layout/shared/MobileMegaMenuSection";
 
 // ── Icons ──────────────────────────────────────────────────────────────────────
 function ChevronDown({ open }: { open: boolean }) {
@@ -150,10 +152,10 @@ const talentCategories: MenuCategory[] = [
 const simpleLinks = [
   { label: "Individual", href: "/talent/individual" },
   { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
 ];
 
 const TALENT_MENU_HOVER = TALENT_PRIMARY;
+const TALENT_ACTIVE_BG = "rgba(158, 235, 170, 0.25)";
 
 // ── Talent mega-menu — left = clickable categories (avatar + label), 2 per
 // row; right = sub-items for whichever category is active.
@@ -194,7 +196,10 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
                 type="button"
                 onClick={() => setActive(i)}
                 aria-pressed={active === i}
-                className="flex cursor-pointer items-center gap-3 text-left group"
+                className={`flex w-full cursor-pointer items-center gap-3 rounded-[8px] px-2.5 py-2.5 text-left transition-colors duration-100 ${
+                  active === i ? "" : "hover:bg-[#f5f6f8]"
+                }`}
+                style={active === i ? { backgroundColor: TALENT_ACTIVE_BG } : undefined}
               >
                 <Image
                   src={cat.avatar}
@@ -248,9 +253,22 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
 }
 
 export default function TalentHeader() {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileTalentExpanded, setMobileTalentExpanded] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const isActive = (href: string) =>
+    href === "/talent"
+      ? pathname === "/talent"
+      : pathname === href || pathname.startsWith(`${href}/`);
+
+  const navLinkClass = (href: string) =>
+    `px-4 py-2 rounded-[8px] text-[0.875rem] font-light transition-colors duration-100 whitespace-nowrap ${
+      isActive(href) ? "bg-[#9EEBAA]/25 text-[#11551C]" : "text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"
+    }`;
 
   const openMenu = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -265,32 +283,43 @@ export default function TalentHeader() {
   const closeAll = () => {
     setMenuOpen(false);
     setMobileOpen(false);
+    setMobileTalentExpanded(false);
   };
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 4);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <header
-      className="sticky top-0 z-50 w-full border-b border-[#9EEBAA]/40 bg-white/80 backdrop-blur-md"
+      className={`sticky top-0 z-50 w-full bg-white transition-shadow duration-150 ${
+        scrolled ? "shadow-[0_1px_0_#e6e9ef,0_2px_16px_rgba(20,20,43,0.07)]" : "border-b border-[#e6e9ef]"
+      }`}
+      style={{ fontFamily: "Poppins, Arial, sans-serif" }}
       onMouseLeave={scheduleClose}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-10 lg:px-16">
-        <Link href="/talent" className="flex items-center" onClick={closeAll}>
+      <div className="mx-auto flex h-[56px] w-full max-w-[1400px] items-center px-4 sm:h-[60px] sm:px-6 lg:px-16">
+        <Link href="/talent" className="flex shrink-0 items-center" onClick={closeAll}>
           <Image
             src={TALENT_LOGO}
             alt="FyerX Talent"
-            width={160}
-            height={48}
-            className="h-10 w-auto object-contain"
+            width={140}
+            height={32}
+            className="h-8 w-auto object-contain"
+            priority
           />
         </Link>
 
-        <div className="hidden md:flex flex-1 items-center justify-center relative">
-          <nav className="flex items-center gap-1">
+        <div className="relative ml-8 flex min-w-0 flex-1 items-center sm:ml-10 lg:ml-12">
+          <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
             <div onMouseEnter={openMenu}>
               <button
                 type="button"
                 aria-expanded={menuOpen}
-                className={`flex items-center gap-2 px-4 py-[9px] rounded-[8px] cursor-pointer text-sm transition-colors duration-100 ${
-                  menuOpen ? "bg-[#9EEBAA]/25 text-[#11551C]" : "text-zinc-600 hover:bg-zinc-50"
+                className={`flex items-center gap-2 px-4 py-2 rounded-[8px] cursor-pointer text-[0.875rem] font-light transition-colors duration-100 whitespace-nowrap ${
+                  menuOpen ? "bg-[#9EEBAA]/25 text-[#11551C]" : "text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"
                 }`}
               >
                 Talent <ChevronDown open={menuOpen} />
@@ -303,92 +332,79 @@ export default function TalentHeader() {
                 href={item.href}
                 onClick={closeAll}
                 onMouseEnter={() => setMenuOpen(false)}
-                className="inline-flex items-center px-4 py-[9px] rounded-[8px] text-sm text-zinc-600 hover:bg-zinc-50 hover:text-[#11551C] transition-colors duration-100 whitespace-nowrap"
+                className={navLinkClass(item.href)}
               >
                 {item.label}
               </Link>
             ))}
           </nav>
 
+          <div className="hidden md:flex ml-auto shrink-0 items-center">
+            <PrimaryCtaLink
+              href="/contact"
+              onClick={closeAll}
+              onMouseEnter={() => setMenuOpen(false)}
+              color={TALENT_PRIMARY}
+              textColor={TALENT_ACCENT}
+              className="h-[40px] whitespace-nowrap"
+            >
+              Get Started
+            </PrimaryCtaLink>
+          </div>
+
+          <button
+            className="md:hidden ml-auto p-1.5 text-[#323338] hover:bg-[#f5f6f8] rounded-[6px]"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <CloseIcon /> : <HamburgerIcon />}
+          </button>
+
           {menuOpen && (
             <div
-              className="absolute top-full left-1/2 -translate-x-1/2 w-[1040px] max-w-[calc(100vw-2rem)] z-50"
+              className="absolute top-full left-0 right-0 z-50 max-w-[1040px]"
               onMouseEnter={cancelClose}
             >
               <TalentMenu onClose={closeAll} />
             </div>
           )}
         </div>
-
-        <div className="hidden md:block">
-          <PrimaryCtaLink href="/talent/book-session" color={TALENT_PRIMARY} textColor={TALENT_ACCENT}>
-            Book a Session
-          </PrimaryCtaLink>
-        </div>
-
-        <button
-          className="md:hidden p-1.5 text-zinc-700 hover:bg-zinc-50 rounded-[6px]"
-          onClick={() => setMobileOpen((v) => !v)}
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <CloseIcon /> : <HamburgerIcon />}
-        </button>
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden border-t border-[#9EEBAA]/40 bg-white">
-          <div className="px-4 py-4 flex flex-col gap-0.5">
-            <p className="px-3 pt-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.07em] text-zinc-400">
-              Talent Solutions
-            </p>
-            {talentCategories.map((cat) => (
-              <div key={cat.label} className="px-3 py-2">
-                <p className="text-[13px] font-semibold text-zinc-800">{cat.label}</p>
-                <div className="mt-1 flex flex-col gap-0.5">
-                  {cat.items.map((item) => (
-                    <Link
-                      key={item.label}
-                      href={item.href}
-                      onClick={closeAll}
-                      className="py-1 text-[13px] text-zinc-600 hover:text-[#11551C] transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
-            <div className="my-2 h-px bg-[#9EEBAA]/40" />
-            <PrimaryCtaLink
-              href="/"
-              onClick={closeAll}
-              icon={null}
-              color={TALENT_PRIMARY}
-              textColor={TALENT_ACCENT}
-              className="mx-3 !min-h-[36px] !px-4 !py-2 text-[0.875rem] font-medium"
-            >
-              Visit Homepage
-            </PrimaryCtaLink>
-            <div className="my-2 h-px bg-[#9EEBAA]/40" />
+        <div className="md:hidden max-h-[calc(100dvh-60px)] overflow-y-auto border-t border-[#e6e9ef] bg-white">
+          <div className="flex flex-col px-4 py-4 sm:px-6 lg:px-16">
+            <MobileMegaMenuSection
+              label="Talent"
+              expanded={mobileTalentExpanded}
+              onToggle={() => setMobileTalentExpanded((current) => !current)}
+              activeClass="bg-[#9EEBAA]/25 text-[#11551C]"
+              activeItemBg={TALENT_ACTIVE_BG}
+              categories={talentCategories}
+              hoverColor={TALENT_MENU_HOVER}
+              visitHomeHref="/talent"
+              visitHomeLabel="Visit Homepage"
+              visitHomeColor={TALENT_PRIMARY}
+              visitHomeTextColor={TALENT_ACCENT}
+              onClose={closeAll}
+            />
+
             {simpleLinks.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
                 onClick={closeAll}
-                className="px-3 py-[10px] rounded-[8px] text-[15px] font-medium text-zinc-700 hover:bg-zinc-50 transition-colors"
+                className={`${navLinkClass(item.href)} border-b border-[#e6e9ef] px-3 py-[10px]`}
               >
                 {item.label}
               </Link>
             ))}
-            <PrimaryCtaLink
-              href="/talent/book-session"
-              onClick={closeAll}
-              className="mt-3"
-              color={TALENT_PRIMARY}
-              textColor={TALENT_ACCENT}
-            >
-              Book a Session
-            </PrimaryCtaLink>
+
+            <div className="mt-3 pt-3">
+              <PrimaryCtaLink href="/contact" onClick={closeAll} color={TALENT_PRIMARY} textColor={TALENT_ACCENT}>
+                Get Started
+              </PrimaryCtaLink>
+            </div>
           </div>
         </div>
       )}

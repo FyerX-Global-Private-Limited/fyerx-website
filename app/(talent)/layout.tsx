@@ -14,7 +14,7 @@ export default function TalentLayout({
       }}
     >
       <TalentHeader />
-      <main className="min-w-0 flex-1 overflow-x-clip">{children}</main>
+      <main className="home-main home-main--site home-main--talent min-w-0 flex-1 overflow-x-clip">{children}</main>
       <TalentFooter />
     </div>
   );
