@@ -14,7 +14,7 @@ export default function MarketingLayout({
       }}
     >
       <MarketingHeader />
-      <main className="min-w-0 flex-1 overflow-x-clip">{children}</main>
+      <main className="home-main home-main--site min-w-0 flex-1 overflow-x-clip">{children}</main>
       <MarketingFooter />
     </div>
   );

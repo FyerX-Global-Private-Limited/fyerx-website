@@ -159,7 +159,7 @@ export default function ServicesGrid() {
 
   return (
     <section className="w-full bg-white py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
+      <div className="mx-auto w-full max-w-[1400px]">
         {/* Heading */}
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="section-title-lg">

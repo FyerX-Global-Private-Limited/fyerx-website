@@ -2,7 +2,6 @@
 
 import { useId, useRef, useState } from "react";
 import Image from "next/image";
-import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 /**
  * ServicesGrid — "Why B2B teams choose FyerX over a typical agency" section.
@@ -32,9 +31,9 @@ function SparkleIcon({ className = "" }: { className?: string }) {
     >
       <defs>
         <linearGradient id={gradientId} x1="0" y1="0" x2="24" y2="24">
-          <stop offset="0%" stopColor="#5B8DFF" />
-          <stop offset="50%" stopColor="#B45CF2" />
-          <stop offset="100%" stopColor="#F45FA0" />
+          <stop offset="0%" stopColor="#FFC900" />
+          <stop offset="50%" stopColor="#F59E0B" />
+          <stop offset="100%" stopColor="#E6A800" />
         </linearGradient>
       </defs>
       <path
@@ -158,18 +157,14 @@ export default function ServicesGrid() {
   };
 
   return (
-    <section className="w-full bg-white py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
+    <section className="w-full bg-white">
+      <div className="mx-auto w-full max-w-[1400px]">
         {/* Heading */}
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="section-title-lg">
             A practical marketing partner, built around the work
             <SparkleIcon className="ml-2 inline-block h-6 w-6 align-middle sm:h-8 sm:w-8" />
           </h2>
-
-          <div className="mt-8 flex flex-col items-center">
-            <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Explore How We Work</PrimaryCtaLink>
-          </div>
         </div>
 
         {/* Scrollable cards */}

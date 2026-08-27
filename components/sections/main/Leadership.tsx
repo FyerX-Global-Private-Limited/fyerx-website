@@ -128,13 +128,13 @@ export default function Leadership() {
           <FeatureCard
             icon={<PillsIcon />}
             title="More than one capability"
-            body="Marketing, talent, and technology work together under one roof, so approvals and updates move faster."
+            body="Choose the expertise you need today, with the flexibility to access more as your business evolves."
           />
 
           {/* Image card */}
           <div className="ldr-card-image">
             <Image
-              src="/leadership.avif"
+              src="/leadership.webp"
               alt="Two colleagues smiling while reviewing work on a laptop"
               fill
               sizes="(min-width: 1024px) 33vw, 100vw"

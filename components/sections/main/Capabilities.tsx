@@ -95,8 +95,9 @@ const COLUMN_TWO: CapabilityCard[] = [
   },
   {
     icon: <IconSupport />,
-    title: "Responsive support",
-    description: "A support team that knows your account and responds quickly when you need it.",
+    title: "Engagement continuity",
+    description:
+      "Proactive follow-through to keep work moving, resolve issues early, and maintain momentum throughout the engagement.",
   },
   {
     icon: <IconTailored />,

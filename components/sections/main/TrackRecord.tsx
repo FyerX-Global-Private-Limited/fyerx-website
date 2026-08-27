@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { PrimaryCtaButton } from "@/components/ui/PrimaryCta";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 const ICON_COLORS = ["#6161FF", "#FF5AC4", "#00CA72", "#FDAB3D", "#E2445C", "#A25DDC", "#0086C0", "#579BFC"];
 
@@ -20,70 +20,71 @@ function ColorIcon({ color, children }: { color: string; children: ReactNode }) 
 const ICONS: Record<string, (color: string) => ReactNode> = {
   growth: (c) => (
     <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M6 40h36" />
-        <path d="M10 32l8-10 7 6 13-16" />
-        <path d="M30 6h8v8" />
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <path d="M8 38h32" stroke={c} strokeWidth="2.4" strokeLinecap="round" />
+        <path d="M12 30l9-11 8 7 11-14" stroke={c} strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M30 8h8v8" stroke={c} strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="34" cy="14" r="3" fill={`${c}55`} />
       </svg>
     </ColorIcon>
   ),
   brand: (c) => (
     <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="24" cy="24" r="16" />
-        <circle cx="24" cy="24" r="9" />
-        <circle cx="24" cy="24" r="2" fill="currentColor" />
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <circle cx="24" cy="24" r="16" fill={`${c}22`} stroke={c} strokeWidth="2.2" />
+        <circle cx="24" cy="24" r="8" fill={`${c}44`} />
+        <circle cx="24" cy="24" r="3" fill={c} />
       </svg>
     </ColorIcon>
   ),
   hiring: (c) => (
     <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="16" cy="17" r="6" />
-        <path d="M4 39v-2a9 9 0 019-9h6a9 9 0 019 9v2" />
-        <circle cx="34" cy="15" r="5" />
-        <path d="M26 39v-1a8 8 0 018-8h1a8 8 0 018 8v1" />
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <circle cx="17" cy="16" r="6" fill={`${c}33`} stroke={c} strokeWidth="2.2" />
+        <path d="M6 38v-2a10 10 0 0118-6" stroke={c} strokeWidth="2.4" strokeLinecap="round" />
+        <circle cx="33" cy="14" r="5" fill={c} />
+        <path d="M27 38v-1a7 7 0 017-7h1a7 7 0 017 7v1" stroke={c} strokeWidth="2.2" strokeLinecap="round" />
       </svg>
     </ColorIcon>
   ),
   specialist: (c) => (
     <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M24 10L4 20l20 10 20-10-20-10z" />
-        <path d="M14 24v10c0 3 5 6 10 6s10-3 10-6V24" />
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <path d="M24 8L6 18l18 10 18-10-18-10z" fill={`${c}22`} stroke={c} strokeWidth="2.2" strokeLinejoin="round" />
+        <path d="M12 26v12c0 3 5 8 12 8s12-5 12-8V26" stroke={c} strokeWidth="2.2" strokeLinecap="round" />
       </svg>
     </ColorIcon>
   ),
   tech: (c) => (
     <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="10" y="10" width="28" height="18" rx="2" />
-        <path d="M4 34h40l-3 5H7l-3-5z" />
-        <path d="M18 19a6 6 0 0110-4" />
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <rect x="10" y="10" width="28" height="18" rx="3" fill={`${c}22`} stroke={c} strokeWidth="2.2" />
+        <path d="M4 34h40l-3 5H7l-3-5z" fill={c} />
+        <rect x="18" y="16" width="12" height="2.5" rx="1.2" fill={c} />
       </svg>
     </ColorIcon>
   ),
   ai: (c) => (
     <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="24" cy="24" r="8" />
-        <path d="M24 4v6M24 38v6M4 24h6M38 24h6M9.9 9.9l4.2 4.2M33.9 33.9l4.2 4.2M9.9 38.1l4.2-4.2M33.9 14.1l4.2-4.2" />
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <circle cx="24" cy="24" r="9" fill={`${c}33`} stroke={c} strokeWidth="2.2" />
+        <path d="M24 6v5M24 37v5M6 24h5M37 24h5M11.5 11.5l3.5 3.5M33 33l3.5 3.5M11.5 36.5l3.5-3.5M33 15l3.5-3.5" stroke={c} strokeWidth="2.2" strokeLinecap="round" />
       </svg>
     </ColorIcon>
   ),
   cloud: (c) => (
     <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14 36h22a8 8 0 000-16 10 10 0 00-19.2-3.2A7 7 0 0014 36z" />
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <path d="M14 36h22a8 8 0 000-16 10 10 0 00-19.2-3.2A7 7 0 0014 36z" fill={`${c}22`} stroke={c} strokeWidth="2.2" strokeLinejoin="round" />
       </svg>
     </ColorIcon>
   ),
   skills: (c) => (
     <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M8 38V18l16-10 16 10v20" />
-        <path d="M18 38V26h12v12" />
-        <path d="M8 18l16 10 16-10" />
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <path d="M8 38V18l16-10 16 10v20" fill={`${c}18`} stroke={c} strokeWidth="2.2" strokeLinejoin="round" />
+        <path d="M18 38V26h12v12" fill={c} />
+        <path d="M8 18l16 10 16-10" stroke={c} strokeWidth="2.2" strokeLinecap="round" />
       </svg>
     </ColorIcon>
   ),
@@ -121,8 +122,8 @@ export default function TrackRecord() {
       <div className="section-shell">
         <div className="section-header section-header--center">
           <h2 className="section-heading">
-            Built around what your{" "}
-            <span className="brand-gradient-text">business needs next</span>
+            Capability for Every Stage of{" "}
+            <span className="brand-gradient-text">Growth</span>
           </h2>
           <p className="section-subheading tr-subheading">
             Select the priority in front of you. We will help identify the right way forward.
@@ -162,7 +163,7 @@ export default function TrackRecord() {
         </div>
 
         <div className="tr-cta-wrap">
-          <PrimaryCtaButton>Get Started</PrimaryCtaButton>
+          <PrimaryCtaLink href="/contact">Get Started</PrimaryCtaLink>
         </div>
       </div>
       </div>
@@ -257,11 +258,17 @@ const css = `
   .tr-hero .tr-iconWrap svg{width:24px;height:24px;}
   .tr-hero .tr-label{
     text-align:center;
-    font-size:0.6875rem;
+    font-size:0.625rem;
     line-height:1.35;
     font-weight:500;
     color:#333333;
     padding:0 2px;
+  }
+  @media (max-width:380px){
+    .tr-hero .tr-card{min-height:96px;padding:12px 6px;gap:4px;}
+    .tr-hero .tr-iconWrap{width:36px;height:36px;}
+    .tr-hero .tr-iconWrap svg{width:22px;height:22px;}
+    .tr-hero .tr-label{font-size:0.5625rem;}
   }
   @media (min-width:640px){
     .tr-hero .tr-cards{gap:10px;}

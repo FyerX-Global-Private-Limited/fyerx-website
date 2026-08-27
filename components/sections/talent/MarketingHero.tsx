@@ -1,132 +1,255 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import type { ReactNode } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { TALENT_HOME } from "@/lib/talent-home-palette";
 
-/**
- * MarketingHero — centered hero with avatar strip, headline containing a
- * rotating word pill (Joins / Strengthens / Grows / Completes / Elevates),
- * subtitle, CTA pair, and corner doodle decorations.
- *
- * Font: Inter (load globally, e.g. via next/font/google) — falls back to
- * the system UI stack. The avatar faces and corner doodles are original
- * inline-SVG stand-ins drawn to the reference sizes/colors; swap them for
- * your real illustration assets under /public when available.
- */
-
-/* ------------------------- rotating word config ------------------------- */
-
-const WORDS = [
-  { w: "Find", bg: "#d8e9fb", dot: "#2383e2", text: "#15335a" },
-  { w: "Assess", bg: "#e8e0fb", dot: "#8b5cf6", text: "#3b2a6b" },
-  { w: "Deploy", bg: "#d5eed3", dot: "#36a852", text: "#14351f" },
-  { w: "Scale", bg: "#fdeecc", dot: "#f2a33c", text: "#6b4a12" },
-  { w: "Retain", bg: "#fde0d3", dot: "#ef7234", text: "#6b2f12" },
+const PILLARS = [
+  {
+    title: "Specialist talent",
+    subtitle: "For critical technology roles",
+    iconBg: "#E8F5EA",
+    iconColor: TALENT_HOME.primary,
+    icon: (
+      <>
+        <circle cx="12" cy="9" r="3.5" />
+        <path d="M5 20c1.2-3.5 3.8-5.5 7-5.5s5.8 2 7 5.5" />
+      </>
+    ),
+  },
+  {
+    title: "Flexible hiring",
+    subtitle: "Contract, permanent, or project teams",
+    iconBg: "#E8F1FB",
+    iconColor: "#1F5C99",
+    icon: (
+      <>
+        <path d="M8 9l-2 3 2 3" />
+        <path d="M16 9l2 3-2 3" />
+        <path d="M13 7l-2 10" />
+      </>
+    ),
+  },
 ] as const;
 
-const ROTATE_MS = 2000;
+function CapabilityCard({
+  label,
+  icon,
+  className,
+}: {
+  label: string;
+  icon: ReactNode;
+  className: string;
+}) {
+  return (
+    <div
+      className={`absolute flex items-center gap-1.5 rounded-xl border border-white/90 bg-white px-2.5 py-1.5 shadow-md sm:gap-2 sm:px-3 sm:py-2 ${className}`}
+    >
+      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#E8F5EA] text-[#11551C] sm:h-7 sm:w-7">
+        {icon}
+      </span>
+      <span className="text-[10px] font-semibold text-[#0B2E59] sm:text-[11px]">{label}</span>
+    </div>
+  );
+}
 
-/* ------------------------------ component ------------------------------ */
+function AvatarBubble({ className, tone }: { className: string; tone: "a" | "b" }) {
+  const bg = tone === "a" ? TALENT_HOME.primary : "#0d4216";
+  return (
+    <div
+      className={`absolute flex h-11 w-11 items-center justify-center rounded-full border-2 border-white shadow-lg sm:h-14 sm:w-14 ${className}`}
+      style={{ background: `linear-gradient(145deg, ${bg}, #6fd88a)` }}
+    >
+      <svg viewBox="0 0 24 24" className="h-5 w-5 text-white sm:h-6 sm:w-6" fill="currentColor" aria-hidden="true">
+        <circle cx="12" cy="9" r="3.5" opacity="0.95" />
+        <path d="M5 20c1.2-3.5 3.8-5.5 7-5.5s5.8 2 7 5.5" opacity="0.9" />
+      </svg>
+    </div>
+  );
+}
+
+function Chip({ label, className }: { label: string; className: string }) {
+  return (
+    <span
+      className={`absolute rounded-full border border-[#C3D4E8] bg-white/95 px-2 py-0.5 text-[9px] font-medium text-[#3D4A5C] shadow-sm sm:text-[10px] ${className}`}
+    >
+      {label}
+    </span>
+  );
+}
+
+const miniIcon = (d: ReactNode) => (
+  <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+    {d}
+  </svg>
+);
+
+function TalentGlobeVisual() {
+  return (
+    <div className="relative mx-auto aspect-square w-full max-w-[480px]" aria-hidden="true">
+      <div
+        className="absolute inset-[6%] rounded-full"
+        style={{
+          background: "radial-gradient(circle at 35% 30%, #ffffff 0%, #E8F5EA 45%, #C5E8CA 100%)",
+        }}
+      />
+
+      <svg viewBox="0 0 400 400" className="absolute inset-0 h-full w-full">
+        <circle cx="200" cy="200" r="130" fill="none" stroke={TALENT_HOME.primary} strokeWidth="1.2" strokeDasharray="3 7" opacity="0.28" />
+        <circle cx="200" cy="200" r="95" fill="none" stroke="#0d4216" strokeWidth="1" strokeDasharray="2 6" opacity="0.22" />
+        <circle cx="200" cy="200" r="58" fill={TALENT_HOME.primary} opacity="0.08" />
+        {[
+          [200, 118],
+          [278, 158],
+          [292, 238],
+          [240, 298],
+          [160, 298],
+          [108, 238],
+          [122, 158],
+        ].map(([x, y], i) => (
+          <line key={i} x1="200" y1="200" x2={x} y2={y} stroke="#B8D4BC" strokeWidth="1" strokeDasharray="2 4" />
+        ))}
+        <circle cx="200" cy="200" r="34" fill="#11551C" />
+        <text x="200" y="196" textAnchor="middle" fill="white" fontSize="8" fontWeight="600" fontFamily="Poppins, sans-serif">
+          FyerX
+        </text>
+        <text x="200" y="210" textAnchor="middle" fill="#9EEBAA" fontSize="6.5" fontWeight="500" fontFamily="Poppins, sans-serif">
+          Talent Delivery
+        </text>
+      </svg>
+
+      <AvatarBubble className="left-[8%] top-[14%]" tone="a" />
+      <AvatarBubble className="bottom-[14%] right-[10%]" tone="b" />
+
+      <CapabilityCard
+        className="left-[2%] top-[38%]"
+        label="Engineering"
+        icon={miniIcon(
+          <>
+            <path d="M8 9l-2 3 2 3" />
+            <path d="M16 9l2 3-2 3" />
+            <path d="M13 7l-2 10" />
+          </>
+        )}
+      />
+      <CapabilityCard
+        className="right-[0%] top-[12%]"
+        label="ServiceNow"
+        icon={miniIcon(
+          <>
+            <rect x="4" y="4" width="7" height="7" rx="1" />
+            <rect x="13" y="4" width="7" height="7" rx="1" />
+            <rect x="4" y="13" width="7" height="7" rx="1" />
+            <rect x="13" y="13" width="7" height="7" rx="1" />
+          </>
+        )}
+      />
+      <CapabilityCard
+        className="right-[2%] top-[42%]"
+        label="Cloud & DevOps"
+        icon={miniIcon(
+          <>
+            <path d="M7 16a4 4 0 0 1-.5-8 5.5 5.5 0 0 1 10.6-1.5A4 4 0 0 1 18 16z" />
+          </>
+        )}
+      />
+      <CapabilityCard
+        className="bottom-[18%] right-[6%]"
+        label="Data & AI"
+        icon={miniIcon(
+          <>
+            <circle cx="6" cy="12" r="2" />
+            <circle cx="18" cy="6" r="2" />
+            <circle cx="18" cy="18" r="2" />
+            <path d="M8 11l8-4M8 13l8 4" />
+          </>
+        )}
+      />
+      <CapabilityCard
+        className="bottom-[14%] left-[8%]"
+        label="QA"
+        icon={miniIcon(
+          <>
+            <path d="M9 5h6v14H9z" />
+            <path d="M11 9h4M11 13h4M11 17h2" />
+          </>
+        )}
+      />
+
+      <Chip label="Contract" className="left-[22%] top-[8%]" />
+      <Chip label="RPO" className="right-[24%] top-[4%]" />
+      <Chip label="Permanent" className="left-[36%] bottom-[4%]" />
+      <Chip label="Project Teams" className="right-[18%] bottom-[6%]" />
+    </div>
+  );
+}
+
+function PillarCard({
+  title,
+  subtitle,
+  iconBg,
+  iconColor,
+  icon,
+}: (typeof PILLARS)[number]) {
+  return (
+    <div className="flex h-full w-full items-start gap-3 rounded-2xl border border-[#E6E9EF] bg-white px-4 py-4 shadow-[0_8px_24px_-12px_rgba(17,85,28,0.12)] sm:gap-3.5 sm:px-4 sm:py-[18px]">
+      <span
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full sm:h-11 sm:w-11"
+        style={{ backgroundColor: iconBg, color: iconColor }}
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 24 24" width={20} height={20} fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+          {icon}
+        </svg>
+      </span>
+      <div className="min-w-0 text-left">
+        <p className="text-sm font-semibold leading-snug text-[var(--ink)] sm:text-[15px]">{title}</p>
+        <p className="mt-0.5 text-xs leading-snug text-[#52525b] sm:text-[13px]">{subtitle}</p>
+      </div>
+    </div>
+  );
+}
 
 export default function MarketingHero() {
-  const [index, setIndex] = useState(0); // start on "Convert"
-
-  useEffect(() => {
-    const id = setInterval(
-      () => setIndex((i) => (i + 1) % WORDS.length),
-      ROTATE_MS
-    );
-    return () => clearInterval(id);
-  }, []);
-
-  const { w, bg, dot, text } = WORDS[index];
-
   return (
-    <section
-      className="relative overflow-hidden bg-white px-6 pt-6 pb-10 sm:px-10 sm:pt-8 sm:pb-14 lg:px-16 lg:pb-16"
-      style={{
-        fontFamily:
-          "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-      }}
-    >
-      {/* keyframes for the word swap */}
-      <style>{`
-        @keyframes heroWordIn {
-          from { opacity: 0; transform: translateY(0.18em); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-
-      <div className="mx-auto max-w-[1360px] text-center">
-        {/* Avatar strip */}
-        <div className="flex justify-center">
-          <Image
-            src="/tophero.png"
-            alt="Team and agent avatars"
-            width={823}
-            height={157}
-            className="h-[40px] w-auto sm:h-[52px] md:h-[64px] lg:h-[92px]"
-            priority
-          />
-        </div>
-
-        {/* Headline with rotating pill */}
-        <div
-          className="mt-4 inline-flex h-[36px] items-center gap-[0.2em] rounded-full px-[0.5em] transition-colors duration-300 sm:mt-5"
-          style={{ backgroundColor: bg }}
-          aria-hidden="true"
-        >
+    <section className="overflow-x-clip bg-white pt-6 lg:pt-0">
+      <div className="mx-auto grid w-full max-w-[1400px] items-start gap-8 lg:grid-cols-2 lg:gap-16 xl:gap-20">
+        <div className="order-2 flex min-w-0 flex-col items-start text-left lg:order-1">
           <span
-            className="ml-1 h-[0.35em] w-[0.35em] rounded-full transition-colors duration-300"
-            style={{ backgroundColor: dot }}
-          />
-          <span
-            key={w}
-            className="px-2 text-[13px] font-medium sm:text-[14px]"
-            style={{ color: text, animation: "heroWordIn 0.3s ease" }}
+            className="inline-flex rounded-full px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
+            style={{ backgroundColor: TALENT_HOME.paleGreen, color: TALENT_HOME.primary }}
           >
-            {w}
+            Technology Recruitment & Delivery
           </span>
+
+          <h1 className="mt-4 max-w-[18ch] text-[clamp(1.875rem,5vw,3.25rem)] font-medium leading-[1.12] tracking-[-0.03em] text-[var(--ink)] sm:mt-5">
+            Hire Technology Talent for{" "}
+            <span className="talent-gradient-text">Critical Roles</span>
+          </h1>
+
+          <p className="mt-4 max-w-[32rem] text-[15px] leading-relaxed text-[#3d4a5c] sm:mt-5 sm:text-[17px]">
+            Hire contract professionals, permanent employees, and project teams
+            across ServiceNow, SAP, Salesforce, Data & AI, Cloud, DevOps, and
+            more.
+          </p>
+
+          <div className="mt-8 grid w-full max-w-[34rem] grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+            {PILLARS.map((pillar) => (
+              <PillarCard key={pillar.title} {...pillar} />
+            ))}
+          </div>
+
+          <div className="mt-7">
+            <PrimaryCtaLink href="/talent/book-session" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
+              Talk to Our Team
+            </PrimaryCtaLink>
+          </div>
         </div>
 
-        <h1 className="mt-3 text-[clamp(1.625rem,7vw,6rem)] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)] sm:mt-4 sm:leading-[1.2] sm:tracking-[-0.03em] lg:mt-[16px] lg:leading-[1.26] lg:tracking-[-0.04em]">
-          Talent that keeps critical work moving.
-        </h1>
-
-        {/* Subtitle */}
-        <p className="mt-4 text-[15px] leading-[1.5] text-[#191918] sm:mt-5 sm:text-[17px] lg:mt-[26px] lg:text-[20px]">
-          Contract staffing, RPO, permanent hiring, and specialist technology
-          recruitment for businesses that need the right people without
-          unnecessary hiring friction.
-        </p>
-
-        {/* CTAs */}
-        <div className="mt-6 flex w-full flex-col items-center justify-center gap-3 sm:mt-[30px] sm:w-auto sm:flex-row sm:gap-[22px]">
-          <PrimaryCtaLink
-            href="/talent/book-session"
-            className="w-full max-w-[300px] justify-center sm:w-auto"
-            color="#11551C"
-            textColor="#9EEBAA"
-          >
-            Discuss Your Hiring Need
-          </PrimaryCtaLink>
-          <button
-            type="button"
-            className="inline-flex h-[44px] w-full items-center justify-center rounded-[10px] bg-[#9EEBAA] px-7 text-[16px] font-semibold text-[#11551C] transition-colors duration-150 hover:bg-[#8adf99] sm:h-[47px] sm:w-auto sm:text-[18px]"
-          >
-            Explore Talent Solutions
-          </button>
+        <div className="order-1 flex min-w-0 items-start justify-center lg:order-2 lg:justify-end">
+          <TalentGlobeVisual />
         </div>
-
-        {/* Reassurance line */}
-        <p className="mt-3 text-[13px] text-[#5b5b58] sm:mt-4">
-          Start with the role, urgency, and outcome you need. We will recommend
-          the engagement model that fits.
-        </p>
       </div>
-
-    
     </section>
   );
 }

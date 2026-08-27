@@ -10,7 +10,7 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, CSSProperties, ReactNo
 
 function CtaArrowIcon() {
   return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.3} strokeLinecap="round" strokeLinejoin="round">
+    <svg className="shrink-0" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.3} strokeLinecap="round" strokeLinejoin="round">
       <line x1="4" y1="12" x2="20" y2="12" />
       <polyline points="13 5 20 12 13 19" />
     </svg>
@@ -34,7 +34,7 @@ function ctaStyle(color: string, textColor = "#ffffff"): CSSProperties {
 }
 
 const ctaClassName =
-  "relative inline-flex w-fit cursor-pointer items-center justify-start gap-2 overflow-hidden text-[15px] font-semibold transition-opacity hover:opacity-95";
+  "relative inline-flex w-fit cursor-pointer items-center justify-center gap-2 overflow-hidden text-[15px] font-semibold transition-opacity hover:opacity-95";
 
 type PrimaryCtaLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className"> & {
   href: string;

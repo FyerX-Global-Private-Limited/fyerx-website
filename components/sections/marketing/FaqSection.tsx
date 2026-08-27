@@ -57,7 +57,7 @@ function ChevronIcon({ open }: { open: boolean }) {
     >
       <path
         d="M6 9l6 6 6-6"
-        stroke="#730031"
+        stroke="#B8860B"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -92,7 +92,10 @@ export default function FaqSection() {
       />
       <div className="faq__inner">
         <div className="faq__left">
-          <h2 className="faq__heading">Frequently Asked Questions</h2>
+          <h2 className="faq__heading">
+            Frequently Asked{" "}
+            <span className="marketing-gradient-text">Questions</span>
+          </h2>
         </div>
 
         <div className="faq__right">
@@ -127,22 +130,12 @@ export default function FaqSection() {
         .faq {
           width: 100%;
           background: #ffffff;
-          padding: 40px 16px;
+          padding: 0;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           box-sizing: border-box;
         }
-        @media (min-width: 640px) {
-          .faq {
-            padding: 56px 40px;
-          }
-        }
-        @media (min-width: 1024px) {
-          .faq {
-            padding: 64px 64px;
-          }
-        }
         .faq__inner {
-          max-width: 1180px;
+          max-width: 1400px;
           margin: 0 auto;
           display: grid;
           grid-template-columns: 1fr;

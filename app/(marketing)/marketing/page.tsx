@@ -23,21 +23,19 @@ export const metadata: Metadata = {
 export default function MarketingPage() {
   return (
     <>
-      
       <MarketingHero />
       <TrackRecord />
-         <TrustBar />
+      <TrustBar highlightClassName="marketing-gradient-text" />
       <ServicesGrid />
       <AIPlatformHero />
       <StackedScrollSection />
       <Leadership />
-        <CampaignsSection />
-             <IntegrationsSection />
-             <EnterpriseSection />
-             <ResourcesSection />
-              <FaqSection />
-      <TestimonialsCTA />         
- 
+      <CampaignsSection />
+      <IntegrationsSection />
+      <EnterpriseSection />
+      <ResourcesSection />
+      <FaqSection />
+      <TestimonialsCTA />
     </>
   );
 }

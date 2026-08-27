@@ -1,83 +1,32 @@
 "use client";
 
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { TALENT_HOME } from "@/lib/talent-home-palette";
 
-/**
- * CampaignsSection
- * -------------------------------------------------------------------------
- * Replica of the monday "campaigns" promo block:
- *
- *   - Black rounded card
- *   - Left: monday|campaigns lockup, headline, sub-copy, "Get Started"
- *     pill + "Learn more" text link
- *   - Right: an email-builder mockup (THE INTERIOR newsletter with the
- *     "Ocean boho" hero, "shop now" button and a product grid) plus a
- *     floating glassy "Open rate 31%" stat card with a sparkline.
- *
- * The photographic parts of the email are reconstructed with warm gradient
- * placeholders (no source imagery was available). Swap the gradient blocks
- * marked `PHOTO` for real <img> tags to reach full pixel-parity.
- * -------------------------------------------------------------------------
- */
-
-/* -------------------------------------------------------------- mockups */
-
-/** Floating white stat card overlapping the dashboard's bottom-left corner. */
-function RetentionStatCard() {
-  return (
-    <div className="absolute -left-6 bottom-16 z-20 w-[190px] overflow-hidden rounded-2xl border border-white/40 bg-white p-4 shadow-2xl">
-      <div className="flex items-center gap-2">
-        <p className="text-4xl font-bold tracking-tight text-neutral-900">98%</p>
-        <svg
-          className="h-4 w-4 text-emerald-500"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2.5}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M4 17L10 11L14 15L20 7" />
-          <path d="M14 7h6v6" />
-        </svg>
-      </div>
-      <p className="mt-1 text-[13px] font-medium text-neutral-500">Client Retention</p>
-    </div>
-  );
-}
-
-/** Clean strategy-dashboard mockup — small labelled workstream tiles. */
-function StrategyDashboardMockup() {
-  const tiles = [
-    { label: "Strategy", accent: "bg-sky-400" },
-    { label: "Content", accent: "bg-fuchsia-400" },
-    { label: "SEO", accent: "bg-emerald-400" },
+function HiringDashboardMockup() {
+  const rows = [
+    { label: "Role scoping", pct: 100, color: "#11551C" },
+    { label: "Shortlist ready", pct: 78, color: "#6fd88a" },
+    { label: "Interviews scheduled", pct: 62, color: "#9EEBAA" },
   ];
 
   return (
-    <div className="relative w-[300px] overflow-hidden rounded-2xl bg-white shadow-2xl">
-      <div className="flex items-center justify-between border-b border-neutral-100 px-5 py-3">
-        <p className="text-[13px] font-semibold text-neutral-900">Growth Dashboard</p>
-        <span className="flex items-center gap-1">
-          <span className="h-2 w-2 rounded-full bg-neutral-200" />
-          <span className="h-2 w-2 rounded-full bg-neutral-200" />
-          <span className="h-2 w-2 rounded-full bg-neutral-200" />
+    <div className="relative w-full max-w-[320px] overflow-hidden rounded-2xl border border-[#C5E8CA] bg-white shadow-lg">
+      <div className="flex items-center justify-between border-b border-[#EEF1F6] px-5 py-3">
+        <p className="text-[13px] font-semibold text-[var(--ink)]">Hiring Pipeline</p>
+        <span className="rounded-full bg-[#F0FAF2] px-2 py-0.5 text-[10px] font-semibold text-[#11551C]">
+          Active
         </span>
       </div>
-
       <div className="space-y-3 p-5">
-        {tiles.map((tile) => (
-          <div
-            key={tile.label}
-            className="flex items-center gap-3 rounded-xl border border-neutral-100 bg-neutral-50 p-3"
-          >
-            <span className={`h-8 w-8 flex-shrink-0 rounded-lg ${tile.accent}`} />
-            <div className="min-w-0 flex-1">
-              <p className="text-[12.5px] font-semibold text-neutral-800">{tile.label}</p>
-              <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-neutral-200">
-                <div className={`h-full ${tile.accent}`} style={{ width: "68%" }} />
-              </div>
+        {rows.map((row) => (
+          <div key={row.label} className="rounded-xl border border-[#EEF1F6] bg-[#FAFBFD] p-3">
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-[12px] font-semibold text-[#3d4a5c]">{row.label}</p>
+              <span className="text-[11px] font-bold text-[var(--ink)]">{row.pct}%</span>
+            </div>
+            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[#E6E9EF]">
+              <div className="h-full rounded-full" style={{ width: `${row.pct}%`, backgroundColor: row.color }} />
             </div>
           </div>
         ))}
@@ -86,55 +35,64 @@ function StrategyDashboardMockup() {
   );
 }
 
-/* ------------------------------------------------------------ component */
+function StatCard() {
+  return (
+    <div className="absolute -left-4 bottom-12 z-10 w-[170px] rounded-2xl border border-[#C5E8CA] bg-white p-4 shadow-xl sm:-left-6">
+      <p className="text-3xl font-bold tracking-tight" style={{ color: TALENT_HOME.primary }}>
+        24–48h
+      </p>
+      <p className="mt-1 text-[12px] font-medium text-[#676879]">Initial profiles delivered</p>
+    </div>
+  );
+}
 
 export default function CampaignsSection() {
   return (
-    <section className="w-full bg-white py-10 sm:py-16">
-      <div className="mx-auto max-w-6xl px-4 sm:px-10 lg:px-16">
-        <div className="relative rounded-[24px] bg-[#11551C] sm:rounded-[32px]">
+    <section className="w-full overflow-x-clip bg-white">
+      <div className="mx-auto w-full max-w-[1400px]">
+        <div
+          className="relative rounded-[24px] border border-[#C5E8CA] sm:rounded-[32px]"
+          style={{ background: "linear-gradient(135deg, #EEF6EF 0%, #F0FAF2 50%, #E8F5EA 100%)" }}
+        >
           <div className="grid items-center gap-8 md:grid-cols-2">
             <div className="px-6 py-10 sm:px-12 sm:py-16 lg:pl-16">
-              <span className="inline-flex w-fit items-center rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white">
+              <span
+                className="inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-medium"
+                style={{ backgroundColor: "rgba(255,255,255,0.85)", color: TALENT_HOME.primary }}
+              >
                 FyerX Talent
               </span>
 
-              <h2 className="section-title-lg mt-6 text-white sm:mt-8">
-                A talent partner that understands the pressure behind an open role.
+              <h2 className="section-title-lg mt-6 text-[var(--ink)] sm:mt-8">
+                A talent partner that understands the pressure behind an{" "}
+                <span className="talent-gradient-text">open role</span>.
               </h2>
 
-              <p className="mt-4 max-w-sm text-sm font-medium leading-relaxed text-neutral-300 sm:mt-6">
+              <p className="mt-4 max-w-sm text-sm font-medium leading-relaxed text-[#52525b] sm:mt-6">
                 When a role stays open, projects slow, teams stretch, and client
                 commitments get harder. FyerX Talent brings structure, specialist
                 sourcing, and clear ownership to the hiring work that needs to move.
               </p>
 
-              <div className="mt-8 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:gap-6">
+              <div className="mt-8">
                 <PrimaryCtaLink
-                  href="/talent/book-session"
+                  href="/contact"
                   className="w-full justify-center sm:w-auto"
-                  color="#FFFBEB"
-                  textColor="#11551C"
+                  color={TALENT_HOME.primary}
+                  textColor={TALENT_HOME.accent}
                 >
-                  Discuss Your Hiring Need
+                  Contact Us
                 </PrimaryCtaLink>
-                <a
-                  href="#"
-                  className="text-sm font-medium text-white underline underline-offset-4 hover:text-neutral-200"
-                >
-                  Explore Talent Solutions
-                </a>
               </div>
             </div>
 
-            {/* Right: strategy dashboard mockup */}
             <div
-              className="relative hidden h-[420px] items-center justify-center md:flex"
+              className="relative hidden min-h-[380px] items-center justify-center pb-8 pr-8 md:flex"
               role="img"
-              aria-label="Why B2B businesses choose FyerX for marketing"
+              aria-label="Hiring pipeline dashboard illustration"
             >
-              <RetentionStatCard />
-              <StrategyDashboardMockup />
+              <StatCard />
+              <HiringDashboardMockup />
             </div>
           </div>
         </div>

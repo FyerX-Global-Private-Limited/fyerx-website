@@ -20,10 +20,10 @@ export default function Home() {
         <Hero />
         <TrustBar />
         <WhoWeAre />
-        <AiHiring />
-        <Capabilities />
         <HowWeWork />
+        <Capabilities />
         <TrackRecord />
+        <AiHiring />
         <Leadership />
         {/* <Trust /> */}
         <SecurityControl />

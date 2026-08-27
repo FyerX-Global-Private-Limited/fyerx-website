@@ -45,8 +45,6 @@ export default function AiHiring() {
       <div className="section-shell section-shell--wide">
         <div className="cg__inner">
           <div className="cg__left">
-            <p className="cg__eyebrow">The FyerX standard</p>
-
             <h2 className="cg__heading section-heading">
               <span className="brand-gradient-text">Built for work</span>
               <br />
@@ -60,8 +58,6 @@ export default function AiHiring() {
             <PrimaryCtaLink href="#" className="mt-10">
               Work with FyerX
             </PrimaryCtaLink>
-
-            <p className="cg__trust">Strategy-led · Outcome-focused · Built to last</p>
           </div>
 
           <div className="cg__grid">

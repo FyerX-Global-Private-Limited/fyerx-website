@@ -1,31 +1,16 @@
 "use client";
 
-/**
- * TrackRecord — "The only AI-first CRM your team will love" hero section.
- *
- * Path: components/sections/main/TrackRecord.tsx
- *
- * Usage (App Router):
- *   import TrackRecord from "@/components/sections/main/TrackRecord";
- *   export default function Page() { return <TrackRecord />; }
- *
- * Self-contained: styles are embedded, no external CSS or dependencies.
- * Industry cards are multi-select toggles; layout never shifts.
- */
-
 import { useState, type ReactNode } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { TALENT_HOME } from "@/lib/talent-home-palette";
 
-/* ------------------------------------------------------------------ */
-/* Icons — 40x40 outline SVGs, stroke inherits currentColor            */
-/* ------------------------------------------------------------------ */
 const I = ({ children }: { children: ReactNode }) => (
   <svg
     className="tr-icon"
     viewBox="0 0 48 48"
     fill="none"
     stroke="currentColor"
-    strokeWidth="2.4"
+    strokeWidth="2.2"
     strokeLinecap="round"
     strokeLinejoin="round"
   >
@@ -34,112 +19,76 @@ const I = ({ children }: { children: ReactNode }) => (
 );
 
 const ICONS: Record<string, ReactNode> = {
-  briefcase: (
+  contract: (
     <I>
-      <rect x="8" y="16" width="32" height="22" rx="3" />
-      <path d="M18 16v-3a3 3 0 013-3h6a3 3 0 013 3v3" />
-      <path d="M8 26h13m6 0h13" />
-      <rect x="21" y="23" width="6" height="6" rx="1.5" />
+      <rect x="10" y="18" width="28" height="20" rx="3" />
+      <path d="M18 18v-4a6 6 0 0 1 12 0v4" />
+      <path d="M10 28h28" />
     </I>
   ),
-  realestate: (
-    <I>
-      <path d="M10 38V20l9-7 9 7v18" />
-      <path d="M28 38V14h10v24" />
-      <path d="M6 38h36" />
-      <path d="M15 26h2m5 0h2M15 32h2m5 0h2M32 20h2m-2 6h2m-2 6h2" />
-    </I>
-  ),
-  software: (
+  itTech: (
     <I>
       <rect x="8" y="10" width="32" height="22" rx="3" />
       <path d="M8 26h32" />
-      <path d="M20 38h8m-4-6v6" />
       <path d="M15 18l4 3-4 3m8 0h6" />
     </I>
   ),
-  media: (
+  project: (
     <I>
-      <path d="M10 22v8a2 2 0 002 2h3" />
-      <path d="M15 20l16-8v24l-16-8z" />
-      <path d="M15 20v12" />
-      <path d="M36 18c2 1.5 2 6.5 0 8" />
-      <path d="M18 32l2 8h4l-2-8" />
+      <path d="M14 20a7 7 0 0 1-4-11l5 5 4-4-5-5a7 7 0 0 1 11 4" />
+      <path d="M34 28a7 7 0 0 1 4 11l-5-5-4 4 5 5a7 7 0 0 1-11-4" />
     </I>
   ),
-  financial: (
+  rpo: (
     <I>
-      <circle cx="24" cy="24" r="16" />
-      <path d="M29 18.5c-1-1.5-2.8-2.5-5-2.5-3 0-5 1.8-5 4s2 3.4 5 4 5 1.8 5 4-2 4-5 4c-2.2 0-4-1-5-2.5" />
-      <path d="M24 12.5v3.5m0 16v3.5" />
+      <circle cx="16" cy="16" r="5" />
+      <circle cx="32" cy="16" r="5" />
+      <path d="M10 36c0-4 2.5-7 6-7s6 3 6 7M26 36c0-4 2.5-7 6-7s6 3 6 7" />
     </I>
   ),
-  healthcare: (
+  permanent: (
     <I>
-      <path d="M24 6l14 5v10c0 10-6 17-14 21C16 38 10 31 10 21V11l14-5z" />
-      <path d="M24 17v10m-5-5h10" />
+      <circle cx="24" cy="16" r="6" />
+      <path d="M12 38c0-6 5-10 12-10s12 4 12 10" />
     </I>
   ),
-  construction: (
+  executive: (
     <I>
-      <path d="M14 20a7 7 0 01-4-11l5 5 4-4-5-5a7 7 0 0111 4" />
-      <path d="M34 28a7 7 0 014 11l-5-5-4 4 5 5a7 7 0 01-11-4" />
-      <path d="M17 23l-7 7a3 3 0 004 4l7-7m4-4l7-7a3 3 0 00-4-4l-7 7" />
+      <circle cx="20" cy="18" r="5" />
+      <path d="M8 38c1.5-5 5-8 12-8s10.5 3 12 8" />
+      <path d="M32 14l6 6-6 6" />
     </I>
   ),
-  other: (
+  bulk: (
     <I>
-      <circle cx="15" cy="13" r="5" />
-      <path d="M31 8l8 10h-16l8-10z" transform="translate(0,1)" />
-      <path d="M12 30l8 8m0-8l-8 8" />
-      <rect x="29" y="30" width="9" height="9" rx="1.5" />
+      <circle cx="14" cy="18" r="4" />
+      <circle cx="24" cy="14" r="4" />
+      <circle cx="34" cy="18" r="4" />
+      <path d="M8 36c1-3 3.5-5 6-5M22 36c1-3 3.5-5 6-5M34 36c1-3 3.5-5 6-5" />
     </I>
   ),
-  logistics: (
+  global: (
     <I>
-      <path d="M6 30V16a2 2 0 012-2h14a2 2 0 012 2v14" />
-      <path d="M24 22h8l6 6v4H24z" />
-      <circle cx="14" cy="34" r="4" />
-      <circle cx="34" cy="34" r="4" />
-      <path d="M6 30h4m14 0h4" />
-    </I>
-  ),
-  enterpriseit: (
-    <I>
-      <rect x="9" y="8" width="30" height="9" rx="2" />
-      <rect x="9" y="20" width="30" height="9" rx="2" />
-      <rect x="9" y="32" width="30" height="8" rx="2" />
-      <path d="M14 12.5h.01M14 24.5h.01" />
-    </I>
-  ),
-  rocket: (
-    <I>
-      <path d="M24 6c5 4 8 11 8 18 0 5-2 9-4 11l-4 4-4-4c-2-2-4-6-4-11 0-7 3-14 8-18z" />
-      <circle cx="24" cy="19" r="3" />
-      <path d="M16 30l-6 4 2-9" />
-      <path d="M32 30l6 4-2-9" />
-      <path d="M20 39v4m8-4v4" />
+      <circle cx="24" cy="24" r="14" />
+      <path d="M10 24h28M24 10c4 4 6 9 6 14s-2 10-6 14M24 10c-4 4-6 9-6 14s2 10 6 14" />
     </I>
   ),
 };
 
-/* ------------------------------------------------------------------ */
-/* Card data                                                           */
-/* ------------------------------------------------------------------ */
-interface Industry {
+const STAFFING_SERVICES: {
   icon: keyof typeof ICONS;
-  label: [string, string?]; // one or two lines, matching the reference
-}
-
-const INDUSTRIES: Industry[] = [
-  { icon: "software", label: ["A specialist for", "a live project"] },
-  { icon: "briefcase", label: ["A contract team", "that can scale"] },
-  { icon: "construction", label: ["Support across", "a hiring surge"] },
-  { icon: "enterpriseit", label: ["An extension to", "the internal team"] },
-  { icon: "financial", label: ["A permanent or", "leadership hire"] },
-  { icon: "media", label: ["Technology talent", "with specific skills"] },
-  { icon: "logistics", label: ["Hiring support", "across borders"] },
-  { icon: "healthcare", label: ["Better confidence", "before an offer"] },
+  label: [string, string?];
+  iconBg: string;
+  iconColor: string;
+}[] = [
+  { icon: "contract", label: ["Contract", "Staffing"], iconBg: "#d8e9fb", iconColor: "#2383e2" },
+  { icon: "itTech", label: ["IT & Tech", "Staffing"], iconBg: "#d5eed3", iconColor: "#16a34a" },
+  { icon: "project", label: ["Project-Based", "Staffing"], iconBg: "#fdeecc", iconColor: "#d97706" },
+  { icon: "rpo", label: ["Recruitment Process", "Outsourcing"], iconBg: "#e8e0fb", iconColor: "#7c3aed" },
+  { icon: "permanent", label: ["Permanent", "Hiring"], iconBg: "#fce7f3", iconColor: "#db2777" },
+  { icon: "executive", label: ["Executive", "Search"], iconBg: "#fde0d3", iconColor: "#ea580c" },
+  { icon: "bulk", label: ["Bulk & Volume", "Hiring"], iconBg: "#ecfeff", iconColor: "#0891b2" },
+  { icon: "global", label: ["Global", "Staffing"], iconBg: "#F0FAF2", iconColor: "#11551C" },
 ];
 
 export default function TrackRecord() {
@@ -148,60 +97,60 @@ export default function TrackRecord() {
   const toggle = (i: number) =>
     setSelected((prev) => {
       const next = new Set(prev);
-      if (next.has(i)) {
-        next.delete(i);
-      } else {
-        next.add(i);
-      }
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
       return next;
     });
 
   return (
-    <section className="tr-hero">
-     
+    <section id="talent-services" className="home-section tr-hero">
+      <div className="section-shell">
+        <p className="tr-question">What kind of hiring support do you need?</p>
 
-      {/* ---------- Industry picker ---------- */}
-      <p className="tr-question">What kind of hiring support do you need?</p>
+        <div className="section-body mt-0 flex flex-col items-center gap-8">
+          <div className="tr-cards" role="group" aria-label="What kind of hiring support do you need?">
+            {STAFFING_SERVICES.map((service, i) => {
+              const isOn = selected.has(i);
+              return (
+                <button
+                  key={service.label.join(" ")}
+                  type="button"
+                  className={`tr-card${isOn ? " selected" : ""}`}
+                  aria-pressed={isOn}
+                  onClick={() => toggle(i)}
+                >
+                  <span className="tr-check" aria-hidden="true">
+                    {isOn && (
+                      <svg viewBox="0 0 16 16" fill="none">
+                        <path d="M3.5 8.5l3 3 6-7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    )}
+                  </span>
+                  <span className="tr-iconWrap" style={{ backgroundColor: service.iconBg, color: service.iconColor }}>
+                    {ICONS[service.icon]}
+                  </span>
+                  <span className="tr-label">
+                    {service.label[0]}
+                    {service.label[1] && (
+                      <>
+                        <br />
+                        {service.label[1]}
+                      </>
+                    )}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
 
-      <div className="tr-cards" role="group" aria-label="What kind of hiring support do you need?">
-        {INDUSTRIES.map((ind, i) => {
-          const isOn = selected.has(i);
-          return (
-            <button
-              key={ind.label.join(" ")}
-              type="button"
-              className={`tr-card${isOn ? " selected" : ""}`}
-              aria-pressed={isOn}
-              onClick={() => toggle(i)}
-            >
-              <span className="tr-check" aria-hidden="true">
-                {isOn && (
-                  <svg viewBox="0 0 16 16" fill="none">
-                    <path d="M3.5 8.5l3 3 6-7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                )}
-              </span>
-              {ICONS[ind.icon]}
-              <span className="tr-label">
-                {ind.label[0]}
-                {ind.label[1] && (
-                  <>
-                    <br />
-                    {ind.label[1]}
-                  </>
-                )}
-              </span>
-            </button>
-          );
-        })}
+          <div className="tr-cta-wrap">
+            <PrimaryCtaLink href="/talent/book-session" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
+              Get Started
+            </PrimaryCtaLink>
+          </div>
+        </div>
       </div>
 
-      {/* ---------- CTA ---------- */}
-      <PrimaryCtaLink href="/talent/book-session" color="#11551C" textColor="#9EEBAA">Tell Us What You Need</PrimaryCtaLink>
-
-      <p className="tr-note">FyerX Talent is being built by the team behind FyerX—bringing a delivery-led mindset to hiring.</p>
-
-      {/* Embedded styles — self-contained, no external CSS needed. */}
       <style>{css}</style>
     </section>
   );
@@ -209,111 +158,63 @@ export default function TrackRecord() {
 
 const css = `
   .tr-hero{
-    --talent:#11551C;
-    --talent-accent:#9EEBAA;
+    --accent:${TALENT_HOME.primary};
     --text:#111111;
-    --gray:#9B9B9B;
     --border:#DCDEE3;
-    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     -webkit-font-smoothing:antialiased;
     background:#ffffff;
     text-align:center;
-    padding:40px 16px;
-  }
-  @media (min-width:640px){
-    .tr-hero{padding:56px 40px;}
-  }
-  @media (min-width:1024px){
-    .tr-hero{padding:64px 64px;}
   }
   .tr-hero *{margin:0;padding:0;box-sizing:border-box;}
-  /* ---------- Heading ---------- */
-  .tr-hero .tr-title{
-    max-width:18ch;
-    font-size:46px;
-    line-height:1.12;
-    font-weight:500;
-    color:var(--ink);
-    letter-spacing:-0.02em;
-    margin:0 auto 40px;
+  .tr-hero .section-shell{
+    margin-inline:auto;
+    width:100%;
+    max-width:75rem;
   }
-  .tr-hero .tr-gradient{
-    background:linear-gradient(90deg,#9EEBAA 0%,#6fd88a 55%,#11551C 100%);
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color:transparent;
-    color:transparent;
-  }
-  .tr-hero .tr-blue{color:var(--talent);}
-  .tr-hero .tr-sub{
-    max-width:40ch;
-    font-size:1.125rem;
-    line-height:1.5;
-    font-weight:300;
-    color:#333333;
-    margin:1.75rem auto .25rem;
-  }
-  /* ---------- Question ---------- */
+  .tr-hero .section-body{width:100%;}
   .tr-hero .tr-question{
     font-size:clamp(1rem,3.5vw,1.25rem);
     line-height:120%;
     font-weight:600;
     color:var(--text);
-    margin-top:24px;
-    margin-bottom:28px;
-    padding-inline:8px;
+    margin:0 auto 20px;
+    padding-inline:0.5rem;
   }
-  /* ---------- Cards ---------- */
   .tr-hero .tr-cards{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
-    align-items:stretch;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:8px;
     width:100%;
-    max-width:520px;
-    gap:10px;
-    margin:0 auto 32px;
+    max-width:920px;
+    margin:0 auto;
   }
-  @media (min-width:480px){
-    .tr-hero .tr-cards{grid-template-columns:repeat(4,1fr);max-width:600px;}
-  }
-  @media (min-width:768px){
-    .tr-hero .tr-cards{max-width:760px;gap:12px;}
-  }
-  @media (min-width:1024px){
-    .tr-hero .tr-cards{grid-template-columns:repeat(8,1fr);width:85%;max-width:100%;margin-bottom:46px;}
+  .tr-hero .tr-cta-wrap{
+    display:flex;
+    justify-content:center;
   }
   .tr-hero .tr-card{
     position:relative;
-    width:100%;
-    height:96px;
+    min-height:120px;
     background:#ffffff;
     border:1px solid var(--border);
-    border-radius:4px;
+    border-radius:8px;
     cursor:pointer;
     font-family:inherit;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:0px;
-    padding:12px 8px;
+    gap:8px;
+    padding:18px 8px 14px;
     transition:border-color .2s ease,box-shadow .2s ease;
   }
-  @media (min-width:640px){
-    .tr-hero .tr-card{height:115px;padding:16px 10px;}
-  }
-  .tr-hero .tr-card:hover{
-    border-color:#B9BDC7;
-    box-shadow:0 4px 14px rgba(17,17,17,0.06);
-  }
-  .tr-hero .tr-card.selected{
-    border-color:var(--talent);
-    box-shadow:0 0 0 1px var(--talent);
-  }
+  .tr-hero .tr-card:hover{border-color:#B9BDC7;box-shadow:0 4px 14px rgba(17,17,17,0.06);}
+  .tr-hero .tr-card.selected{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);}
   .tr-hero .tr-check{
     position:absolute;
-    top:14px;
-    left:14px;
+    top:10px;
+    left:10px;
     width:18px;
     height:18px;
     border:1px solid #C9CCD4;
@@ -324,66 +225,51 @@ const css = `
     justify-content:center;
     transition:background-color .2s ease,border-color .2s ease;
   }
-  .tr-hero .tr-card.selected .tr-check{
-    background:var(--talent);
-    border-color:var(--talent);
-  }
+  .tr-hero .tr-card.selected .tr-check{background:var(--accent);border-color:var(--accent);}
   .tr-hero .tr-check svg{width:12px;height:12px;}
-  .tr-hero .tr-icon{
-    width:32px;
-    height:32px;
-    color:#555A64;
-  }
-  @media (min-width:640px){
-    .tr-hero .tr-icon{width:42px;height:42px;}
-  }
-  .tr-hero .tr-label{
-    position:relative;
-    text-align:center;
-    margin-top:.5rem;
-    margin-left:auto;
-    margin-right:auto;
-    font-size:.6875rem;
-    line-height:1.35;
-    font-weight:400;
-    color:#333333;
-  }
-  @media (min-width:640px){
-    .tr-hero .tr-label{font-size:.75rem;}
-  }
-  /* ---------- CTA ---------- */
-  .tr-hero .tr-cta{
-    display:inline-flex;
+  .tr-hero .tr-iconWrap{
+    display:flex;
     align-items:center;
-    gap:10px;
-    background:#11551C;
-    color:#9EEBAA;
-    font-family:inherit;
-    font-size:16px;
-    font-weight:400;
-    border:none;
+    justify-content:center;
+    width:52px;
+    height:52px;
     border-radius:999px;
-    padding:10px 24px;
-    cursor:pointer;
-    transition:background-color .25s ease,transform .25s ease;
+    box-shadow:0 6px 16px rgba(20,20,43,0.12);
+    flex-shrink:0;
+  }
+  .tr-hero .tr-icon{width:28px;height:28px;}
+  .tr-hero .tr-label{
+    text-align:center;
+    font-size:0.6875rem;
+    line-height:1.35;
+    font-weight:500;
+    color:#333333;
+    padding:0 2px;
+  }
+  @media (max-width:380px){
+    .tr-hero .tr-card{min-height:108px;padding:14px 6px 12px;gap:6px;}
+    .tr-hero .tr-iconWrap{width:44px;height:44px;}
+    .tr-hero .tr-icon{width:24px;height:24px;}
+    .tr-hero .tr-label{font-size:0.625rem;}
   }
   @media (min-width:640px){
-    .tr-hero .tr-cta{font-size:20px;gap:12px;padding:10px 30px;}
+    .tr-hero .tr-cards{gap:10px;}
+    .tr-hero .tr-card{min-height:128px;padding:18px 10px 14px;}
+    .tr-hero .tr-iconWrap{width:56px;height:56px;}
+    .tr-hero .tr-label{font-size:0.75rem;padding:0 4px;}
   }
-  .tr-hero .tr-cta:hover{background:#0d4216;}
-  .tr-hero .tr-arrow{display:inline-flex;transition:transform .25s ease;}
-  .tr-hero .tr-cta:hover .tr-arrow{transform:translateX(4px);}
-  /* ---------- Note ---------- */
-  .tr-hero .tr-note{
-    font-size:18px;
-    font-weight:300;
-    color:var(--gray);
-    margin-top:14px;
+  @media (min-width:768px){
+    .tr-hero .tr-cards{grid-template-columns:repeat(3, minmax(0, 1fr));gap:12px;max-width:760px;}
   }
-  /* ---------- Responsive ---------- */
-  @media (max-width:640px){
-    .tr-hero .tr-title{font-size:34px;}
-    .tr-hero .tr-title br{display:none;}
-    .tr-hero .tr-sub br{display:none;}
+  @media (min-width:1024px){
+    .tr-hero .tr-cards{
+      display:flex;
+      flex-flow:row wrap;
+      justify-content:center;
+      max-width:100%;
+      gap:12px;
+    }
+    .tr-hero .tr-card{flex:1 1 calc(12.5% - 12px);min-width:110px;max-width:140px;}
+    .tr-hero .tr-iconWrap{width:58px;height:58px;}
   }
 `;
