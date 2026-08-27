@@ -1,5 +1,5 @@
-import { lookup } from "node:dns/promises";
 import mysql from "mysql2/promise";
+import { lookup } from "node:dns/promises";
 
 const LOG_PREFIX = "[mysql]";
 
@@ -10,6 +10,24 @@ export type MysqlConfig = {
   password: string;
   database: string;
 };
+
+export type DbCheckResult = {
+  ok: boolean;
+  detail: string;
+};
+
+function dbLog(message: string, error = false) {
+  const line = `${LOG_PREFIX} ${message}`;
+  if (error) {
+    console.error(line);
+    return;
+  }
+  console.log(line);
+  // Hostinger and similar panels often capture stderr only
+  if (process.env.NODE_ENV === "production") {
+    console.error(line);
+  }
+}
 
 export function getMysqlConfig(): MysqlConfig | null {
   const host = process.env.MYSQL_HOST?.trim();
@@ -26,23 +44,16 @@ export function getMysqlConfig(): MysqlConfig | null {
 }
 
 async function resolveCandidates(hostname: string): Promise<string[]> {
-  const candidates: string[] = [];
+  const ipv6 = await lookup(hostname, { family: 6 }).then((r) => r.address).catch(() => null);
+  const ipv4 = await lookup(hostname, { family: 4 }).then((r) => r.address).catch(() => null);
 
-  try {
-    candidates.push((await lookup(hostname, { family: 6 })).address);
-  } catch {
-    // IPv6 not published for this host
-  }
+  // Local Windows often reaches Hostinger over IPv6; Hostinger Node apps usually need IPv4.
+  const ordered =
+    process.env.NODE_ENV === "production"
+      ? [hostname, ipv4, ipv6]
+      : [ipv6, hostname, ipv4];
 
-  candidates.push(hostname);
-
-  try {
-    candidates.push((await lookup(hostname, { family: 4 })).address);
-  } catch {
-    // IPv4 not published for this host
-  }
-
-  return [...new Set(candidates)];
+  return [...new Set(ordered.filter((value): value is string => Boolean(value)))];
 }
 
 function connectionOptions(config: MysqlConfig, host: string): mysql.ConnectionOptions {
@@ -63,21 +74,19 @@ type PingRow = {
   version: string;
 };
 
-export async function checkDatabaseConnection(): Promise<boolean> {
+export async function checkDatabaseConnection(): Promise<DbCheckResult> {
   const config = getMysqlConfig();
 
   if (!config) {
-    console.warn(
-      `${LOG_PREFIX} Skipped connection check: set MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, and MYSQL_DATABASE.`
-    );
-    return false;
+    const detail =
+      "Skipped connection check: set MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, and MYSQL_DATABASE.";
+    dbLog(detail, true);
+    return { ok: false, detail };
   }
 
   const startedAt = Date.now();
   const candidates = await resolveCandidates(config.host);
-  console.info(
-    `${LOG_PREFIX} Checking connection to ${config.host}:${config.port} / ${config.database} ...`
-  );
+  dbLog(`Checking connection to ${config.host}:${config.port} / ${config.database} ...`);
 
   let lastError = "Unknown connection error";
 
@@ -86,35 +95,33 @@ export async function checkDatabaseConnection(): Promise<boolean> {
     const attemptLabel = host === config.host ? host : `${config.host} (${host})`;
 
     try {
-      console.info(`${LOG_PREFIX} Trying ${attemptLabel} ...`);
+      dbLog(`Trying ${attemptLabel} ...`);
       connection = await mysql.createConnection(connectionOptions(config, host));
       const [rows] = await connection.query<mysql.RowDataPacket[]>(
         "SELECT 1 AS ok, DATABASE() AS db, VERSION() AS version"
       );
       const row = rows[0] as PingRow | undefined;
       const elapsed = Date.now() - startedAt;
-
-      console.info(
-        `${LOG_PREFIX} Connection successful` +
-          (row
-            ? ` (database=${row.db ?? config.database}, version=${row.version}, ${elapsed}ms)`
-            : ` (${elapsed}ms)`)
-      );
-      return true;
+      const detail = row
+        ? `Connection successful (database=${row.db ?? config.database}, version=${row.version}, ${elapsed}ms)`
+        : `Connection successful (${elapsed}ms)`;
+      dbLog(detail);
+      return { ok: true, detail };
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       lastError = message;
-      console.error(`${LOG_PREFIX} ${attemptLabel} failed: ${message}`);
+      dbLog(`${attemptLabel} failed: ${message}`, true);
 
       if (message.includes("Access denied")) {
-        console.error(
-          `${LOG_PREFIX} Access denied: check MYSQL_PASSWORD (use $$ for a literal $), and allow this machine in hPanel → Databases → Remote MySQL (add your IPv6/IPv4 or %).`
+        dbLog(
+          "Access denied: check MYSQL_PASSWORD (use $$ for a literal $), and allow this machine in hPanel → Databases → Remote MySQL (add your IPv6/IPv4 or %).",
+          true
         );
-        return false;
+        return { ok: false, detail: message };
       }
 
       if (!isTimeoutError(message)) {
-        return false;
+        return { ok: false, detail: message };
       }
     } finally {
       if (connection) {
@@ -123,8 +130,18 @@ export async function checkDatabaseConnection(): Promise<boolean> {
     }
   }
 
-  console.error(
-    `${LOG_PREFIX} Connection failed after ${Date.now() - startedAt}ms: ${lastError}`
-  );
-  return false;
+  const detail = `Connection failed after ${Date.now() - startedAt}ms: ${lastError}`;
+  dbLog(detail, true);
+  return { ok: false, detail };
+}
+
+const globalForDb = globalThis as unknown as {
+  mysqlCheck?: Promise<DbCheckResult>;
+};
+
+export function checkDatabaseConnectionOnce(): Promise<DbCheckResult> {
+  if (!globalForDb.mysqlCheck) {
+    globalForDb.mysqlCheck = checkDatabaseConnection();
+  }
+  return globalForDb.mysqlCheck;
 }
