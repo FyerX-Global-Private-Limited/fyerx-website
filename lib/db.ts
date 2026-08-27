@@ -1,3 +1,4 @@
+import { lookup } from "node:dns/promises";
 import mysql from "mysql2/promise";
 
 const LOG_PREFIX = "[mysql]";
@@ -24,11 +25,36 @@ export function getMysqlConfig(): MysqlConfig | null {
   return { host, port, user, password, database };
 }
 
-function connectionOptions(config: MysqlConfig): mysql.ConnectionOptions {
+async function resolveCandidates(hostname: string): Promise<string[]> {
+  const candidates: string[] = [];
+
+  try {
+    candidates.push((await lookup(hostname, { family: 6 })).address);
+  } catch {
+    // IPv6 not published for this host
+  }
+
+  candidates.push(hostname);
+
+  try {
+    candidates.push((await lookup(hostname, { family: 4 })).address);
+  } catch {
+    // IPv4 not published for this host
+  }
+
+  return [...new Set(candidates)];
+}
+
+function connectionOptions(config: MysqlConfig, host: string): mysql.ConnectionOptions {
   return {
     ...config,
-    connectTimeout: 10_000,
+    host,
+    connectTimeout: 8_000,
   };
+}
+
+function isTimeoutError(message: string) {
+  return message.includes("ETIMEDOUT") || message.includes("ECONNREFUSED") || message.includes("ENETUNREACH");
 }
 
 type PingRow = {
@@ -48,35 +74,57 @@ export async function checkDatabaseConnection(): Promise<boolean> {
   }
 
   const startedAt = Date.now();
+  const candidates = await resolveCandidates(config.host);
   console.info(
     `${LOG_PREFIX} Checking connection to ${config.host}:${config.port} / ${config.database} ...`
   );
 
-  let connection: mysql.Connection | undefined;
+  let lastError = "Unknown connection error";
 
-  try {
-    connection = await mysql.createConnection(connectionOptions(config));
-    const [rows] = await connection.query<mysql.RowDataPacket[]>(
-      "SELECT 1 AS ok, DATABASE() AS db, VERSION() AS version"
-    );
-    const row = rows[0] as PingRow | undefined;
-    const elapsed = Date.now() - startedAt;
+  for (const host of candidates) {
+    let connection: mysql.Connection | undefined;
+    const attemptLabel = host === config.host ? host : `${config.host} (${host})`;
 
-    console.info(
-      `${LOG_PREFIX} Connection successful` +
-        (row
-          ? ` (database=${row.db ?? config.database}, version=${row.version}, ${elapsed}ms)`
-          : ` (${elapsed}ms)`)
-    );
-    return true;
-  } catch (error) {
-    const elapsed = Date.now() - startedAt;
-    const message = error instanceof Error ? error.message : String(error);
-    console.error(`${LOG_PREFIX} Connection failed after ${elapsed}ms: ${message}`);
-    return false;
-  } finally {
-    if (connection) {
-      await connection.end().catch(() => undefined);
+    try {
+      console.info(`${LOG_PREFIX} Trying ${attemptLabel} ...`);
+      connection = await mysql.createConnection(connectionOptions(config, host));
+      const [rows] = await connection.query<mysql.RowDataPacket[]>(
+        "SELECT 1 AS ok, DATABASE() AS db, VERSION() AS version"
+      );
+      const row = rows[0] as PingRow | undefined;
+      const elapsed = Date.now() - startedAt;
+
+      console.info(
+        `${LOG_PREFIX} Connection successful` +
+          (row
+            ? ` (database=${row.db ?? config.database}, version=${row.version}, ${elapsed}ms)`
+            : ` (${elapsed}ms)`)
+      );
+      return true;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      lastError = message;
+      console.error(`${LOG_PREFIX} ${attemptLabel} failed: ${message}`);
+
+      if (message.includes("Access denied")) {
+        console.error(
+          `${LOG_PREFIX} Access denied: check MYSQL_PASSWORD (use $$ for a literal $), and allow this machine in hPanel → Databases → Remote MySQL (add your IPv6/IPv4 or %).`
+        );
+        return false;
+      }
+
+      if (!isTimeoutError(message)) {
+        return false;
+      }
+    } finally {
+      if (connection) {
+        await connection.end().catch(() => undefined);
+      }
     }
   }
+
+  console.error(
+    `${LOG_PREFIX} Connection failed after ${Date.now() - startedAt}ms: ${lastError}`
+  );
+  return false;
 }
