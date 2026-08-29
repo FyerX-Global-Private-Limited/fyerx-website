@@ -1,5 +1,8 @@
 import type { LeadFormType, LeadPayload } from "@/lib/leads";
 
+/** Inline attachment CID used by nodemailer for the header logo. */
+export const LEAD_EMAIL_LOGO_CID = "fyerx-logo";
+
 const FORM_LABELS: Record<LeadFormType, string> = {
   contact: "Contact our team",
   job: "Job application",
@@ -68,6 +71,8 @@ export function leadEmailHtml(lead: LeadPayload, id: number): string {
   });
   const helpWith = lead.helpWith.length > 0 ? lead.helpWith.join(", ") : null;
   const phone = `${lead.phoneCountry} ${lead.phone}`.trim();
+  const year = new Date().getFullYear();
+  const websiteUrl = "https://fyerx.com/";
 
   const rows = [
     row("Lead ID", String(id)),
@@ -109,9 +114,21 @@ export function leadEmailHtml(lead: LeadPayload, id: number): string {
       <td align="center">
         <table role="presentation" class="container" width="600" cellspacing="0" cellpadding="0" style="width:600px;max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(11,46,89,0.08);">
           <tr>
+            <td style="background:#ffffff;padding:20px 28px 16px;border-bottom:1px solid #e8eef5;">
+              <a href="${websiteUrl}" style="text-decoration:none;">
+                <img
+                  src="cid:${LEAD_EMAIL_LOGO_CID}"
+                  alt="FyerX"
+                  width="140"
+                  height="32"
+                  style="display:block;width:140px;max-width:50%;height:auto;border:0;outline:none;"
+                />
+              </a>
+            </td>
+          </tr>
+          <tr>
             <td style="background:#0b2e59;padding:22px 28px;">
-              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#9ec0e6;">FyerX</p>
-              <h1 style="margin:8px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:22px;line-height:1.3;color:#ffffff;font-weight:700;">
+              <h1 style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:22px;line-height:1.3;color:#ffffff;font-weight:700;">
                 New lead received
               </h1>
             </td>
@@ -137,6 +154,16 @@ export function leadEmailHtml(lead: LeadPayload, id: number): string {
             <td style="background:#f7fafc;padding:16px 28px;border-top:1px solid #e8eef5;">
               <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;color:#5a6a7d;">
                 This notification was sent automatically from the FyerX website. Reply to this email to contact the lead.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="background:#0b2e59;padding:18px 28px;text-align:center;">
+              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;color:#c5d7ec;">
+                &copy; ${year} FyerX Global Private Limited. All rights reserved.
+              </p>
+              <p style="margin:8px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;">
+                <a href="${websiteUrl}" style="color:#ffffff;text-decoration:underline;">${websiteUrl}</a>
               </p>
             </td>
           </tr>
@@ -168,8 +195,11 @@ export function leadEmailText(lead: LeadPayload, id: number): string {
     ["Message", lead.message],
   ];
 
-  return lines
+  return `${lines
     .filter(([, value]) => Boolean(value?.trim()))
     .map(([label, value]) => `${label}: ${value}`)
-    .join("\n");
+    .join("\n")}
+
+© ${new Date().getFullYear()} FyerX Global Private Limited. All rights reserved.
+https://fyerx.com/`;
 }

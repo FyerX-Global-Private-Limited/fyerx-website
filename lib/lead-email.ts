@@ -1,6 +1,13 @@
+import fs from "node:fs";
+import path from "node:path";
 import nodemailer from "nodemailer";
 import type { LeadPayload } from "@/lib/leads";
-import { leadEmailHtml, leadEmailSubject, leadEmailText } from "@/lib/lead-email-template";
+import {
+  LEAD_EMAIL_LOGO_CID,
+  leadEmailHtml,
+  leadEmailSubject,
+  leadEmailText,
+} from "@/lib/lead-email-template";
 
 const LOG_PREFIX = "[zeptomail]";
 
@@ -113,6 +120,22 @@ export async function sendLeadNotificationEmail(lead: LeadPayload, id: number): 
   }
 
   try {
+    const logoPath = path.join(process.cwd(), "public", "logo.png");
+    const attachments = fs.existsSync(logoPath)
+      ? [
+          {
+            filename: "logo.png",
+            path: logoPath,
+            cid: LEAD_EMAIL_LOGO_CID,
+            contentDisposition: "inline" as const,
+          },
+        ]
+      : [];
+
+    if (attachments.length === 0) {
+      mailLog("Logo attachment missing at public/logo.png; sending without logo.", true);
+    }
+
     const info = await getTransporter(config).sendMail({
       from: config.from,
       envelope: {
@@ -124,6 +147,7 @@ export async function sendLeadNotificationEmail(lead: LeadPayload, id: number): 
       subject: leadEmailSubject(lead, id),
       text: leadEmailText(lead, id),
       html: leadEmailHtml(lead, id),
+      attachments,
     });
     mailLog(`Sent lead #${id} from ${formatFrom(config.from)} to ${config.to} messageId=${info.messageId ?? "n/a"}`);
   } catch (error) {
