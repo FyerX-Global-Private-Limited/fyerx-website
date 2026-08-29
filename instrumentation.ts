@@ -9,5 +9,10 @@ export async function register() {
   }
 
   const { checkDatabaseConnectionOnce } = await import("./lib/db");
-  await checkDatabaseConnectionOnce();
+  const result = await checkDatabaseConnectionOnce();
+  const line = result.ok
+    ? `[mysql] STARTUP CONNECTION: SUCCESS — ${result.detail}`
+    : `[mysql] STARTUP CONNECTION: FAILED — ${result.detail}`;
+  console.log(line);
+  console.error(line);
 }

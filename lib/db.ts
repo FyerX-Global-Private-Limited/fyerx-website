@@ -22,6 +22,10 @@ export type MysqlConfig = {
 export type DbCheckResult = {
   ok: boolean;
   detail: string;
+  passwordLength?: number;
+  passwordEndsWithDollar?: boolean;
+  passwordFromBase64?: boolean;
+  usedPasswordSource?: string;
 };
 
 type ConnectionTarget = {
@@ -52,28 +56,60 @@ function normalizeMysqlPassword(password: string): string {
   return value.replaceAll("$$", "$");
 }
 
-function passwordCandidates(password: string): string[] {
-  const normalized = normalizeMysqlPassword(password);
-  const values = [normalized];
-  // Next.js env expansion can drop a trailing $ (FyerxDb69$ → FyerxDb69)
-  if (!normalized.endsWith("$")) {
-    values.push(`${normalized}$`);
+type PasswordCandidate = {
+  label: string;
+  password: string;
+};
+
+function decodePasswordBase64(): string | null {
+  const raw = process.env.MYSQL_PASSWORD_BASE64?.trim();
+  if (!raw) return null;
+  try {
+    const decoded = Buffer.from(raw, "base64").toString("utf8");
+    return decoded || null;
+  } catch {
+    return null;
   }
-  return [...new Set(values)];
+}
+
+function collectPasswordCandidates(): PasswordCandidate[] {
+  const seen = new Set<string>();
+  const candidates: PasswordCandidate[] = [];
+
+  const add = (password: string | null | undefined, label: string) => {
+    if (!password || seen.has(password)) return;
+    seen.add(password);
+    candidates.push({ password, label });
+  };
+
+  // Base64 cannot be eaten by shell/$ expansion. Prefer this on Hostinger.
+  add(decodePasswordBase64(), "base64");
+
+  const raw = process.env.MYSQL_PASSWORD;
+  if (raw) {
+    add(raw, "raw");
+    const normalized = normalizeMysqlPassword(raw);
+    add(normalized, "normalized");
+    if (!normalized.endsWith("$")) {
+      add(`${normalized}$`, "normalized+$");
+    }
+  }
+
+  return candidates;
 }
 
 export function getMysqlConfig(): MysqlConfig | null {
   const host = process.env.MYSQL_HOST?.trim();
   const user = process.env.MYSQL_USER?.trim();
-  const password = process.env.MYSQL_PASSWORD;
   const database = process.env.MYSQL_DATABASE?.trim();
   const port = Number(process.env.MYSQL_PORT ?? 3306);
+  const password = collectPasswordCandidates()[0]?.password;
 
   if (!host || !user || !password || !database || Number.isNaN(port)) {
     return null;
   }
 
-  return { host, port, user, password: normalizeMysqlPassword(password), database };
+  return { host, port, user, password, database };
 }
 
 function baseAuth(config: MysqlConfig, password: string): mysql.ConnectionOptions {
@@ -157,12 +193,10 @@ async function resolveWorkingOptions(config: MysqlConfig): Promise<mysql.Connect
   }
 
   const failures: string[] = [];
-  const passwords = passwordCandidates(config.password);
+  const passwords = collectPasswordCandidates();
 
-  for (const [index, password] of passwords.entries()) {
-    if (index > 0) {
-      dbLog("Retrying with trailing $ restored (env expansion may have stripped it)");
-    }
+  for (const { password, label } of passwords) {
+    dbLog(`Trying password source=${label} length=${password.length} endsWith$=${password.endsWith("$")}`);
     const targets = await resolveTargets(config, password);
     for (const target of targets) {
       const result = await tryTarget(target);
@@ -172,7 +206,7 @@ async function resolveWorkingOptions(config: MysqlConfig): Promise<mysql.Connect
         return target.options;
       }
       if (!isNoSocketError(result.error)) {
-        failures.push(`${target.label}: ${result.error}`);
+        failures.push(`[${label}] ${target.label}: ${result.error}`);
       }
     }
   }
@@ -219,16 +253,17 @@ export async function checkDatabaseConnection(): Promise<DbCheckResult> {
   }
 
   const startedAt = Date.now();
+  const passwords = collectPasswordCandidates();
+  const primary = passwords[0];
   dbLog(`Checking connection to ${config.host}:${config.port} / ${config.database} ...`);
+  dbLog(
+    `Password candidates=${passwords.length} primarySource=${primary?.label ?? "none"} length=${primary?.password.length ?? 0} endsWith$=${primary?.password.endsWith("$") ?? false}`
+  );
 
   const failures: string[] = [];
-  const passwords = passwordCandidates(config.password);
 
-  for (const [index, password] of passwords.entries()) {
-    if (index > 0) {
-      dbLog("Retrying with trailing $ restored (env expansion may have stripped it)");
-    }
-
+  for (const { password, label } of passwords) {
+    dbLog(`Trying password source=${label} ...`);
     const targets = await resolveTargets(config, password);
     for (const target of targets) {
       dbLog(`Trying ${target.label} ...`);
@@ -244,9 +279,16 @@ export async function checkDatabaseConnection(): Promise<DbCheckResult> {
           const detail = row
             ? `Connection successful (database=${row.db ?? config.database}, version=${row.version}, via ${via}, ${elapsed}ms)`
             : `Connection successful (via ${via}, ${elapsed}ms)`;
-          dbLog(detail);
+          dbLog(`STARTUP CONNECTION: SUCCESS — ${detail}`);
           globalForDb.mysqlPoolOptions = target.options;
-          return { ok: true, detail };
+          return {
+            ok: true,
+            detail,
+            passwordLength: password.length,
+            passwordEndsWithDollar: password.endsWith("$"),
+            passwordFromBase64: label === "base64",
+            usedPasswordSource: label,
+          };
         } finally {
           await result.connection.end().catch(() => undefined);
         }
@@ -255,15 +297,21 @@ export async function checkDatabaseConnection(): Promise<DbCheckResult> {
       if (isNoSocketError(result.error)) {
         dbLog(`${target.label} skipped: ${result.error}`);
       } else {
-        failures.push(`${target.label}: ${result.error}`);
+        failures.push(`[${label}] ${target.label}: ${result.error}`);
         dbLog(`${target.label} failed: ${result.error}`, true);
       }
     }
   }
 
   const detail = `Connection failed after ${Date.now() - startedAt}ms: ${failures.join(" | ")}`;
-  dbLog(detail, true);
-  return { ok: false, detail };
+  dbLog(`STARTUP CONNECTION: FAILED — ${detail}`, true);
+  return {
+    ok: false,
+    detail,
+    passwordLength: primary?.password.length,
+    passwordEndsWithDollar: primary?.password.endsWith("$"),
+    passwordFromBase64: Boolean(decodePasswordBase64()),
+  };
 }
 
 export function checkDatabaseConnectionOnce(): Promise<DbCheckResult> {
