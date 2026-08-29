@@ -40,11 +40,12 @@ export default function TalentClosingSection() {
       <div className="mx-auto max-w-[1360px] text-center">
         <div className="flex justify-center">
           <Image
-            src="/tophero.png"
-            alt="Team avatars"
-            width={823}
-            height={157}
-            className="h-[40px] w-auto sm:h-[52px] md:h-[64px] lg:h-[92px]"
+            src="/images/talent/centericons.svg"
+            alt=""
+            width={399}
+            height={74}
+            unoptimized
+            className="h-[40px] w-auto sm:h-[48px] md:h-[56px] lg:h-[64px]"
           />
         </div>
 

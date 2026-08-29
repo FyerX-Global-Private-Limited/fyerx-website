@@ -301,7 +301,7 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
             </p>
           </div>
 
-          <div className="flex shrink-0 items-center gap-3 text-[#43454d] sm:gap-4">
+          <div className="flex shrink-0 flex-row items-center justify-end gap-4 text-[#43454d]">
             {FOOTER_SOCIALS.map((social) => (
               <a
                 key={social.label}
@@ -309,9 +309,15 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
-                className="inline-flex h-11 w-11 items-center justify-center sm:h-8 sm:w-8 transition-opacity hover:opacity-70"
+                className="inline-flex h-8 w-8 shrink-0 items-center justify-center transition-opacity hover:opacity-70"
               >
-                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <svg
+                  className="block h-[18px] w-[18px] shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  focusable="false"
+                >
                   <path d={social.path} />
                 </svg>
               </a>

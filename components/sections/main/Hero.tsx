@@ -16,6 +16,8 @@ const pillars: {
   brandColor: string;
   activeText: string;
   checkText: string;
+  ctaHref: string;
+  ctaTextColor: string;
 }[] = [
   {
     label: "Technology",
@@ -23,6 +25,8 @@ const pillars: {
     brandColor: BRAND.technology,
     activeText: BRAND.technology,
     checkText: "#ffffff",
+    ctaHref: "/contact?form=technology",
+    ctaTextColor: "#ffffff",
   },
   {
     label: "Talent",
@@ -30,6 +34,8 @@ const pillars: {
     brandColor: BRAND.talent,
     activeText: BRAND.talent,
     checkText: "#ffffff",
+    ctaHref: "/talent",
+    ctaTextColor: "#ffffff",
   },
   {
     label: "Marketing",
@@ -37,6 +43,8 @@ const pillars: {
     brandColor: BRAND.marketing,
     activeText: "#111111",
     checkText: "#111111",
+    ctaHref: "/marketing",
+    ctaTextColor: "#111111",
   },
   {
     label: "Learning",
@@ -44,6 +52,8 @@ const pillars: {
     brandColor: BRAND.home,
     activeText: BRAND.home,
     checkText: "#ffffff",
+    ctaHref: "/contact",
+    ctaTextColor: "#ffffff",
   },
 ];
 
@@ -57,6 +67,7 @@ function CheckIcon() {
 
 export default function Hero() {
   const [active, setActive] = useState(0);
+  const activePillar = pillars[active];
 
   return (
     <section className="home-section relative w-full bg-white font-calibri">
@@ -131,7 +142,12 @@ export default function Hero() {
             </div>
 
             <div className="mt-5 sm:mt-6">
-              <PrimaryCtaLink href="/contact" color={BRAND.home} className="w-full justify-center sm:w-fit">
+              <PrimaryCtaLink
+                href={activePillar.ctaHref}
+                color={activePillar.brandColor}
+                textColor={activePillar.ctaTextColor}
+                className="w-full justify-center sm:w-fit"
+              >
                 Get Started
               </PrimaryCtaLink>
               <p className="mt-3 text-xs leading-relaxed text-slate">

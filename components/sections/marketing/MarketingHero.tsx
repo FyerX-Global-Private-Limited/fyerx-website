@@ -75,22 +75,24 @@ export default function MarketingHero() {
         <h1 className="mt-3 text-[clamp(1.625rem,7vw,6rem)] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)] sm:mt-4 sm:leading-[1.2] sm:tracking-[-0.03em] lg:mt-4 lg:leading-[1.26] lg:tracking-[-0.04em]">
           Marketing built to create{" "}
           <span
-            className="inline-flex h-[1.22em] -translate-y-[0.06em] items-center gap-[0.2em] rounded-full px-[0.36em] align-middle transition-colors duration-300"
+            className="inline-flex h-[1.22em] -translate-y-[0.06em] items-center rounded-full pl-[0.4em] pr-[0.48em] align-middle transition-colors duration-300"
             style={{ backgroundColor: bg }}
           >
             <span
-              className="h-[0.27em] w-[0.27em] rounded-full transition-colors duration-300"
-              style={{ backgroundColor: dot }}
-            />
-            <span
               key={w}
-              className="leading-none"
+              className="inline-flex items-center gap-[0.22em] leading-none"
               style={{ color: text, animation: "heroWordIn 0.3s ease" }}
             >
-              {w}
+              <span
+                className="h-[0.27em] w-[0.27em] shrink-0 rounded-full"
+                style={{ backgroundColor: dot }}
+                aria-hidden="true"
+              />
+              <span className="leading-none">
+                {w}.
+              </span>
             </span>
           </span>
-          .
         </h1>
 
         <p className="mt-4 text-[15px] leading-[1.5] text-[#191918] sm:mt-5 sm:text-[17px] lg:mt-[26px] lg:text-[20px]">
