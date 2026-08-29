@@ -1,4 +1,5 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
+import { sendLeadNotificationEmail } from "@/lib/lead-email";
 import { insertLead, parseLeadPayload } from "@/lib/leads";
 
 export const runtime = "nodejs";
@@ -32,6 +33,9 @@ export async function POST(request: Request) {
   try {
     const id = await insertLead(data);
     console.log(`[leads] Stored ${data.formType} lead id=${id} email=${data.email}`);
+    after(async () => {
+      await sendLeadNotificationEmail(data, id);
+    });
     return NextResponse.json(
       {
         ok: true,
