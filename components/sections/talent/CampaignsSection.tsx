@@ -1,50 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TALENT_HOME } from "@/lib/talent-home-palette";
-
-function HiringDashboardMockup() {
-  const rows = [
-    { label: "Role scoping", pct: 100, color: "#11551C" },
-    { label: "Shortlist ready", pct: 78, color: "#6fd88a" },
-    { label: "Interviews scheduled", pct: 62, color: "#9EEBAA" },
-  ];
-
-  return (
-    <div className="relative w-full max-w-[320px] overflow-hidden rounded-2xl border border-[#C5E8CA] bg-white shadow-lg">
-      <div className="flex items-center justify-between border-b border-[#EEF1F6] px-5 py-3">
-        <p className="text-[13px] font-semibold text-[var(--ink)]">Hiring Pipeline</p>
-        <span className="rounded-full bg-[#F0FAF2] px-2 py-0.5 text-[10px] font-semibold text-[#11551C]">
-          Active
-        </span>
-      </div>
-      <div className="space-y-3 p-5">
-        {rows.map((row) => (
-          <div key={row.label} className="rounded-xl border border-[#EEF1F6] bg-[#FAFBFD] p-3">
-            <div className="flex items-center justify-between gap-2">
-              <p className="text-[12px] font-semibold text-[#3d4a5c]">{row.label}</p>
-              <span className="text-[11px] font-bold text-[var(--ink)]">{row.pct}%</span>
-            </div>
-            <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[#E6E9EF]">
-              <div className="h-full rounded-full" style={{ width: `${row.pct}%`, backgroundColor: row.color }} />
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function StatCard() {
-  return (
-    <div className="absolute -left-4 bottom-12 z-10 w-[170px] rounded-2xl border border-[#C5E8CA] bg-white p-4 shadow-xl sm:-left-6">
-      <p className="text-3xl font-bold tracking-tight" style={{ color: TALENT_HOME.primary }}>
-        24–48h
-      </p>
-      <p className="mt-1 text-[12px] font-medium text-[#676879]">Initial profiles delivered</p>
-    </div>
-  );
-}
 
 export default function CampaignsSection() {
   return (
@@ -86,13 +44,16 @@ export default function CampaignsSection() {
               </div>
             </div>
 
-            <div
-              className="relative hidden min-h-[380px] items-center justify-center pb-8 pr-8 md:flex"
-              role="img"
-              aria-label="Hiring pipeline dashboard illustration"
-            >
-              <StatCard />
-              <HiringDashboardMockup />
+            <div className="relative flex min-h-[280px] items-center justify-center px-6 pb-10 md:min-h-[380px] md:pb-8 md:pr-8">
+              <Image
+                src="/images/talent/fyerxopenrole.svg"
+                alt="Hiring pipeline dashboard showing role scoping, shortlist, and interviews"
+                width={440}
+                height={371}
+                unoptimized
+                className="h-auto w-full max-w-[440px] select-none"
+                draggable={false}
+              />
             </div>
           </div>
         </div>

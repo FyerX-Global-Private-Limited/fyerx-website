@@ -88,7 +88,7 @@ export default function TrackRecord() {
                     style={{ backgroundColor: palette.tint }}
                     aria-hidden="true"
                   >
-                    <MenuGlyphBold name={goal.icon} color={palette.color} size={28} />
+                    <MenuGlyphBold name={goal.icon} color={palette.color} size={24} />
                   </span>
                   <span className="tr-label">{goal.label}</span>
                 </button>
@@ -148,7 +148,7 @@ const css = `
   }
   .tr-hero .tr-card{
     position:relative;
-    min-height:120px;
+    min-height:108px;
     background:#ffffff;
     border:1px solid var(--border);
     border-radius:8px;
@@ -158,13 +158,12 @@ const css = `
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    gap:8px;
-    padding:18px 8px 14px;
-    transition:border-color .2s ease,box-shadow .2s ease;
+    gap:6px;
+    padding:14px 8px;
+    transition:border-color .2s ease;
   }
   .tr-hero .tr-card:hover{
     border-color:#B9BDC7;
-    box-shadow:0 4px 14px rgba(17,17,17,0.06);
   }
   .tr-hero .tr-check{
     position:absolute;
@@ -185,33 +184,33 @@ const css = `
     display:flex;
     align-items:center;
     justify-content:center;
-    width:52px;
-    height:52px;
-    border-radius:999px;
-    box-shadow:0 6px 16px rgba(20,20,43,0.12);
+    width:40px;
+    height:40px;
+    border-radius:10px;
     flex-shrink:0;
   }
   .tr-hero .tr-label{
     text-align:center;
-    font-size:0.6875rem;
+    font-size:0.625rem;
     line-height:1.35;
     font-weight:500;
     color:#333333;
     padding:0 2px;
   }
   @media (max-width:380px){
-    .tr-hero .tr-card{min-height:108px;padding:14px 6px 12px;gap:6px;}
-    .tr-hero .tr-iconWrap{width:44px;height:44px;}
-    .tr-hero .tr-label{font-size:0.625rem;}
+    .tr-hero .tr-card{min-height:96px;padding:12px 6px;gap:4px;}
+    .tr-hero .tr-iconWrap{width:36px;height:36px;}
+    .tr-hero .tr-label{font-size:0.5625rem;}
   }
   @media (min-width:640px){
     .tr-hero .tr-cards{gap:10px;}
-    .tr-hero .tr-card{min-height:128px;padding:18px 10px 14px;}
-    .tr-hero .tr-iconWrap{width:56px;height:56px;}
-    .tr-hero .tr-label{font-size:0.75rem;padding:0 4px;}
+    .tr-hero .tr-card{min-height:115px;padding:16px 10px;}
+    .tr-hero .tr-iconWrap{width:44px;height:44px;}
+    .tr-hero .tr-label{font-size:0.72rem;padding:0 4px;}
   }
   @media (min-width:768px){
     .tr-hero .tr-cards{grid-template-columns:repeat(3, minmax(0, 1fr));gap:12px;max-width:760px;}
+    .tr-hero .tr-label{font-size:0.75rem;}
   }
   @media (min-width:1024px){
     .tr-hero .tr-cards{
@@ -222,6 +221,5 @@ const css = `
       gap:12px;
     }
     .tr-hero .tr-card{flex:1 1 calc(12.5% - 12px);min-width:110px;max-width:140px;}
-    .tr-hero .tr-iconWrap{width:58px;height:58px;}
   }
 `;

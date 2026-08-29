@@ -289,8 +289,8 @@ button:disabled,
   }
 
   .home-main--talent {
-    gap: 70px;
-    padding-block: 70px;
+    gap: 2.5rem;
+    padding-block: 0.75rem 2.5rem;
   }
 }
 

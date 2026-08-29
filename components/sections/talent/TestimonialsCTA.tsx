@@ -1,10 +1,7 @@
 "use client";
 
-import React from "react";
-import { CONTACT_TEAM_AVATARS } from "@/lib/contact-team-avatars";
+import Image from "next/image";
 import { ContactEnquiryForm } from "@/components/sections/contact/ContactEnquiryForm";
-
-const AVATARS = CONTACT_TEAM_AVATARS.map((avatar) => avatar.src);
 
 export default function TestimonialsCTA() {
   return (
@@ -32,16 +29,16 @@ export default function TestimonialsCTA() {
             </div>
 
             <div className="relative mt-8 w-full sm:mt-10 lg:mt-0 lg:w-[462px] lg:shrink-0">
-              <div className="absolute -top-[22px] left-1/2 z-10 flex -translate-x-1/2 -space-x-[6px]">
-                {AVATARS.map((src, i) => (
-                  <img
-                    key={src}
-                    src={src}
-                    alt=""
-                    className="h-9 w-9 rounded-full border-2 border-[#0f0f10] object-cover"
-                    style={{ zIndex: AVATARS.length - i }}
-                  />
-                ))}
+              <div className="absolute -top-[22px] left-1/2 z-10 -translate-x-1/2">
+                <Image
+                  src="/images/talent/contactformimg.svg"
+                  alt=""
+                  width={188}
+                  height={44}
+                  unoptimized
+                  className="h-11 w-auto select-none"
+                  draggable={false}
+                />
               </div>
 
               <div className="w-full rounded-[16px] bg-white px-4 py-6 shadow-[0px_6px_20px_rgba(29,37,45,0.05)] sm:px-9 sm:py-7">

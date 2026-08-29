@@ -19,25 +19,25 @@ type Card = {
 
 const CARDS: Card[] = [
   {
-    icon: <GrowthPathIcon />,
+    icon: <TargetIcon />,
     title: 'Growth initiatives',
     body: 'From new-market plans to demand creation, we help turn commercial priorities into focused action.',
     tint: 'orange',
   },
   {
-    icon: <PuzzleGapIcon />,
+    icon: <PuzzleIcon />,
     title: 'Capability gaps',
     body: 'When internal capacity falls short, bring in the expertise needed to keep work progressing.',
     tint: 'purple',
   },
   {
-    icon: <ConnectedArrowsIcon />,
+    icon: <SyncIcon />,
     title: 'Business change',
     body: 'New systems, new teams, or new direction require support that works with the wider business.',
     tint: 'pink',
   },
   {
-    icon: <ForwardArrowIcon />,
+    icon: <BoltIcon />,
     title: 'Execution at pace',
     body: 'Move from decision to delivery with a team built to take responsibility for the work.',
     tint: 'green',
@@ -118,7 +118,8 @@ export default function SecurityControl() {
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: 20px;
+          border-radius: 999px;
+          box-shadow: 0 6px 16px rgba(20, 20, 43, 0.1);
         }
         .sc__icon--orange { background: #FFF0E6; color: #FDAB3D; }
         .sc__icon--purple { background: #F3EEFF; color: #6161FF; }
@@ -199,49 +200,74 @@ export default function SecurityControl() {
 }
 
 /* ============================================================= */
-/* Card icons (inline SVG)                                       */
+/* Monday-style bold glyphs (target, puzzle, sync, bolt)         */
 /* ============================================================= */
 
-function GrowthPathIcon() {
-  // Upward path — an ascending line ending in an arrow, for "Growth initiatives"
+function TargetIcon() {
   return (
-    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M18 68 L36 50 L50 62 L74 34" />
-      <path d="M58 34 H74 V50" />
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <circle cx="20" cy="20" r="15" fill="currentColor" opacity="0.18" />
+      <circle cx="20" cy="20" r="15" stroke="currentColor" strokeWidth="2.8" />
+      <circle cx="20" cy="20" r="8.5" stroke="currentColor" strokeWidth="2.8" />
+      <circle cx="20" cy="20" r="3.2" fill="currentColor" />
     </svg>
   );
 }
 
-function PuzzleGapIcon() {
-  // Missing puzzle piece — a solid piece and a dashed, separated piece, for "Capability gaps"
+function PuzzleIcon() {
   return (
-    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M14 28 H40 V38 A6 6 0 0 1 40 50 V60 H14 Z" />
-      <path d="M82 28 H56 V38 A6 6 0 0 0 56 50 V60 H82 Z" strokeDasharray="4 5" />
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <circle cx="20" cy="20" r="15" fill="currentColor" opacity="0.16" />
+      <path
+        d="M14 11h6.2v-1.8a3 3 0 1 1 6 0V11H27a1.2 1.2 0 0 1 1.2 1.2v5h1.8a3 3 0 1 1 0 6h-1.8v5A1.2 1.2 0 0 1 27 29.4h-6.2v1.8a3 3 0 1 1-6 0v-1.8H12a1.2 1.2 0 0 1-1.2-1.2v-5H9a3 3 0 1 1 0-6h1.8v-5A1.2 1.2 0 0 1 12 11h2z"
+        fill="currentColor"
+      />
     </svg>
   );
 }
 
-function ConnectedArrowsIcon() {
-  // Two curved arrows forming a loop, for "Business change"
+function SyncIcon() {
   return (
-    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M16 36 A34 34 0 0 1 74 26" />
-      <path d="M60 18 H76 V34" />
-      <path d="M80 60 A34 34 0 0 1 22 70" />
-      <path d="M36 78 H20 V62" />
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <circle cx="20" cy="20" r="15" fill="currentColor" opacity="0.16" />
+      <path
+        d="M12 18.5a8.5 8.5 0 0 1 14.2-5.4"
+        stroke="currentColor"
+        strokeWidth="2.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M24.5 8.5h5v5"
+        stroke="currentColor"
+        strokeWidth="2.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M28 21.5a8.5 8.5 0 0 1-14.2 5.4"
+        stroke="currentColor"
+        strokeWidth="2.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M15.5 31.5h-5v-5"
+        stroke="currentColor"
+        strokeWidth="2.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
-function ForwardArrowIcon() {
-  // Forward arrow with motion lines, for "Execution at pace"
+function BoltIcon() {
   return (
-    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M14 40 H26" />
-      <path d="M14 56 H26" />
-      <path d="M34 48 H70" />
-      <path d="M58 34 L74 48 L58 62" />
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <circle cx="20" cy="20" r="15" fill="currentColor" opacity="0.16" />
+      <path
+        d="M21.8 7.5 11.5 22.2h7.2L17.8 32.5 28.5 17.8h-7.2L21.8 7.5z"
+        fill="currentColor"
+      />
     </svg>
   );
 }
