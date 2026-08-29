@@ -74,6 +74,69 @@ type PingRow = {
   version: string;
 };
 
+const globalForDb = globalThis as unknown as {
+  mysqlCheck?: Promise<DbCheckResult>;
+  mysqlPool?: mysql.Pool;
+  mysqlPoolHost?: string;
+};
+
+async function resolveWorkingHost(config: MysqlConfig): Promise<string> {
+  if (globalForDb.mysqlPoolHost) {
+    return globalForDb.mysqlPoolHost;
+  }
+
+  const candidates = await resolveCandidates(config.host);
+  let lastError = "Unable to reach MySQL host";
+
+  for (const host of candidates) {
+    let connection: mysql.Connection | undefined;
+    try {
+      connection = await mysql.createConnection(connectionOptions(config, host));
+      await connection.query("SELECT 1");
+      globalForDb.mysqlPoolHost = host;
+      return host;
+    } catch (error) {
+      lastError = error instanceof Error ? error.message : String(error);
+      if (!isTimeoutError(lastError) && !lastError.includes("Access denied")) {
+        continue;
+      }
+    } finally {
+      if (connection) {
+        await connection.end().catch(() => undefined);
+      }
+    }
+  }
+
+  throw new Error(lastError);
+}
+
+export async function getPool(): Promise<mysql.Pool> {
+  if (globalForDb.mysqlPool) {
+    return globalForDb.mysqlPool;
+  }
+
+  const config = getMysqlConfig();
+  if (!config) {
+    throw new Error(
+      "Missing MySQL configuration. Set MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, and MYSQL_DATABASE."
+    );
+  }
+
+  const host = await resolveWorkingHost(config);
+  const pool = mysql.createPool({
+    ...connectionOptions(config, host),
+    waitForConnections: true,
+    connectionLimit: 5,
+    maxIdle: 5,
+    idleTimeout: 60_000,
+    enableKeepAlive: true,
+  });
+
+  globalForDb.mysqlPool = pool;
+  dbLog(`Connection pool ready via ${host === config.host ? host : `${config.host} (${host})`}`);
+  return pool;
+}
+
 export async function checkDatabaseConnection(): Promise<DbCheckResult> {
   const config = getMysqlConfig();
 
@@ -106,6 +169,7 @@ export async function checkDatabaseConnection(): Promise<DbCheckResult> {
         ? `Connection successful (database=${row.db ?? config.database}, version=${row.version}, ${elapsed}ms)`
         : `Connection successful (${elapsed}ms)`;
       dbLog(detail);
+      globalForDb.mysqlPoolHost = host;
       return { ok: true, detail };
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
@@ -134,10 +198,6 @@ export async function checkDatabaseConnection(): Promise<DbCheckResult> {
   dbLog(detail, true);
   return { ok: false, detail };
 }
-
-const globalForDb = globalThis as unknown as {
-  mysqlCheck?: Promise<DbCheckResult>;
-};
 
 export function checkDatabaseConnectionOnce(): Promise<DbCheckResult> {
   if (!globalForDb.mysqlCheck) {
