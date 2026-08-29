@@ -93,7 +93,6 @@ function ArrowLeftIcon() {
 
 const sectionPad = "px-4 sm:px-6";
 const containerCls = "mx-auto w-full min-w-0 max-w-6xl";
-const footerHeadingCls = "text-sm font-medium text-[rgb(88,89,101)]";
 
 /* ============================================================= */
 /* Hero                                                           */
@@ -308,9 +307,9 @@ const DETAIL_ITEMS = [
     key: "linkedin",
     icon: <LinkedInIcon />,
     label: "LinkedIn",
-    value: "FyerX Global Private Limited",
+    value: "linkedin.com/company/fyerx",
     actionLabel: "Visit Page",
-    href: "https://www.linkedin.com/company/fyerx/",
+    href: "https://www.linkedin.com/company/fyerx",
   },
 ];
 
@@ -319,10 +318,16 @@ const MAP_EMBED_SRC =
 
 function ContactDetailsMap() {
   return (
-    <section className={`w-full overflow-x-clip bg-gradient-to-b from-[#E8F1FB] via-white to-[#F6F7FB] py-12 sm:py-16 md:py-20 ${sectionPad}`}>
+    <section
+      className={`w-full overflow-x-clip py-12 sm:py-16 md:py-20 ${sectionPad}`}
+      style={{
+        background:
+          "linear-gradient(180deg, #FFE8EE 0%, #FFF7F9 38%, #FFFFFF 68%, #F8F5F7 100%)",
+      }}
+    >
       <div className={containerCls}>
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-12">
-          <div className="flex min-h-0 min-w-0 flex-col overflow-hidden rounded-3xl border border-[#E6E9EF] bg-white shadow-sm">
+          <div className="flex min-h-0 min-w-0 flex-col overflow-hidden rounded-3xl border border-[#F0D4DE] bg-white shadow-[0_12px_40px_rgba(115,0,49,0.06)]">
             <iframe
               title="FyerX Global Private Limited office location"
               src={MAP_EMBED_SRC}
@@ -337,7 +342,7 @@ function ContactDetailsMap() {
             <p className="text-xs font-semibold uppercase tracking-[0.12em]" style={{ color: BRAND.crimson }}>
               Get in Touch
             </p>
-            <h2 className="mt-2 text-[clamp(1.75rem,4vw,2.75rem)] font-medium leading-[1.12] tracking-[-0.02em] text-[#0B2E59]">
+            <h2 className="mt-2 text-[clamp(1.75rem,4vw,2.75rem)] font-medium leading-[1.12] tracking-[-0.02em] text-[#181b34]">
               Contact Details
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-[#3d4a5c] sm:text-base lg:mx-0">
@@ -345,22 +350,63 @@ function ContactDetailsMap() {
               clarity on next steps and the right contact path.
             </p>
 
-            <div className="mt-8 grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+            {/* Mobile — unified premium panel */}
+            <div className="mt-8 overflow-hidden rounded-2xl border border-[#F0D4DE] bg-white shadow-[0_16px_48px_rgba(115,0,49,0.08)] sm:hidden">
+              {DETAIL_ITEMS.map((item, index) => (
+                <a
+                  key={item.key}
+                  href={item.href}
+                  target={item.href.startsWith("http") ? "_blank" : undefined}
+                  rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className={`flex items-start gap-3.5 px-4 py-4 text-left transition-colors active:bg-[#FFF7F9] ${
+                    index > 0 ? "border-t border-[#F7E4EB]" : ""
+                  }`}
+                >
+                  <span
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl"
+                    style={{ background: "#FFE8EE", color: BRAND.crimson }}
+                  >
+                    {item.icon}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#8A4A62]">
+                      {item.label}
+                    </span>
+                    <span className="mt-1 block break-words text-sm font-medium leading-snug text-[#181b34]">
+                      {item.value}
+                    </span>
+                    <span
+                      className="mt-2 inline-flex items-center gap-1 text-xs font-semibold"
+                      style={{ color: BRAND.crimson }}
+                    >
+                      {item.actionLabel}
+                      <ChevronRightIcon />
+                    </span>
+                  </span>
+                </a>
+              ))}
+            </div>
+
+            {/* Desktop / tablet — 2×2 crimson cards */}
+            <div className="mt-8 hidden flex-1 grid-cols-2 gap-4 sm:grid">
               {DETAIL_ITEMS.map((item) => (
                 <div
                   key={item.key}
-                  className="flex h-full min-h-[168px] min-w-0 flex-col items-start rounded-2xl border border-[#E6E9EF] bg-white p-4 text-left shadow-sm sm:min-h-[180px] sm:p-5"
+                  className="flex h-full min-h-[180px] min-w-0 flex-col items-start rounded-2xl border border-[#F0D4DE] bg-white p-5 text-left shadow-[0_10px_32px_rgba(115,0,49,0.05)] transition-shadow hover:shadow-[0_14px_40px_rgba(115,0,49,0.1)]"
                 >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E8F1FB] text-[#1F5C99] sm:h-11 sm:w-11">
+                  <span
+                    className="flex h-11 w-11 items-center justify-center rounded-xl"
+                    style={{ background: "#FFE8EE", color: BRAND.crimson }}
+                  >
                     {item.icon}
                   </span>
-                  <p className={`mt-3 ${footerHeadingCls}`}>{item.label}</p>
-                  <p className="mt-1 break-words text-sm leading-relaxed text-[#3d4a5c]">{item.value}</p>
+                  <p className="mt-3 text-sm font-medium text-[#8A4A62]">{item.label}</p>
+                  <p className="mt-1 break-words text-sm font-medium leading-relaxed text-[#181b34]">{item.value}</p>
                   <a
                     href={item.href}
                     target={item.href.startsWith("http") ? "_blank" : undefined}
                     rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="mt-4 inline-flex min-h-[40px] items-center justify-center rounded-full border border-[#C3D4E8] px-4 py-2 text-xs font-semibold text-[#0B2E59] transition-colors hover:border-[#1F5C99] hover:text-[#1F5C99]"
+                    className="mt-auto inline-flex min-h-[40px] items-center justify-center rounded-full border border-[rgba(115,0,49,0.28)] px-4 py-2 text-xs font-semibold text-[#730031] transition-colors hover:border-[#730031] hover:bg-[#FFE8EE]"
                   >
                     {item.actionLabel}
                   </a>

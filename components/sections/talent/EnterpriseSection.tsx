@@ -1,10 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TALENT_HOME } from "@/lib/talent-home-palette";
-
-const IMAGE_SRC =
-  "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=1200&q=80";
 
 const features = [
   "A clear role-scoping conversation",
@@ -67,13 +65,15 @@ export default function EnterpriseSection() {
           </div>
 
           <div className="order-1 flex justify-center lg:order-2">
-            <div className="relative aspect-square w-full max-w-[360px] overflow-hidden rounded-3xl border border-white shadow-lg sm:max-w-[400px]">
-              <img
-                src={IMAGE_SRC}
-                alt="Team collaborating on hiring plans"
-                className="h-full w-full object-cover"
-              />
-            </div>
+            <Image
+              src="/images/talent/hardesttofill.svg"
+              alt="Team collaborating on hiring plans"
+              width={615}
+              height={476}
+              unoptimized
+              className="h-auto w-full max-w-[480px] select-none"
+              draggable={false}
+            />
           </div>
         </div>
       </div>

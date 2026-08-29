@@ -18,8 +18,18 @@ const CARD_PALETTES = [
   { cardBg: "#C5DAF5", panelBg: "#D8E9FB", accent: "#1F5C99" },
   { cardBg: "#FFE8E6", panelBg: "#FFF0EE", accent: "#E2445C" },
   { cardBg: "#E8F5EA", panelBg: "#F0FAF2", accent: TALENT_HOME.primary },
-  { cardBg: "#FFF8E1", panelBg: "#FEF9C3", accent: "#FDAB3D" },
-  { cardBg: "#FCE7F3", panelBg: "#FFF0F7", accent: "#db2777" },
+  { cardBg: "#FFF8E1", panelBg: "#FEF9C3", accent: "#EA580C" },
+  { cardBg: "#FFE8E6", panelBg: "#FFF0EE", accent: "#E2445C" },
+] as const;
+
+/** Soft multicolor role chips — matches case-study mockup reference. */
+const ROLE_CHIP_STYLES = [
+  { bg: "#FCE7F3", color: "#BE185D" },
+  { bg: "#DBEAFE", color: "#1D4ED8" },
+  { bg: "#FEF3C7", color: "#B45309" },
+  { bg: "#D1FAE5", color: "#047857" },
+  { bg: "#EDE9FE", color: "#6D28D9" },
+  { bg: "#FFEDD5", color: "#C2410C" },
 ] as const;
 
 function CaseStudyBadge({
@@ -54,6 +64,8 @@ function MetricsMockup({
   accentColor: string;
   panelBg: string;
 }) {
+  const categoryPill = study.categoryLabel.split(" ")[0];
+
   return (
     <div className="relative flex h-full min-h-[360px] w-full items-center justify-center p-4 sm:min-h-[420px] sm:p-6">
       <div
@@ -65,47 +77,60 @@ function MetricsMockup({
       />
 
       <div className="relative z-10 w-full max-w-[440px] px-1 sm:max-w-none sm:px-2">
-        {study.logoSrc && (
-          <div className="absolute -left-1 top-2 z-20 rounded-xl border border-white/60 bg-white/95 px-3 py-2 shadow-lg backdrop-blur-sm sm:-left-2">
-            <img src={study.logoSrc} alt={study.clientName} className="h-6 w-auto object-contain" />
-          </div>
-        )}
-
         <div className="w-full overflow-hidden rounded-2xl border border-white/80 bg-white shadow-[0_16px_40px_-20px_rgba(16,16,20,0.25)]">
-          <div className="flex items-center justify-between border-b border-[#E6E9EF] px-5 py-3.5">
-            <p className="text-sm font-semibold text-[var(--ink)]">{study.clientName}</p>
+          <div className="flex items-center justify-between gap-3 border-b border-[#E6E9EF] px-5 py-3.5">
+            <div className="flex min-w-0 items-center gap-2.5">
+              {study.logoSrc ? (
+                <img
+                  src={study.logoSrc}
+                  alt={study.clientName}
+                  className="h-5 w-auto max-w-[140px] object-contain object-left sm:h-6"
+                />
+              ) : (
+                <p className="text-sm font-semibold text-[var(--ink)]">{study.clientName}</p>
+              )}
+            </div>
             <span
-              className="rounded-full px-2.5 py-1 text-xs font-semibold"
-              style={{ backgroundColor: `${accentColor}18`, color: accentColor }}
+              className="shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold"
+              style={{ backgroundColor: `${accentColor}22`, color: accentColor }}
             >
-              {study.categoryLabel.split(" ")[0]}
+              {categoryPill}
             </span>
           </div>
-          <div className="space-y-3 p-5">
+
+          <div className="space-y-2.5 p-5">
             {metrics.map((metric) => (
               <div
                 key={metric.label}
-                className="flex items-center justify-between rounded-lg border border-[#EEF1F6] bg-[#F8FAFC] px-4 py-3"
+                className="flex items-center justify-between rounded-xl bg-[#F6F7FB] px-4 py-3"
               >
                 <span className="text-xs font-medium text-[#5a5f6b] sm:text-sm">{metric.label}</span>
-                <span className="text-base font-bold text-[var(--ink)]">{metric.value}</span>
+                <span className="text-sm font-bold sm:text-base" style={{ color: accentColor }}>
+                  {metric.value}
+                </span>
               </div>
             ))}
           </div>
+
           {study.roleChips && study.roleChips.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 border-t border-[#EEF1F6] px-4 py-3">
-              {study.roleChips.slice(0, 4).map((chip) => (
-                <span
-                  key={chip}
-                  className="rounded-full bg-[#F6F7FB] px-2 py-0.5 text-[9px] font-medium text-[#3d4a5c]"
-                >
-                  {chip}
-                </span>
-              ))}
+            <div className="flex flex-wrap gap-1.5 px-5 pb-4">
+              {study.roleChips.slice(0, 4).map((chip, i) => {
+                const style = ROLE_CHIP_STYLES[i % ROLE_CHIP_STYLES.length];
+                return (
+                  <span
+                    key={chip}
+                    className="rounded-full px-2.5 py-1 text-[10px] font-semibold sm:text-[11px]"
+                    style={{ backgroundColor: style.bg, color: style.color }}
+                  >
+                    {chip}
+                  </span>
+                );
+              })}
             </div>
           )}
-          <div className="border-t border-[#EEF1F6] px-4 py-2.5 text-right">
-            <span className="text-[10px] font-medium" style={{ color: accentColor }}>
+
+          <div className="px-5 pb-4 text-right">
+            <span className="text-xs font-semibold" style={{ color: accentColor }}>
               View full story →
             </span>
           </div>
@@ -188,14 +213,11 @@ function StackedCaseStudyCard({
 }
 
 export default function StackedScrollSection() {
+  // Enable after mount so sticky top offsets match client layout (avoids SSR mismatch).
   const [stackEnabled, setStackEnabled] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
-    const update = () => setStackEnabled(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
+    setStackEnabled(true);
   }, []);
 
   return (
@@ -211,7 +233,7 @@ export default function StackedScrollSection() {
           </h2>
         </div>
 
-        <div className="relative mt-8">
+        <div className="relative mt-8 pb-[16vh] md:mt-12 md:pb-[20vh]">
           {TALENT_CASE_STUDIES.map((study, index) => (
             <StackedCaseStudyCard
               key={study.slug}
