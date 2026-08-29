@@ -22,12 +22,6 @@ export type MysqlConfig = {
 export type DbCheckResult = {
   ok: boolean;
   detail: string;
-  passwordLength?: number;
-  passwordEndsWithDollar?: boolean;
-  passwordFromBase64?: boolean;
-  usedPasswordSource?: string;
-  passwordCandidateCount?: number;
-  lastCharCodes?: number[];
 };
 
 export function isNextBuildPhase() {
@@ -52,7 +46,7 @@ function dbLog(message: string, error = false) {
   }
 }
 
-function normalizeMysqlPassword(password: string): string {
+function readMysqlPassword(password: string): string {
   let value = password.trim().replace(/^\uFEFF/, "");
   if (
     (value.startsWith("'") && value.endsWith("'") && value.length >= 2) ||
@@ -60,67 +54,17 @@ function normalizeMysqlPassword(password: string): string {
   ) {
     value = value.slice(1, -1);
   }
-  while (value.includes("$$")) {
-    value = value.replaceAll("$$", "$");
-  }
   return value;
-}
-
-function lastCharCodes(password: string, count = 3): number[] {
-  return [...password].slice(-count).map((char) => char.charCodeAt(0));
-}
-
-type PasswordCandidate = {
-  label: string;
-  password: string;
-};
-
-function decodePasswordBase64(): string | null {
-  const raw = process.env.MYSQL_PASSWORD_BASE64?.trim();
-  if (!raw) return null;
-  try {
-    const decoded = Buffer.from(raw, "base64").toString("utf8");
-    return decoded || null;
-  } catch {
-    return null;
-  }
-}
-
-function collectPasswordCandidates(): PasswordCandidate[] {
-  const seen = new Set<string>();
-  const candidates: PasswordCandidate[] = [];
-
-  const add = (password: string | null | undefined, label: string) => {
-    if (!password || seen.has(password)) return;
-    seen.add(password);
-    candidates.push({ password, label });
-  };
-
-  add(decodePasswordBase64(), "base64");
-
-  const raw = process.env.MYSQL_PASSWORD;
-  if (raw) {
-    const collapsed = normalizeMysqlPassword(raw);
-    // Prefer collapsed (FyerxDb69$$ → FyerxDb69$). Do not try the doubled
-    // Hostinger/runtime value first — that is what /api/health was sending.
-    add(collapsed, "collapsed");
-    if (collapsed.length === 11 && collapsed.endsWith("$")) {
-      add(collapsed.slice(0, -1), "drop-extra-dollar");
-    }
-    if (!collapsed.endsWith("$")) {
-      add(`${collapsed}$`, "collapsed+$");
-    }
-  }
-
-  return candidates;
 }
 
 export function getMysqlConfig(): MysqlConfig | null {
   const host = process.env.MYSQL_HOST?.trim();
   const user = process.env.MYSQL_USER?.trim();
+  const password = process.env.MYSQL_PASSWORD
+    ? readMysqlPassword(process.env.MYSQL_PASSWORD)
+    : undefined;
   const database = process.env.MYSQL_DATABASE?.trim();
   const port = Number(process.env.MYSQL_PORT ?? 3306);
-  const password = collectPasswordCandidates()[0]?.password;
 
   if (!host || !user || !password || !database || Number.isNaN(port)) {
     return null;
@@ -129,23 +73,17 @@ export function getMysqlConfig(): MysqlConfig | null {
   return { host, port, user, password, database };
 }
 
-function baseAuth(config: MysqlConfig, password: string): mysql.ConnectionOptions {
-  return {
+async function resolveTargets(config: MysqlConfig): Promise<ConnectionTarget[]> {
+  const auth: mysql.ConnectionOptions = {
     user: config.user,
-    password,
+    password: config.password,
     database: config.database,
     connectTimeout: 8_000,
   };
-}
-
-async function resolveTargets(config: MysqlConfig, password: string): Promise<ConnectionTarget[]> {
-  const auth = baseAuth(config, password);
   const ipv6 = await lookup(config.host, { family: 6 }).then((r) => r.address).catch(() => null);
   const ipv4 = await lookup(config.host, { family: 4 }).then((r) => r.address).catch(() => null);
 
   const targets: ConnectionTarget[] = [
-    // host:localhost + port forces TCP to ::1, which MariaDB treats as user@'::1'
-    // (not user@localhost). Unix socket is what Hostinger grants.
     ...UNIX_SOCKETS.map((socketPath) => ({
       label: `unix:${socketPath}`,
       options: { ...auth, socketPath },
@@ -210,21 +148,17 @@ async function resolveWorkingOptions(config: MysqlConfig): Promise<mysql.Connect
   }
 
   const failures: string[] = [];
-  const passwords = collectPasswordCandidates();
+  const targets = await resolveTargets(config);
 
-  for (const { password, label } of passwords) {
-    dbLog(`Trying password source=${label} length=${password.length} endsWith$=${password.endsWith("$")}`);
-    const targets = await resolveTargets(config, password);
-    for (const target of targets) {
-      const result = await tryTarget(target);
-      if (result.ok) {
-        await result.connection.end().catch(() => undefined);
-        globalForDb.mysqlPoolOptions = target.options;
-        return target.options;
-      }
-      if (!isNoSocketError(result.error)) {
-        failures.push(`[${label}] ${target.label}: ${result.error}`);
-      }
+  for (const target of targets) {
+    const result = await tryTarget(target);
+    if (result.ok) {
+      await result.connection.end().catch(() => undefined);
+      globalForDb.mysqlPoolOptions = target.options;
+      return target.options;
+    }
+    if (!isNoSocketError(result.error)) {
+      failures.push(`${target.label}: ${result.error}`);
     }
   }
 
@@ -261,8 +195,7 @@ export async function getPool(): Promise<mysql.Pool> {
 
 export async function checkDatabaseConnection(): Promise<DbCheckResult> {
   if (isNextBuildPhase()) {
-    const detail = "Skipped during next build (static generation)";
-    return { ok: true, detail };
+    return { ok: true, detail: "Skipped during next build (static generation)" };
   }
 
   const config = getMysqlConfig();
@@ -275,69 +208,44 @@ export async function checkDatabaseConnection(): Promise<DbCheckResult> {
   }
 
   const startedAt = Date.now();
-  const passwords = collectPasswordCandidates();
-  const primary = passwords[0];
   dbLog(`Checking connection to ${config.host}:${config.port} / ${config.database} ...`);
-  dbLog(
-    `Password candidates=${passwords.length} primarySource=${primary?.label ?? "none"} length=${primary?.password.length ?? 0} endsWith$=${primary?.password.endsWith("$") ?? false}`
-  );
 
   const failures: string[] = [];
+  const targets = await resolveTargets(config);
 
-  for (const { password, label } of passwords) {
-    dbLog(`Trying password source=${label} ...`);
-    const targets = await resolveTargets(config, password);
-    for (const target of targets) {
-      dbLog(`Trying ${target.label} ...`);
-      const result = await tryTarget(target);
-      if (result.ok) {
-        try {
-          const [rows] = await result.connection.query<mysql.RowDataPacket[]>(
-            "SELECT 1 AS ok, DATABASE() AS db, VERSION() AS version"
-          );
-          const row = rows[0] as PingRow | undefined;
-          const elapsed = Date.now() - startedAt;
-          const via = target.options.socketPath ?? target.options.host ?? target.label;
-          const detail = row
-            ? `Connection successful (database=${row.db ?? config.database}, version=${row.version}, via ${via}, ${elapsed}ms)`
-            : `Connection successful (via ${via}, ${elapsed}ms)`;
-          dbLog(`STARTUP CONNECTION: SUCCESS — ${detail}`);
-          globalForDb.mysqlPoolOptions = target.options;
-          return {
-            ok: true,
-            detail,
-            passwordLength: password.length,
-            passwordEndsWithDollar: password.endsWith("$"),
-            passwordFromBase64: label === "base64",
-            usedPasswordSource: label,
-            passwordCandidateCount: passwords.length,
-            lastCharCodes: lastCharCodes(password),
-          };
-        } finally {
-          await result.connection.end().catch(() => undefined);
-        }
+  for (const target of targets) {
+    dbLog(`Trying ${target.label} ...`);
+    const result = await tryTarget(target);
+    if (result.ok) {
+      try {
+        const [rows] = await result.connection.query<mysql.RowDataPacket[]>(
+          "SELECT 1 AS ok, DATABASE() AS db, VERSION() AS version"
+        );
+        const row = rows[0] as PingRow | undefined;
+        const elapsed = Date.now() - startedAt;
+        const via = target.options.socketPath ?? target.options.host ?? target.label;
+        const detail = row
+          ? `Connection successful (database=${row.db ?? config.database}, version=${row.version}, via ${via}, ${elapsed}ms)`
+          : `Connection successful (via ${via}, ${elapsed}ms)`;
+        dbLog(`STARTUP CONNECTION: SUCCESS — ${detail}`);
+        globalForDb.mysqlPoolOptions = target.options;
+        return { ok: true, detail };
+      } finally {
+        await result.connection.end().catch(() => undefined);
       }
+    }
 
-      if (isNoSocketError(result.error)) {
-        dbLog(`${target.label} skipped: ${result.error}`);
-      } else {
-        failures.push(`[${label}] ${target.label}: ${result.error}`);
-        dbLog(`${target.label} failed: ${result.error}`, true);
-      }
+    if (isNoSocketError(result.error)) {
+      dbLog(`${target.label} skipped: ${result.error}`);
+    } else {
+      failures.push(`${target.label}: ${result.error}`);
+      dbLog(`${target.label} failed: ${result.error}`, true);
     }
   }
 
   const detail = `Connection failed after ${Date.now() - startedAt}ms: ${failures.join(" | ")}`;
   dbLog(`STARTUP CONNECTION: FAILED — ${detail}`, true);
-  return {
-    ok: false,
-    detail,
-    passwordLength: primary?.password.length,
-    passwordEndsWithDollar: primary?.password.endsWith("$"),
-    passwordFromBase64: Boolean(decodePasswordBase64()),
-    passwordCandidateCount: passwords.length,
-    lastCharCodes: primary ? lastCharCodes(primary.password) : undefined,
-  };
+  return { ok: false, detail };
 }
 
 export function checkDatabaseConnectionOnce(): Promise<DbCheckResult> {

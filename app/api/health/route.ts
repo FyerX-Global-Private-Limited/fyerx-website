@@ -11,12 +11,6 @@ export async function GET() {
     {
       ok: result.ok,
       detail: result.detail,
-      passwordLength: result.passwordLength ?? null,
-      passwordEndsWithDollar: result.passwordEndsWithDollar ?? null,
-      passwordFromBase64: result.passwordFromBase64 ?? false,
-      usedPasswordSource: result.usedPasswordSource ?? null,
-      passwordCandidateCount: result.passwordCandidateCount ?? null,
-      lastCharCodes: result.lastCharCodes ?? null,
       runtime: process.env.NEXT_RUNTIME ?? "nodejs",
       env: process.env.NODE_ENV ?? "undefined",
       checkedAt: new Date().toISOString(),
