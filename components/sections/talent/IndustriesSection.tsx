@@ -1,103 +1,44 @@
 "use client";
 
-import { TALENT_HOME } from "@/lib/talent-home-palette";
-
-const ICON_COLOR = TALENT_HOME.primary;
-const ICON_BG = `${TALENT_HOME.primary}18`;
+import Image from "next/image";
 
 type Industry = {
   label: string;
-  icon: React.ReactNode;
+  iconSrc: string;
 };
-
-function IndustryIconWrap({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl sm:h-12 sm:w-12"
-      style={{ backgroundColor: ICON_BG, color: ICON_COLOR }}
-      aria-hidden="true"
-    >
-      {children}
-    </span>
-  );
-}
 
 const INDUSTRIES: Industry[] = [
   {
     label: "IT Services & Consulting",
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6" />
-        <polyline points="8 6 2 12 8 18" />
-      </svg>
-    ),
+    iconSrc: "/images/talent/iconwrap/it-services.svg",
   },
   {
-    label: "SaaS & Technology Products",
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 3 4 7v6c0 5 3.5 8 8 8s8-3 8-8V7l-8-4z" />
-        <path d="M12 11v4" />
-      </svg>
-    ),
+    label: "SaaS & Technology",
+    iconSrc: "/images/talent/iconwrap/saas.svg",
   },
   {
     label: "GCCs & Enterprise IT",
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="4" y="8" width="16" height="12" rx="1" />
-        <path d="M9 8V5a3 3 0 0 1 6 0v3" />
-        <circle cx="12" cy="14" r="1.5" />
-      </svg>
-    ),
+    iconSrc: "/images/talent/iconwrap/gccs.svg",
   },
   {
     label: "BFSI",
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 3 4 7v14h16V7L12 3z" />
-        <path d="M12 11v6" />
-      </svg>
-    ),
+    iconSrc: "/images/talent/iconwrap/bfsi.svg",
   },
   {
     label: "Retail & E-commerce",
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M6 6h15l-1.5 9H7.5L6 6z" />
-        <circle cx="9" cy="20" r="1" />
-        <circle cx="18" cy="20" r="1" />
-      </svg>
-    ),
+    iconSrc: "/images/talent/iconwrap/retail.svg",
   },
   {
     label: "Manufacturing & Logistics",
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="8" width="20" height="10" rx="1" />
-        <path d="M6 8V5h12v3" />
-        <circle cx="7" cy="18" r="2" />
-        <circle cx="17" cy="18" r="2" />
-      </svg>
-    ),
+    iconSrc: "/images/talent/iconwrap/manufacturing.svg",
   },
   {
     label: "Healthcare & Life Sciences",
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 21s-6-4.5-6-10a6 6 0 0 1 12 0c0 5.5-6 10-6 10z" />
-        <path d="M12 8v6M9 11h6" />
-      </svg>
-    ),
+    iconSrc: "/images/talent/iconwrap/healthcare.svg",
   },
   {
     label: "Media & Digital Businesses",
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="5 3 19 12 5 21 5 3" />
-        <path d="M19 5v14" />
-      </svg>
-    ),
+    iconSrc: "/images/talent/iconwrap/media.svg",
   },
 ];
 
@@ -116,14 +57,23 @@ export default function IndustriesSection() {
           </p>
         </div>
 
-        <div className="section-body mt-8 grid grid-cols-2 gap-2.5 sm:gap-4 lg:grid-cols-4">
+        <div className="section-body mt-8 grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
           {INDUSTRIES.map((industry) => (
             <div
               key={industry.label}
-              className="flex min-w-0 items-center gap-2 rounded-2xl border border-[#E6E9EF] bg-white p-3 shadow-sm transition-shadow hover:shadow-md sm:gap-3 sm:p-5"
+              className="flex min-w-0 items-center gap-2.5 rounded-xl border border-[#E6E9EF] bg-white px-3 py-3.5 transition-colors hover:border-[#C9CCD4] sm:gap-3 sm:px-4 sm:py-4"
             >
-              <IndustryIconWrap>{industry.icon}</IndustryIconWrap>
-              <p className="min-w-0 text-[12px] font-medium leading-snug text-[#323338] sm:text-[0.9375rem]">
+              <span className="relative h-10 w-10 shrink-0 sm:h-11 sm:w-11" aria-hidden="true">
+                <Image
+                  src={industry.iconSrc}
+                  alt=""
+                  fill
+                  unoptimized
+                  sizes="44px"
+                  className="object-contain"
+                />
+              </span>
+              <p className="min-w-0 text-[12px] font-medium leading-snug text-[#323338] sm:text-[0.875rem]">
                 {industry.label}
               </p>
             </div>

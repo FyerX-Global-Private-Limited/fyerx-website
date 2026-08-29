@@ -173,14 +173,11 @@ function StackedCaseStudyCard({
 }
 
 export default function StackedScrollSection() {
+  // Enable after mount so sticky top offsets match client layout (avoids SSR mismatch).
   const [stackEnabled, setStackEnabled] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
-    const update = () => setStackEnabled(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
+    setStackEnabled(true);
   }, []);
 
   return (
@@ -199,7 +196,7 @@ export default function StackedScrollSection() {
           </h2>
         </div>
 
-        <div className="relative mt-8 pb-2 md:mt-12 md:pb-[20vh]">
+        <div className="relative mt-8 pb-[16vh] md:mt-12 md:pb-[20vh]">
           {MARKETING_CASE_STUDIES.map((study, index) => (
             <StackedCaseStudyCard
               key={study.slug}

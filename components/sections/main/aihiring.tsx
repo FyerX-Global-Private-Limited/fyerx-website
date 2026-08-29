@@ -55,7 +55,7 @@ export default function AiHiring() {
               Clear thinking, reliable execution, and a working relationship designed around your priorities.
             </p>
 
-            <PrimaryCtaLink href="#" className="mt-10">
+            <PrimaryCtaLink href="/contact" className="mt-10">
               Work with FyerX
             </PrimaryCtaLink>
           </div>

@@ -162,7 +162,9 @@ export default function ServicesGrid() {
         {/* Heading */}
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="section-title-lg">
-            A practical marketing partner, built around the work
+            A{" "}
+            <span className="marketing-gradient-text">practical marketing partner</span>
+            , built around the work
             <SparkleIcon className="ml-2 inline-block h-6 w-6 align-middle sm:h-8 sm:w-8" />
           </h2>
         </div>
