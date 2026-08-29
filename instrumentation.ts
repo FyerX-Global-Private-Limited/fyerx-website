@@ -8,7 +8,14 @@ export async function register() {
     return;
   }
 
-  const { checkDatabaseConnectionOnce } = await import("./lib/db");
+  const { checkDatabaseConnectionOnce, isNextBuildPhase } = await import("./lib/db");
+
+  if (isNextBuildPhase()) {
+    console.log("[mysql] Skipping database check during next build");
+    console.error("[mysql] Skipping database check during next build");
+    return;
+  }
+
   const result = await checkDatabaseConnectionOnce();
   const line = result.ok
     ? `[mysql] STARTUP CONNECTION: SUCCESS — ${result.detail}`

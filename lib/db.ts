@@ -26,7 +26,14 @@ export type DbCheckResult = {
   passwordEndsWithDollar?: boolean;
   passwordFromBase64?: boolean;
   usedPasswordSource?: string;
+  passwordCandidateCount?: number;
+  lastCharCodes?: number[];
 };
+
+export function isNextBuildPhase() {
+  const phase = process.env.NEXT_PHASE ?? "";
+  return phase === "phase-production-build" || phase === "phase-export";
+}
 
 type ConnectionTarget = {
   label: string;
@@ -46,14 +53,21 @@ function dbLog(message: string, error = false) {
 }
 
 function normalizeMysqlPassword(password: string): string {
-  let value = password.trim();
+  let value = password.trim().replace(/^\uFEFF/, "");
   if (
     (value.startsWith("'") && value.endsWith("'") && value.length >= 2) ||
     (value.startsWith('"') && value.endsWith('"') && value.length >= 2)
   ) {
     value = value.slice(1, -1);
   }
-  return value.replaceAll("$$", "$");
+  while (value.includes("$$")) {
+    value = value.replaceAll("$$", "$");
+  }
+  return value;
+}
+
+function lastCharCodes(password: string, count = 3): number[] {
+  return [...password].slice(-count).map((char) => char.charCodeAt(0));
 }
 
 type PasswordCandidate = {
@@ -82,16 +96,19 @@ function collectPasswordCandidates(): PasswordCandidate[] {
     candidates.push({ password, label });
   };
 
-  // Base64 cannot be eaten by shell/$ expansion. Prefer this on Hostinger.
   add(decodePasswordBase64(), "base64");
 
   const raw = process.env.MYSQL_PASSWORD;
   if (raw) {
-    add(raw, "raw");
-    const normalized = normalizeMysqlPassword(raw);
-    add(normalized, "normalized");
-    if (!normalized.endsWith("$")) {
-      add(`${normalized}$`, "normalized+$");
+    const collapsed = normalizeMysqlPassword(raw);
+    // Prefer collapsed (FyerxDb69$$ → FyerxDb69$). Do not try the doubled
+    // Hostinger/runtime value first — that is what /api/health was sending.
+    add(collapsed, "collapsed");
+    if (collapsed.length === 11 && collapsed.endsWith("$")) {
+      add(collapsed.slice(0, -1), "drop-extra-dollar");
+    }
+    if (!collapsed.endsWith("$")) {
+      add(`${collapsed}$`, "collapsed+$");
     }
   }
 
@@ -243,6 +260,11 @@ export async function getPool(): Promise<mysql.Pool> {
 }
 
 export async function checkDatabaseConnection(): Promise<DbCheckResult> {
+  if (isNextBuildPhase()) {
+    const detail = "Skipped during next build (static generation)";
+    return { ok: true, detail };
+  }
+
   const config = getMysqlConfig();
 
   if (!config) {
@@ -288,6 +310,8 @@ export async function checkDatabaseConnection(): Promise<DbCheckResult> {
             passwordEndsWithDollar: password.endsWith("$"),
             passwordFromBase64: label === "base64",
             usedPasswordSource: label,
+            passwordCandidateCount: passwords.length,
+            lastCharCodes: lastCharCodes(password),
           };
         } finally {
           await result.connection.end().catch(() => undefined);
@@ -311,6 +335,8 @@ export async function checkDatabaseConnection(): Promise<DbCheckResult> {
     passwordLength: primary?.password.length,
     passwordEndsWithDollar: primary?.password.endsWith("$"),
     passwordFromBase64: Boolean(decodePasswordBase64()),
+    passwordCandidateCount: passwords.length,
+    lastCharCodes: primary ? lastCharCodes(primary.password) : undefined,
   };
 }
 

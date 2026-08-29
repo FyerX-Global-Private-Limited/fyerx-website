@@ -1,7 +1,11 @@
-import { checkDatabaseConnectionOnce } from "@/lib/db";
+import { checkDatabaseConnectionOnce, isNextBuildPhase } from "@/lib/db";
 
-/** Runs the MySQL check on the first server render if instrumentation logs are not captured. */
+/** Optional one-shot server check. Instrumentation already logs on `next start`. */
 export async function MysqlStartupCheck() {
+  if (isNextBuildPhase()) {
+    return null;
+  }
+
   const result = await checkDatabaseConnectionOnce();
   const line = result.ok
     ? `[mysql] STARTUP CONNECTION: SUCCESS — ${result.detail}`
