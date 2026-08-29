@@ -108,11 +108,11 @@ export function leadEmailHtml(lead: LeadPayload, id: number): string {
     }
   </style>
 </head>
-<body style="margin:0;padding:0;background-color:#e8f1fb;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#e8f1fb;padding:24px 12px;">
+<body style="margin:0;padding:0;background-color:#ffffff;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#ffffff;padding:24px 12px;">
     <tr>
       <td align="center">
-        <table role="presentation" class="container" width="600" cellspacing="0" cellpadding="0" style="width:600px;max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(11,46,89,0.08);">
+        <table role="presentation" class="container" width="600" cellspacing="0" cellpadding="0" style="width:600px;max-width:600px;background:#ffffff;border:2px solid #730031;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(115,0,49,0.12);">
           <tr>
             <td style="background:#ffffff;padding:20px 28px 16px;border-bottom:1px solid #e8eef5;">
               <a href="${websiteUrl}" style="text-decoration:none;">
@@ -127,7 +127,7 @@ export function leadEmailHtml(lead: LeadPayload, id: number): string {
             </td>
           </tr>
           <tr>
-            <td style="background:#0b2e59;padding:22px 28px;">
+            <td style="background:#730031;padding:22px 28px;">
               <h1 style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:22px;line-height:1.3;color:#ffffff;font-weight:700;">
                 New lead received
               </h1>
@@ -158,8 +158,8 @@ export function leadEmailHtml(lead: LeadPayload, id: number): string {
             </td>
           </tr>
           <tr>
-            <td style="background:#0b2e59;padding:18px 28px;text-align:center;">
-              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;color:#c5d7ec;">
+            <td style="background:#730031;padding:18px 28px;text-align:center;">
+              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;color:#f5d0dc;">
                 &copy; ${year} FyerX Global Private Limited. All rights reserved.
               </p>
               <p style="margin:8px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;">
