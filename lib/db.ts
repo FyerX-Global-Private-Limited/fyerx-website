@@ -30,8 +30,15 @@ function dbLog(message: string, error = false) {
 }
 
 function normalizeMysqlPassword(password: string): string {
-  // Next.js dotenv expands $$ → $. Hostinger's env panel does not, so collapse here.
-  return password.replaceAll("$$", "$");
+  let value = password.trim();
+  if (
+    (value.startsWith("'") && value.endsWith("'") && value.length >= 2) ||
+    (value.startsWith('"') && value.endsWith('"') && value.length >= 2)
+  ) {
+    value = value.slice(1, -1);
+  }
+  // Next.js dotenv expands $$ → $. If Hostinger stored $$ literally, collapse it.
+  return value.replaceAll("$$", "$");
 }
 
 export function getMysqlConfig(): MysqlConfig | null {
@@ -50,10 +57,6 @@ export function getMysqlConfig(): MysqlConfig | null {
   return { host, port, user, password, database };
 }
 
-function isProductionRuntime() {
-  return process.env.NODE_ENV === "production";
-}
-
 async function resolveCandidates(hostname: string): Promise<string[]> {
   const ipv6 = await lookup(hostname, { family: 6 }).then((r) => r.address).catch(() => null);
   const ipv4 = await lookup(hostname, { family: 4 }).then((r) => r.address).catch(() => null);
@@ -61,10 +64,8 @@ async function resolveCandidates(hostname: string): Promise<string[]> {
   // Hostinger Node apps sit on the same machine as MySQL. Connecting via the
   // public hostname/IPv6 makes MariaDB see user@'<server-ipv6>' and reject it.
   // localhost / 127.0.0.1 authenticate as user@localhost, which Hostinger allows.
-  const local = isProductionRuntime() ? ["localhost", "127.0.0.1"] : [];
-  const ordered = isProductionRuntime()
-    ? [...local, hostname, ipv4, ipv6]
-    : [ipv6, hostname, ipv4];
+  // Always try those first; a local Windows machine will fail fast and fall through.
+  const ordered = ["localhost", "127.0.0.1", hostname, ipv6, ipv4];
 
   return [...new Set(ordered.filter((value): value is string => Boolean(value)))];
 }
