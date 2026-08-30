@@ -168,7 +168,7 @@ export default function IntegrationsHero() {
           collaboration, and drive better business results faster.
         </p>
 
-        <PrimaryCtaLink href="/contact" className="mt-9 text-black!" color="#FFC900">
+        <PrimaryCtaLink href="/contact#marketing" className="mt-9 text-black!" color="#FFC900">
           Get Started
         </PrimaryCtaLink>
       </div>

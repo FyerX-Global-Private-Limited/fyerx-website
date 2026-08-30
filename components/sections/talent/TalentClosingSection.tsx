@@ -27,7 +27,7 @@ export default function TalentClosingSection() {
 
   return (
     <section
-      className="overflow-x-clip bg-white"
+      className="home-section overflow-x-clip bg-white"
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
       <style>{`
@@ -52,22 +52,22 @@ export default function TalentClosingSection() {
         <h2 className="mt-4 text-[clamp(1.625rem,7vw,3.5rem)] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)] sm:mt-5 sm:leading-[1.2] lg:mt-[20px]">
           Hiring built to{" "}
           <span
-            className="inline-flex h-[1.22em] -translate-y-[0.06em] items-center gap-[0.2em] rounded-full px-[0.36em] align-middle transition-colors duration-300"
+            className="inline-flex h-[1.22em] -translate-y-[0.06em] items-center rounded-full pl-[0.4em] pr-[0.48em] align-middle transition-colors duration-300"
             style={{ backgroundColor: bg }}
           >
             <span
-              className="h-[0.27em] w-[0.27em] rounded-full transition-colors duration-300"
-              style={{ backgroundColor: dot }}
-            />
-            <span
               key={w}
-              className="leading-none"
+              className="inline-flex items-center gap-[0.22em] leading-none"
               style={{ color: text, animation: "closingWordIn 0.3s ease" }}
             >
-              {w}
+              <span
+                className="h-[0.27em] w-[0.27em] shrink-0 rounded-full"
+                style={{ backgroundColor: dot }}
+                aria-hidden="true"
+              />
+              <span className="leading-none">{w}.</span>
             </span>
           </span>
-          .
         </h2>
 
         <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-[1.5] text-[#3d4a5c] sm:mt-5 sm:text-[17px] lg:mt-[26px] lg:text-[20px]">
@@ -78,7 +78,7 @@ export default function TalentClosingSection() {
 
         <div className="mt-6 flex w-full flex-col items-center justify-center gap-3 sm:mt-[30px] sm:w-auto sm:flex-row sm:gap-[22px]">
           <PrimaryCtaLink
-            href="/contact"
+            href="/contact#talent"
             className="w-full max-w-[300px] justify-center sm:w-auto"
             color={TALENT_HOME.primary}
             textColor={TALENT_HOME.accent}

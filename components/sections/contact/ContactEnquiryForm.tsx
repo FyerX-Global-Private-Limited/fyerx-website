@@ -333,7 +333,7 @@ function CompactHelpMultiselect({
         {label}
         <RequiredMark />
       </p>
-      <div className="flex flex-wrap gap-2">
+      <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
         {options.map((opt) => {
           const isSelected = selected.includes(opt);
           return (
@@ -342,7 +342,7 @@ function CompactHelpMultiselect({
               type="button"
               onClick={() => onToggle(opt)}
               aria-pressed={isSelected}
-              className="cursor-pointer rounded-full border px-3 py-2 text-[11px] font-medium transition-colors sm:text-xs"
+              className="flex min-h-[40px] w-full min-w-0 cursor-pointer items-center justify-center rounded-full border px-2 py-2 text-center text-[11px] font-medium leading-tight break-words transition-colors sm:min-h-[38px] sm:px-3 sm:text-xs sm:leading-snug"
               style={
                 isSelected
                   ? {

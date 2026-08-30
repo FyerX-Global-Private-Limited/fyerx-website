@@ -1,6 +1,7 @@
 export type FooterLink = {
   label: string;
   href: string;
+  external?: boolean;
 };
 
 export type FooterCapability = FooterLink & {
@@ -17,7 +18,7 @@ export const FOOTER_CONTACT = {
 export const FOOTER_CAPABILITIES: FooterCapability[] = [
   { label: "Marketing", href: "/marketing", icon: "marketing" },
   { label: "Talent", href: "/talent", icon: "talent" },
-  { label: "Technology", href: "/contact?form=technology", icon: "technology" },
+  { label: "Technology", href: "/technology", icon: "technology" },
   { label: "Learning", href: "#capabilities", icon: "learning" },
 ];
 
@@ -25,21 +26,25 @@ export const FOOTER_EXPLORE_LINKS: FooterLink[] = [
   { label: "About FyerX", href: "/about" },
   { label: "Industries", href: "/about#industries" },
   { label: "Insights", href: "/blog" },
-  { label: "Careers", href: "/contact?form=job" },
+  {
+    label: "Careers",
+    href: "https://fyerx.zohorecruit.in/jobs/Careers",
+    external: true,
+  },
   { label: "Contact", href: "/contact" },
 ];
 
 export const FOOTER_FOR_BUSINESS_LINKS: FooterLink[] = [
   { label: "Growth & Marketing", href: "/marketing" },
   { label: "Talent & Hiring", href: "/talent" },
-  { label: "Technology & Transformation", href: "/contact?form=technology" },
+  { label: "Technology & Transformation", href: "/technology" },
   { label: "Learning & Development", href: "#capabilities" },
 ];
 
 export const FOOTER_RESOURCES_LINKS: FooterLink[] = [
   { label: "Blog", href: "/blog" },
-  { label: "Case Studies", href: "/marketing/case-studies" },
-  { label: "FAQs", href: "/contact#faqs" },
+  { label: "Cookie Policy", href: "/cookie-policy" },
+  { label: "Refund Policy", href: "/refund-policy" },
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms of Service", href: "/terms-of-service" },
 ];
@@ -68,7 +73,7 @@ export const FOOTER_MARKETING_GROWTH_FOCUS: FooterLink[] = [
 export const FOOTER_MARKETING_EXPLORE_LINKS: FooterLink[] = [
   { label: "Main Site", href: "/" },
   { label: "Talent", href: "/talent" },
-  { label: "Technology", href: "/contact?form=technology" },
+  { label: "Technology", href: "/technology" },
   { label: "Learning", href: "/#capabilities" },
   { label: "Contact", href: "/contact?form=marketing" },
 ];
@@ -103,7 +108,7 @@ export const FOOTER_TALENT_HIRING_NEEDS: FooterLink[] = [
 export const FOOTER_TALENT_EXPLORE_LINKS: FooterLink[] = [
   { label: "Main Site", href: "/" },
   { label: "Marketing", href: "/marketing" },
-  { label: "Technology", href: "/contact?form=technology" },
+  { label: "Technology", href: "/technology" },
   { label: "Learning", href: "/#capabilities" },
   { label: "Contact", href: "/contact?form=talent" },
 ];
@@ -112,6 +117,41 @@ export const FOOTER_TALENT_RESOURCES_LINKS: FooterLink[] = [
   { label: "Talent Insights", href: "/blog" },
   { label: "Hiring Guides", href: "/talent" },
   { label: "Candidate FAQs", href: "/talent#faqs" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms of Service", href: "/terms-of-service" },
+];
+
+export const FOOTER_TECHNOLOGY_TAGLINE =
+  "Systems that keep the business moving." as const;
+
+export const FOOTER_TECHNOLOGY_SERVICES: FooterLink[] = [
+  { label: "Enterprise Platforms", href: "/technology#services" },
+  { label: "Digital Transformation", href: "/technology#services" },
+  { label: "Data & AI", href: "/technology#services" },
+  { label: "Cloud & DevOps", href: "/technology#services" },
+  { label: "Strategic Advisory", href: "/technology#services" },
+];
+
+export const FOOTER_TECHNOLOGY_PRIORITIES: FooterLink[] = [
+  { label: "Enterprise Platform Change", href: "/technology" },
+  { label: "Legacy Modernisation", href: "/technology" },
+  { label: "Data and AI Adoption", href: "/technology" },
+  { label: "Cloud Operating Maturity", href: "/technology" },
+  { label: "Process Automation", href: "/technology" },
+];
+
+export const FOOTER_TECHNOLOGY_EXPLORE_LINKS: FooterLink[] = [
+  { label: "Main Site", href: "/" },
+  { label: "Marketing", href: "/marketing" },
+  { label: "Talent", href: "/talent" },
+  { label: "Learning", href: "/#capabilities" },
+  { label: "Contact", href: "/contact?form=technology" },
+];
+
+export const FOOTER_TECHNOLOGY_RESOURCES_LINKS: FooterLink[] = [
+  { label: "Technology Insights", href: "/blog" },
+  { label: "Case Studies", href: "/technology/case-studies" },
+  { label: "Technology FAQs", href: "/technology#faqs" },
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms of Service", href: "/terms-of-service" },
 ];

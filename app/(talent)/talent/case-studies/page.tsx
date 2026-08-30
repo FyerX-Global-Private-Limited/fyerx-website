@@ -15,7 +15,7 @@ export default function TalentCaseStudiesPage() {
             Explore how FyerX helps technology teams add project-ready capability across
             ServiceNow, Salesforce, SAP, cloud, data, and quality engineering roles.
           </p>
-          <PrimaryCtaLink href="/talent/book-session" className="mt-8" color="#11551C" textColor="#9EEBAA">
+          <PrimaryCtaLink href="/contact#talent" className="mt-8" color="#11551C" textColor="#9EEBAA">
             Explore Talent Solutions
           </PrimaryCtaLink>
         </div>

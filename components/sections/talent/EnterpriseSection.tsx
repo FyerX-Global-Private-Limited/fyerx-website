@@ -58,7 +58,7 @@ export default function EnterpriseSection() {
             </ul>
 
             <div className="mt-7">
-              <PrimaryCtaLink href="/contact" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
+              <PrimaryCtaLink href="/contact#talent" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
                 Contact Us
               </PrimaryCtaLink>
             </div>

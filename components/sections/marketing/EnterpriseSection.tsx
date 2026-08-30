@@ -67,7 +67,7 @@ export default function EnterpriseSection() {
 
             <div className="mt-7">
               <PrimaryCtaLink
-                href="/contact"
+                href="/contact#marketing"
                 className="text-black!"
                 color={MARKETING_HOME.primary}
               >

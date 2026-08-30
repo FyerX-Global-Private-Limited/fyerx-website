@@ -39,7 +39,7 @@ export const capabilities: Capability[] = [
     description:
       "Websites, applications, and digital infrastructure built to support businesses as they scale.",
     icon: "brackets",
-    href: "#capabilities",
+    href: "/technology",
   },
   {
     slug: "learning-development",

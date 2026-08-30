@@ -20,6 +20,20 @@ export type MobileMenuCategory = {
   items: { label: string; href: string; icon: MenuIconName }[];
 };
 
+/** Long Talent labels that may wrap to a second line to avoid overlap. */
+const MENU_LABELS_ALLOW_WRAP = new Set([
+  "Permanent Hiring & Executive Search",
+  "Cross-Border Contract Staffing (US)",
+]);
+
+export function allowsMenuLabelWrap(label: string) {
+  return MENU_LABELS_ALLOW_WRAP.has(label);
+}
+
+export function menuLabelNowrapClass(label: string) {
+  return allowsMenuLabelWrap(label) ? "leading-snug" : "whitespace-nowrap";
+}
+
 function ChevronDown({ open }: { open: boolean }) {
   return (
     <svg
@@ -38,13 +52,20 @@ function ChevronDown({ open }: { open: boolean }) {
   );
 }
 
-export function CategoryThumb({ cat }: { cat: MobileMenuCategory }) {
+export function CategoryThumb({
+  cat,
+  size = 40,
+}: {
+  cat: MobileMenuCategory;
+  size?: number;
+}) {
   if (cat.icon && cat.tint) {
     return (
       <MenuCategoryThumb
         icon={cat.icon}
         tint={cat.tint}
         color={cat.iconColor ?? "#6161FF"}
+        size={size}
       />
     );
   }
@@ -53,9 +74,10 @@ export function CategoryThumb({ cat }: { cat: MobileMenuCategory }) {
     <Image
       src={cat.avatar}
       alt=""
-      width={40}
-      height={40}
-      className="h-10 w-10 shrink-0 rounded-[10px] object-cover"
+      width={size}
+      height={size}
+      className="shrink-0 rounded-[10px] object-cover"
+      style={{ width: size, height: size }}
     />
   );
 }
@@ -114,11 +136,9 @@ export function MobileMegaMenuSection({
               <PrimaryCtaLink
                 href={visitHomeHref}
                 onClick={onClose}
-                icon={null}
                 color={visitHomeColor}
                 textColor={visitHomeTextColor}
-                className="!min-h-[34px] shrink-0 !px-4 !py-2 text-[0.8125rem] font-medium"
-                style={{ padding: "0.5rem 1.125rem" }}
+                variant="menu"
               >
                 {visitHomeLabel}
               </PrimaryCtaLink>
@@ -133,7 +153,7 @@ export function MobileMegaMenuSection({
                   type="button"
                   onClick={() => setOpenCategory(isOpen ? null : i)}
                   aria-expanded={isOpen}
-                  className={`flex w-full cursor-pointer items-center gap-2.5 rounded-[8px] px-2 py-2.5 text-left transition-colors duration-100 ${
+                  className={`flex w-full cursor-pointer items-center gap-2.5 rounded-[8px] px-2 py-1.5 text-left transition-colors duration-100 ${
                     isOpen ? "" : "hover:bg-[#f5f6f8]"
                   }`}
                   style={isOpen ? { backgroundColor: activeItemBg } : undefined}

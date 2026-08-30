@@ -45,7 +45,6 @@ export const TALENT_CASE_STUDIES: TalentCaseStudy[] = [
       "ITSM",
       "ITOM",
     ],
-    logoSrc: "/images/talent/comp-logo-microland.svg",
     peekColor: "#E8F1FB",
     accentColor: "#1F5C99",
     metrics: [
@@ -89,7 +88,6 @@ export const TALENT_CASE_STUDIES: TalentCaseStudy[] = [
       "Sales Cloud",
       "Service Cloud",
     ],
-    logoSrc: "/images/talent/comp-logo-solenis.svg",
     peekColor: "#F0FAF2",
     accentColor: "#11551C",
     metrics: [
@@ -126,7 +124,6 @@ export const TALENT_CASE_STUDIES: TalentCaseStudy[] = [
       "Contract Staffing",
     ],
     roleChips: ["S/4HANA Finance", "MM", "SD", "ABAP", "Basis", "SuccessFactors"],
-    logoSrc: "/images/talent/comp-logo-cgi.svg",
     peekColor: "#F3F0FF",
     accentColor: "#7C3AED",
     metrics: [
@@ -162,7 +159,6 @@ export const TALENT_CASE_STUDIES: TalentCaseStudy[] = [
       "Project Team Ramp-Up",
     ],
     roleChips: ["Cloud Engineer", "DevOps Engineer", "SRE", "Kubernetes", "AWS", "Azure"],
-    logoSrc: "/images/talent/comp-logo-cgi.svg",
     peekColor: "#ECFEFF",
     accentColor: "#0EA5E9",
     metrics: [
@@ -186,7 +182,7 @@ export const TALENT_CASE_STUDIES: TalentCaseStudy[] = [
   {
     slug: "data-ai-delivery",
     label: "Case Study 05",
-    clientName: "Kanini",
+    clientName: "Tachyon",
     categoryLabel: "Data & AI Delivery Talent",
     title: "Data & AI Delivery Talent",
     summary:
@@ -205,7 +201,6 @@ export const TALENT_CASE_STUDIES: TalentCaseStudy[] = [
       "Python",
       "Databricks",
     ],
-    logoSrc: "/images/talent/comp-logo-kanini.svg",
     peekColor: "#FFF7ED",
     accentColor: "#EA580C",
     metrics: [
@@ -242,7 +237,6 @@ export const TALENT_CASE_STUDIES: TalentCaseStudy[] = [
       "Technical Screening",
     ],
     roleChips: ["SDET", "Automation QA", "API Testing", "Selenium", "Playwright", "Cypress"],
-    logoSrc: "/images/talent/comp-logo-aspire.svg",
     peekColor: "#FDF2F8",
     accentColor: "#E2445C",
     metrics: [

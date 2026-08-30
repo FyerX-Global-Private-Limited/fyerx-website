@@ -98,7 +98,7 @@ export default function AIPlatformHero() {
           <h3 className="text-xl font-semibold text-[var(--ink)] sm:text-[22px]">{copy.heading}</h3>
           <p className="mt-3 text-sm leading-relaxed text-[#52525b] sm:text-base">{copy.description}</p>
           <div className="mt-6 flex justify-center">
-            <PrimaryCtaLink href="/talent/book-session" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
+            <PrimaryCtaLink href="/contact#talent" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
               Discuss This Talent Solution
             </PrimaryCtaLink>
           </div>

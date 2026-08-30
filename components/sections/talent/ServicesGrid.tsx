@@ -168,7 +168,7 @@ export default function ServicesGrid() {
           </h2>
 
           <div className="mt-8 flex flex-col items-center">
-            <PrimaryCtaLink href="/talent/book-session" color="#11551C" textColor="#9EEBAA">See How We Support Hiring</PrimaryCtaLink>
+            <PrimaryCtaLink href="/contact#talent" color="#11551C" textColor="#9EEBAA">See How We Support Hiring</PrimaryCtaLink>
           </div>
         </div>
 

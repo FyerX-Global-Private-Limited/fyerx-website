@@ -106,7 +106,11 @@ export default function TrackRecord() {
           </div>
 
           <div className="tr-cta-wrap">
-            <PrimaryCtaLink href="/talent/book-session" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
+            <PrimaryCtaLink
+              href="/contact#talent"
+              color={TALENT_HOME.primary}
+              textColor={TALENT_HOME.accent}
+            >
               Get Started
             </PrimaryCtaLink>
           </div>

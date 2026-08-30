@@ -49,7 +49,7 @@ export default function IntegrationsSection() {
         </p>
 
         <div className="integrations__cta-wrap">
-          <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Work With FyerX</PrimaryCtaLink>
+          <PrimaryCtaLink href="/contact#marketing" className="text-black!" color="#FFC900">Work With FyerX</PrimaryCtaLink>
         </div>
 
         <div className="integrations__rows">

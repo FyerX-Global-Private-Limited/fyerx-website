@@ -94,7 +94,7 @@ export default function CampaignsSection() {
 
               <div className="mt-6 sm:mt-8">
                 <PrimaryCtaLink
-                  href="/contact"
+                  href="/contact#marketing"
                   className="w-[234px] justify-center text-black!"
                   color={MARKETING_HOME.primary}
                 >

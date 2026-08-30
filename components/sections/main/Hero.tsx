@@ -25,7 +25,7 @@ const pillars: {
     brandColor: BRAND.technology,
     activeText: BRAND.technology,
     checkText: "#ffffff",
-    ctaHref: "/contact?form=technology",
+    ctaHref: "/technology",
     ctaTextColor: "#ffffff",
   },
   {

@@ -16,7 +16,7 @@ export default function CaseStudiesPage() {
             professional services teams build pipeline with clearer strategy and measurable
             outcomes.
           </p>
-          <PrimaryCtaLink href="/contact" className="mt-8 text-black!" color="#FFC900">
+          <PrimaryCtaLink href="/contact#marketing" className="mt-8 text-black!" color="#FFC900">
             Get Started
           </PrimaryCtaLink>
         </div>
