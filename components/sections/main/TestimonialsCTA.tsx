@@ -6,7 +6,8 @@ import type { CountryCode } from "libphonenumber-js";
 import { PrimaryCtaButton } from "@/components/ui/PrimaryCta";
 import { DEFAULT_PHONE_COUNTRY, PhoneInput } from "@/components/ui/PhoneInput";
 import { validateEmail, validatePhone } from "@/lib/form-validation";
-import { readFormString, submitLead } from "@/lib/submit-lead";
+import { readFormString } from "@/lib/submit-lead";
+import { useSubmitLead } from "@/lib/use-submit-lead";
 import { TRUSTBAR_LOGOS } from "@/lib/trustbar-logos";
 import { CONTACT_TEAM_AVATARS } from "@/lib/contact-team-avatars";
 
@@ -46,6 +47,7 @@ function Caret({ className }: { className?: string }) {
 
 export default function TestimonialsCTA() {
   const router = useRouter();
+  const submitLead = useSubmitLead();
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [phoneCountry, setPhoneCountry] = useState<CountryCode>(DEFAULT_PHONE_COUNTRY);
@@ -67,21 +69,24 @@ export default function TestimonialsCTA() {
     if (nextEmailError || nextPhoneError) return;
 
     setSubmitting(true);
-    const result = await submitLead({
-      formType: "contact",
-      firstName: readFormString(form, "firstName"),
-      lastName: readFormString(form, "lastName"),
-      email,
-      phoneCountry,
-      phone,
-      jobTitle: readFormString(form, "jobTitle") || null,
-      companyName: readFormString(form, "companyName") || null,
-      companySize: readFormString(form, "companySize") || null,
-      helpWith: readFormString(form, "helpWith") ? [readFormString(form, "helpWith")] : [],
-      priority: readFormString(form, "priority") || null,
-      message: readFormString(form, "message") || null,
-      privacyAccepted: true,
-    });
+    const result = await submitLead(
+      {
+        formType: "contact",
+        firstName: readFormString(form, "firstName"),
+        lastName: readFormString(form, "lastName"),
+        email,
+        phoneCountry,
+        phone,
+        jobTitle: readFormString(form, "jobTitle") || null,
+        companyName: readFormString(form, "companyName") || null,
+        companySize: readFormString(form, "companySize") || null,
+        helpWith: readFormString(form, "helpWith") ? [readFormString(form, "helpWith")] : [],
+        priority: readFormString(form, "priority") || null,
+        message: readFormString(form, "message") || null,
+        privacyAccepted: true,
+      },
+      "contact"
+    );
     setSubmitting(false);
 
     if (!result.ok) {

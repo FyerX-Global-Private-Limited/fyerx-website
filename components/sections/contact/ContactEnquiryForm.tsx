@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import type { CountryCode } from "libphonenumber-js";
 import { DEFAULT_PHONE_COUNTRY, PhoneInput } from "@/components/ui/PhoneInput";
 import { validateEmail, validatePhone } from "@/lib/form-validation";
-import { readFormString, submitLead } from "@/lib/submit-lead";
+import { readFormString } from "@/lib/submit-lead";
+import { useSubmitLead } from "@/lib/use-submit-lead";
 
 export const BRAND = {
   crimson: "#730031",
@@ -383,6 +384,7 @@ export function ContactEnquiryForm({
   submitLabel,
 }: ContactEnquiryFormProps) {
   const router = useRouter();
+  const submitLead = useSubmitLead();
   const config = FORM_CONFIG[formKey];
   const [selected, setSelected] = useState<string[]>([]);
   const [helpError, setHelpError] = useState(false);
@@ -448,24 +450,27 @@ export function ContactEnquiryForm({
     }
 
     setSubmitting(true);
-    const result = await submitLead({
-      formType: formKey,
-      firstName: readFormString(form, "firstName"),
-      lastName: readFormString(form, "lastName"),
-      email,
-      phoneCountry,
-      phone,
-      jobTitle: readFormString(form, "jobTitle") || null,
-      companyName: readFormString(form, "companyName") || null,
-      yearsOfExperience: readFormString(form, "experience") || null,
-      linkedinUrl: readFormString(form, "linkedin") || null,
-      resumeUrl: readFormString(form, "resumeUrl") || null,
-      monthlyBudget: readFormString(form, "monthlyBudget") || null,
-      helpWith: selected,
-      expectedStart,
-      message: readFormString(form, "message") || null,
-      privacyAccepted: true,
-    });
+    const result = await submitLead(
+      {
+        formType: formKey,
+        firstName: readFormString(form, "firstName"),
+        lastName: readFormString(form, "lastName"),
+        email,
+        phoneCountry,
+        phone,
+        jobTitle: readFormString(form, "jobTitle") || null,
+        companyName: readFormString(form, "companyName") || null,
+        yearsOfExperience: readFormString(form, "experience") || null,
+        linkedinUrl: readFormString(form, "linkedin") || null,
+        resumeUrl: readFormString(form, "resumeUrl") || null,
+        monthlyBudget: readFormString(form, "monthlyBudget") || null,
+        helpWith: selected,
+        expectedStart,
+        message: readFormString(form, "message") || null,
+        privacyAccepted: true,
+      },
+      formKey
+    );
     setSubmitting(false);
 
     if (!result.ok) {
