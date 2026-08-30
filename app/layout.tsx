@@ -34,6 +34,11 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Fyerx",
   description: "Marketing, consulting, and growth solutions by Fyerx.",
+  icons: {
+    icon: [{ url: "/favicon.png", type: "image/png" }],
+    shortcut: ["/favicon.png"],
+    apple: [{ url: "/favicon.png", type: "image/png" }],
+  },
 };
 
 export const viewport = {
