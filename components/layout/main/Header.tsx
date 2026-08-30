@@ -15,7 +15,9 @@ import {
   MobileMegaMenuSection,
 } from "@/components/layout/shared/MobileMegaMenuSection";
 import { TALENT_ACCENT, TALENT_PRIMARY } from "@/lib/talent-brand";
+import { TECH_ACCENT, TECH_PRIMARY } from "@/lib/technology-brand";
 import { MARKETING_MENU_CATEGORIES } from "@/lib/marketing-menu";
+import { TECHNOLOGY_MENU_CATEGORIES } from "@/lib/technology-menu";
 
 const MARKETING_CRIMSON = "#730031";
 
@@ -130,10 +132,12 @@ type MenuCategory = {
 };
 
 const marketingCategories: MenuCategory[] = MARKETING_MENU_CATEGORIES;
+const technologyCategories: MenuCategory[] = TECHNOLOGY_MENU_CATEGORIES;
 
 const talentCategories: MenuCategory[] = [
   {
     label: "Contract Staffing",
+    subtitle: "Flexibility & scale",
     avatar: "/avatar/1.avif",
     icon: "personPlus",
     tint: "#E8F8EF",
@@ -147,6 +151,7 @@ const talentCategories: MenuCategory[] = [
   },
   {
     label: "RPO",
+    subtitle: "Sourcing & management",
     avatar: "/avatar/2.avif",
     icon: "funnel",
     tint: "#F3EEFF",
@@ -159,6 +164,7 @@ const talentCategories: MenuCategory[] = [
   },
   {
     label: "Permanent Hiring & Executive Search",
+    subtitle: "Placement & leadership",
     avatar: "/avatar/3.avif",
     icon: "search",
     tint: "#E8F4FF",
@@ -170,6 +176,7 @@ const talentCategories: MenuCategory[] = [
   },
   {
     label: "IT & Tech Talent",
+    subtitle: "Tech & engineering",
     avatar: "/avatar/4.avif",
     icon: "gear",
     tint: "#FFF6E6",
@@ -183,6 +190,7 @@ const talentCategories: MenuCategory[] = [
   },
   {
     label: "HR Advisory",
+    subtitle: "Strategy & compliance",
     avatar: "/avatar/5.avif",
     icon: "clipboardCheck",
     tint: "#E8F8EF",
@@ -195,6 +203,7 @@ const talentCategories: MenuCategory[] = [
   },
   {
     label: "Global Staffing",
+    subtitle: "Reach & expansion",
     avatar: "/avatar/6.avif",
     icon: "globe",
     tint: "#E8F4FF",
@@ -275,14 +284,14 @@ function CategoryMenu({
             {headingSubtitle && (
               <p className="mt-[1.125rem] mb-[1.125rem] text-[0.75rem] leading-[1.6] text-[#676879]">{headingSubtitle}</p>
             )}
-            <div className="grid grid-cols-2 gap-x-6 gap-y-5">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-2">
               {categories.map((cat, i) => (
                 <button
                   key={cat.label}
                   type="button"
                   onClick={() => setActive(i)}
                   aria-pressed={active === i}
-                  className={`flex w-full cursor-pointer items-center gap-3 rounded-[8px] px-2.5 py-2.5 text-left transition-colors duration-100 ${
+                  className={`flex w-full cursor-pointer items-center gap-3 rounded-[8px] px-2 py-1.5 text-left transition-colors duration-100 ${
                     active === i ? "" : "hover:bg-[#f5f6f8]"
                   }`}
                   style={active === i ? { backgroundColor: activeItemBg } : undefined}
@@ -351,14 +360,14 @@ function CategoryMenu({
       <div className="flex px-10 pt-6 pb-6">
 
         {/* Left — main headings, 2 per row */}
-        <div className="w-[560px] pr-8 grid grid-cols-2 gap-x-6 gap-y-5 content-start">
+        <div className="w-[560px] pr-8 grid grid-cols-2 gap-x-6 gap-y-2 content-start">
           {categories.map((cat, i) => (
             <button
               key={cat.label}
               type="button"
               onClick={() => setActive(i)}
               aria-pressed={active === i}
-              className={`flex w-full cursor-pointer items-center gap-3 rounded-[8px] px-2.5 py-2.5 text-left transition-colors duration-100 ${
+              className={`flex w-full cursor-pointer items-center gap-3 rounded-[8px] px-2 py-1.5 text-left transition-colors duration-100 ${
                 active === i ? "" : "hover:bg-[#f5f6f8]"
               }`}
               style={active === i ? { backgroundColor: activeItemBg } : undefined}
@@ -410,7 +419,7 @@ export default function MainHeader() {
   const pathname = usePathname();
   const [openMenu, setOpenMenu]   = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileExpanded, setMobileExpanded] = useState<"Marketing" | "Talent" | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<"Marketing" | "Talent" | "Technology" | null>(null);
   const [scrolled, setScrolled]   = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -473,6 +482,14 @@ export default function MainHeader() {
               </Link>
             </div>
 
+            {/* Technology — column mega-menu */}
+            <div onMouseEnter={() => open("Technology")}>
+              <Link href="/technology" onClick={closeAll} className={`${navLinkClass("/technology", "bg-[#20287A1F] text-[#20287A]")} gap-2
+                ${openMenu === "Technology" && !isActive("/technology") ? "bg-[#20287A1F] text-[#20287A]" : ""}`}>
+                Technology <ChevronDown open={openMenu === "Technology"} />
+              </Link>
+            </div>
+
             {/* Plain links */}
             {simpleLinks.map((item) => (
               <Link key={item.label} href={item.href} onClick={closeAll}
@@ -485,8 +502,12 @@ export default function MainHeader() {
 
           {/* Desktop CTA — Get Started */}
           <div className="hidden md:flex items-center ml-auto shrink-0">
-            <PrimaryCtaLink href="/contact" onClick={closeAll} onMouseEnter={() => setOpenMenu(null)}
-              className="h-[40px] whitespace-nowrap">
+            <PrimaryCtaLink
+              href="/contact"
+              onClick={closeAll}
+              onMouseEnter={() => setOpenMenu(null)}
+              variant="nav"
+            >
               Get Started
             </PrimaryCtaLink>
           </div>
@@ -530,6 +551,22 @@ export default function MainHeader() {
                 visitHomeTextColor={TALENT_ACCENT} />
             </div>
           )}
+          {openMenu === "Technology" && (
+            <div className="absolute top-full left-0 right-0 z-50 max-w-[1040px]"
+              onMouseEnter={cancelClose}>
+              <CategoryMenu categories={technologyCategories} onClose={closeAll}
+                heading="TECHNOLOGY SERVICES"
+                headingSubtitle="An overview of what we offer"
+                headingIcon="gear"
+                platformStyle
+                hoverColor={TECH_PRIMARY}
+                activeItemBg="rgba(32, 40, 122, 0.12)"
+                visitHomeHref="/technology"
+                visitHomeLabel="Visit Homepage"
+                visitHomeColor={TECH_PRIMARY}
+                visitHomeTextColor={TECH_ACCENT} />
+            </div>
+          )}
         </div>
       </div>
 
@@ -571,6 +608,23 @@ export default function MainHeader() {
               onClose={closeAll}
             />
 
+            <MobileMegaMenuSection
+              label="Technology"
+              expanded={mobileExpanded === "Technology"}
+              onToggle={() =>
+                setMobileExpanded((current) => (current === "Technology" ? null : "Technology"))
+              }
+              activeClass="bg-[#20287A1F] text-[#20287A]"
+              activeItemBg="rgba(32, 40, 122, 0.12)"
+              categories={technologyCategories}
+              hoverColor={TECH_PRIMARY}
+              visitHomeHref="/technology"
+              visitHomeLabel="Visit Homepage"
+              visitHomeColor={TECH_PRIMARY}
+              visitHomeTextColor={TECH_ACCENT}
+              onClose={closeAll}
+            />
+
             {simpleLinks.map((item) => (
               <Link key={item.label} href={item.href} onClick={closeAll}
                 className={`${navLinkClass(item.href)} border-b border-[#e6e9ef] px-3 py-[10px] justify-start`}>
@@ -579,7 +633,7 @@ export default function MainHeader() {
             ))}
 
             <div className="mt-3 pt-3">
-              <PrimaryCtaLink href="/contact" onClick={closeAll}>
+              <PrimaryCtaLink href="/contact" onClick={closeAll} variant="nav">
                 Get Started
               </PrimaryCtaLink>
             </div>

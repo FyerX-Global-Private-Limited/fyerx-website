@@ -133,7 +133,7 @@ export function MobileMegaMenuSection({
                   type="button"
                   onClick={() => setOpenCategory(isOpen ? null : i)}
                   aria-expanded={isOpen}
-                  className={`flex w-full cursor-pointer items-center gap-2.5 rounded-[8px] px-2 py-2.5 text-left transition-colors duration-100 ${
+                  className={`flex w-full cursor-pointer items-center gap-2.5 rounded-[8px] px-2 py-1.5 text-left transition-colors duration-100 ${
                     isOpen ? "" : "hover:bg-[#f5f6f8]"
                   }`}
                   style={isOpen ? { backgroundColor: activeItemBg } : undefined}

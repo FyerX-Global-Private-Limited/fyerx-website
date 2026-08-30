@@ -5,14 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
-import { MenuDetailIcon, MenuGlyphBold } from "@/components/ui/MenuGlyph";
+import { TECH_ACCENT, TECH_LOGO, TECH_PRIMARY } from "@/lib/technology-brand";
+import { TECHNOLOGY_MENU_CATEGORIES } from "@/lib/technology-menu";
 import {
   CategoryThumb,
   MobileMegaMenuSection,
 } from "@/components/layout/shared/MobileMegaMenuSection";
-import { MARKETING_MENU_CATEGORIES } from "@/lib/marketing-menu";
 
-// ── Icons ──────────────────────────────────────────────────────────────────────
 function ChevronDown({ open }: { open: boolean }) {
   return (
     <svg
@@ -50,41 +49,74 @@ function CloseIcon() {
   );
 }
 
-const servicesCategories = MARKETING_MENU_CATEGORIES;
+type IconName =
+  | "clipboardCheck" | "gear" | "personPlus" | "funnel"
+  | "sparkle" | "database" | "search" | "doc" | "plug" | "tag" | "chart" | "globe";
+
+function Glyph({ name }: { name: IconName }) {
+  const c = {
+    width: 18, height: 18, viewBox: "0 0 24 24", fill: "none",
+    stroke: "currentColor", strokeWidth: 1.6,
+    strokeLinecap: "round" as const, strokeLinejoin: "round" as const,
+  };
+  switch (name) {
+    case "clipboardCheck":
+      return <svg {...c}><rect x="5.5" y="4" width="13" height="17" rx="2" /><rect x="9" y="2.5" width="6" height="3" rx="1" /><polyline points="9 12.5 11 14.5 15 10.5" /></svg>;
+    case "gear":
+      return <svg {...c}><circle cx="12" cy="12" r="3" /><path d="M12 3v2.4M12 18.6V21M21 12h-2.4M5.4 12H3M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7M18.4 18.4l-1.7-1.7M7.3 7.3 5.6 5.6" /></svg>;
+    case "personPlus":
+      return <svg {...c}><circle cx="10" cy="8" r="3.5" /><path d="M3.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6" /><line x1="18" y1="7" x2="18" y2="13" /><line x1="15" y1="10" x2="21" y2="10" /></svg>;
+    case "funnel":
+      return <svg {...c}><polygon points="4 4 20 4 14 12 14 19 10 21 10 12 4 4" /></svg>;
+    case "sparkle":
+      return <svg {...c}><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18" /></svg>;
+    case "database":
+      return <svg {...c}><ellipse cx="12" cy="5.5" rx="7" ry="2.5" /><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13" /><path d="M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5" /></svg>;
+    case "search":
+      return <svg {...c}><circle cx="10.8" cy="10.8" r="6.8" /><line x1="15.8" y1="15.8" x2="21" y2="21" /></svg>;
+    case "doc":
+      return <svg {...c}><rect x="5.5" y="3" width="13" height="18" rx="1.8" /><line x1="8.5" y1="8" x2="15.5" y2="8" /><line x1="8.5" y1="12" x2="15.5" y2="12" /><line x1="8.5" y1="16" x2="13" y2="16" /></svg>;
+    case "plug":
+      return <svg {...c}><path d="M9 2.5v4M15 2.5v4M6 6.5h12v4a6 6 0 0 1-12 0z" /><path d="M9 16.5v5M15 16.5v5" /></svg>;
+    case "tag":
+      return <svg {...c}><path d="M11.7 3.5H5.8a2.3 2.3 0 0 0-2.3 2.3v5.9l10.8 10.8 8.2-8.2L11.7 3.5z" /><circle cx="8.3" cy="8.3" r="1.3" fill="currentColor" stroke="none" /></svg>;
+    case "chart":
+      return <svg {...c}><line x1="5" y1="19" x2="5" y2="12" /><line x1="12" y1="19" x2="12" y2="6" /><line x1="19" y1="19" x2="19" y2="15" /></svg>;
+    case "globe":
+      return <svg {...c}><circle cx="12" cy="12" r="9" /><ellipse cx="12" cy="12" rx="4" ry="9" /><line x1="3" y1="12" x2="21" y2="12" /></svg>;
+  }
+}
 
 const simpleLinks = [
-  { label: "Our Work", href: "/marketing/case-studies" },
+  { label: "Our Work", href: "/technology/case-studies" },
   { label: "Blog", href: "/blog" },
 ];
 
-const MARKETING_CRIMSON = "#730031";
-const MARKETING_ACTIVE_BG = "#fce8ef";
+const TECH_MENU_HOVER = TECH_PRIMARY;
+const TECH_ACTIVE_BG = "rgba(184, 197, 255, 0.35)";
 
-// ── Services mega-menu — left = clickable categories (avatar + label), 2 per
-// row; right = sub-items for whichever category is active.
 function ServicesMenu({ onClose }: { onClose: () => void }) {
   const [active, setActive] = useState(0);
-  const category = servicesCategories[active];
+  const category = TECHNOLOGY_MENU_CATEGORIES[active];
 
   return (
     <div className="animate-dropdown bg-white border-t border-[#e6e9ef] rounded-b-[12px] shadow-[0_16px_36px_rgba(20,20,43,0.12),0_2px_8px_rgba(20,20,43,0.06)]">
       <div className="flex px-10 pt-6 pb-6">
-        {/* Left — heading + main headings, 2 per row */}
-        <div className="w-[560px] pr-8" style={{ ["--menu-hover" as string]: MARKETING_CRIMSON }}>
+        <div className="w-[560px] pr-8" style={{ ["--menu-hover" as string]: TECH_MENU_HOVER }}>
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 text-[#9a9ea8]">
-              <MenuGlyphBold name="megaphone" color="#8b8fa3" size={20} />
+              <Glyph name="gear" />
               <span className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">
-                MARKETING SERVICES
+                Technology Services
               </span>
             </div>
             <PrimaryCtaLink
-              href="/marketing"
+              href="/technology"
               onClick={onClose}
               icon={null}
-              color="#FFC900"
-              textColor="#111111"
-              className="!min-h-[36px] shrink-0 !px-4 !py-2 text-[0.875rem] font-medium text-black!"
+              color={TECH_PRIMARY}
+              textColor={TECH_ACCENT}
+              className="!min-h-[36px] shrink-0 !px-4 !py-2 text-[0.875rem] font-medium"
             >
               Visit Homepage
             </PrimaryCtaLink>
@@ -93,7 +125,7 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
             An overview of what we offer
           </p>
           <div className="grid grid-cols-2 gap-x-6 gap-y-2">
-            {servicesCategories.map((cat, i) => (
+            {TECHNOLOGY_MENU_CATEGORIES.map((cat, i) => (
               <button
                 key={cat.label}
                 type="button"
@@ -102,13 +134,13 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
                 className={`flex w-full cursor-pointer items-center gap-3 rounded-[8px] px-2 py-1.5 text-left transition-colors duration-100 ${
                   active === i ? "" : "hover:bg-[#f5f6f8]"
                 }`}
-                style={active === i ? { backgroundColor: MARKETING_ACTIVE_BG } : undefined}
+                style={active === i ? { backgroundColor: TECH_ACTIVE_BG } : undefined}
               >
                 <CategoryThumb cat={cat} />
                 <span className="flex flex-col gap-[0.35rem]">
                   <span
                     className="text-[0.875rem] font-normal leading-[1] transition-colors duration-100"
-                    style={{ color: active === i ? MARKETING_CRIMSON : "#000000" }}
+                    style={{ color: active === i ? TECH_MENU_HOVER : "#000000" }}
                   >
                     {cat.label}
                   </span>
@@ -123,11 +155,9 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
           </div>
         </div>
 
-        {/* Divider */}
         <div className="w-px bg-[#eef0f4] mx-2" />
 
-        {/* Right — Visit Homepage + sub-items for the active category */}
-        <div className="flex-1 pl-8" style={{ ["--menu-hover" as string]: MARKETING_CRIMSON }}>
+        <div className="flex-1 pl-8" style={{ ["--menu-hover" as string]: TECH_MENU_HOVER }}>
           <p className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">
             Service Details
           </p>
@@ -142,7 +172,9 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
                   onClick={onClose}
                   className="flex items-center gap-2 py-1 text-[0.875rem] font-normal leading-[1.4] text-black transition-colors duration-100 hover:text-[var(--menu-hover)]"
                 >
-                  <MenuDetailIcon name={item.icon} />
+                  <span className="text-[#8b8fa3] shrink-0">
+                    <Glyph name={item.icon as IconName} />
+                  </span>
                   {item.label}
                 </Link>
               </li>
@@ -154,45 +186,45 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
   );
 }
 
-export default function MarketingHeader() {
+export default function TechnologyHeader() {
   const pathname = usePathname();
-  const [servicesOpen, setServicesOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileServicesExpanded, setMobileServicesExpanded] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const isActive = (href: string) =>
-    href === "/marketing"
-      ? pathname === "/marketing"
+    href === "/technology"
+      ? pathname === "/technology"
       : pathname === href || pathname.startsWith(`${href}/`);
 
-  const navLinkClass = (href: string, activeBg = "bg-[#fce8ef] text-[#730031]") =>
+  const navLinkClass = (href: string) =>
     `px-4 py-2 rounded-[8px] text-[0.875rem] font-light transition-colors duration-100 whitespace-nowrap ${
-      isActive(href) ? activeBg : "text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"
+      isActive(href) ? "bg-[#B8C5FF]/35 text-[#20287A]" : "text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"
     }`;
+
+  const openMenu = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setMenuOpen(true);
+  };
+  const scheduleClose = () => {
+    closeTimer.current = setTimeout(() => setMenuOpen(false), 200);
+  };
+  const cancelClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+  };
+  const closeAll = () => {
+    setMenuOpen(false);
+    setMobileOpen(false);
+    setMobileServicesExpanded(false);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const openServices = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    setServicesOpen(true);
-  };
-  const scheduleClose = () => {
-    closeTimer.current = setTimeout(() => setServicesOpen(false), 200);
-  };
-  const cancelClose = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-  };
-  const closeAll = () => {
-    setServicesOpen(false);
-    setMobileOpen(false);
-    setMobileServicesExpanded(false);
-  };
 
   return (
     <header
@@ -203,26 +235,29 @@ export default function MarketingHeader() {
       onMouseLeave={scheduleClose}
     >
       <div className="mx-auto flex h-[56px] w-full max-w-[1400px] items-center px-4 sm:h-[60px] sm:px-6 lg:px-16">
-        <Link href="/marketing" className="flex shrink-0 items-center" onClick={closeAll}>
+        <Link href="/technology" className="flex shrink-0 items-center" onClick={closeAll}>
           <Image
-            src="/images/marketing/marketinglogo.png"
-            alt="FyerX Marketing"
-            width={140}
-            height={32}
-            className="h-8 w-auto object-contain"
+            src={TECH_LOGO}
+            alt="FyerX Technology"
+            width={180}
+            height={44}
+            unoptimized
+            className="h-9 w-auto object-contain sm:h-10 md:h-11"
             priority
           />
         </Link>
 
         <div className="relative ml-8 flex min-w-0 flex-1 items-center sm:ml-10 lg:ml-12">
           <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
-            <div onMouseEnter={openServices}>
+            <div onMouseEnter={openMenu}>
               <button
+                type="button"
+                aria-expanded={menuOpen}
                 className={`flex items-center gap-2 px-4 py-2 rounded-[8px] cursor-pointer text-[0.875rem] font-light transition-colors duration-100 whitespace-nowrap ${
-                  servicesOpen ? "bg-[#fce8ef] text-[#730031]" : "text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"
+                  menuOpen ? "bg-[#B8C5FF]/35 text-[#20287A]" : "text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"
                 }`}
               >
-                Services <ChevronDown open={servicesOpen} />
+                Services <ChevronDown open={menuOpen} />
               </button>
             </div>
 
@@ -231,7 +266,7 @@ export default function MarketingHeader() {
                 key={item.label}
                 href={item.href}
                 onClick={closeAll}
-                onMouseEnter={() => setServicesOpen(false)}
+                onMouseEnter={() => setMenuOpen(false)}
                 className={navLinkClass(item.href)}
               >
                 {item.label}
@@ -241,15 +276,14 @@ export default function MarketingHeader() {
 
           <div className="hidden md:flex ml-auto shrink-0 items-center">
             <PrimaryCtaLink
-              href="/contact"
+              href="/technology#contact"
               onClick={closeAll}
-              onMouseEnter={() => setServicesOpen(false)}
-              className="text-black!"
-              color="#FFC900"
-              textColor="#111111"
+              onMouseEnter={() => setMenuOpen(false)}
+              color={TECH_PRIMARY}
+              textColor="#ffffff"
               variant="nav"
             >
-              Get Started
+              Talk to an Expert
             </PrimaryCtaLink>
           </div>
 
@@ -261,7 +295,7 @@ export default function MarketingHeader() {
             {mobileOpen ? <CloseIcon /> : <HamburgerIcon />}
           </button>
 
-          {servicesOpen && (
+          {menuOpen && (
             <div
               className="absolute top-full left-0 right-0 z-50 max-w-[1040px]"
               onMouseEnter={cancelClose}
@@ -279,14 +313,14 @@ export default function MarketingHeader() {
               label="Services"
               expanded={mobileServicesExpanded}
               onToggle={() => setMobileServicesExpanded((current) => !current)}
-              activeClass="bg-[#fce8ef] text-[#730031]"
-              activeItemBg={MARKETING_ACTIVE_BG}
-              categories={servicesCategories}
-              hoverColor={MARKETING_CRIMSON}
-              visitHomeHref="/marketing"
+              activeClass="bg-[#B8C5FF]/35 text-[#20287A]"
+              activeItemBg={TECH_ACTIVE_BG}
+              categories={TECHNOLOGY_MENU_CATEGORIES}
+              hoverColor={TECH_MENU_HOVER}
+              visitHomeHref="/technology"
               visitHomeLabel="Visit Homepage"
-              visitHomeColor="#FFC900"
-              visitHomeTextColor="#111111"
+              visitHomeColor={TECH_PRIMARY}
+              visitHomeTextColor={TECH_ACCENT}
               onClose={closeAll}
             />
 
@@ -303,14 +337,13 @@ export default function MarketingHeader() {
 
             <div className="mt-3 pt-3">
               <PrimaryCtaLink
-                href="/contact"
+                href="/technology#contact"
                 onClick={closeAll}
-                className="text-black!"
-                color="#FFC900"
-                textColor="#111111"
+                color={TECH_PRIMARY}
+                textColor="#ffffff"
                 variant="nav"
               >
-                Get Started
+                Talk to an Expert
               </PrimaryCtaLink>
             </div>
           </div>

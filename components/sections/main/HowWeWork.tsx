@@ -13,7 +13,7 @@ interface TabData {
 }
 
 const TAB_LINKS = [
-  "/contact?form=technology",
+  "/technology",
   "/contact?form=talent",
   "/contact?form=marketing",
   "/contact",

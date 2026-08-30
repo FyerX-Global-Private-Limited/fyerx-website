@@ -6,11 +6,25 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, CSSProperties, ReactNo
  * animated gradient orb sweeping through it (see `orbSwoosh` in
  * app/globals.css). Reserved for the single most important action on a
  * given screen — use Button/plain links for everything else.
+ *
+ * `variant="nav"` is a Monday-style solid premium pill for header CTAs:
+ * no orb animation, crisp shadow, subtle hover lift.
  */
 
-function CtaArrowIcon() {
+function CtaArrowIcon({ className = "" }: { className?: string }) {
   return (
-    <svg className="shrink-0" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.3} strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      className={`shrink-0 ${className}`}
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.4}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <line x1="4" y1="12" x2="20" y2="12" />
       <polyline points="13 5 20 12 13 19" />
     </svg>
@@ -19,7 +33,7 @@ function CtaArrowIcon() {
 
 const DEFAULT_CTA_COLOR = "#86013A";
 
-function ctaStyle(color: string, textColor = "#ffffff"): CSSProperties {
+function defaultCtaStyle(color: string, textColor = "#ffffff"): CSSProperties {
   return {
     padding: "0.8125rem 1.75rem",
     borderRadius: "10rem",
@@ -33,8 +47,24 @@ function ctaStyle(color: string, textColor = "#ffffff"): CSSProperties {
   };
 }
 
-const ctaClassName =
+function navCtaStyle(color: string, textColor = "#ffffff"): CSSProperties {
+  return {
+    padding: "0.625rem 1.25rem",
+    borderRadius: "9999px",
+    backgroundColor: color,
+    color: textColor,
+    boxShadow:
+      "0 1px 2px rgba(16, 16, 20, 0.06), 0 6px 16px rgba(16, 16, 20, 0.12)",
+  };
+}
+
+const defaultCtaClassName =
   "relative inline-flex w-fit cursor-pointer items-center justify-center gap-2 overflow-hidden text-[15px] font-semibold transition-opacity hover:opacity-95";
+
+const navCtaClassName =
+  "relative inline-flex h-10 w-fit cursor-pointer items-center justify-center gap-2 whitespace-nowrap text-[0.875rem] font-semibold leading-none transition-[transform,box-shadow,filter] duration-200 hover:-translate-y-px hover:brightness-[1.05] hover:shadow-[0_4px_14px_rgba(16,16,20,0.16)] active:translate-y-0 active:brightness-100";
+
+type CtaVariant = "default" | "nav";
 
 type PrimaryCtaLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className"> & {
   href: string;
@@ -45,6 +75,8 @@ type PrimaryCtaLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "classN
   color?: string;
   /** Text color on the pill. Defaults to white; use dark text on light buttons (e.g. Marketing yellow). */
   textColor?: string;
+  /** `nav` = Monday-style solid premium header CTA (no orb). */
+  variant?: CtaVariant;
   style?: CSSProperties;
 };
 
@@ -55,14 +87,19 @@ export function PrimaryCtaLink({
   icon,
   color = DEFAULT_CTA_COLOR,
   textColor = "#ffffff",
+  variant = "default",
   style,
   ...props
 }: PrimaryCtaLinkProps) {
+  const isNav = variant === "nav";
   return (
     <Link
       href={href}
-      className={`${ctaClassName} ${className}`}
-      style={{ ...ctaStyle(color, textColor), ...style }}
+      className={`${isNav ? navCtaClassName : defaultCtaClassName} ${className}`}
+      style={{
+        ...(isNav ? navCtaStyle(color, textColor) : defaultCtaStyle(color, textColor)),
+        ...style,
+      }}
       {...props}
     >
       {children}
@@ -79,6 +116,7 @@ type PrimaryCtaButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "clas
   color?: string;
   /** Text color on the pill. Defaults to white. */
   textColor?: string;
+  variant?: CtaVariant;
   style?: CSSProperties;
 };
 
@@ -88,12 +126,22 @@ export function PrimaryCtaButton({
   icon,
   color = DEFAULT_CTA_COLOR,
   textColor = "#ffffff",
+  variant = "default",
   style,
   type = "button",
   ...props
 }: PrimaryCtaButtonProps) {
+  const isNav = variant === "nav";
   return (
-    <button type={type} className={`${ctaClassName} ${className}`} style={{ ...ctaStyle(color, textColor), ...style }} {...props}>
+    <button
+      type={type}
+      className={`${isNav ? navCtaClassName : defaultCtaClassName} ${className}`}
+      style={{
+        ...(isNav ? navCtaStyle(color, textColor) : defaultCtaStyle(color, textColor)),
+        ...style,
+      }}
+      {...props}
+    >
       {children}
       {icon === null ? null : (icon ?? <CtaArrowIcon />)}
     </button>

@@ -6,7 +6,11 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TALENT_ACCENT, TALENT_LOGO, TALENT_PRIMARY } from "@/lib/talent-brand";
-import { MobileMegaMenuSection } from "@/components/layout/shared/MobileMegaMenuSection";
+import {
+  CategoryThumb,
+  MobileMegaMenuSection,
+  type MobileMenuCategory,
+} from "@/components/layout/shared/MobileMegaMenuSection";
 
 // ── Icons ──────────────────────────────────────────────────────────────────────
 function ChevronDown({ open }: { open: boolean }) {
@@ -85,16 +89,14 @@ function Glyph({ name }: { name: IconName }) {
 }
 
 // ── Data ───────────────────────────────────────────────────────────────────────
-type MenuCategory = {
-  label: string;
-  avatar: string;
-  items: { label: string; href: string; icon: IconName }[];
-};
-
-const talentCategories: MenuCategory[] = [
+const talentCategories: MobileMenuCategory[] = [
   {
     label: "Contract Staffing",
+    subtitle: "Flexibility & scale",
     avatar: "/avatar/1.avif",
+    icon: "personPlus",
+    tint: "#E8F8EF",
+    iconColor: "#00CA72",
     items: [
       { label: "IT & Tech Contract Roles", icon: "gear", href: "#" },
       { label: "Project-Based Staffing", icon: "clipboardCheck", href: "#" },
@@ -104,7 +106,11 @@ const talentCategories: MenuCategory[] = [
   },
   {
     label: "RPO",
+    subtitle: "Sourcing & management",
     avatar: "/avatar/2.avif",
+    icon: "funnel",
+    tint: "#F3EEFF",
+    iconColor: "#6161FF",
     items: [
       { label: "End-to-End Recruitment Outsourcing", icon: "funnel", href: "#" },
       { label: "On-Demand RPO", icon: "sparkle", href: "#" },
@@ -113,7 +119,11 @@ const talentCategories: MenuCategory[] = [
   },
   {
     label: "Permanent Hiring & Executive Search",
+    subtitle: "Placement & leadership",
     avatar: "/avatar/3.avif",
+    icon: "search",
+    tint: "#E8F4FF",
+    iconColor: "#579BFC",
     items: [
       { label: "Permanent Hiring", icon: "personPlus", href: "#" },
       { label: "Executive Search", icon: "search", href: "#" },
@@ -121,7 +131,11 @@ const talentCategories: MenuCategory[] = [
   },
   {
     label: "IT & Tech Talent",
+    subtitle: "Tech & engineering",
     avatar: "/avatar/4.avif",
+    icon: "gear",
+    tint: "#FFF6E6",
+    iconColor: "#FDAB3D",
     items: [
       { label: "Software Development Roles", icon: "doc", href: "#" },
       { label: "ServiceNow & Enterprise Platform Talent", icon: "plug", href: "#" },
@@ -131,7 +145,11 @@ const talentCategories: MenuCategory[] = [
   },
   {
     label: "HR Advisory",
+    subtitle: "Strategy & compliance",
     avatar: "/avatar/5.avif",
+    icon: "clipboardCheck",
+    tint: "#E8F8EF",
+    iconColor: "#00CA72",
     items: [
       { label: "Hiring Assessments", icon: "clipboardCheck", href: "#" },
       { label: "Background Verification", icon: "tag", href: "#" },
@@ -140,7 +158,11 @@ const talentCategories: MenuCategory[] = [
   },
   {
     label: "Global Staffing",
+    subtitle: "Reach & expansion",
     avatar: "/avatar/6.avif",
+    icon: "globe",
+    tint: "#E8F4FF",
+    iconColor: "#0086C0",
     items: [
       { label: "US Contract Staffing", icon: "globe", href: "#" },
       { label: "Remote Team Building", icon: "personPlus", href: "#" },
@@ -189,30 +211,31 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
           <p className="mt-[1.125rem] mb-[1.125rem] text-[0.75rem] leading-[1.6] text-[#676879]">
             An overview of what we offer
           </p>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-5">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-2">
             {talentCategories.map((cat, i) => (
               <button
                 key={cat.label}
                 type="button"
                 onClick={() => setActive(i)}
                 aria-pressed={active === i}
-                className={`flex w-full cursor-pointer items-center gap-3 rounded-[8px] px-2.5 py-2.5 text-left transition-colors duration-100 ${
+                className={`flex w-full cursor-pointer items-center gap-3 rounded-[8px] px-2 py-1.5 text-left transition-colors duration-100 ${
                   active === i ? "" : "hover:bg-[#f5f6f8]"
                 }`}
                 style={active === i ? { backgroundColor: TALENT_ACTIVE_BG } : undefined}
               >
-                <Image
-                  src={cat.avatar}
-                  alt=""
-                  width={40}
-                  height={40}
-                  className="w-10 h-10 rounded-[10px] object-cover shrink-0"
-                />
-                <span
-                  className="text-[0.875rem] font-normal leading-[1.3] transition-colors duration-100"
-                  style={{ color: active === i ? TALENT_MENU_HOVER : "#000000" }}
-                >
-                  {cat.label}
+                <CategoryThumb cat={cat} />
+                <span className="flex flex-col gap-[0.35rem]">
+                  <span
+                    className="text-[0.875rem] font-normal leading-[1] transition-colors duration-100"
+                    style={{ color: active === i ? TALENT_MENU_HOVER : "#000000" }}
+                  >
+                    {cat.label}
+                  </span>
+                  {cat.subtitle && (
+                    <span className="text-[0.75rem] font-normal leading-[1.3] text-[#676879]">
+                      {cat.subtitle}
+                    </span>
+                  )}
                 </span>
               </button>
             ))}
@@ -345,8 +368,8 @@ export default function TalentHeader() {
               onClick={closeAll}
               onMouseEnter={() => setMenuOpen(false)}
               color={TALENT_PRIMARY}
-              textColor={TALENT_ACCENT}
-              className="h-[40px] whitespace-nowrap"
+              textColor="#ffffff"
+              variant="nav"
             >
               Get Started
             </PrimaryCtaLink>
@@ -401,7 +424,13 @@ export default function TalentHeader() {
             ))}
 
             <div className="mt-3 pt-3">
-              <PrimaryCtaLink href="/contact" onClick={closeAll} color={TALENT_PRIMARY} textColor={TALENT_ACCENT}>
+              <PrimaryCtaLink
+                href="/contact"
+                onClick={closeAll}
+                color={TALENT_PRIMARY}
+                textColor="#ffffff"
+                variant="nav"
+              >
                 Get Started
               </PrimaryCtaLink>
             </div>

@@ -282,6 +282,11 @@ button:disabled,
   padding-block: 70px;
 }
 
+.home-main--technology {
+  gap: 70px;
+  padding-block: 70px;
+}
+
 @media (max-width: 767px) {
   .home-main--site {
     gap: 1.25rem;
@@ -291,6 +296,15 @@ button:disabled,
   .home-main--talent {
     gap: 2.5rem;
     padding-block: 0.75rem 2.5rem;
+  }
+
+  .home-main--technology {
+    gap: 1.75rem;
+    padding-block: 0.5rem 1.75rem;
+  }
+
+  .home-main--technology .section-title-lg {
+    font-size: clamp(1.5rem, 5.5vw, 1.75rem);
   }
 }
 
@@ -386,6 +400,14 @@ button:disabled,
 
 .talent-gradient-text {
   background: linear-gradient(90deg, #11551c 0%, #36a852 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.tech-gradient-text {
+  background: linear-gradient(90deg, #20287A 0%, #4A6CF7 55%, #6B8CFF 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

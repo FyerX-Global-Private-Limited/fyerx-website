@@ -19,13 +19,18 @@ import {
   FOOTER_TALENT_RESOURCES_LINKS,
   FOOTER_TALENT_SERVICES,
   FOOTER_TALENT_TAGLINE,
+  FOOTER_TECHNOLOGY_EXPLORE_LINKS,
+  FOOTER_TECHNOLOGY_PRIORITIES,
+  FOOTER_TECHNOLOGY_RESOURCES_LINKS,
+  FOOTER_TECHNOLOGY_SERVICES,
+  FOOTER_TECHNOLOGY_TAGLINE,
   FOOTER_RESOURCES_LINKS,
   FOOTER_SOCIALS,
   type FooterCapability,
   type FooterLink,
 } from "@/lib/footer-data";
 
-export type SiteFooterVariant = "main" | "marketing" | "talent";
+export type SiteFooterVariant = "main" | "marketing" | "talent" | "technology";
 
 const LOGO_BY_VARIANT: Record<
   SiteFooterVariant,
@@ -55,12 +60,21 @@ const LOGO_BY_VARIANT: Record<
     height: 48,
     className: "h-10 w-auto object-contain",
   },
+  technology: {
+    src: "/technologylogo.svg",
+    alt: "FyerX Technology",
+    href: "/technology",
+    width: 160,
+    height: 48,
+    className: "h-10 w-auto object-contain",
+  },
 };
 
 const TAGLINE_BY_VARIANT: Record<SiteFooterVariant, string> = {
   main: "One partner for every part of your business.",
   marketing: "Campaigns, content, and growth that drive pipeline.",
   talent: "Staffing, hiring, and recruitment support for your team.",
+  technology: "Systems that keep the business moving.",
 };
 
 const headingCls =
@@ -187,7 +201,7 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
       <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 md:px-10 lg:px-16">
         <div
           className={`grid min-w-0 grid-cols-2 items-start gap-x-6 gap-y-8 text-left sm:grid-cols-3 sm:gap-x-8 sm:gap-y-10 lg:gap-x-8 xl:gap-x-10 ${
-            variant === "marketing" || variant === "talent"
+            variant === "marketing" || variant === "talent" || variant === "technology"
               ? "lg:grid-cols-[minmax(200px,1.15fr)_repeat(5,minmax(0,1fr))]"
               : "lg:grid-cols-[minmax(200px,1.15fr)_repeat(4,minmax(0,1fr))]"
           }`}
@@ -201,6 +215,7 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
                 width={logo.width}
                 height={logo.height}
                 className={logo.className}
+                unoptimized={logo.src.endsWith(".svg")}
               />
             </Link>
             <p className="mt-4 max-w-none text-left text-[0.8125rem] font-light leading-[1.6] text-[rgb(88,89,101)] sm:max-w-[280px] lg:max-w-none">
@@ -208,7 +223,9 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
                 ? FOOTER_MARKETING_TAGLINE
                 : variant === "talent"
                   ? FOOTER_TALENT_TAGLINE
-                  : TAGLINE_BY_VARIANT[variant]}
+                  : variant === "technology"
+                    ? FOOTER_TECHNOLOGY_TAGLINE
+                    : TAGLINE_BY_VARIANT[variant]}
             </p>
             <div className="mt-5 flex flex-col gap-1.5">
               <a href={FOOTER_CONTACT.phoneHref} className={contactCls}>
@@ -262,6 +279,25 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
               <div className="min-w-0">
                 <h4 className={headingCls}>Resources</h4>
                 <FooterLinks items={FOOTER_TALENT_RESOURCES_LINKS} />
+              </div>
+            </>
+          ) : variant === "technology" ? (
+            <>
+              <div className="min-w-0">
+                <h4 className={headingCls}>Technology Services</h4>
+                <FooterLinks items={FOOTER_TECHNOLOGY_SERVICES} />
+              </div>
+              <div className="min-w-0">
+                <h4 className={headingCls}>Business Priorities</h4>
+                <FooterLinks items={FOOTER_TECHNOLOGY_PRIORITIES} />
+              </div>
+              <div className="min-w-0">
+                <h4 className={headingCls}>Explore FyerX</h4>
+                <FooterLinks items={FOOTER_TECHNOLOGY_EXPLORE_LINKS} />
+              </div>
+              <div className="min-w-0">
+                <h4 className={headingCls}>Resources</h4>
+                <FooterLinks items={FOOTER_TECHNOLOGY_RESOURCES_LINKS} />
               </div>
             </>
           ) : (
