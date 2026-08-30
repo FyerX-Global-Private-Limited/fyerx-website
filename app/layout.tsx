@@ -2,6 +2,7 @@
 import { Geist, Geist_Mono, Inter, Inter_Tight, Poppins } from "next/font/google";
 import "./globals.css";
 import StyledJsxRegistry from "./registry";
+import { RecaptchaProvider } from "@/components/RecaptchaProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -54,7 +55,9 @@ export default function RootLayout({
       style={{ colorScheme: "light" }}
     >
       <body className="min-h-full flex flex-col bg-white text-[#171717]">
-        <StyledJsxRegistry>{children}</StyledJsxRegistry>
+        <RecaptchaProvider>
+          <StyledJsxRegistry>{children}</StyledJsxRegistry>
+        </RecaptchaProvider>
       </body>
     </html>
   );
