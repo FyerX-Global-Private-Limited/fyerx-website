@@ -6,6 +6,7 @@ import type { CountryCode } from "libphonenumber-js";
 import { PrimaryCtaButton } from "@/components/ui/PrimaryCta";
 import { DEFAULT_PHONE_COUNTRY, PhoneInput } from "@/components/ui/PhoneInput";
 import { validateEmail, validatePhone } from "@/lib/form-validation";
+import { readFormString, submitLead } from "@/lib/submit-lead";
 import { TRUSTBAR_LOGOS } from "@/lib/trustbar-logos";
 import { CONTACT_TEAM_AVATARS } from "@/lib/contact-team-avatars";
 import { MARKETING_HOME } from "@/lib/marketing-home-palette";
@@ -51,15 +52,45 @@ export default function TestimonialsCTA() {
   const [phoneCountry, setPhoneCountry] = useState<CountryCode>(DEFAULT_PHONE_COUNTRY);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [phoneError, setPhoneError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (submitting) return;
+
+    const form = e.currentTarget;
     const nextEmailError = validateEmail(email);
     const nextPhoneError = validatePhone(phone, phoneCountry);
     setEmailError(nextEmailError);
     setPhoneError(nextPhoneError);
+    setSubmitError(null);
     if (nextEmailError || nextPhoneError) return;
-    router.push("/contact/thankyou-marketing");
+
+    setSubmitting(true);
+    const result = await submitLead({
+      formType: "marketing",
+      firstName: readFormString(form, "firstName"),
+      lastName: readFormString(form, "lastName"),
+      email,
+      phoneCountry,
+      phone,
+      jobTitle: readFormString(form, "jobTitle") || null,
+      companyName: readFormString(form, "companyName") || null,
+      companySize: readFormString(form, "companySize") || null,
+      helpWith: readFormString(form, "helpWith") ? [readFormString(form, "helpWith")] : [],
+      priority: readFormString(form, "priority") || null,
+      message: readFormString(form, "message") || null,
+      privacyAccepted: true,
+    });
+    setSubmitting(false);
+
+    if (!result.ok) {
+      setSubmitError(result.error);
+      return;
+    }
+
+    router.push(`/contact/thankyou-marketing?leadId=${result.id}`);
   };
 
   return (
@@ -234,14 +265,21 @@ export default function TestimonialsCTA() {
                     className="h-[88px] w-full resize-none rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 py-2.5 text-[13px] leading-[1.5] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]"
                   />
 
+                  {submitError && (
+                    <p className="text-center text-xs text-[#730031]" role="alert">
+                      {submitError}
+                    </p>
+                  )}
+
                   <PrimaryCtaButton
                     type="submit"
                     icon={null}
+                    disabled={submitting}
                     color="#FFC900"
                     textColor="#111111"
-                    className="mx-auto mt-3 h-10 justify-center px-6 text-[14px] font-medium text-black!"
+                    className="mx-auto mt-3 h-10 justify-center px-6 text-[14px] font-medium text-black! disabled:cursor-not-allowed disabled:opacity-70"
                   >
-                    Contact Us &rarr;
+                    {submitting ? "Submitting..." : <>Contact Us &rarr;</>}
                   </PrimaryCtaButton>
 
                   <p className="mx-auto mt-1.5 max-w-[300px] text-center text-[10.5px] leading-[1.6] text-[#333333]">

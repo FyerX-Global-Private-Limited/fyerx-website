@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import type { CountryCode } from "libphonenumber-js";
 import { DEFAULT_PHONE_COUNTRY, PhoneInput } from "@/components/ui/PhoneInput";
 import { validateEmail, validatePhone } from "@/lib/form-validation";
+import { readFormString, submitLead } from "@/lib/submit-lead";
 
 export const BRAND = {
   crimson: "#730031",
@@ -391,6 +392,8 @@ export function ContactEnquiryForm({
   const [emailError, setEmailError] = useState<string | null>(null);
   const [phoneError, setPhoneError] = useState<string | null>(null);
   const [expectedStartError, setExpectedStartError] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
     setSelected([]);
@@ -401,6 +404,8 @@ export function ContactEnquiryForm({
     setEmailError(null);
     setPhoneError(null);
     setExpectedStartError(false);
+    setSubmitting(false);
+    setSubmitError(null);
   }, [formKey]);
 
   const toggleOption = (opt: string) => {
@@ -411,8 +416,10 @@ export function ContactEnquiryForm({
     });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (submitting) return;
+
     const form = e.currentTarget;
     const expectedStart = (form.elements.namedItem("expectedStart") as HTMLSelectElement).value;
     const choiceOptions = config.teamOptions ?? config.helpOptions;
@@ -429,6 +436,7 @@ export function ContactEnquiryForm({
     setEmailError(nextEmailError);
     setPhoneError(nextPhoneError);
     setExpectedStartError(nextExpectedStartError);
+    setSubmitError(null);
 
     if (
       (choiceOptions && selected.length === 0) ||
@@ -439,7 +447,33 @@ export function ContactEnquiryForm({
       return;
     }
 
-    router.push(THANK_YOU_BY_FORM[formKey]);
+    setSubmitting(true);
+    const result = await submitLead({
+      formType: formKey,
+      firstName: readFormString(form, "firstName"),
+      lastName: readFormString(form, "lastName"),
+      email,
+      phoneCountry,
+      phone,
+      jobTitle: readFormString(form, "jobTitle") || null,
+      companyName: readFormString(form, "companyName") || null,
+      yearsOfExperience: readFormString(form, "experience") || null,
+      linkedinUrl: readFormString(form, "linkedin") || null,
+      resumeUrl: readFormString(form, "resumeUrl") || null,
+      monthlyBudget: readFormString(form, "monthlyBudget") || null,
+      helpWith: selected,
+      expectedStart,
+      message: readFormString(form, "message") || null,
+      privacyAccepted: true,
+    });
+    setSubmitting(false);
+
+    if (!result.ok) {
+      setSubmitError(result.error);
+      return;
+    }
+
+    router.push(`${THANK_YOU_BY_FORM[formKey]}?leadId=${result.id}`);
   };
 
   return (
@@ -566,16 +600,23 @@ export function ContactEnquiryForm({
 
         <textarea name="message" placeholder="Type your message..." className={textareaBase} />
 
+        {submitError && (
+          <p className="text-center text-xs text-[#730031]" role="alert">
+            {submitError}
+          </p>
+        )}
+
         <button
           type="submit"
-          className="mx-auto mt-3 inline-flex h-10 min-w-[7rem] items-center justify-center gap-2 rounded-full px-5 text-[14px] font-medium transition-colors duration-150"
+          disabled={submitting}
+          className="mx-auto mt-3 inline-flex h-10 min-w-[7rem] items-center justify-center gap-2 rounded-full px-5 text-[14px] font-medium transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-70"
           style={{
             background: config.accent,
             color: config.onTint === "#111111" ? "#111111" : "#ffffff",
           }}
         >
-          {submitLabel ?? config.submitLabel}
-          <ArrowRightIcon />
+          {submitting ? "Submitting..." : (submitLabel ?? config.submitLabel)}
+          {!submitting && <ArrowRightIcon />}
         </button>
 
         <p className="mx-auto mt-1.5 max-w-[300px] text-center text-[10.5px] leading-[1.6] text-[#333333]">
