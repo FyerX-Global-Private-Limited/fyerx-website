@@ -130,7 +130,7 @@ function CaseStudyBody({ study }: { study: CaseStudy }) {
               campaigns.
             </p>
           </div>
-          <PrimaryCtaLink href="/contact" className="shrink-0 text-black!" color="#FFC900">
+          <PrimaryCtaLink href="/contact#marketing" className="shrink-0 text-black!" color="#FFC900">
             Get Started
           </PrimaryCtaLink>
         </div>

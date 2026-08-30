@@ -36,7 +36,7 @@ export default function TechContactSection() {
               </p>
             </div>
 
-            <div className="relative mt-5 w-full sm:mt-8 lg:mt-0 lg:w-[462px] lg:shrink-0">
+            <div className="relative mx-auto mt-5 w-full min-w-0 max-w-[462px] shrink-0 sm:mt-8 lg:mx-0 lg:mt-0 lg:w-[462px]">
               <div className="absolute -top-[20px] left-1/2 z-10 -translate-x-1/2">
                 <Image
                   src="/images/talent/contactformimg.svg"
@@ -49,12 +49,12 @@ export default function TechContactSection() {
                 />
               </div>
 
-              <div className="w-full rounded-[16px] bg-white px-3 py-5 shadow-[0px_6px_20px_rgba(29,37,45,0.05)] sm:px-9 sm:py-7">
+              <div className="w-full min-w-0 overflow-hidden rounded-[16px] bg-white px-3.5 py-5 shadow-[0px_6px_20px_rgba(29,37,45,0.05)] sm:px-9 sm:py-7">
                 <ContactEnquiryForm
                   formKey="technology"
                   title="Talk to the FyerX Technology Team"
                   submitLabel="Contact Us"
-                  className="mt-4 flex flex-col gap-3"
+                  className="mt-4 flex min-w-0 flex-col gap-3"
                   nameGridClassName="grid grid-cols-1 gap-3 sm:grid-cols-2"
                 />
               </div>

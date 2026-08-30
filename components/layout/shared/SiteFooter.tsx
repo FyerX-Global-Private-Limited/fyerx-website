@@ -37,7 +37,7 @@ const LOGO_BY_VARIANT: Record<
   { src: string; alt: string; href: string; width: number; height: number; className: string }
 > = {
   main: {
-    src: "/15.png",
+    src: "/logo.webp",
     alt: "FyerX",
     href: "/",
     width: 140,
@@ -95,7 +95,11 @@ function FooterLinks({ items }: { items: FooterLink[] }) {
     <ul className={listCls}>
       {items.map((item) => (
         <li key={item.label}>
-          <Link href={item.href} className={linkCls}>
+          <Link
+            href={item.href}
+            className={linkCls}
+            {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          >
             {item.label}
           </Link>
         </li>

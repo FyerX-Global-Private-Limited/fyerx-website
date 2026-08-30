@@ -102,7 +102,7 @@ export default function MarketingHero() {
 
         <div className="mt-6 flex w-full flex-col items-center justify-center sm:mt-[30px]">
           <PrimaryCtaLink
-            href="/contact"
+            href="/contact#marketing"
             className="w-[234px] justify-center text-black!"
             color={MARKETING_HOME.primary}
           >

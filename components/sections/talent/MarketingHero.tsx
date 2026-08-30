@@ -22,7 +22,7 @@ const PILLARS = [
 function TalentPeopleMarquee() {
   return (
     <div
-      className="relative mx-auto aspect-[642/640] h-auto w-full max-w-[642px] overflow-hidden"
+      className="relative mx-auto aspect-[642/640] h-auto w-full max-w-[642px] overflow-hidden rounded-xl sm:rounded-2xl"
       aria-hidden="true"
     >
       <style>{`
@@ -92,16 +92,16 @@ function PillarCard({
 export default function MarketingHero() {
   return (
     <section className="overflow-x-clip bg-white pt-1 sm:pt-4 lg:pt-0">
-      <div className="mx-auto grid w-full max-w-[1400px] items-center gap-5 sm:gap-8 lg:grid-cols-2 lg:gap-16 xl:gap-20">
-        <div className="order-2 flex min-w-0 flex-col items-start text-left lg:order-1">
+      <div className="mx-auto grid w-full max-w-[1400px] items-center gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-16 xl:gap-20">
+        <div className="order-2 flex min-w-0 w-full flex-col items-stretch text-left sm:items-start lg:order-1">
           <span
-            className="inline-flex rounded-full px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
+            className="inline-flex w-fit rounded-full px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
             style={{ backgroundColor: TALENT_HOME.paleGreen, color: TALENT_HOME.primary }}
           >
             Technology Recruitment & Delivery
           </span>
 
-          <h1 className="mt-4 max-w-[18ch] text-[clamp(1.875rem,5vw,3.25rem)] font-medium leading-[1.12] tracking-[-0.03em] text-[var(--ink)] sm:mt-5">
+          <h1 className="mt-4 max-w-[18ch] text-[clamp(1.75rem,6.5vw,3.25rem)] font-medium leading-[1.12] tracking-[-0.03em] text-[var(--ink)] sm:mt-5">
             Hire Technology Talent for{" "}
             <span className="talent-gradient-text">Critical Roles</span>
           </h1>
@@ -112,20 +112,20 @@ export default function MarketingHero() {
             more.
           </p>
 
-          <div className="mt-8 grid w-full max-w-[34rem] grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+          <div className="mt-6 grid w-full max-w-[34rem] grid-cols-1 gap-3 sm:mt-8 sm:grid-cols-2 sm:gap-4">
             {PILLARS.map((pillar) => (
               <PillarCard key={pillar.title} {...pillar} />
             ))}
           </div>
 
-          <div className="mt-7">
-            <PrimaryCtaLink href="/talent/book-session" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
+          <div className="mt-6 flex w-full justify-start sm:mt-7">
+            <PrimaryCtaLink href="/contact#talent" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
               Talk to Our Team
             </PrimaryCtaLink>
           </div>
         </div>
 
-        <div className="order-1 flex min-w-0 items-center justify-center lg:order-2 lg:justify-end">
+        <div className="order-1 mx-auto flex w-full min-w-0 max-w-[min(100%,28rem)] items-center justify-center sm:max-w-[36rem] lg:order-2 lg:mx-0 lg:max-w-none lg:justify-end">
           <TalentPeopleMarquee />
         </div>
       </div>

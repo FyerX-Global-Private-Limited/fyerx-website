@@ -213,11 +213,16 @@ function StackedCaseStudyCard({
 }
 
 export default function StackedScrollSection() {
-  // Enable after mount so sticky top offsets match client layout (avoids SSR mismatch).
+  // Sticky stack on desktop only — mobile shows a normal stacked section so
+  // the full card (including the visual panel) stays visible while scrolling.
   const [stackEnabled, setStackEnabled] = useState(false);
 
   useEffect(() => {
-    setStackEnabled(true);
+    const mq = window.matchMedia("(min-width: 768px)");
+    const sync = () => setStackEnabled(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, []);
 
   return (
@@ -233,7 +238,11 @@ export default function StackedScrollSection() {
           </h2>
         </div>
 
-        <div className="relative mt-8 pb-[16vh] md:mt-12 md:pb-[20vh]">
+        <div
+          className={`relative mt-8 md:mt-12 ${
+            stackEnabled ? "pb-[20vh]" : "pb-4 sm:pb-6"
+          }`}
+        >
           {TALENT_CASE_STUDIES.map((study, index) => (
             <StackedCaseStudyCard
               key={study.slug}

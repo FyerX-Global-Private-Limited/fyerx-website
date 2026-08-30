@@ -37,7 +37,6 @@ export const TECHNOLOGY_CASE_STUDIES: TechCaseStudy[] = [
       "Delivery Governance",
     ],
     roleChips: ["ITSM", "CMDB", "Flow Designer", "Integration Hub", "Now Assist"],
-    logoSrc: "/images/talent/comp-logo-microland.svg",
     peekColor: "#E8F1FB",
     accentColor: "#1F5C99",
     metrics: [
@@ -73,7 +72,6 @@ export const TECHNOLOGY_CASE_STUDIES: TechCaseStudy[] = [
       "Automation",
     ],
     roleChips: ["Sales Cloud", "Service Cloud", "Flows", "Experience Cloud"],
-    logoSrc: "/images/talent/comp-logo-solenis.svg",
     peekColor: "#EEF0FA",
     accentColor: "#20287A",
     metrics: [
@@ -109,7 +107,6 @@ export const TECHNOLOGY_CASE_STUDIES: TechCaseStudy[] = [
       "Change Planning",
     ],
     roleChips: ["S/4HANA", "Finance", "MM", "ABAP", "BTP"],
-    logoSrc: "/images/talent/comp-logo-cgi.svg",
     peekColor: "#E4E8F8",
     accentColor: "#3D52C7",
     metrics: [
@@ -133,7 +130,7 @@ export const TECHNOLOGY_CASE_STUDIES: TechCaseStudy[] = [
   {
     slug: "cloud-devops-migration",
     label: "Case Study 04",
-    clientName: "Kanini",
+    clientName: "Tachyon",
     categoryLabel: "Cloud & DevOps",
     title: "Cloud Migration with Release Discipline",
     summary:
@@ -145,7 +142,6 @@ export const TECHNOLOGY_CASE_STUDIES: TechCaseStudy[] = [
       "FinOps",
     ],
     roleChips: ["AWS", "Azure", "Kubernetes", "Terraform", "GitHub Actions"],
-    logoSrc: "/images/talent/comp-logo-kanini.svg",
     peekColor: "#F0F2FC",
     accentColor: "#4B5FDB",
     metrics: [
@@ -181,7 +177,6 @@ export const TECHNOLOGY_CASE_STUDIES: TechCaseStudy[] = [
       "GenAI Enablement",
     ],
     roleChips: ["ETL", "Warehouse", "Power BI", "RAG", "MLOps"],
-    logoSrc: "/images/talent/comp-logo-aspire.svg",
     peekColor: "#EEF0FA",
     accentColor: "#20287A",
     metrics: [

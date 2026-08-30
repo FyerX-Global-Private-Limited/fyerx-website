@@ -1,6 +1,7 @@
 export type FooterLink = {
   label: string;
   href: string;
+  external?: boolean;
 };
 
 export type FooterCapability = FooterLink & {
@@ -25,7 +26,11 @@ export const FOOTER_EXPLORE_LINKS: FooterLink[] = [
   { label: "About FyerX", href: "/about" },
   { label: "Industries", href: "/about#industries" },
   { label: "Insights", href: "/blog" },
-  { label: "Careers", href: "/contact?form=job" },
+  {
+    label: "Careers",
+    href: "https://fyerx.zohorecruit.in/jobs/Careers",
+    external: true,
+  },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -38,8 +43,8 @@ export const FOOTER_FOR_BUSINESS_LINKS: FooterLink[] = [
 
 export const FOOTER_RESOURCES_LINKS: FooterLink[] = [
   { label: "Blog", href: "/blog" },
-  { label: "Case Studies", href: "/marketing/case-studies" },
-  { label: "FAQs", href: "/contact#faqs" },
+  { label: "Cookie Policy", href: "/cookie-policy" },
+  { label: "Refund Policy", href: "/refund-policy" },
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms of Service", href: "/terms-of-service" },
 ];

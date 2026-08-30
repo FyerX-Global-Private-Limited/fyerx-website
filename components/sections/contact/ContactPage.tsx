@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import {
@@ -206,7 +206,10 @@ function ContactHub({ onSelect }: { onSelect: (key: FormKey) => void }) {
 
 function ContactForm({ config, onBack }: { config: FormConfig; onBack: () => void }) {
   return (
-    <section className={`w-full overflow-x-clip bg-white py-8 sm:py-12 md:py-14 ${sectionPad}`}>
+    <section
+      id="contact-enquiry"
+      className={`w-full overflow-x-clip bg-white py-8 sm:py-12 md:py-14 ${sectionPad}`}
+    >
       <div className={`${containerCls} grid grid-cols-1 overflow-hidden rounded-2xl border border-[#e6e9ef] shadow-[0_12px_40px_rgba(11,46,89,0.06)] sm:rounded-[28px] sm:shadow-[0_20px_60px_rgba(11,46,89,0.08)] lg:grid-cols-2`}>
         <div className="order-1 min-w-0 p-4 sm:p-6 lg:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -260,6 +263,21 @@ function ContactForm({ config, onBack }: { config: FormConfig; onBack: () => voi
 
 function ContactHubAndForm({ initial }: { initial: FormKey | null }) {
   const [active, setActive] = useState<FormKey | null>(initial);
+
+  useEffect(() => {
+    setActive(initial);
+  }, [initial]);
+
+  useEffect(() => {
+    if (!active) return;
+    const id = window.setTimeout(() => {
+      document.getElementById("contact-enquiry")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 50);
+    return () => window.clearTimeout(id);
+  }, [active]);
 
   if (active === null) {
     return <ContactHub onSelect={setActive} />;
@@ -424,13 +442,53 @@ function ContactDetailsMap() {
 /* Page orchestrator                                              */
 /* ============================================================= */
 
+function formKeyFromParam(value: string | null): FormKey | null {
+  if (!value) return null;
+  // Take the first segment only so malformed hashes like #talent#talent still resolve.
+  const key = value.replace(/^#/, "").split("#")[0]?.toLowerCase() ?? "";
+  return key in FORM_CONFIG ? (key as FormKey) : null;
+}
+
+function formKeyFromHash(): FormKey | null {
+  return formKeyFromParam(window.location.hash);
+}
+
+/** Keep the address bar as /contact#talent (never /contact#talent#talent). */
+function normalizeContactHash(formKey: FormKey) {
+  const expected = `#${formKey}`;
+  if (window.location.hash === expected) return;
+  const url = `${window.location.pathname}${window.location.search}${expected}`;
+  window.history.replaceState(null, "", url);
+}
+
 export default function ContactPage() {
   const searchParams = useSearchParams();
+  const [initial, setInitial] = useState<FormKey | null>(() =>
+    formKeyFromParam(searchParams.get("form")),
+  );
 
-  const initial = useMemo<FormKey | null>(() => {
-    const param = searchParams.get("form");
-    return param && param in FORM_CONFIG ? (param as FormKey) : null;
+  useEffect(() => {
+    const fromQuery = formKeyFromParam(searchParams.get("form"));
+    if (fromQuery) {
+      setInitial(fromQuery);
+      return;
+    }
+    const fromHash = formKeyFromHash();
+    if (fromHash) normalizeContactHash(fromHash);
+    setInitial(fromHash);
   }, [searchParams]);
+
+  useEffect(() => {
+    const onHashChange = () => {
+      const fromHash = formKeyFromHash();
+      if (fromHash) {
+        normalizeContactHash(fromHash);
+        setInitial(fromHash);
+      }
+    };
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
 
   return (
     <div className="overflow-x-clip pb-[env(safe-area-inset-bottom)]">

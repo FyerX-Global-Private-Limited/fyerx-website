@@ -27,7 +27,7 @@ export default function TalentClosingSection() {
 
   return (
     <section
-      className="overflow-x-clip bg-white"
+      className="home-section overflow-x-clip bg-white"
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
       <style>{`
@@ -78,7 +78,7 @@ export default function TalentClosingSection() {
 
         <div className="mt-6 flex w-full flex-col items-center justify-center gap-3 sm:mt-[30px] sm:w-auto sm:flex-row sm:gap-[22px]">
           <PrimaryCtaLink
-            href="/contact"
+            href="/contact#talent"
             className="w-full max-w-[300px] justify-center sm:w-auto"
             color={TALENT_HOME.primary}
             textColor={TALENT_HOME.accent}

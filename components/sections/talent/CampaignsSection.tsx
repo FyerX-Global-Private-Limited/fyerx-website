@@ -34,7 +34,7 @@ export default function CampaignsSection() {
 
               <div className="mt-8">
                 <PrimaryCtaLink
-                  href="/contact"
+                  href="/contact#talent"
                   className="w-full justify-center sm:w-auto"
                   color={TALENT_HOME.primary}
                   textColor={TALENT_HOME.accent}

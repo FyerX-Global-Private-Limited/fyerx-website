@@ -288,7 +288,7 @@ export function MenuDetailIcon({ name }: { name: MenuIconName }) {
       className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[7px]"
       style={{ backgroundColor: palette.tint }}
     >
-      <MenuGlyphBold name={name} color={palette.color} size={16} />
+      <MenuGlyphBold name={name} color={palette.color} size={15} />
     </span>
   );
 }

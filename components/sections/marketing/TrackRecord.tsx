@@ -97,7 +97,7 @@ export default function TrackRecord() {
           </div>
 
           <div className="tr-cta-wrap">
-            <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">
+            <PrimaryCtaLink href="/contact#marketing" className="text-black!" color="#FFC900">
               Get Started
             </PrimaryCtaLink>
           </div>

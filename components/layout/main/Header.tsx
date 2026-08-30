@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/MenuGlyph";
 import {
   CategoryThumb,
+  allowsMenuLabelWrap,
+  menuLabelNowrapClass,
   MobileMegaMenuSection,
 } from "@/components/layout/shared/MobileMegaMenuSection";
 import { TALENT_ACCENT, TALENT_PRIMARY } from "@/lib/talent-brand";
@@ -118,6 +120,7 @@ const capabilityCols: ConsultingCol[] = [
 ];
 
 const simpleLinks = [
+  { label: "Careers", href: "https://fyerx.zohorecruit.in/jobs/Careers", external: true },
   { label: "Blog", href: "/blog" },
 ];
 
@@ -254,16 +257,16 @@ function CategoryMenu({
 
   if (platformStyle) {
     return (
-      <div className="animate-dropdown bg-white border-t border-[#e6e9ef] rounded-b-[12px] shadow-[0_16px_36px_rgba(20,20,43,0.12),0_2px_8px_rgba(20,20,43,0.06)]">
-        <div className="flex px-10 pt-6 pb-6">
+      <div className="animate-dropdown rounded-b-[16px] border border-[#e6e9ef] bg-white shadow-[0_16px_36px_rgba(20,20,43,0.12),0_2px_8px_rgba(20,20,43,0.06)]">
+        <div className="flex px-10 pt-7 pb-8">
 
           {/* Left — heading + main headings, 2 per row */}
-          <div className="w-[560px] pr-8" style={{ ["--menu-hover" as string]: hoverColor }}>
+          <div className="w-[52%] min-w-[480px] shrink-0 pr-8" style={{ ["--menu-hover" as string]: hoverColor }}>
             {heading && (
               <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3 text-[#9a9ea8]">
-                  <MenuGlyphBold name={headingIcon} color="#8b8fa3" size={20} />
-                  <span className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">
+                <div className="flex items-center gap-2.5 text-[#9a9ea8]">
+                  <MenuGlyphBold name={headingIcon} color="#8b8fa3" size={18} />
+                  <span className="mb-0 text-[13px] font-normal uppercase leading-[1.5] tracking-[0.06em] text-[#7c7b7b]">
                     {heading}
                   </span>
                 </div>
@@ -271,10 +274,9 @@ function CategoryMenu({
                   <PrimaryCtaLink
                     href={visitHomeHref}
                     onClick={onClose}
-                    icon={null}
                     color={visitHomeColor}
                     textColor={visitHomeTextColor}
-                    className="!min-h-[36px] shrink-0 !px-4 !py-2 text-[0.875rem] font-medium"
+                    variant="menu"
                   >
                     {visitHomeLabel}
                   </PrimaryCtaLink>
@@ -282,30 +284,30 @@ function CategoryMenu({
               </div>
             )}
             {headingSubtitle && (
-              <p className="mt-[1.125rem] mb-[1.125rem] text-[0.75rem] leading-[1.6] text-[#676879]">{headingSubtitle}</p>
+              <p className="mb-5 mt-3 text-[13px] leading-[1.5] text-[#676879]">{headingSubtitle}</p>
             )}
-            <div className="grid grid-cols-2 gap-x-6 gap-y-2">
+            <div className="grid grid-cols-2 gap-x-8 gap-y-2.5">
               {categories.map((cat, i) => (
                 <button
                   key={cat.label}
                   type="button"
                   onClick={() => setActive(i)}
                   aria-pressed={active === i}
-                  className={`flex w-full cursor-pointer items-center gap-3 rounded-[8px] px-2 py-1.5 text-left transition-colors duration-100 ${
-                    active === i ? "" : "hover:bg-[#f5f6f8]"
-                  }`}
+                  className={`flex w-full cursor-pointer gap-3 rounded-[12px] px-3 py-2.5 text-left transition-colors duration-100 ${
+                    allowsMenuLabelWrap(cat.label) ? "items-start" : "items-center"
+                  } ${active === i ? "" : "hover:bg-[#f5f6f8]"}`}
                   style={active === i ? { backgroundColor: activeItemBg } : undefined}
                 >
                   <CategoryThumb cat={cat} />
-                  <span className="flex flex-col gap-[0.35rem]">
+                  <span className="flex min-w-0 flex-col gap-0.5">
                     <span
-                      className="text-[0.875rem] font-normal leading-[1] transition-colors duration-100"
-                      style={{ color: active === i ? hoverColor : "#000000" }}
+                      className={`${menuLabelNowrapClass(cat.label)} text-[14px] font-medium leading-[1.2] transition-colors duration-100`}
+                      style={{ color: active === i ? hoverColor : "#323338" }}
                     >
                       {cat.label}
                     </span>
                     {cat.subtitle && (
-                      <span className="text-[0.75rem] font-normal leading-[1.3] text-[#676879]">
+                      <span className="whitespace-nowrap text-[12px] font-normal leading-[1.35] text-[#676879]">
                         {cat.subtitle}
                       </span>
                     )}
@@ -316,21 +318,23 @@ function CategoryMenu({
           </div>
 
           {/* Divider */}
-          <div className="w-px bg-[#eef0f4] mx-2" />
+          <div className="mx-2 w-px self-stretch bg-[#eef0f4]" />
 
-          {/* Right — Visit Homepage + Service Details */}
-          <div className="flex-1 pl-8" style={{ ["--menu-hover" as string]: hoverColor }}>
-            <p className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">Service Details</p>
-            <p className="mt-[1.125rem] mb-[1.125rem] text-[0.75rem] leading-[1.6] text-[#676879] whitespace-nowrap">{category.label}</p>
-            <ul className="flex flex-col gap-1">
+          {/* Right — Service Details in Monday-style columns */}
+          <div className="min-w-0 flex-1 pl-8" style={{ ["--menu-hover" as string]: hoverColor }}>
+            <p className="mb-0 text-[13px] font-normal uppercase leading-[1.5] tracking-[0.06em] text-[#7c7b7b]">Service Details</p>
+            <p className={`mb-5 mt-3 text-[13px] leading-[1.5] text-[#676879] ${menuLabelNowrapClass(category.label)}`}>{category.label}</p>
+            <ul className="grid grid-cols-2 content-start gap-x-8 gap-y-2">
               {category.items.map((item) => (
-                <li key={item.label}>
+                <li key={item.label} className="min-w-0">
                   <Link
                     href={item.href} onClick={onClose}
-                    className="flex items-center gap-2 py-1 text-[0.875rem] font-normal leading-[1.4] text-black transition-colors duration-100 hover:text-[var(--menu-hover)]"
+                    className={`flex gap-2.5 py-1.5 text-[14px] font-normal leading-[1.35] text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)] ${
+                      allowsMenuLabelWrap(item.label) ? "items-start" : "items-center whitespace-nowrap"
+                    }`}
                   >
                     <MenuDetailIcon name={item.icon} />
-                    {item.label}
+                    <span className={menuLabelNowrapClass(item.label)}>{item.label}</span>
                   </Link>
                 </li>
               ))}
@@ -344,42 +348,42 @@ function CategoryMenu({
   return (
     <div className="animate-dropdown bg-white border-t border-[#e6e9ef] rounded-b-[12px] shadow-[0_16px_36px_rgba(20,20,43,0.12),0_2px_8px_rgba(20,20,43,0.06)]">
       {heading && (
-        <div className="px-10 pt-6 pb-[3px] border-b border-[#eef0f4]">
-          <div className="flex items-center gap-3 text-[#9a9ea8]">
-            <MenuGlyphBold name={headingIcon} color="#8b8fa3" size={20} />
-            <span className="text-[20px] font-normal uppercase tracking-[0.1em]"
+        <div className="border-b border-[#eef0f4] px-8 pt-4 pb-[3px]">
+          <div className="flex items-center gap-2.5 text-[#9a9ea8]">
+            <MenuGlyphBold name={headingIcon} color="#8b8fa3" size={18} />
+            <span className="text-[19px] font-normal uppercase tracking-[0.1em]"
               style={{ color: "rgb(124, 123, 123)" }}>
               {heading}
             </span>
           </div>
           {headingSubtitle && (
-            <p className="mt-2 text-[14px] font-normal text-[#323338]">{headingSubtitle}</p>
+            <p className="mt-2 text-[13px] font-normal text-[#323338]">{headingSubtitle}</p>
           )}
         </div>
       )}
-      <div className="flex px-10 pt-6 pb-6">
+      <div className="flex px-8 pt-4 pb-5">
 
         {/* Left — main headings, 2 per row */}
-        <div className="w-[560px] pr-8 grid grid-cols-2 gap-x-6 gap-y-2 content-start">
+        <div className="grid w-[520px] shrink-0 grid-cols-2 content-start gap-x-4 gap-y-1 pr-6">
           {categories.map((cat, i) => (
             <button
               key={cat.label}
               type="button"
               onClick={() => setActive(i)}
               aria-pressed={active === i}
-              className={`flex w-full cursor-pointer items-center gap-3 rounded-[8px] px-2 py-1.5 text-left transition-colors duration-100 ${
+              className={`flex w-full cursor-pointer items-center gap-2.5 rounded-[8px] px-2 py-1 text-left transition-colors duration-100 ${
                 active === i ? "" : "hover:bg-[#f5f6f8]"
               }`}
               style={active === i ? { backgroundColor: activeItemBg } : undefined}
             >
               <CategoryThumb cat={cat} />
               <span className="flex flex-col leading-tight">
-                <span className={`text-[15px] font-medium whitespace-nowrap transition-colors duration-100 group-hover:text-[#5c4fe0]
+                <span className={`text-[14px] font-medium whitespace-nowrap transition-colors duration-100 group-hover:text-[#5c4fe0]
                   ${active === i ? "text-[#5c4fe0]" : "text-[#323338]"}`}>
                   {cat.label}
                 </span>
                 {cat.subtitle && (
-                  <span className="text-[13px] font-normal text-[#8b8fa3] whitespace-nowrap">
+                  <span className="text-[12px] font-normal whitespace-nowrap text-[#8b8fa3]">
                     {cat.subtitle}
                   </span>
                 )}
@@ -389,18 +393,18 @@ function CategoryMenu({
         </div>
 
         {/* Divider */}
-        <div className="w-px bg-[#eef0f4] mx-2" />
+        <div className="mx-2 w-px bg-[#eef0f4]" />
 
         {/* Right — sub-headings for the active main heading */}
-        <div className="flex-1 pl-8">
-          <p className="text-[15px] font-normal text-[#8b8fa3] mb-5">{category.label}</p>
-          <ul className="flex flex-col gap-1">
+        <div className="min-w-0 flex-1 pl-6">
+          <p className="mb-4 text-[14px] font-normal text-[#8b8fa3]">{category.label}</p>
+          <ul className="flex flex-col gap-0.5">
             {category.items.map((item) => (
               <li key={item.label}>
                 <Link
                   href={item.href} onClick={onClose}
-                  className="flex items-center gap-2 py-1 text-[15px] font-medium text-[#323338]
-                             hover:text-[#5c4fe0] transition-colors duration-100"
+                  className="flex items-center gap-2 py-0.5 text-[14px] font-medium text-[#323338]
+                             transition-colors duration-100 hover:text-[#5c4fe0]"
                 >
                   <MenuDetailIcon name={item.icon} />
                   {item.label}
@@ -453,121 +457,134 @@ export default function MainHeader() {
       onMouseLeave={scheduleClose}
     >
       {/* ─── Header bar ────────────────────────────────────────────────── */}
-      <div className="mx-auto flex h-[56px] w-full max-w-[1400px] items-center px-4 sm:h-[60px] sm:px-6 lg:px-16">
+      <div className="relative mx-auto w-full max-w-[1400px]">
+        <div className="flex h-[56px] w-full items-center px-4 sm:h-[60px] sm:px-6 lg:px-16">
 
-        {/* Logo */}
-        <Link href="/" onClick={closeAll} className="flex shrink-0 items-center">
-          <FyerxLogo />
-        </Link>
+          {/* Logo */}
+          <Link href="/" onClick={closeAll} className="flex shrink-0 items-center">
+            <FyerxLogo />
+          </Link>
 
-        {/* Nav + CTAs + Dropdown container */}
-        <div className="relative ml-8 flex min-w-0 flex-1 items-center sm:ml-10 lg:ml-12">
+          {/* Nav + CTAs */}
+          <div className="ml-8 flex min-w-0 flex-1 items-center sm:ml-10 lg:ml-12">
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
+            {/* Desktop nav */}
+            <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
 
-            {/* Marketing — icon-list mega-menu */}
-            <div onMouseEnter={() => open("Marketing")}>
-              <Link href="/marketing" onClick={closeAll} className={`${navLinkClass("/marketing")} gap-2
-                ${openMenu === "Marketing" && !isActive("/marketing") ? "bg-[#fce8ef] text-[#730031]" : ""}`}>
-                Marketing <ChevronDown open={openMenu === "Marketing"} />
-              </Link>
-            </div>
+              {/* Marketing — icon-list mega-menu */}
+              <div onMouseEnter={() => open("Marketing")}>
+                <Link href="/marketing" onClick={closeAll} className={`${navLinkClass("/marketing")} gap-2
+                  ${openMenu === "Marketing" && !isActive("/marketing") ? "bg-[#fce8ef] text-[#730031]" : ""}`}>
+                  Marketing <ChevronDown open={openMenu === "Marketing"} />
+                </Link>
+              </div>
 
-            {/* Talent — column mega-menu */}
-            <div onMouseEnter={() => open("Talent")}>
-              <Link href="/talent" onClick={closeAll} className={`${navLinkClass("/talent", "bg-[#9EEBAA]/25 text-[#11551C]")} gap-2
-                ${openMenu === "Talent" && !isActive("/talent") ? "bg-[#9EEBAA]/25 text-[#11551C]" : ""}`}>
-                Talent <ChevronDown open={openMenu === "Talent"} />
-              </Link>
-            </div>
+              {/* Talent — column mega-menu */}
+              <div onMouseEnter={() => open("Talent")}>
+                <Link href="/talent" onClick={closeAll} className={`${navLinkClass("/talent", "bg-[#9EEBAA]/25 text-[#11551C]")} gap-2
+                  ${openMenu === "Talent" && !isActive("/talent") ? "bg-[#9EEBAA]/25 text-[#11551C]" : ""}`}>
+                  Talent <ChevronDown open={openMenu === "Talent"} />
+                </Link>
+              </div>
 
-            {/* Technology — column mega-menu */}
-            <div onMouseEnter={() => open("Technology")}>
-              <Link href="/technology" onClick={closeAll} className={`${navLinkClass("/technology", "bg-[#20287A1F] text-[#20287A]")} gap-2
-                ${openMenu === "Technology" && !isActive("/technology") ? "bg-[#20287A1F] text-[#20287A]" : ""}`}>
-                Technology <ChevronDown open={openMenu === "Technology"} />
-              </Link>
-            </div>
+              {/* Technology — column mega-menu */}
+              <div onMouseEnter={() => open("Technology")}>
+                <Link href="/technology" onClick={closeAll} className={`${navLinkClass("/technology", "bg-[#20287A1F] text-[#20287A]")} gap-2
+                  ${openMenu === "Technology" && !isActive("/technology") ? "bg-[#20287A1F] text-[#20287A]" : ""}`}>
+                  Technology <ChevronDown open={openMenu === "Technology"} />
+                </Link>
+              </div>
 
-            {/* Plain links */}
-            {simpleLinks.map((item) => (
-              <Link key={item.label} href={item.href} onClick={closeAll}
+              {/* Plain links */}
+              {simpleLinks.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={closeAll}
+                  onMouseEnter={() => setOpenMenu(null)}
+                  className={navLinkClass(item.href)}
+                  {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Desktop CTA — Get Started */}
+            <div className="ml-auto hidden shrink-0 items-center md:flex">
+              <PrimaryCtaLink
+                href="/contact"
+                onClick={closeAll}
                 onMouseEnter={() => setOpenMenu(null)}
-                className={navLinkClass(item.href)}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+                variant="nav"
+              >
+                Get Started
+              </PrimaryCtaLink>
+            </div>
 
-          {/* Desktop CTA — Get Started */}
-          <div className="hidden md:flex items-center ml-auto shrink-0">
-            <PrimaryCtaLink
-              href="/contact"
-              onClick={closeAll}
-              onMouseEnter={() => setOpenMenu(null)}
-              variant="nav"
-            >
-              Get Started
-            </PrimaryCtaLink>
+            {/* Mobile hamburger */}
+            <button className="ml-auto rounded-[6px] p-1.5 text-[#323338] hover:bg-[#f5f6f8] md:hidden"
+              onClick={() => setMobileOpen((v) => !v)} aria-label="Toggle menu">
+              {mobileOpen ? <CloseIcon /> : <HamburgerIcon />}
+            </button>
           </div>
-
-          {/* Mobile hamburger */}
-          <button className="md:hidden ml-auto p-1.5 text-[#323338] hover:bg-[#f5f6f8] rounded-[6px]"
-            onClick={() => setMobileOpen((v) => !v)} aria-label="Toggle menu">
-            {mobileOpen ? <CloseIcon /> : <HamburgerIcon />}
-          </button>
-
-          {/* Dropdown — Marketing and Talent */}
-          {openMenu === "Marketing" && (
-            <div className="absolute top-full left-0 right-0 z-50 max-w-[1040px]"
-              onMouseEnter={cancelClose}>
-              <CategoryMenu categories={marketingCategories} onClose={closeAll}
-                heading="MARKETING SERVICES"
-                headingSubtitle="An overview of what we offer"
-                headingIcon="megaphone"
-                platformStyle
-                hoverColor={MARKETING_CRIMSON}
-                activeItemBg="#fce8ef"
-                visitHomeHref="/marketing"
-                visitHomeLabel="Visit Homepage"
-                visitHomeColor="#FFC900"
-                visitHomeTextColor="#111111" />
-            </div>
-          )}
-          {openMenu === "Talent" && (
-            <div className="absolute top-full left-0 right-0 z-50 max-w-[1040px]"
-              onMouseEnter={cancelClose}>
-              <CategoryMenu categories={talentCategories} onClose={closeAll}
-                heading="TALENT SOLUTIONS"
-                headingSubtitle="An overview of what we offer"
-                headingIcon="personPlus"
-                platformStyle
-                hoverColor={TALENT_PRIMARY}
-                activeItemBg="rgba(158, 235, 170, 0.25)"
-                visitHomeHref="/talent"
-                visitHomeLabel="Visit Homepage"
-                visitHomeColor={TALENT_PRIMARY}
-                visitHomeTextColor={TALENT_ACCENT} />
-            </div>
-          )}
-          {openMenu === "Technology" && (
-            <div className="absolute top-full left-0 right-0 z-50 max-w-[1040px]"
-              onMouseEnter={cancelClose}>
-              <CategoryMenu categories={technologyCategories} onClose={closeAll}
-                heading="TECHNOLOGY SERVICES"
-                headingSubtitle="An overview of what we offer"
-                headingIcon="gear"
-                platformStyle
-                hoverColor={TECH_PRIMARY}
-                activeItemBg="rgba(32, 40, 122, 0.12)"
-                visitHomeHref="/technology"
-                visitHomeLabel="Visit Homepage"
-                visitHomeColor={TECH_PRIMARY}
-                visitHomeTextColor={TECH_ACCENT} />
-            </div>
-          )}
         </div>
+
+        {/* Dropdown — full header width like Monday */}
+        {openMenu === "Marketing" && (
+          <div
+            className="absolute top-full right-4 left-4 z-50 sm:right-6 sm:left-6 lg:right-16 lg:left-16"
+            onMouseEnter={cancelClose}
+          >
+            <CategoryMenu categories={marketingCategories} onClose={closeAll}
+              heading="MARKETING SERVICES"
+              headingSubtitle="An overview of what we offer"
+              headingIcon="megaphone"
+              platformStyle
+              hoverColor={MARKETING_CRIMSON}
+              activeItemBg="#fce8ef"
+              visitHomeHref="/marketing"
+              visitHomeLabel="Visit Homepage"
+              visitHomeColor="#FFC900"
+              visitHomeTextColor="#111111" />
+          </div>
+        )}
+        {openMenu === "Talent" && (
+          <div
+            className="absolute top-full right-4 left-4 z-50 sm:right-6 sm:left-6 lg:right-16 lg:left-16"
+            onMouseEnter={cancelClose}
+          >
+            <CategoryMenu categories={talentCategories} onClose={closeAll}
+              heading="TALENT SOLUTIONS"
+              headingSubtitle="An overview of what we offer"
+              headingIcon="personPlus"
+              platformStyle
+              hoverColor={TALENT_PRIMARY}
+              activeItemBg="rgba(158, 235, 170, 0.25)"
+              visitHomeHref="/talent"
+              visitHomeLabel="Visit Homepage"
+              visitHomeColor={TALENT_PRIMARY}
+              visitHomeTextColor={TALENT_ACCENT} />
+          </div>
+        )}
+        {openMenu === "Technology" && (
+          <div
+            className="absolute top-full right-4 left-4 z-50 sm:right-6 sm:left-6 lg:right-16 lg:left-16"
+            onMouseEnter={cancelClose}
+          >
+            <CategoryMenu categories={technologyCategories} onClose={closeAll}
+              heading="TECHNOLOGY SERVICES"
+              headingSubtitle="An overview of what we offer"
+              headingIcon="gear"
+              platformStyle
+              hoverColor={TECH_PRIMARY}
+              activeItemBg="rgba(32, 40, 122, 0.12)"
+              visitHomeHref="/technology"
+              visitHomeLabel="Visit Homepage"
+              visitHomeColor={TECH_PRIMARY}
+              visitHomeTextColor={TECH_ACCENT} />
+          </div>
+        )}
       </div>
 
       {/* ─── Mobile drawer ─────────────────────────────────────────────── */}
@@ -626,8 +643,13 @@ export default function MainHeader() {
             />
 
             {simpleLinks.map((item) => (
-              <Link key={item.label} href={item.href} onClick={closeAll}
-                className={`${navLinkClass(item.href)} border-b border-[#e6e9ef] px-3 py-[10px] justify-start`}>
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={closeAll}
+                className={`${navLinkClass(item.href)} border-b border-[#e6e9ef] px-3 py-[10px] justify-start`}
+                {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              >
                 {item.label}
               </Link>
             ))}

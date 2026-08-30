@@ -134,7 +134,7 @@ function CaseStudyBody({ study }: { study: TalentCaseStudy }) {
               search across technology roles.
             </p>
           </div>
-          <PrimaryCtaLink href="/talent/book-session" className="shrink-0" color="#9EEBAA" textColor="#11551C">
+          <PrimaryCtaLink href="/contact#talent" className="shrink-0" color="#9EEBAA" textColor="#11551C">
             Explore Talent Solutions
           </PrimaryCtaLink>
         </div>
