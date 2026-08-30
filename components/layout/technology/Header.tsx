@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { MenuDetailIcon } from "@/components/ui/MenuGlyph";
 import { TECH_ACCENT, TECH_LOGO, TECH_PRIMARY } from "@/lib/technology-brand";
 import { TECHNOLOGY_MENU_CATEGORIES } from "@/lib/technology-menu";
 import {
@@ -173,7 +174,7 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
                   className="flex items-center gap-2 py-1 text-[0.875rem] font-normal leading-[1.4] text-black transition-colors duration-100 hover:text-[var(--menu-hover)]"
                 >
                   <span className="text-[#8b8fa3] shrink-0">
-                    <Glyph name={item.icon as IconName} />
+                    <MenuDetailIcon name={item.icon} />
                   </span>
                   {item.label}
                 </Link>

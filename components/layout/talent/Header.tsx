@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { MenuDetailIcon } from "@/components/ui/MenuGlyph";
 import { TALENT_ACCENT, TALENT_LOGO, TALENT_PRIMARY } from "@/lib/talent-brand";
 import {
   CategoryThumb,
@@ -262,7 +263,7 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
                   className="flex items-center gap-2 py-1 text-[0.875rem] font-normal leading-[1.4] text-black transition-colors duration-100 hover:text-[var(--menu-hover)]"
                 >
                   <span className="text-[#8b8fa3] shrink-0">
-                    <Glyph name={item.icon} />
+                    <MenuDetailIcon name={item.icon} />
                   </span>
                   {item.label}
                 </Link>
