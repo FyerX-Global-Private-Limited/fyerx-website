@@ -16,14 +16,14 @@ export default function Home() {
   return (
     <>
       <MainHeader />
-      <main className="flex-1">
+      <main className="home-main home-main--home flex-1">
         <Hero />
         <TrustBar />
         <WhoWeAre />
-        <AiHiring />
-        <Capabilities />
         <HowWeWork />
+        <Capabilities />
         <TrackRecord />
+        <AiHiring />
         <Leadership />
         {/* <Trust /> */}
         <SecurityControl />

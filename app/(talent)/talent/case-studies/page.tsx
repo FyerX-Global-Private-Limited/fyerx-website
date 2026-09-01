@@ -1,0 +1,57 @@
+import Link from "next/link";
+import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { TALENT_CASE_STUDIES } from "@/data/talent-case-studies";
+
+export default function TalentCaseStudiesPage() {
+  return (
+    <section className="bg-white">
+      <div className="mx-auto max-w-6xl px-6 py-16 sm:px-10 sm:py-20 lg:px-16">
+        <div className="max-w-2xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[#11551C]">
+            Case studies
+          </p>
+          <h1 className="section-heading mt-3">The talent behind critical delivery</h1>
+          <p className="mt-4 text-base leading-relaxed text-[#5a5f6b]">
+            Explore how FyerX helps technology teams add project-ready capability across
+            ServiceNow, Salesforce, SAP, cloud, data, and quality engineering roles.
+          </p>
+          <PrimaryCtaLink href="/contact#talent" className="mt-8" color="#11551C" textColor="#9EEBAA">
+            Explore Talent Solutions
+          </PrimaryCtaLink>
+        </div>
+
+        <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2">
+          {TALENT_CASE_STUDIES.map((study) => (
+            <Link
+              key={study.slug}
+              href={`/talent/case-studies/${study.slug}`}
+              className="group rounded-[24px] border border-[#E6E9EF] bg-[#F6F7FB] p-8 transition-all hover:border-[#11551C]/30 hover:shadow-[0_16px_40px_-24px_rgba(17,85,28,0.25)]"
+            >
+              <div className="flex items-center gap-2">
+                <span
+                  className="h-2 w-2 rounded-sm"
+                  style={{ backgroundColor: study.accentColor }}
+                  aria-hidden="true"
+                />
+                <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[#5a5f6b]">
+                  {study.label} · {study.clientName}
+                </span>
+              </div>
+              <p className="mt-1 text-[11px] font-medium text-[#5a5f6b]">{study.categoryLabel}</p>
+              <h2 className="mt-4 text-xl font-semibold leading-snug text-[var(--ink)] group-hover:text-[#11551C]">
+                {study.title}
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-[#5a5f6b]">{study.summary}</p>
+              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#11551C]">
+                View case study
+                <span className="transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+                  →
+                </span>
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

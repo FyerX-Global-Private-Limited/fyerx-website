@@ -1,36 +1,31 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
-
-/**
- * MarketingHero — centered hero with avatar strip, headline containing a
- * rotating word pill (Convert / Scale / Compound / Predict / Perform),
- * subtitle, CTA pair, and corner doodle decorations.
- *
- * Font: Inter (load globally, e.g. via next/font/google) — falls back to
- * the system UI stack. The avatar faces and corner doodles are original
- * inline-SVG stand-ins drawn to the reference sizes/colors; swap them for
- * your real illustration assets under /public when available.
- */
-
-/* ------------------------- rotating word config ------------------------- */
+import { MenuHeroCircle, type MenuIconName } from "@/components/ui/MenuGlyph";
+import { MARKETING_HOME } from "@/lib/marketing-home-palette";
 
 const WORDS = [
-  { w: "Grow", bg: "#d8e9fb", dot: "#2383e2", text: "#15335a" },
-  { w: "Convert", bg: "#e8e0fb", dot: "#8b5cf6", text: "#3b2a6b" },
-  { w: "Scale", bg: "#d5eed3", dot: "#36a852", text: "#14351f" },
-  { w: "Compound", bg: "#fdeecc", dot: "#f2a33c", text: "#6b4a12" },
-  { w: "Close", bg: "#fde0d3", dot: "#ef7234", text: "#6b2f12" },
+  { w: "Clarity", bg: "#fdeecc", dot: MARKETING_HOME.primary, text: "#6b4a12" },
+  { w: "Demand", bg: "#fff3cd", dot: "#e6a800", text: "#5c4a0a" },
+  { w: "Visibility", bg: "#fef9c3", dot: "#ca8a04", text: "#5c4a0a" },
+  { w: "Conversion", bg: "#fde68a", dot: "#d97706", text: "#6b4a12" },
+  { w: "Growth", bg: "#fef3c7", dot: "#f59e0b", text: "#6b2f12" },
 ] as const;
+
+const HERO_ICONS: { label: string; icon: MenuIconName }[] = [
+  { label: "Campaigns", icon: "megaphone" },
+  { label: "Search & visibility", icon: "search" },
+  { label: "Creative", icon: "sparkle" },
+  { label: "Analytics", icon: "chart" },
+  { label: "Demand generation", icon: "funnel" },
+  { label: "AI marketing", icon: "robot" },
+];
 
 const ROTATE_MS = 2000;
 
-/* ------------------------------ component ------------------------------ */
-
 export default function MarketingHero() {
-  const [index, setIndex] = useState(0); // start on "Convert"
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const id = setInterval(
@@ -44,13 +39,12 @@ export default function MarketingHero() {
 
   return (
     <section
-      className="relative overflow-hidden bg-white px-6 pt-6 pb-10 sm:px-10 sm:pt-8 sm:pb-14 lg:px-16 lg:pb-16"
+      className="relative overflow-hidden bg-white"
       style={{
         fontFamily:
           "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       }}
     >
-      {/* keyframes for the word swap */}
       <style>{`
         @keyframes heroWordIn {
           from { opacity: 0; transform: translateY(0.18em); }
@@ -59,65 +53,63 @@ export default function MarketingHero() {
       `}</style>
 
       <div className="mx-auto max-w-[1360px] text-center">
-        {/* Avatar strip */}
-        <div className="flex justify-center">
-          <Image
-            src="/tophero.png"
-            alt="Team and agent avatars"
-            width={823}
-            height={157}
-            className="h-[40px] w-auto sm:h-[52px] md:h-[64px] lg:h-[92px]"
-            priority
-          />
+        <div
+          className="flex items-center justify-center pl-3 sm:pl-4 md:pl-5"
+          aria-hidden="true"
+        >
+          {HERO_ICONS.map(({ label, icon }, i) => (
+            <MenuHeroCircle
+              key={label}
+              icon={icon}
+              label={label}
+              className={
+                i > 0
+                  ? "-ml-3 sm:-ml-3.5 md:-ml-4 lg:-ml-[1.125rem]"
+                  : undefined
+              }
+              style={{ zIndex: HERO_ICONS.length - i }}
+            />
+          ))}
         </div>
 
-        {/* Headline with rotating pill */}
-        <h1 className="mt-4 text-[46px] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)] sm:mt-5 sm:text-[48px] sm:leading-[1.2] sm:tracking-[-0.03em] md:text-[64px] lg:mt-[20px] lg:text-[96px] lg:leading-[1.26] lg:tracking-[-0.04em]">
-          Where B2B pipelines
-          <br />
+        <h1 className="mt-3 text-[clamp(1.625rem,7vw,6rem)] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)] sm:mt-4 sm:leading-[1.2] sm:tracking-[-0.03em] lg:mt-4 lg:leading-[1.26] lg:tracking-[-0.04em]">
+          Marketing built to create{" "}
           <span
-            className="inline-flex h-[1.22em] -translate-y-[0.06em] items-center gap-[0.2em] rounded-full px-[0.36em] align-middle transition-colors duration-300"
+            className="inline-flex h-[1.22em] -translate-y-[0.06em] items-center rounded-full pl-[0.4em] pr-[0.48em] align-middle transition-colors duration-300"
             style={{ backgroundColor: bg }}
           >
             <span
-              className="h-[0.27em] w-[0.27em] rounded-full transition-colors duration-300"
-              style={{ backgroundColor: dot }}
-            />
-            <span
               key={w}
-              className="leading-none"
+              className="inline-flex items-center gap-[0.22em] leading-none"
               style={{ color: text, animation: "heroWordIn 0.3s ease" }}
             >
-              {w}
+              <span
+                className="h-[0.27em] w-[0.27em] shrink-0 rounded-full"
+                style={{ backgroundColor: dot }}
+                aria-hidden="true"
+              />
+              <span className="leading-none">
+                {w}.
+              </span>
             </span>
-          </span>{" "}
-          faster.
+          </span>
         </h1>
 
-        {/* Subtitle */}
         <p className="mt-4 text-[15px] leading-[1.5] text-[#191918] sm:mt-5 sm:text-[17px] lg:mt-[26px] lg:text-[20px]">
-          Strategy, demand generation, SEO, and content that moves B2B buyers
-          from first touch to signed deal.
+          We combine strategy, creative, search, and automation into marketing
+          programs that build visibility and drive conversions.
         </p>
 
-        {/* CTAs */}
-        <div className="mt-6 flex w-full flex-col items-center justify-center gap-3 sm:mt-[30px] sm:w-auto sm:flex-row sm:gap-[22px]">
-          <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Get Started</PrimaryCtaLink>
-          <button
-            type="button"
-            className="inline-flex h-[44px] w-full items-center justify-center rounded-[10px] bg-[#FFC900] px-7 text-[16px] font-semibold text-black transition-colors duration-150 hover:bg-[#e6b400] sm:h-[47px] sm:w-auto sm:text-[18px]"
+        <div className="mt-6 flex w-full flex-col items-center justify-center sm:mt-[30px]">
+          <PrimaryCtaLink
+            href="/contact#marketing"
+            className="w-[234px] justify-center text-black!"
+            color={MARKETING_HOME.primary}
           >
-            Talk to Our Team
-          </button>
+            Start a Conversation
+          </PrimaryCtaLink>
         </div>
-
-        {/* Reassurance line */}
-        <p className="mt-3 text-[13px] text-[#5b5b58] sm:mt-4">
-          Free consultation, no long-term lock-in
-        </p>
       </div>
-
-    
     </section>
   );
 }

@@ -13,15 +13,14 @@
   --ink: #101014;
 }
 
-/* Shared section-heading typography — keep in sync with the reference style
-   used across all section titles (main/marketing/talent). */
+/* Shared section-heading typography — keep in sync across main/marketing/talent */
 .section-heading {
   letter-spacing: -0.02em;
   color: var(--ink);
   margin: 0;
-  font-size: 46px;
+  font-size: clamp(1.625rem, 5vw, 2.25rem);
   font-weight: 500;
-  line-height: 1.12;
+  line-height: 1.2;
   font-family: var(--font-poppins), -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Helvetica, Arial, sans-serif;
 }
@@ -40,17 +39,51 @@
   --font-calibri: var(--font-poppins), Arial, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color-scheme: light;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: #ffffff;
+  color: #171717;
   font-family: var(--font-poppins), Arial, sans-serif;
+  min-width: 0;
+  overflow-x: clip;
+}
+
+/* Pointer cursor on interactive controls site-wide */
+a[href],
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+label[for],
+select,
+summary,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+input[type="file"],
+.cursor-pointer {
+  cursor: pointer;
+}
+
+button:disabled,
+[disabled],
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+/* Large section titles (≈46px desktop) — scales down on phone/tablet */
+.section-title-lg {
+  margin: 0;
+  font-size: clamp(1.75rem, 5vw, 2.875rem);
+  line-height: 1.12;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
 }
 
 @keyframes dropdown-enter {
@@ -110,4 +143,299 @@ body {
   100% {
     background-position: -350px center;
   }
+}
+
+/* Thank-you page — ambient motion + reduced-motion safe */
+@keyframes ty-glow-drift-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(20px, 14px) scale(1.08);
+  }
+}
+
+@keyframes ty-glow-drift-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-16px, -12px) scale(1.06);
+  }
+}
+
+@keyframes ty-dot-float {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(-5px);
+    opacity: 0.65;
+  }
+}
+
+@keyframes ty-icon-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-ty-glow-a {
+  animation: ty-glow-drift-a 9s ease-in-out infinite;
+}
+
+.animate-ty-glow-b {
+  animation: ty-glow-drift-b 11s ease-in-out infinite;
+}
+
+.animate-ty-dot {
+  animation: ty-dot-float 3.5s ease-in-out infinite;
+}
+
+.animate-ty-icon-float {
+  animation: ty-icon-float 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ty-glow-a,
+  .animate-ty-glow-b,
+  .animate-ty-dot,
+  .animate-ty-icon-float {
+    animation: none !important;
+  }
+}
+
+/* Homepage spacing — equal top, bottom, left, and right rhythm */
+:root {
+  --section-space: clamp(1.25rem, 4.5vw, 2.5rem);
+  --section-content-gap: 2rem;
+  --heading-sub-gap: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --section-space: 3.5rem;
+    --section-content-gap: 2.25rem;
+    --heading-sub-gap: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --section-space: 5rem;
+    --section-content-gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --section-space: 6rem;
+    --section-content-gap: 3rem;
+  }
+}
+
+.home-main {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 6.5vw, var(--section-space));
+  padding:
+    max(var(--section-space), env(safe-area-inset-top))
+    max(var(--section-space), env(safe-area-inset-right))
+    max(var(--section-space), env(safe-area-inset-bottom))
+    max(var(--section-space), env(safe-area-inset-left));
+  overflow-x: clip;
+}
+
+/* Main homepage: tight gap under the sticky header (matches ~-53px preview). */
+.home-main--home {
+  padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
+}
+
+@media (min-width: 768px) {
+  .home-main--home {
+    padding-top: max(1rem, env(safe-area-inset-top, 0px));
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-main--home {
+    padding-top: max(1.25rem, env(safe-area-inset-top, 0px));
+  }
+}
+
+/* Marketing + talent: 3–4rem side padding (tighter than the 6rem homepage) */
+.home-main--site {
+  padding-inline:
+    max(1.5rem, env(safe-area-inset-left))
+    max(1.5rem, env(safe-area-inset-right));
+}
+
+@media (min-width: 768px) {
+  .home-main--site {
+    padding-inline:
+      max(3rem, env(safe-area-inset-left))
+      max(3rem, env(safe-area-inset-right));
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-main--site {
+    padding-inline:
+      max(4rem, env(safe-area-inset-left))
+      max(4rem, env(safe-area-inset-right));
+  }
+}
+
+.home-main--talent {
+  gap: 70px;
+  padding-block: 70px;
+}
+
+.home-main--technology {
+  gap: 70px;
+  padding-block: 70px;
+}
+
+@media (max-width: 767px) {
+  .home-main--site {
+    gap: 1.25rem;
+    padding-block: 1.25rem;
+  }
+
+  .home-main--talent {
+    gap: 1.25rem;
+    padding-block: 1.25rem;
+  }
+
+  .home-main--technology {
+    gap: 1.75rem;
+    padding-block: 0.5rem 1.75rem;
+  }
+
+  .home-main--technology .section-title-lg {
+    font-size: clamp(1.5rem, 5.5vw, 1.75rem);
+  }
+}
+
+.home-section {
+  padding: 0;
+  min-width: 0;
+}
+
+/* Contact sections inherit horizontal padding from .home-main — do not
+   add a second padding-inline here (it squeezes the form on mobile). */
+.home-section--contact {
+  min-width: 0;
+}
+
+.section-shell {
+  width: 100%;
+  max-width: 75rem;
+  margin-inline: auto;
+  min-width: 0;
+}
+
+.section-shell--wide {
+  max-width: 87.5rem;
+}
+
+.section-inset {
+  padding: clamp(1.25rem, 4vw, var(--section-content-gap));
+}
+
+.section-header--center {
+  text-align: center;
+}
+
+.section-heading--sm {
+  font-size: clamp(1.125rem, 3.5vw, 1.375rem);
+  line-height: 1.35;
+}
+
+.section-subheading {
+  margin: var(--heading-sub-gap) auto 0;
+  max-width: 42rem;
+  font-size: clamp(0.875rem, 2.5vw, 1.0625rem);
+  line-height: 1.6;
+  font-weight: 400;
+  color: #5a5f6b;
+}
+
+.section-subheading--wide {
+  max-width: 51.25rem;
+}
+
+.section-body,
+.section-content-offset {
+  margin-top: var(--section-content-gap);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --section-space: clamp(1.5rem, 5vw, 2.875rem);
+    --section-content-gap: 2.25rem;
+  }
+
+  .home-main {
+    gap: clamp(2.25rem, 7.5vw, 3.125rem);
+  }
+
+  .home-section {
+    padding-block: 1rem;
+  }
+
+  .section-body,
+  .section-content-offset {
+    margin-top: 2.25rem;
+  }
+
+  .section-header--center .section-subheading,
+  .section-subheading {
+    max-width: none;
+  }
+
+  .section-heading {
+    font-size: clamp(1.375rem, 6vw, 1.875rem);
+    line-height: 1.25;
+  }
+}
+
+.brand-gradient-text {
+  background: linear-gradient(90deg, #730031 0%, #CC0057 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.talent-gradient-text {
+  background: linear-gradient(90deg, #11551c 0%, #36a852 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.tech-gradient-text {
+  background: linear-gradient(90deg, #20287A 0%, #4A6CF7 55%, #6B8CFF 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.marketing-gradient-text {
+  background: linear-gradient(90deg, #b45309 0%, #ffc900 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }

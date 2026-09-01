@@ -1,70 +1,24 @@
 "use client";
 
-import React from "react";
+import React, { useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import type { CountryCode } from "libphonenumber-js";
+import { PrimaryCtaButton } from "@/components/ui/PrimaryCta";
+import { DEFAULT_PHONE_COUNTRY, PhoneInput } from "@/components/ui/PhoneInput";
+import { validateEmail, validatePhone } from "@/lib/form-validation";
+import { readFormString } from "@/lib/submit-lead";
+import { useSubmitLead } from "@/lib/use-submit-lead";
+import { TRUSTBAR_LOGOS } from "@/lib/trustbar-logos";
+import { CONTACT_TEAM_AVATARS } from "@/lib/contact-team-avatars";
 
-/**
- * TestimonialsCTA — Enterprise CTA section with contact-sales form.
- *
- * Font: Poppins (make sure it is loaded globally, e.g. via next/font/google).
- * Avatar images use remote placeholders — swap the URLs in AVATARS /
- * TESTIMONIAL_AVATAR for your own assets under /public when available.
- */
-
-const AVATARS = [
-  "https://randomuser.me/api/portraits/women/68.jpg",
-  "https://randomuser.me/api/portraits/women/44.jpg",
-  "https://randomuser.me/api/portraits/men/32.jpg",
-  "https://randomuser.me/api/portraits/men/85.jpg",
-  "https://randomuser.me/api/portraits/men/76.jpg",
-];
-
-const TESTIMONIAL_AVATAR = "https://randomuser.me/api/portraits/women/47.jpg";
-
-// Same client roster as TrustBar.tsx, muted grayscale for this darker card background.
-const LOGOS = [
-  { name: "WeGoFin", img: "/trustbarlogos/trimmed/wegofin.png" },
-  { name: "Sayyam" },
-  { name: "Adro", img: "/trustbarlogos/trimmed/adro.png" },
-  { name: "Saraogi", img: "/trustbarlogos/trimmed/sarogi.png" },
-  { name: "Codeus", img: "/trustbarlogos/trimmed/codeus.png" },
-  { name: "Bullsmart", img: "/trustbarlogos/trimmed/bullsmart.png" },
-  { name: "Onroadz", img: "/trustbarlogos/trimmed/onroad.png" },
-  { name: "KPRM" },
-  { name: "Kaypee Space", img: "/trustbarlogos/trimmed/kaypeespace.png" },
-  { name: "Avekshaa", img: "/trustbarlogos/trimmed/avekshaa.png" },
-  { name: "Orihiro", img: "/trustbarlogos/trimmed/orihiro.png" },
-  { name: "Hoshitry" },
-  { name: "TrnDigital" },
-  { name: "Digitathya", img: "/trustbarlogos/trimmed/digitathya.png" },
-  { name: "Cinepebble", img: "/trustbarlogos/trimmed/cinipebble.png" },
-  { name: "WinExch" },
-  { name: "SpinMatch", img: "/trustbarlogos/trimmed/spinmatch.png" },
-];
-
-function LogoSet() {
-  return (
-    <>
-      {LOGOS.map((logo) => (
-        <span key={logo.name} className="flex shrink-0 items-center">
-          {logo.img ? (
-            <img
-              src={logo.img}
-              alt={logo.name}
-              className="h-6 w-auto max-w-full object-contain grayscale opacity-60"
-            />
-          ) : (
-            <span className="text-[15px] font-bold tracking-tight text-[#77777e]">
-              {logo.name}
-            </span>
-          )}
-        </span>
-      ))}
-    </>
-  );
-}
+const AVATARS = CONTACT_TEAM_AVATARS;
 
 const inputBase =
   "w-full h-10 rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 text-[13px] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]";
+
+function inputClassName(hasError?: boolean) {
+  return `${inputBase}${hasError ? " border-[#730031]" : ""}`;
+}
 
 const selectBase =
   "w-full h-10 rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 pr-9 text-[13px] text-[#676879] outline-none appearance-none cursor-pointer transition-colors duration-150 focus:border-[#6161ff]";
@@ -92,182 +46,178 @@ function Caret({ className }: { className?: string }) {
 }
 
 export default function TestimonialsCTA() {
+  const router = useRouter();
+  const submitLead = useSubmitLead();
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [phoneCountry, setPhoneCountry] = useState<CountryCode>(DEFAULT_PHONE_COUNTRY);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (submitting) return;
+
+    const form = e.currentTarget;
+    const nextEmailError = validateEmail(email);
+    const nextPhoneError = validatePhone(phone, phoneCountry);
+    setEmailError(nextEmailError);
+    setPhoneError(nextPhoneError);
+    setSubmitError(null);
+    if (nextEmailError || nextPhoneError) return;
+
+    setSubmitting(true);
+    const result = await submitLead(
+      {
+        formType: "contact",
+        firstName: readFormString(form, "firstName"),
+        lastName: readFormString(form, "lastName"),
+        email,
+        phoneCountry,
+        phone,
+        jobTitle: readFormString(form, "jobTitle") || null,
+        companyName: readFormString(form, "companyName") || null,
+        companySize: readFormString(form, "companySize") || null,
+        helpWith: readFormString(form, "helpWith") ? [readFormString(form, "helpWith")] : [],
+        priority: readFormString(form, "priority") || null,
+        message: readFormString(form, "message") || null,
+        privacyAccepted: true,
+      },
+      "contact"
+    );
+    setSubmitting(false);
+
+    if (!result.ok) {
+      setSubmitError(result.error);
+      return;
+    }
+
+    router.push(`/contact/thankyou-home?leadId=${result.id}`);
+  };
+
   return (
     <section
-      className="bg-white px-4 pb-2 sm:px-8 lg:px-[6%]"
+      id="contact"
+      className="home-section bg-white"
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
-      <div className="rounded-[24px] bg-[#ab05491a] px-6 py-16 lg:py-[88px]">
-        <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-16 lg:flex-row lg:items-stretch lg:justify-between lg:gap-[120px]">
-          {/* ------------------------------ Left column ------------------------------ */}
+      <div className="section-shell section-shell--wide">
+        <div className="section-inset rounded-2xl border border-[#E6E9EF] bg-[#b0064817] sm:rounded-[24px]">
+        <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-6 sm:gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-[var(--section-content-gap)]">
           <div className="flex min-w-0 flex-1 flex-col">
-            <h2 className="max-w-[470px] mt-0 mb-0 font-[family-name:var(--font-poppins)] text-[36px] font-medium leading-[1.25] tracking-[-0.02em] text-[var(--ink)]">
+            <h2 className="section-heading max-w-none lg:max-w-[470px]">
               Ready to see what FyerX can do for{" "}
-              <span
-                style={{
-                  background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
-                  backgroundClip: "text",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  color: "transparent",
-                }}
-              >
-                your business?
-              </span>
+              <span className="brand-gradient-text">your business?</span>
             </h2>
 
-            <p className="mt-6 max-w-[400px] text-[18px] font-light leading-[140%] text-[#181b34]">
+            <p className="section-subheading max-w-none lg:max-w-[400px]">
               Share your goals with our team to explore the right approach and
               pricing for your business.
             </p>
 
-            {/* Spacer pushes logos + testimonial to the bottom of the column */}
-            <div className="min-h-[48px] flex-1" />
-
-            {/* Logos strip — infinite scroll loop, pauses on hover */}
-            <div className="group w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-              <div className="animate-marquee flex w-max items-center gap-10 group-hover:[animation-play-state:paused]">
-                <div className="flex shrink-0 items-center gap-10">
-                  <LogoSet />
-                </div>
-                <div className="flex shrink-0 items-center gap-10" aria-hidden="true">
-                  <LogoSet />
-                </div>
-              </div>
-            </div>
-
-            {/* Testimonial card — placeholder, pending a verified client quote */}
-            <div className="mt-7 max-w-[465px] rounded-[8px] border border-[#323338] p-6">
-              <p className="text-[14px] leading-[1.5] text-[#181b34]">
-                &ldquo;[Insert client quote, 15-25 words]&rdquo;
+            <div className="mt-8 w-full max-w-none lg:max-w-[520px]">
+              <p className="text-sm font-medium text-[#676879]">
+                Organisations that have partnered with us
               </p>
-              <div className="mt-5 flex items-center gap-4">
-                <img
-                  src={TESTIMONIAL_AVATAR}
-                  alt="[Client Name]"
-                  className="h-[54px] w-[54px] shrink-0 rounded-full object-cover"
-                />
-                <div>
-                  <p className="text-[15px] font-semibold leading-[1.4] text-[#181b34]">
-                    [Client Name]
-                  </p>
-                  <p className="text-[14px] leading-[1.4] text-[#181b34]">
-                    [Title] | [Company Name]
-                  </p>
-                </div>
+              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+                {TRUSTBAR_LOGOS.map((logo) => (
+                  <div
+                    key={logo.name}
+                    className="flex h-14 items-center justify-center rounded-xl border border-[#E6E9EF] bg-white px-3 py-2 sm:h-16 sm:px-4"
+                  >
+                    {logo.badge ? (
+                      <span className="text-center text-xs font-semibold leading-tight text-[#323338] sm:text-sm">
+                        {logo.name}
+                      </span>
+                    ) : (
+                      <img
+                        src={logo.img}
+                        alt={logo.name}
+                        className="max-h-7 w-full object-contain sm:max-h-8"
+                        loading="lazy"
+                        style={
+                          logo.scale
+                            ? { transform: `scale(${logo.scale})`, transformOrigin: "center" }
+                            : undefined
+                        }
+                      />
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* --------------------------- Right column (form) --------------------------- */}
-          <div className="relative w-full lg:w-[462px] lg:shrink-0">
-            {/* Overlapping avatars */}
+          <div className="relative mt-8 w-full sm:mt-10 lg:mt-0 lg:w-[462px] lg:shrink-0">
             <div className="absolute -top-[22px] left-1/2 z-10 flex -translate-x-1/2 -space-x-[6px]">
-              {AVATARS.map((src, i) => (
+              {AVATARS.map((avatar, i) => (
                 <img
-                  key={src}
-                  src={src}
-                  alt=""
+                  key={avatar.src}
+                  src={avatar.src}
+                  alt={avatar.alt}
                   className="h-9 w-9 rounded-full border-2 border-[#0f0f10] object-cover"
                   style={{ zIndex: AVATARS.length - i }}
                 />
               ))}
             </div>
 
-            <div className="w-full rounded-[16px] bg-white px-6 py-7 shadow-[0px_6px_20px_rgba(29,37,45,0.05)] sm:px-9">
+            <div className="w-full rounded-[16px] bg-white px-4 py-6 shadow-[0px_6px_20px_rgba(29,37,45,0.05)] sm:px-9 sm:py-7">
               <h3 className="text-center text-[16px] font-semibold text-[#181b34]">
                 Contact our team
               </h3>
 
-              <form
-                className="mt-4 flex flex-col gap-3"
-                onSubmit={(e) => e.preventDefault()}
-              >
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    type="text"
-                    name="firstName"
-                    placeholder="First name*"
-                    required
-                    className={inputBase}
-                  />
-                  <input
-                    type="text"
-                    name="lastName"
-                    placeholder="Last name*"
-                    required
-                    className={inputBase}
-                  />
+              <form className="mt-4 flex flex-col gap-3" onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <input type="text" name="firstName" placeholder="First name*" required className={inputBase} />
+                  <input type="text" name="lastName" placeholder="Last name*" required className={inputBase} />
                 </div>
 
-                <input
-                  type="email"
-                  name="workEmail"
-                  placeholder="Work email*"
-                  required
-                  className={inputBase}
-                />
-
-                <input
-                  type="text"
-                  name="jobTitle"
-                  placeholder="Job title"
-                  className={inputBase}
-                />
-
-                {/* Phone with country code */}
-                <div className="flex h-10 w-full overflow-hidden rounded-[8px] border border-[#c3c6d4] bg-white transition-colors duration-150 focus-within:border-[#6161ff]">
-                  <button
-                    type="button"
-                    className="flex h-full w-11 shrink-0 items-center justify-center gap-[3px] border-r border-[#c3c6d4] bg-white"
-                    aria-label="Select country code"
-                  >
-                    <img
-                      src="https://flagcdn.com/w20/in.png"
-                      alt="India"
-                      className="h-3 w-[18px] object-cover"
-                    />
-                    <svg
-                      className="h-2.5 w-2.5 text-[#676879]"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M5 7.5L10 12.5L15 7.5"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
+                <div>
                   <input
-                    type="tel"
-                    name="phone"
-                    placeholder="+91"
-                    className="h-full w-full border-0 bg-white px-3.5 text-[13px] text-[#333333] placeholder-[#676879] outline-none"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    type="text"
-                    name="companyName"
-                    placeholder="Company name*"
+                    type="email"
+                    name="workEmail"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (emailError) setEmailError(null);
+                    }}
+                    placeholder="Work email*"
                     required
-                    className={inputBase}
+                    inputMode="email"
+                    autoComplete="email"
+                    aria-invalid={emailError ? true : undefined}
+                    className={inputClassName(!!emailError)}
                   />
+                  {emailError && (
+                    <p className="mt-1.5 text-xs text-[#730031]" role="alert">
+                      {emailError}
+                    </p>
+                  )}
+                </div>
+                <input type="text" name="jobTitle" placeholder="Job title" className={inputBase} />
+
+                <PhoneInput
+                  country={phoneCountry}
+                  onCountryChange={(next) => {
+                    setPhoneCountry(next);
+                    if (phoneError) setPhoneError(null);
+                  }}
+                  value={phone}
+                  onChange={(next) => {
+                    setPhone(next);
+                    if (phoneError) setPhoneError(null);
+                  }}
+                  error={phoneError}
+                  placeholder="Phone number*"
+                />
+
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <input type="text" name="companyName" placeholder="Company name*" required className={inputBase} />
                   <div className="relative">
-                    <select
-                      name="companySize"
-                      required
-                      defaultValue=""
-                      className={selectBase}
-                    >
-                      <option value="" disabled>
-                        Company size*
-                      </option>
+                    <select name="companySize" defaultValue="" className={selectBase}>
+                      <option value="" disabled>Company size</option>
                       <option value="1-19">1-19</option>
                       <option value="20-49">20-49</option>
                       <option value="50-99">50-99</option>
@@ -280,19 +230,28 @@ export default function TestimonialsCTA() {
                 </div>
 
                 <div className="relative">
-                  <select
-                    name="explore"
-                    required
-                    defaultValue=""
-                    className={selectBase}
-                  >
-                    <option value="" disabled>
-                      What would you like to explore?*
-                    </option>
-                    <option value="work-management">Work management</option>
-                    <option value="crm">CRM</option>
-                    <option value="dev">Software development</option>
-                    <option value="service">Service management</option>
+                  <select name="helpWith" required defaultValue="" className={selectBase}>
+                    <option value="" disabled>What can we help with?*</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="talent-staffing">Talent &amp; Staffing</option>
+                    <option value="technology">Technology</option>
+                    <option value="learning-training">Learning &amp; Training</option>
+                    <option value="general">General Business Enquiry</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <Caret />
+                </div>
+
+                <div className="relative">
+                  <select name="priority" required defaultValue="" className={selectBase}>
+                    <option value="" disabled>What is your priority?*</option>
+                    <option value="generate-demand">Generate demand</option>
+                    <option value="build-brand">Build a brand</option>
+                    <option value="hire-talent">Hire talent</option>
+                    <option value="modernise-technology">Modernise technology</option>
+                    <option value="digital-product">Build a digital product</option>
+                    <option value="upskill-team">Upskill a team</option>
+                    <option value="partnership">Explore a partnership</option>
                     <option value="other">Other</option>
                   </select>
                   <Caret />
@@ -300,28 +259,35 @@ export default function TestimonialsCTA() {
 
                 <textarea
                   name="message"
-                  placeholder="Tell us more about your business and what you'd like support with"
+                  placeholder="Tell us more about your goals, timeline, or anything else that would help us prepare for the conversation."
                   className="h-[88px] w-full resize-none rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 py-2.5 text-[13px] leading-[1.5] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]"
                 />
 
-                <button
+                {submitError && (
+                  <p className="text-center text-xs text-[#730031]" role="alert">
+                    {submitError}
+                  </p>
+                )}
+
+                <PrimaryCtaButton
                   type="submit"
-                  className="mx-auto mt-3 h-10 w-24 rounded-full bg-[#6c6cff] text-[14px] font-normal text-white transition-colors duration-150 hover:bg-[#5b5bd6]"
+                  icon={null}
+                  disabled={submitting}
+                  className="mx-auto mt-3 h-10 justify-center px-6 text-[14px] font-medium disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  Submit
-                </button>
+                  {submitting ? "Submitting..." : <>Send Enquiry &rarr;</>}
+                </PrimaryCtaButton>
 
                 <p className="mx-auto mt-1.5 max-w-[300px] text-center text-[10.5px] leading-[1.6] text-[#333333]">
                   By submitting this form, you accept FyerX&rsquo;s{" "}
-                  <a href="/privacy-policy" className="underline">
-                    Privacy Policy
-                  </a>{" "}
+                  <a href="/privacy-policy" className="underline">Privacy Policy</a>{" "}
                   and consent to be contacted regarding your enquiry.
                 </p>
               </form>
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

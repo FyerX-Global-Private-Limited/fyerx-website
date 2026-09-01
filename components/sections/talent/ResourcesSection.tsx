@@ -1,68 +1,23 @@
 "use client";
 
 import React from "react";
-
-/**
- * "Resources to hit your goals" section.
- * Exact copy + design replication. No external dependencies.
- *
- * Cards 1 and 4 use photos — swap the `img` values for your own assets
- * (e.g. "/images/bottom-line.jpg"). Card 2 (dark "What's new" panel) is
- * rendered in markup. Card 3 uses a teal illustration image — replace its
- * `img` with your own illustration for a pixel match.
- */
-
-const IMG_AEO =
-  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80";
-const IMG_ABM =
-  "https://images.unsplash.com/photo-1611926653458-09294b3142bf?auto=format&fit=crop&w=800&q=80";
-const IMG_AGENTS =
-  "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80";
-const IMG_GEO =
-  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80";
-
-function PhotoTop({ src, alt }: { src: string; alt: string }) {
-  return (
-    <div className="res-top res-top--photo">
-      <img src={src} alt={alt} />
-    </div>
-  );
-}
+import { TALENT_HOME } from "@/lib/talent-home-palette";
 
 const cards = [
   {
-    top: (
-      <PhotoTop
-        src={IMG_AEO}
-        alt="Contract Staffing vs Permanent Hiring: What's Right for You?"
-      />
-    ),
-    title: "Contract Staffing vs Permanent Hiring: What's Right for You?",
-    body: "A practical breakdown of when contract talent makes sense and when it doesn't.",
-    link: "Learn More",
+    img: "/images/talent/blog-rpo.svg",
+    title: "What RPO Looks Like in Practice",
+    body: "When outsourced recruitment support is useful—and what the working model should include.",
   },
   {
-    top: <PhotoTop src={IMG_ABM} alt="What is RPO and When Does It Make Sense?" />,
-    title: "What is RPO and When Does It Make Sense?",
-    body: "How recruitment process outsourcing works, and the signs it's time to consider it.",
-    link: "See the Latest Updates",
+    img: "/images/talent/blog-distributed.svg",
+    title: "Building a Distributed Technology Team",
+    body: "How to choose the model that fits your timeline, budget structure, and ongoing capability need.",
   },
   {
-    top: <PhotoTop src={IMG_AGENTS} alt="A Guide to Hiring IT Talent in 2026" />,
-    title: "A Guide to Hiring IT Talent in 2026",
-    body: "What to look for when sourcing developers, data specialists, and cloud engineers.",
-    link: "Explore Our Blog",
-  },
-  {
-    top: (
-      <PhotoTop
-        src={IMG_GEO}
-        alt="US Contract Staffing: What Indian Businesses Need to Know"
-      />
-    ),
-    title: "US Contract Staffing: What Indian Businesses Need to Know",
-    body: "The compliance basics behind placing contract talent for US-based teams.",
-    link: "Check Our Latest Posts",
+    img: "/images/talent/blog-enterprise.svg",
+    title: "How to Hire for Enterprise Platforms",
+    body: "What to clarify before hiring ServiceNow, Salesforce, SAP, and other platform specialists.",
   },
 ];
 
@@ -70,21 +25,23 @@ export default function ResourcesSection() {
   return (
     <section className="res">
       <div className="res__container">
-        <h2 className="res__heading">Resources to hit your hiring goals</h2>
-        <p className="res__subheading">
-          Straight talk on AI, demand generation, and B2B growth, no fluff.
-        </p>
+        <h2 className="res__heading">
+          Practical thinking for{" "}
+          <span className="talent-gradient-text">smarter hiring</span>
+        </h2>
 
         <div className="res__grid">
           {cards.map((c) => (
             <article className="res__card" key={c.title}>
-              {c.top}
+              <div className="res-top res-top--photo">
+                <img src={c.img} alt={c.title} />
+              </div>
               <h3 className="res__card-title">{c.title}</h3>
               <p className="res__card-body">{c.body}</p>
               <a className="res__link" href="#">
-                {c.link}
+                Read more
                 <span aria-hidden="true" className="res__link-arrow">
-                  →
+                  ›
                 </span>
               </a>
             </article>
@@ -93,7 +50,7 @@ export default function ResourcesSection() {
 
         <div className="res__cta-wrap">
           <button className="res__cta" type="button">
-            View All Posts
+            View All Resources
           </button>
         </div>
       </div>
@@ -102,120 +59,116 @@ export default function ResourcesSection() {
         .res {
           width: 100%;
           background: #ffffff;
-          padding: 48px 24px;
+          padding: 0;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           box-sizing: border-box;
-        }
-        @media (min-width: 640px) {
-          .res {
-            padding: 56px 40px;
-          }
-        }
-        @media (min-width: 1024px) {
-          .res {
-            padding: 64px 64px;
-          }
         }
         .res__container {
           max-width: 1260px;
           margin: 0 auto;
           background: #f4f4f5;
-          border-radius: 28px;
-          padding: 56px 48px 64px;
+          border-radius: 20px;
+          padding: 32px 20px 40px;
           box-sizing: border-box;
         }
+        @media (min-width: 640px) {
+          .res__container {
+            border-radius: 28px;
+            padding: 48px 32px 56px;
+          }
+        }
+        @media (min-width: 1024px) {
+          .res__container {
+            padding: 56px 48px 64px;
+          }
+        }
         .res__heading {
-          margin: 0;
+          margin: 0 0 32px;
           text-align: center;
-          font-size: 46px;
+          font-size: clamp(1.75rem, 5vw, 2.875rem);
           line-height: 1.12;
           font-weight: 500;
           letter-spacing: -0.02em;
           color: var(--ink);
         }
-        .res__subheading {
-          margin: 12px 0 44px;
-          text-align: center;
-          font-size: 16px;
-          line-height: 1.5;
-          color: #52525b;
-        }
         .res__grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 28px;
+          grid-template-columns: 1fr;
+          gap: 24px;
+        }
+        @media (min-width: 640px) {
+          .res__grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+          }
+        }
+        @media (min-width: 1024px) {
+          .res__grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
         }
         .res__card {
           display: flex;
           flex-direction: column;
+          background: #ffffff;
+          border-radius: 16px;
+          border: 1px solid #e6e9ef;
+          padding: 12px 12px 20px;
+          box-shadow: 0 8px 24px -16px rgba(16, 16, 20, 0.18);
         }
         .res__card-title {
-          margin: 20px 0 0;
-          font-size: 19px;
+          margin: 16px 4px 0;
+          font-size: 18px;
           font-weight: 600;
+          line-height: 1.3;
           color: #18181b;
         }
         .res__card-body {
-          margin: 12px 0 0;
+          margin: 10px 4px 0;
           font-size: 14px;
           line-height: 1.55;
           color: #52525b;
+          flex: 1;
         }
         .res__link {
-          margin-top: 18px;
+          margin: 16px 4px 0;
           display: inline-flex;
           align-items: center;
-          gap: 8px;
+          gap: 6px;
           align-self: flex-start;
           font-size: 14px;
-          font-weight: 500;
-          color: #18181b;
+          font-weight: 600;
+          color: ${TALENT_HOME.primary};
           text-decoration: none;
-          border-bottom: 1px solid #18181b;
-          padding-bottom: 2px;
           transition: gap 0.15s ease, opacity 0.15s ease;
         }
         .res__link:hover {
-          gap: 12px;
-          opacity: 0.8;
+          gap: 10px;
+          opacity: 0.85;
         }
         .res__link-arrow {
-          font-size: 15px;
+          font-size: 16px;
+          line-height: 1;
         }
         .res__cta-wrap {
-          margin-top: 48px;
+          margin-top: 40px;
           display: flex;
           justify-content: center;
         }
         .res__cta {
-          background: #0B2E59;
-          color: #ffffff;
+          background: ${TALENT_HOME.primary};
+          color: ${TALENT_HOME.accent};
           border: none;
           border-radius: 999px;
-          padding: 15px 30px;
+          padding: 12px 24px;
           font-size: 15px;
-          font-weight: 500;
+          font-weight: 600;
           cursor: pointer;
           transition: transform 0.15s ease, opacity 0.15s ease;
         }
         .res__cta:hover {
           transform: translateY(-1px);
-          opacity: 0.9;
-        }
-
-        @media (max-width: 980px) {
-          .res__grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
-          }
-        }
-        @media (max-width: 560px) {
-          .res__container {
-            padding: 40px 24px 48px;
-          }
-          .res__grid {
-            grid-template-columns: 1fr;
-          }
+          opacity: 0.92;
         }
       `}</style>
 
@@ -223,7 +176,7 @@ export default function ResourcesSection() {
         .res-top {
           width: 100%;
           aspect-ratio: 16 / 11;
-          border-radius: 14px;
+          border-radius: 12px;
           overflow: hidden;
         }
         .res-top--photo img {

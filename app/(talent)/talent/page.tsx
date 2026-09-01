@@ -1,35 +1,38 @@
+import type { Metadata } from "next";
 import MarketingHero from "@/components/sections/talent/MarketingHero";
-import ServicesGrid from "@/components/sections/talent/ServicesGrid";
+import FoundationSection from "@/components/sections/talent/FoundationSection";
 import TrackRecord from "@/components/sections/talent/TrackRecord";
-import TrustBar from "@/components/sections/marketing/TrustBar";
-import Leadership from "@/components/sections/talent/Leadership";
-import AIPlatformHero from "@/components/sections/talent/AIPlatformHero";
+import TalentCapabilitySection from "@/components/sections/talent/TalentCapabilitySection";
 import StackedScrollSection from "@/components/sections/talent/StackedScrollSection";
-
+import IndustriesSection from "@/components/sections/talent/IndustriesSection";
 import CampaignsSection from "@/components/sections/talent/CampaignsSection";
-import TestimonialsCTA from "@/components/sections/talent/TestimonialsCTA";
-import IntegrationsSection from "@/components/sections/talent/IntegrationsSection";
 import EnterpriseSection from "@/components/sections/talent/EnterpriseSection";
 import ResourcesSection from "@/components/sections/talent/ResourcesSection";
+import TestimonialsCTA from "@/components/sections/talent/TestimonialsCTA";
 import FaqSection from "@/components/sections/talent/FaqSection";
-export default function MarketingPage() {
+import TalentClosingSection from "@/components/sections/talent/TalentClosingSection";
+
+export const metadata: Metadata = {
+  title: "IT Staffing & Technology Recruitment | FyerX Talent",
+  description:
+    "Hire contract professionals, permanent employees, and project teams across ServiceNow, SAP, Salesforce, Data & AI, Cloud, DevOps, and more.",
+};
+
+export default function TalentHomePage() {
   return (
     <>
-      
       <MarketingHero />
+      <TalentClosingSection />
       <TrackRecord />
-         {/* <TrustBar /> */}
-      <ServicesGrid />
-      <AIPlatformHero />
+      <FoundationSection />
+      <TalentCapabilitySection />
       <StackedScrollSection />
-      <Leadership />
-        <CampaignsSection />
-             <IntegrationsSection />
-             <EnterpriseSection />
-             <ResourcesSection />
-              <FaqSection />
-      <TestimonialsCTA />         
- 
+      <IndustriesSection />
+      <CampaignsSection />
+      <EnterpriseSection />
+      <ResourcesSection />
+      <TestimonialsCTA />
+      <FaqSection />
     </>
   );
 }

@@ -15,7 +15,7 @@ export default function TalentHero() {
         challenges and unlock your potential.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 mt-4">
-        <PrimaryCtaLink href="/talent/book-session" color="#2935a3">
+        <PrimaryCtaLink href="/contact#talent" color="#11551C" textColor="#9EEBAA">
           Book a Session
         </PrimaryCtaLink>
         <Link

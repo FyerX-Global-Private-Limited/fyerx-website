@@ -24,6 +24,5 @@ export const marketingNav: NavItem[] = [
 export const talentNav: NavItem[] = [
   { label: "Home", href: "/talent" },
   { label: "Individual", href: "/talent/individual" },
-  { label: "Book a Session", href: "/talent/book-session" },
-  { label: "Contact", href: "/contact" },
+  { label: "Contact", href: "/contact#talent" },
 ];

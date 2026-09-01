@@ -1,254 +1,256 @@
 "use client";
 
-import { type ReactNode } from "react";
-import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { TALENT_HOME } from "@/lib/talent-home-palette";
+import {
+  TALENT_CASE_STUDIES,
+  type TalentCaseStudy,
+  type TalentCaseStudyMetric,
+} from "@/data/talent-case-studies";
 
-/**
- * StackedScrollSection
- * -------------------------------------------------------------------------
- * Replica of the monday.com/crm "stacking cards" scroll section.
- *
- * ANIMATION
- *   Each coloured panel is `position: sticky`. As you scroll, panel N pins
- *   near the top of the viewport while panel N+1 slides up and overlaps it,
- *   leaving a thin coloured sliver of the previous panel peeking above the
- *   new one. This is pure CSS sticky-stacking — no JS, no scroll listeners,
- *   so it's smooth on every device and degrades gracefully.
- *
- *   The peek is produced by giving each panel a slightly larger `top`
- *   offset than the one before it (STACK_TOP + index * PEEK).
- *
- * CONTENT
- *   Five panels — "Why B2B Marketing Needs an AI-First Partner Now" — each:
- *   a pill badge, a headline, and a supporting paragraph (left column), plus
- *   the original "monday CRM" UI mockup with a floating AI-agent popup
- *   (right column, kept as placeholder visuals — swap for real product/brand
- *   mockups when available).
- * -------------------------------------------------------------------------
- */
-
-/* Sticky geometry (px). PEEK controls how much of each previous panel shows. */
 const STACK_TOP = 88;
 const PEEK = 26;
 
-/* -------------------------------------------------------------------------
- * Case-study visual placeholder — reserves the mockup's spot until real
- * screenshots/result graphics are available.
- * ---------------------------------------------------------------------- */
+/** Monday-style pastel card fills — varied palette. */
+const CARD_PALETTES = [
+  { cardBg: "#E6E0FF", panelBg: "#F0EDFF", accent: "#7c3aed" },
+  { cardBg: "#C5DAF5", panelBg: "#D8E9FB", accent: "#1F5C99" },
+  { cardBg: "#FFE8E6", panelBg: "#FFF0EE", accent: "#E2445C" },
+  { cardBg: "#E8F5EA", panelBg: "#F0FAF2", accent: TALENT_HOME.primary },
+  { cardBg: "#FFF8E1", panelBg: "#FEF9C3", accent: "#EA580C" },
+  { cardBg: "#FFE8E6", panelBg: "#FFF0EE", accent: "#E2445C" },
+] as const;
 
-function ComingSoonPlaceholder({
-  tone,
-  alt,
+/** Soft multicolor role chips — matches case-study mockup reference. */
+const ROLE_CHIP_STYLES = [
+  { bg: "#FCE7F3", color: "#BE185D" },
+  { bg: "#DBEAFE", color: "#1D4ED8" },
+  { bg: "#FEF3C7", color: "#B45309" },
+  { bg: "#D1FAE5", color: "#047857" },
+  { bg: "#EDE9FE", color: "#6D28D9" },
+  { bg: "#FFEDD5", color: "#C2410C" },
+] as const;
+
+function CaseStudyBadge({
+  label,
+  clientName,
+  accentColor,
 }: {
-  tone: "light" | "dark";
-  alt: string;
+  label: string;
+  clientName: string;
+  accentColor: string;
 }) {
-  const isDark = tone === "dark";
   return (
-    <div
-      role="img"
-      aria-label={alt}
-      className={`flex h-full w-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed ${
-        isDark ? "border-black/20 bg-black/5" : "border-white/30 bg-white/10"
-      }`}
-    >
-      <svg
-        className={isDark ? "text-neutral-900/50" : "text-white/70"}
-        width="32"
-        height="32"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+    <span className="inline-flex w-fit items-center gap-2 rounded-md bg-white/90 px-3 py-1.5 text-xs font-medium text-[var(--ink)] shadow-sm ring-1 ring-black/5">
+      <span
+        className="h-2 w-2 shrink-0 rounded-sm"
+        style={{ backgroundColor: accentColor }}
         aria-hidden="true"
-      >
-        <rect x="3" y="5" width="18" height="14" rx="2" />
-        <path d="M3 15l4.5-4.5a1.5 1.5 0 0 1 2.1 0L12 13l3-3a1.5 1.5 0 0 1 2.1 0L21 13.5" />
-        <circle cx="8" cy="9" r="1.4" />
-      </svg>
-      <p
-        className={`text-sm font-medium ${
-          isDark ? "text-neutral-900/70" : "text-white/80"
-        }`}
-      >
-        Case Study Coming Soon
-      </p>
+      />
+      {label} · {clientName}
+    </span>
+  );
+}
+
+function MetricsMockup({
+  study,
+  metrics,
+  accentColor,
+  panelBg,
+}: {
+  study: TalentCaseStudy;
+  metrics: TalentCaseStudyMetric[];
+  accentColor: string;
+  panelBg: string;
+}) {
+  const categoryPill = study.categoryLabel.split(" ")[0];
+
+  return (
+    <div className="relative flex h-full min-h-[360px] w-full items-center justify-center p-4 sm:min-h-[420px] sm:p-6">
+      <div
+        className="absolute inset-3 rounded-2xl sm:inset-4"
+        style={{
+          background: `linear-gradient(145deg, ${accentColor}22 0%, ${panelBg} 55%, ${accentColor}18 100%)`,
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 w-full max-w-[440px] px-1 sm:max-w-none sm:px-2">
+        <div className="w-full overflow-hidden rounded-2xl border border-white/80 bg-white shadow-[0_16px_40px_-20px_rgba(16,16,20,0.25)]">
+          <div className="flex items-center justify-between gap-3 border-b border-[#E6E9EF] px-5 py-3.5">
+            <div className="flex min-w-0 items-center gap-2.5">
+              {study.logoSrc ? (
+                <img
+                  src={study.logoSrc}
+                  alt={study.clientName}
+                  className="h-5 w-auto max-w-[140px] object-contain object-left sm:h-6"
+                />
+              ) : (
+                <p className="text-sm font-semibold text-[var(--ink)]">{study.clientName}</p>
+              )}
+            </div>
+            <span
+              className="shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold"
+              style={{ backgroundColor: `${accentColor}22`, color: accentColor }}
+            >
+              {categoryPill}
+            </span>
+          </div>
+
+          <div className="space-y-2.5 p-5">
+            {metrics.map((metric) => (
+              <div
+                key={metric.label}
+                className="flex items-center justify-between rounded-xl bg-[#F6F7FB] px-4 py-3"
+              >
+                <span className="text-xs font-medium text-[#5a5f6b] sm:text-sm">{metric.label}</span>
+                <span className="text-sm font-bold sm:text-base" style={{ color: accentColor }}>
+                  {metric.value}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {study.roleChips && study.roleChips.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 px-5 pb-4">
+              {study.roleChips.slice(0, 4).map((chip, i) => {
+                const style = ROLE_CHIP_STYLES[i % ROLE_CHIP_STYLES.length];
+                return (
+                  <span
+                    key={chip}
+                    className="rounded-full px-2.5 py-1 text-[10px] font-semibold sm:text-[11px]"
+                    style={{ backgroundColor: style.bg, color: style.color }}
+                  >
+                    {chip}
+                  </span>
+                );
+              })}
+            </div>
+          )}
+
+          <div className="px-5 pb-4 text-right">
+            <span className="text-xs font-semibold" style={{ color: accentColor }}>
+              View full story →
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
-/* -------------------------------------------------------------------------
- * Panel data / theming
- * ---------------------------------------------------------------------- */
+function StackedCaseStudyCard({
+  study,
+  index,
+  stackEnabled,
+}: {
+  study: TalentCaseStudy;
+  index: number;
+  stackEnabled: boolean;
+}) {
+  const palette = CARD_PALETTES[index % CARD_PALETTES.length];
 
-type Panel = {
-  id: string;
-  label: string; // "Case Study 0X" icon label
-  title: ReactNode;
-  description: string;
-  cta: string;
-  bg: string; // Tailwind bg-[...]
-  tone: "light" | "dark"; // text colour on the panel
-  alt: string;
-};
+  return (
+    <div
+      className={stackEnabled ? "sticky" : undefined}
+      style={stackEnabled ? { top: `${STACK_TOP + index * PEEK}px` } : undefined}
+      suppressHydrationWarning
+    >
+      <div
+        className="mb-8 overflow-hidden rounded-[28px] shadow-[0_24px_64px_-28px_rgba(16,16,20,0.22)]"
+        style={{ backgroundColor: palette.cardBg }}
+      >
+        <div className="grid md:grid-cols-2">
+          <div className="flex flex-col p-8 sm:p-10 md:p-12" style={{ backgroundColor: palette.cardBg }}>
+            <CaseStudyBadge
+              label={study.label}
+              clientName={study.clientName}
+              accentColor={palette.accent}
+            />
+            <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-[#5a5f6b]">
+              {study.categoryLabel}
+            </p>
+            <h3 className="mt-3 text-2xl font-semibold leading-[1.15] tracking-tight text-[var(--ink)] sm:text-[1.75rem]">
+              {study.title}
+            </h3>
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-[#3d4a5c]">{study.summary}</p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {study.services.map((service) => (
+                <span
+                  key={service}
+                  className="rounded-full border border-black/8 bg-white/75 px-3 py-1 text-[11px] font-medium text-[#3d4a5c]"
+                >
+                  {service}
+                </span>
+              ))}
+            </div>
+            <Link
+              href={`/talent/case-studies/${study.slug}`}
+              className="mt-8 inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-transform hover:scale-[1.02] active:scale-[0.98]"
+              style={{ backgroundColor: TALENT_HOME.primary, color: TALENT_HOME.accent }}
+            >
+              Explore This Requirement
+              <span aria-hidden="true">→</span>
+            </Link>
+          </div>
 
-const PANELS: Panel[] = [
-  {
-    id: "case-study-01",
-    label: "Case Study 01",
-    title: "Scaling a Product Team in Six Weeks",
-    description:
-      "A mid-sized SaaS company needed to double its engineering team ahead of a funding-driven growth push. FyerX ran end-to-end recruitment for the roles, filling most positions within six weeks through a mix of contract and permanent hires.",
-    cta: "Read the Case Study",
-    bg: "bg-[#123fd4]",
-    tone: "light",
-    alt: "Scaling a Product Team in Six Weeks — FyerX Talent case study",
-  },
-  {
-    id: "case-study-02",
-    label: "Case Study 02",
-    title: "Filling a Niche ServiceNow Role",
-    description:
-      "An enterprise IT client had an open ServiceNow developer role sitting unfilled for over two months. FyerX sourced and placed a qualified specialist within three weeks by tapping into a network built specifically for platform talent.",
-    cta: "Read the Case Study",
-    bg: "bg-[#2f7bf6]",
-    tone: "light",
-    alt: "Filling a Niche ServiceNow Role — FyerX Talent case study",
-  },
-  {
-    id: "case-study-03",
-    label: "Case Study 03",
-    title: "Supporting a Seasonal Hiring Spike",
-    description:
-      "A logistics business needed to bring on 40 warehouse and operations staff ahead of a peak season. FyerX managed sourcing, screening, and background verification for the full batch without compromising on quality.",
-    cta: "Read the Case Study",
-    bg: "bg-[#12b562]",
-    tone: "light",
-    alt: "Supporting a Seasonal Hiring Spike — FyerX Talent case study",
-  },
-  {
-    id: "case-study-04",
-    label: "Case Study 04",
-    title: "Placing a Finance Leadership Hire",
-    description:
-      "A growing financial services firm needed a CFO who understood both compliance and scale-up operations. FyerX ran a focused executive search and closed the role with a candidate already familiar with the sector.",
-    cta: "Read the Case Study",
-    bg: "bg-[#f7c518]",
-    tone: "dark",
-    alt: "Placing a Finance Leadership Hire — FyerX Talent case study",
-  },
-  {
-    id: "case-study-05",
-    label: "Case Study 05",
-    title: "Building a Remote Team Across Two Countries",
-    description:
-      "A professional services firm wanted to build a remote delivery team split across India and the US. FyerX handled sourcing, contracts, and cross-border compliance so the client could focus on onboarding.",
-    cta: "Read the Case Study",
-    bg: "bg-[#6b4df6]",
-    tone: "light",
-    alt: "Building a Remote Team Across Two Countries — FyerX Talent case study",
-  },
-];
-
-/* -------------------------------------------------------------------------
- * Component
- * ---------------------------------------------------------------------- */
+          <div
+            className="border-t border-black/5 md:min-h-[420px] md:border-t-0 md:border-l md:border-black/5"
+            style={{ backgroundColor: palette.panelBg }}
+          >
+            <MetricsMockup
+              study={study}
+              metrics={study.metrics}
+              accentColor={palette.accent}
+              panelBg={palette.panelBg}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function StackedScrollSection() {
+  // Sticky stack on desktop only — mobile shows a normal stacked section so
+  // the full card (including the visual panel) stays visible while scrolling.
+  const [stackEnabled, setStackEnabled] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const sync = () => setStackEnabled(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
   return (
-    <section className="w-full bg-white">
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-16">
-        {/* Section header */}
-        <div className="flex flex-col gap-6 pt-12 sm:flex-row sm:items-start sm:justify-between sm:pt-16">
-          <div className="max-w-xl">
-            <h2
-              style={{
-                fontSize: "46px",
-                fontWeight: 500,
-                lineHeight: 1.12,
-                letterSpacing: "-0.02em",
-                color: "var(--ink)",
-              }}
-            >
-              Why B2B Marketing Needs an AI-First Partner Now
-            </h2>
-          </div>
-          <PrimaryCtaLink href="/talent/book-session" className="flex-shrink-0" color="#2935a3">
-            Get Started
-          </PrimaryCtaLink>
+    <section className="w-full overflow-x-clip bg-white">
+      <div className="mx-auto w-full max-w-[1400px]">
+        <div className="max-w-2xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.14em]" style={{ color: TALENT_HOME.primary }}>
+            Featured hiring scenarios
+          </p>
+          <h2 className="section-heading mt-3">
+            Talent support for the roles that{" "}
+            <span className="talent-gradient-text">affect delivery</span>
+          </h2>
         </div>
 
-        {/* Stacking cards */}
-        <div className="relative mt-12 pb-[20vh]">
-          {PANELS.map((panel, i) => {
-            const isDark = panel.tone === "dark";
-            const textColor = isDark ? "text-neutral-900" : "text-white";
-            const subColor = isDark ? "text-neutral-800/80" : "text-white/85";
-            const badgeCls = isDark
-              ? "bg-black/10 text-neutral-900"
-              : "bg-white/15 text-white";
-
-            return (
-              <div
-                key={panel.id}
-                className="sticky"
-                style={{ top: `${STACK_TOP + i * PEEK}px` }}
-              >
-                <div
-                  className={`${panel.bg} mb-8 overflow-hidden rounded-[28px] shadow-[0_20px_60px_-20px_rgba(0,0,0,0.35)]`}
-                >
-                  <div className="grid gap-6 p-8 sm:p-10 md:grid-cols-2 md:gap-4 md:p-12">
-                    {/* Left: copy */}
-                    <div className="flex flex-col">
-                      <span
-                        className={`inline-flex w-fit items-center gap-1.5 rounded-md px-3 py-1 text-xs font-medium ${badgeCls}`}
-                      >
-                        <svg
-                          width="13"
-                          height="13"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          aria-hidden="true"
-                        >
-                          <path d="M9 3h6a1 1 0 0 1 1 1v2H8V4a1 1 0 0 1 1-1Z" />
-                          <rect x="3" y="6" width="18" height="14" rx="2" />
-                        </svg>
-                        {panel.label}
-                      </span>
-                      <h3
-                        className={`mt-6 text-2xl font-bold leading-[1.15] tracking-tight sm:text-3xl md:text-[32px] ${textColor}`}
-                      >
-                        {panel.title}
-                      </h3>
-                      <p className={`mt-5 max-w-md text-sm leading-relaxed ${subColor}`}>
-                        {panel.description}
-                      </p>
-                      <button
-                        type="button"
-                        className={`mt-6 inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-transform hover:scale-[1.03] active:scale-[0.98] ${
-                          isDark ? "bg-neutral-900 text-white" : "bg-white text-neutral-900"
-                        }`}
-                      >
-                        {panel.cta}
-                        <span aria-hidden="true">→</span>
-                      </button>
-                    </div>
-
-                    {/* Right: case study visual placeholder */}
-                    <div className="relative h-[300px] w-full sm:h-[340px]">
-                      <ComingSoonPlaceholder tone={panel.tone} alt={panel.alt} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+        <div
+          className={`relative mt-8 md:mt-12 ${
+            stackEnabled ? "pb-[20vh]" : "pb-4 sm:pb-6"
+          }`}
+        >
+          {TALENT_CASE_STUDIES.map((study, index) => (
+            <StackedCaseStudyCard
+              key={study.slug}
+              study={study}
+              index={index}
+              stackEnabled={stackEnabled}
+            />
+          ))}
         </div>
       </div>
     </section>

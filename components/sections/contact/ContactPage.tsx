@@ -1,8 +1,16 @@
 "use client";
 
-import { useMemo, useState, type InputHTMLAttributes, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
+import {
+  BRAND,
+  ContactEnquiryForm,
+  FORM_CONFIG,
+  FORM_ORDER,
+  type FormConfig,
+  type FormKey,
+} from "@/components/sections/contact/ContactEnquiryForm";
 
 /* ============================================================= */
 /* Icons — 20x20 stroke line icons, colour set via currentColor  */
@@ -23,48 +31,6 @@ function IconBase({ children, size = 20 }: { children: ReactNode; size?: number 
     >
       {children}
     </svg>
-  );
-}
-
-function MegaphoneIcon() {
-  return (
-    <IconBase>
-      <path d="M3 10v4h2l1 5h2l-1-5h1l10 4V6L8 10H3z" />
-      <line x1="18" y1="9" x2="18" y2="15" />
-    </IconBase>
-  );
-}
-
-function BriefcaseIcon() {
-  return (
-    <IconBase>
-      <rect x="3" y="7" width="18" height="13" rx="2" />
-      <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-      <line x1="3" y1="13" x2="21" y2="13" />
-    </IconBase>
-  );
-}
-
-function LaptopCodeIcon() {
-  return (
-    <IconBase>
-      <rect x="3" y="4" width="18" height="12" rx="2" />
-      <path d="M2 20h20" />
-      <path d="M9.5 8.5 7.5 10.5 9.5 12.5" />
-      <path d="M14.5 8.5 16.5 10.5 14.5 12.5" />
-    </IconBase>
-  );
-}
-
-function BadgeCheckIcon() {
-  return (
-    <IconBase>
-      <rect x="4" y="4" width="14" height="17" rx="2.5" />
-      <circle cx="11" cy="10" r="2.4" />
-      <path d="M7 18c.5-2.2 2-3.4 4-3.4s3.5 1.2 4 3.4" />
-      <circle cx="18.5" cy="17" r="3" fill="white" />
-      <path d="M17.1 17l1 1 1.7-1.9" />
-    </IconBase>
   );
 }
 
@@ -94,11 +60,13 @@ function EnvelopeIcon() {
   );
 }
 
-function ChevronDownIcon() {
+function LinkedInIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <polyline points="6 9 12 15 18 9" />
-    </svg>
+    <IconBase>
+      <rect x="3" y="3" width="18" height="18" rx="3" />
+      <path d="M8 10v7M8 7.5v.01" strokeWidth={2.2} />
+      <path d="M12 10v7M12 13c0-1.5 1-2.5 2.5-2.5S17 11.5 17 13v4" />
+    </IconBase>
   );
 }
 
@@ -119,151 +87,12 @@ function ArrowLeftIcon() {
   );
 }
 
-function ArrowRightIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
-  );
-}
-
 /* ============================================================= */
-/* Form field data                                                */
+/* Layout helpers                                                 */
 /* ============================================================= */
 
-type FormKey = "marketing" | "talent" | "technology" | "job";
-
-type FormConfig = {
-  key: FormKey;
-  icon: ReactNode;
-  tabLabel: string;
-  badgeLabel: string;
-  tint: string;
-  accent: string;
-  image: { src: string; alt: string };
-  subheading: string;
-  helpLabel: string;
-  helpOptions: string[];
-  budgetOptions?: string[];
-  variant: "standard" | "job";
-  submitLabel: string;
-};
-
-const FORM_CONFIG: Record<FormKey, FormConfig> = {
-  marketing: {
-    key: "marketing",
-    icon: <MegaphoneIcon />,
-    tabLabel: "Marketing",
-    badgeLabel: "Marketing Enquiry",
-    tint: "#DCEAFB",
-    accent: "#2E63B8",
-    image: { src: "/g1.avif", alt: "FyerX marketing team at work" },
-    subheading:
-      "Let's explore how we can build your pipeline through campaigns, SEO, content, or brand strategy.",
-    helpLabel: "What are you looking for help with?",
-    helpOptions: [
-      "Demand & Lead Generation",
-      "SEO & AI Search Visibility",
-      "Content & Creative Production",
-      "Performance Marketing",
-      "Marketing Automation & CRM",
-      "Branding & Website Design",
-      "Marketing Strategy & Consulting",
-      "Other",
-    ],
-    budgetOptions: [
-      "₹1,00,000 - ₹1,99,999",
-      "₹2,00,000 - ₹4,99,999",
-      "₹5,00,000 - ₹9,99,999",
-      "Above ₹10,00,000",
-    ],
-    variant: "standard",
-    submitLabel: "Submit",
-  },
-  talent: {
-    key: "talent",
-    icon: <BriefcaseIcon />,
-    tabLabel: "Talent",
-    badgeLabel: "Talent Enquiry",
-    tint: "#FBE2DE",
-    accent: "#D6543A",
-    image: { src: "/g2.avif", alt: "FyerX talent team at work" },
-    subheading:
-      "Let's explore how we can build your hiring pipeline through staffing, RPO, or executive search.",
-    helpLabel: "What are you looking for help with?",
-    helpOptions: [
-      "Contract Staffing",
-      "Permanent Hiring",
-      "Executive Search",
-      "RPO",
-      "IT & Tech Talent",
-      "HR Advisory",
-      "Other",
-    ],
-    variant: "standard",
-    submitLabel: "Submit",
-  },
-  technology: {
-    key: "technology",
-    icon: <LaptopCodeIcon />,
-    tabLabel: "Technology",
-    badgeLabel: "Technology Enquiry",
-    tint: "#FCF0D6",
-    accent: "#B7791F",
-    image: { src: "/g3.avif", alt: "FyerX technology team at work" },
-    subheading:
-      "Let's explore how we can build or support the websites and tools your business runs on.",
-    helpLabel: "What are you looking for help with?",
-    helpOptions: [
-      "Website Development",
-      "App Development",
-      "Ongoing Maintenance & Support",
-      "Other",
-    ],
-    variant: "standard",
-    submitLabel: "Submit",
-  },
-  job: {
-    key: "job",
-    icon: <BadgeCheckIcon />,
-    tabLabel: "Careers",
-    badgeLabel: "Career Enquiry",
-    tint: "#DFF4EC",
-    accent: "#0E8A7D",
-    image: { src: "/leadership.avif", alt: "FyerX leadership team" },
-    subheading:
-      "Let's explore roles at FyerX or through our hiring network, based on your experience and interests.",
-    helpLabel: "Which team are you interested in?",
-    helpOptions: ["Marketing", "Talent", "Technology", "Design", "Sales", "Other"],
-    variant: "job",
-    submitLabel: "Submit Application",
-  },
-};
-
-const FORM_ORDER: FormKey[] = ["marketing", "talent", "technology", "job"];
-
-/* ============================================================= */
-/* Form field primitives                                          */
-/* ============================================================= */
-
-const inputCls =
-  "w-full rounded-xl border border-transparent bg-[#f7f9fc] px-4 py-3 text-sm text-[#181b34] placeholder-[#8b8fa3] outline-none transition-colors focus:border-[#0B2E59] focus:bg-white";
-const selectCls = `${inputCls} appearance-none cursor-pointer pr-9`;
-const labelCls = "mb-1.5 block text-sm font-semibold text-[#181b34]";
-
-function Field({
-  label,
-  className = "",
-  ...props
-}: { label: string; className?: string } & InputHTMLAttributes<HTMLInputElement>) {
-  return (
-    <label className={`block ${className}`}>
-      <span className={labelCls}>{label}</span>
-      <input {...props} className={inputCls} />
-    </label>
-  );
-}
+const sectionPad = "px-4 sm:px-6";
+const containerCls = "mx-auto w-full min-w-0 max-w-6xl";
 
 /* ============================================================= */
 /* Hero                                                           */
@@ -271,21 +100,21 @@ function Field({
 
 function HeroSection() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#f7f9fc] px-6 py-10 sm:py-14">
+    <section className={`relative w-full overflow-x-clip bg-white py-8 sm:py-12 md:py-14 ${sectionPad}`}>
       <div className="pointer-events-none absolute inset-y-0 right-0 w-full sm:w-3/5" aria-hidden="true">
-        <div className="absolute -right-16 top-1/4 h-[420px] w-[420px] rounded-full bg-[#4A7FC1] opacity-30 blur-[100px]" />
-        <div className="absolute right-16 top-1/2 h-[360px] w-[360px] -translate-y-1/2 rounded-full bg-[#1F5C99] opacity-30 blur-[90px]" />
-        <div className="absolute -right-10 bottom-0 h-[320px] w-[320px] rounded-full bg-[#0B2E59] opacity-20 blur-[90px]" />
+        <div className="absolute -right-8 top-1/4 h-[220px] w-[220px] rounded-full opacity-20 blur-[80px] sm:-right-16 sm:h-[420px] sm:w-[420px] sm:opacity-25 sm:blur-[100px]" style={{ background: BRAND.yellow }} />
+        <div className="absolute right-4 top-1/2 h-[180px] w-[180px] -translate-y-1/2 rounded-full opacity-20 blur-[70px] sm:right-16 sm:h-[360px] sm:w-[360px] sm:opacity-25 sm:blur-[90px]" style={{ background: BRAND.blue }} />
+        <div className="absolute -right-6 bottom-0 h-[160px] w-[160px] rounded-full opacity-20 blur-[70px] sm:-right-10 sm:h-[320px] sm:w-[320px] sm:blur-[90px]" style={{ background: BRAND.crimson }} />
       </div>
 
-      <div className="relative mx-auto max-w-6xl">
+      <div className={`relative ${containerCls}`}>
         <div className="max-w-xl">
-          <p className="text-sm font-semibold text-[#1F5C99]">Get in Touch</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#181b34] sm:text-4xl">
-            Let&rsquo;s Talk, Reach Out to Us
+          <p className="text-sm font-semibold" style={{ color: BRAND.crimson }}>Get in Touch</p>
+          <h1 className="mt-2 text-2xl font-bold tracking-tight text-[#181b34] sm:text-3xl md:text-4xl">
+            Ready to Get Started? Let&rsquo;s Talk.
           </h1>
-          <p className="mt-3 max-w-md text-base leading-relaxed text-[#3d4a5c]">
-            Our team is ready to help — whether you&rsquo;re hiring, marketing, building, or
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-[#3d4a5c] sm:text-base">
+            Our team is ready to work with you, whether you&rsquo;re hiring, marketing, building, or
             exploring a career at FyerX.
           </p>
         </div>
@@ -301,18 +130,18 @@ function HeroSection() {
 
 function ContactHub({ onSelect }: { onSelect: (key: FormKey) => void }) {
   return (
-    <section className="w-full bg-white px-6 py-10 sm:py-14">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 rounded-[28px] bg-[#F3F1FC] p-6 sm:p-10 lg:grid-cols-2 lg:gap-10">
+    <section className={`w-full overflow-x-clip bg-white py-8 sm:py-12 md:py-14 ${sectionPad}`}>
+      <div className={`${containerCls} grid grid-cols-1 gap-6 rounded-2xl border border-[#e6e9ef] bg-white p-4 sm:gap-8 sm:rounded-[28px] sm:p-6 md:p-8 lg:grid-cols-2 lg:gap-10`}>
         {/* Left — heading + category cards */}
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight text-[#181b34] sm:text-4xl">
+        <div className="min-w-0">
+          <h2 className="text-2xl font-bold tracking-tight text-[#181b34] sm:text-3xl md:text-4xl">
             Get in Touch
           </h2>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-[#3d4a5c]">
-            Tell us who you are, and we&rsquo;ll route you to the right team.
+            Tell us what you need, and we&rsquo;ll route you to the right team.
           </p>
 
-          <div className="mt-7 flex flex-col gap-4">
+          <div className="mt-5 flex flex-col gap-3 sm:mt-7 sm:gap-4">
             {FORM_ORDER.map((key) => {
               const cfg = FORM_CONFIG[key];
               return (
@@ -320,26 +149,26 @@ function ContactHub({ onSelect }: { onSelect: (key: FormKey) => void }) {
                   key={key}
                   type="button"
                   onClick={() => onSelect(key)}
-                  className="group flex cursor-pointer items-center gap-4 rounded-2xl p-5 text-left transition-transform duration-150 hover:-translate-y-0.5"
+                  className="group flex w-full min-w-0 cursor-pointer items-start gap-3 rounded-2xl p-4 text-left transition-transform duration-150 active:scale-[0.99] sm:items-center sm:gap-4 sm:p-5 sm:hover:-translate-y-0.5"
                   style={{ background: cfg.tint }}
                 >
                   <span
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm"
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm sm:h-11 sm:w-11"
                     style={{ color: cfg.accent }}
                   >
                     {cfg.icon}
                   </span>
-                  <span className="flex-1">
-                    <span className="block text-base font-semibold text-[#181b34]">
-                      {cfg.badgeLabel}
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm font-semibold sm:text-base" style={{ color: cfg.onTint }}>
+                      {cfg.hubCardTitle}
                     </span>
-                    <span className="mt-1 block text-sm leading-relaxed text-[#3d4a5c]">
-                      {cfg.subheading}
+                    <span className="mt-1 block text-xs leading-relaxed sm:text-sm" style={{ color: cfg.onTintMuted }}>
+                      {cfg.hubDescription}
                     </span>
                   </span>
                   <span
-                    className="shrink-0 transition-transform duration-150 group-hover:translate-x-1"
-                    style={{ color: cfg.accent }}
+                    className="mt-1 shrink-0 transition-transform duration-150 sm:mt-0 sm:group-hover:translate-x-1"
+                    style={{ color: cfg.onTint }}
                   >
                     <ChevronRightIcon />
                   </span>
@@ -349,17 +178,17 @@ function ContactHub({ onSelect }: { onSelect: (key: FormKey) => void }) {
           </div>
         </div>
 
-        {/* Right — 2x2 photo grid, one image per enquiry type */}
-        <div className="grid grid-cols-2 gap-4">
+        {/* Right — 2x2 photo grid */}
+        <div className="grid min-w-0 grid-cols-2 gap-3 sm:gap-4">
           {FORM_ORDER.map((key) => {
             const img = FORM_CONFIG[key].image;
             return (
-              <div key={key} className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+              <div key={key} className="relative aspect-[4/5] min-h-[140px] overflow-hidden rounded-xl sm:min-h-0 sm:rounded-2xl">
                 <Image
                   src={img.src}
                   alt={img.alt}
                   fill
-                  sizes="(min-width: 1024px) 280px, 45vw"
+                  sizes="(max-width: 640px) 44vw, (min-width: 1024px) 280px, 45vw"
                   className="object-cover"
                 />
               </div>
@@ -376,148 +205,50 @@ function ContactHub({ onSelect }: { onSelect: (key: FormKey) => void }) {
 /* ============================================================= */
 
 function ContactForm({ config, onBack }: { config: FormConfig; onBack: () => void }) {
-  const [selected, setSelected] = useState<string[]>([]);
-
-  const toggleOption = (opt: string) =>
-    setSelected((prev) =>
-      prev.includes(opt) ? prev.filter((o) => o !== opt) : [...prev, opt]
-    );
-
   return (
-    <section className="w-full bg-white px-6 py-10 sm:py-14">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 overflow-hidden rounded-[28px] border border-[#e6e9ef] shadow-[0_20px_60px_rgba(11,46,89,0.08)] lg:grid-cols-2">
-        {/* Left — form */}
-        <div className="p-6 sm:p-8">
-          <div className="flex items-center justify-between">
+    <section
+      id="contact-enquiry"
+      className={`w-full overflow-x-clip bg-white py-8 sm:py-12 md:py-14 ${sectionPad}`}
+    >
+      <div className={`${containerCls} grid grid-cols-1 overflow-hidden rounded-2xl border border-[#e6e9ef] shadow-[0_12px_40px_rgba(11,46,89,0.06)] sm:rounded-[28px] sm:shadow-[0_20px_60px_rgba(11,46,89,0.08)] lg:grid-cols-2`}>
+        <div className="order-1 min-w-0 p-4 sm:p-6 lg:p-8">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <button
               type="button"
               onClick={onBack}
-              className="inline-flex cursor-pointer items-center gap-2 text-sm font-medium text-[#3d4a5c] transition-colors hover:text-[#181b34]"
+              className="inline-flex min-h-[44px] cursor-pointer items-center gap-2 text-sm font-medium text-[#3d4a5c] transition-colors hover:text-[#181b34]"
             >
               <ArrowLeftIcon />
               Back
             </button>
 
             <span
-              className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold"
-              style={{ background: config.tint, color: config.accent }}
+              className="inline-flex max-w-full items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-semibold sm:px-3.5 sm:text-xs"
+              style={{ background: config.tint, color: config.onTint }}
             >
-              {config.icon}
-              {config.badgeLabel}
+              <span className="shrink-0">{config.icon}</span>
+              <span className="truncate">{config.formHeader}</span>
             </span>
           </div>
 
           <p className="mt-3 max-w-md text-sm leading-relaxed text-[#3d4a5c]">
-            {config.subheading}
+            {config.formSubheading}
           </p>
 
           <div className="mt-5 border-t border-[#e6e9ef]" />
 
-          <form key={config.key} className="mt-5 flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Field label="First Name" type="text" required />
-              <Field label="Last Name" type="text" required />
-            </div>
-
-            {config.variant === "job" ? (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <Field label="Current Job Title" type="text" />
-                <Field label="Years of Experience" type="text" />
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <Field label="Job Title" type="text" />
-                <Field label="Company" type="text" />
-              </div>
-            )}
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Field label="Email" type="email" required />
-              <Field label="Phone Number" type="tel" />
-            </div>
-
-            {config.budgetOptions && (
-              <label className="block">
-                <span className={labelCls}>Monthly Marketing Budget</span>
-                <span className="relative block">
-                  <select defaultValue="" className={selectCls}>
-                    <option value="" disabled>
-                      Select a range
-                    </option>
-                    {config.budgetOptions.map((opt) => (
-                      <option key={opt} value={opt}>
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[#8b8fa3]">
-                    <ChevronDownIcon />
-                  </span>
-                </span>
-              </label>
-            )}
-
-            <div>
-              <p className={labelCls}>{config.helpLabel}</p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {config.helpOptions.map((opt) => {
-                  const isSelected = selected.includes(opt);
-                  return (
-                    <button
-                      key={opt}
-                      type="button"
-                      onClick={() => toggleOption(opt)}
-                      aria-pressed={isSelected}
-                      className="cursor-pointer rounded-full border px-3.5 py-2 text-xs font-medium transition-colors"
-                      style={
-                        isSelected
-                          ? { background: "#0B2E59", borderColor: "#0B2E59", color: "#fff" }
-                          : { background: "#f7f9fc", borderColor: "transparent", color: "#3d4a5c" }
-                      }
-                    >
-                      {opt}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {config.variant === "job" && (
-              <div>
-                <p className={labelCls}>Resume Upload</p>
-                <input
-                  type="file"
-                  accept=".pdf"
-                  className="mt-2 block w-full rounded-xl border border-dashed border-[#d6dae3] bg-[#f7f9fc] px-4 py-3 text-xs text-[#8b8fa3] file:mr-3 file:rounded-full file:border-0 file:bg-[#0B2E59]/10 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-[#0B2E59]"
-                />
-                <p className="mt-1.5 text-xs text-[#8b8fa3]">PDF, max 5MB</p>
-              </div>
-            )}
-
-            <label className="block">
-              <span className={labelCls}>Message</span>
-              <textarea rows={4} className={`${inputCls} resize-none`} />
-            </label>
-
-            <button
-              type="submit"
-              className="mt-2 inline-flex w-fit cursor-pointer items-center gap-2 rounded-full bg-[#0B2E59] px-7 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-            >
-              {config.submitLabel}
-              <ArrowRightIcon />
-            </button>
-          </form>
+          <ContactEnquiryForm formKey={config.key} className="mt-5 flex min-w-0 flex-col gap-4" />
         </div>
 
-        {/* Right — photo matching whichever enquiry type is open */}
-        <div className="p-6 sm:p-8" style={{ background: config.tint }}>
-          <div className="relative h-full min-h-[420px] w-full overflow-hidden rounded-2xl">
+        <div className="order-2 p-4 sm:p-6 lg:p-8" style={{ background: config.tint }}>
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl sm:aspect-[5/4] sm:rounded-2xl lg:aspect-auto lg:min-h-[420px] lg:h-full">
             <Image
               src={config.image.src}
               alt={config.image.alt}
               fill
-              sizes="(min-width: 1024px) 480px, 100vw"
+              sizes="(max-width: 1024px) 100vw, 480px"
               className="object-cover"
+              priority
             />
           </div>
         </div>
@@ -533,11 +264,32 @@ function ContactForm({ config, onBack }: { config: FormConfig; onBack: () => voi
 function ContactHubAndForm({ initial }: { initial: FormKey | null }) {
   const [active, setActive] = useState<FormKey | null>(initial);
 
+  useEffect(() => {
+    setActive(initial);
+  }, [initial]);
+
+  useEffect(() => {
+    if (!active) return;
+    const id = window.setTimeout(() => {
+      document.getElementById("contact-enquiry")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 50);
+    return () => window.clearTimeout(id);
+  }, [active]);
+
   if (active === null) {
     return <ContactHub onSelect={setActive} />;
   }
 
-  return <ContactForm config={FORM_CONFIG[active]} onBack={() => setActive(null)} />;
+  return (
+    <ContactForm
+      key={active}
+      config={FORM_CONFIG[active]}
+      onBack={() => setActive(null)}
+    />
+  );
 }
 
 /* ============================================================= */
@@ -546,17 +298,17 @@ function ContactHubAndForm({ initial }: { initial: FormKey | null }) {
 
 const DETAIL_ITEMS = [
   {
-    key: "location",
+    key: "address",
     icon: <PinIcon />,
-    label: "Location",
+    label: "Address",
     value: "HSR Layout, Bengaluru, Karnataka – 560102",
     actionLabel: "Get directions",
-    href: "https://maps.google.com/?q=HSR+Layout,+Bengaluru,+Karnataka+560102",
+    href: "https://maps.app.goo.gl/meBMGbVpLetWKUqy6",
   },
   {
-    key: "contact",
+    key: "phone",
     icon: <PhoneIcon />,
-    label: "Contact",
+    label: "Phone",
     value: "+91 7598306999",
     actionLabel: "Call us",
     href: "tel:+917598306999",
@@ -570,49 +322,116 @@ const DETAIL_ITEMS = [
     href: "mailto:hello@fyerx.com",
   },
   {
-    key: "map",
-    icon: <PinIcon />,
-    label: "Visit Us",
-    value: "See us on the map",
-    actionLabel: "Open in Maps",
-    href: "https://maps.google.com/?q=HSR+Layout,+Bengaluru,+Karnataka+560102",
+    key: "linkedin",
+    icon: <LinkedInIcon />,
+    label: "LinkedIn",
+    value: "linkedin.com/company/fyerx",
+    actionLabel: "Visit Page",
+    href: "https://www.linkedin.com/company/fyerx",
   },
 ];
 
+const MAP_EMBED_SRC =
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.826155497647!2d77.6515039!3d12.918892399999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae157b4e431207%3A0x3d3f8f103b4f1795!2sFyerX%20Global%20Private%20Limited!5e0!3m2!1sen!2sin!4v1787816413986!5m2!1sen!2sin";
+
 function ContactDetailsMap() {
   return (
-    <section className="w-full bg-gradient-to-b from-white via-[#f7f9fc] to-[#e8f1fb] px-6 py-10 sm:py-14">
-      <div className="mx-auto max-w-6xl">
-        <div className="mx-auto max-w-xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-[#181b34] sm:text-4xl">
-            Contact Details
-          </h2>
-          <p className="mt-2 text-base leading-relaxed text-[#3d4a5c]">
-            Prefer to reach us directly? Here&rsquo;s how to find us.
-          </p>
-        </div>
+    <section
+      className={`w-full overflow-x-clip py-12 sm:py-16 md:py-20 ${sectionPad}`}
+      style={{
+        background:
+          "linear-gradient(180deg, #FFE8EE 0%, #FFF7F9 38%, #FFFFFF 68%, #F8F5F7 100%)",
+      }}
+    >
+      <div className={containerCls}>
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-12">
+          <div className="flex min-h-0 min-w-0 flex-col overflow-hidden rounded-3xl border border-[#F0D4DE] bg-white shadow-[0_12px_40px_rgba(115,0,49,0.06)]">
+            <iframe
+              title="FyerX Global Private Limited office location"
+              src={MAP_EMBED_SRC}
+              className="min-h-[280px] w-full flex-1 border-0 sm:min-h-[360px] lg:min-h-[480px]"
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {DETAIL_ITEMS.map((item) => (
-            <div
-              key={item.key}
-              className="flex flex-col items-start rounded-2xl border border-[#e6e9ef] bg-white p-5"
-            >
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E8F1FB] text-[#0B2E59]">
-                {item.icon}
-              </span>
-              <p className="mt-3 text-base font-semibold text-[#181b34]">{item.label}</p>
-              <p className="mt-1 text-sm leading-relaxed text-[#3d4a5c]">{item.value}</p>
-              <a
-                href={item.href}
-                target={item.href.startsWith("http") ? "_blank" : undefined}
-                rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="mt-4 inline-flex items-center justify-center rounded-full border border-[#d6dae3] px-4 py-2 text-xs font-semibold text-[#181b34] transition-colors hover:border-[#0B2E59] hover:text-[#0B2E59]"
-              >
-                {item.actionLabel}
-              </a>
+          <div className="flex min-w-0 flex-col justify-center text-center lg:text-left">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em]" style={{ color: BRAND.crimson }}>
+              Get in Touch
+            </p>
+            <h2 className="mt-2 text-[clamp(1.75rem,4vw,2.75rem)] font-medium leading-[1.12] tracking-[-0.02em] text-[#181b34]">
+              Contact Details
+            </h2>
+            <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-[#3d4a5c] sm:text-base lg:mx-0">
+              Reach our team directly for staffing, technology, marketing, or career enquiries. We respond with
+              clarity on next steps and the right contact path.
+            </p>
+
+            {/* Mobile — unified premium panel */}
+            <div className="mt-8 overflow-hidden rounded-2xl border border-[#F0D4DE] bg-white shadow-[0_16px_48px_rgba(115,0,49,0.08)] sm:hidden">
+              {DETAIL_ITEMS.map((item, index) => (
+                <a
+                  key={item.key}
+                  href={item.href}
+                  target={item.href.startsWith("http") ? "_blank" : undefined}
+                  rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className={`flex items-start gap-3.5 px-4 py-4 text-left transition-colors active:bg-[#FFF7F9] ${
+                    index > 0 ? "border-t border-[#F7E4EB]" : ""
+                  }`}
+                >
+                  <span
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl"
+                    style={{ background: "#FFE8EE", color: BRAND.crimson }}
+                  >
+                    {item.icon}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-xs font-semibold uppercase tracking-[0.08em] text-[#8A4A62]">
+                      {item.label}
+                    </span>
+                    <span className="mt-1 block break-words text-sm font-medium leading-snug text-[#181b34]">
+                      {item.value}
+                    </span>
+                    <span
+                      className="mt-2 inline-flex items-center gap-1 text-xs font-semibold"
+                      style={{ color: BRAND.crimson }}
+                    >
+                      {item.actionLabel}
+                      <ChevronRightIcon />
+                    </span>
+                  </span>
+                </a>
+              ))}
             </div>
-          ))}
+
+            {/* Desktop / tablet — 2×2 crimson cards */}
+            <div className="mt-8 hidden flex-1 grid-cols-2 gap-4 sm:grid">
+              {DETAIL_ITEMS.map((item) => (
+                <div
+                  key={item.key}
+                  className="flex h-full min-h-[180px] min-w-0 flex-col items-start rounded-2xl border border-[#F0D4DE] bg-white p-5 text-left shadow-[0_10px_32px_rgba(115,0,49,0.05)] transition-shadow hover:shadow-[0_14px_40px_rgba(115,0,49,0.1)]"
+                >
+                  <span
+                    className="flex h-11 w-11 items-center justify-center rounded-xl"
+                    style={{ background: "#FFE8EE", color: BRAND.crimson }}
+                  >
+                    {item.icon}
+                  </span>
+                  <p className="mt-3 text-sm font-medium text-[#8A4A62]">{item.label}</p>
+                  <p className="mt-1 break-words text-sm font-medium leading-relaxed text-[#181b34]">{item.value}</p>
+                  <a
+                    href={item.href}
+                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                    rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="mt-auto inline-flex min-h-[40px] items-center justify-center rounded-full border border-[rgba(115,0,49,0.28)] px-4 py-2 text-xs font-semibold text-[#730031] transition-colors hover:border-[#730031] hover:bg-[#FFE8EE]"
+                  >
+                    {item.actionLabel}
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -623,19 +442,59 @@ function ContactDetailsMap() {
 /* Page orchestrator                                              */
 /* ============================================================= */
 
+function formKeyFromParam(value: string | null): FormKey | null {
+  if (!value) return null;
+  // Take the first segment only so malformed hashes like #talent#talent still resolve.
+  const key = value.replace(/^#/, "").split("#")[0]?.toLowerCase() ?? "";
+  return key in FORM_CONFIG ? (key as FormKey) : null;
+}
+
+function formKeyFromHash(): FormKey | null {
+  return formKeyFromParam(window.location.hash);
+}
+
+/** Keep the address bar as /contact#talent (never /contact#talent#talent). */
+function normalizeContactHash(formKey: FormKey) {
+  const expected = `#${formKey}`;
+  if (window.location.hash === expected) return;
+  const url = `${window.location.pathname}${window.location.search}${expected}`;
+  window.history.replaceState(null, "", url);
+}
+
 export default function ContactPage() {
   const searchParams = useSearchParams();
+  const [initial, setInitial] = useState<FormKey | null>(() =>
+    formKeyFromParam(searchParams.get("form")),
+  );
 
-  const initial = useMemo<FormKey | null>(() => {
-    const param = searchParams.get("form");
-    return param && param in FORM_CONFIG ? (param as FormKey) : null;
+  useEffect(() => {
+    const fromQuery = formKeyFromParam(searchParams.get("form"));
+    if (fromQuery) {
+      setInitial(fromQuery);
+      return;
+    }
+    const fromHash = formKeyFromHash();
+    if (fromHash) normalizeContactHash(fromHash);
+    setInitial(fromHash);
   }, [searchParams]);
 
+  useEffect(() => {
+    const onHashChange = () => {
+      const fromHash = formKeyFromHash();
+      if (fromHash) {
+        normalizeContactHash(fromHash);
+        setInitial(fromHash);
+      }
+    };
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
   return (
-    <>
+    <div className="overflow-x-clip pb-[env(safe-area-inset-bottom)]">
       <HeroSection />
       <ContactHubAndForm initial={initial} />
       <ContactDetailsMap />
-    </>
+    </div>
   );
 }

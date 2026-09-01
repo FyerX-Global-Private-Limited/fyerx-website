@@ -1,31 +1,11 @@
 "use client";
 
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { MARKETING_HOME } from "@/lib/marketing-home-palette";
 
-/**
- * CampaignsSection
- * -------------------------------------------------------------------------
- * Replica of the monday "campaigns" promo block:
- *
- *   - Black rounded card
- *   - Left: monday|campaigns lockup, headline, sub-copy, "Get Started"
- *     pill + "Learn more" text link
- *   - Right: an email-builder mockup (THE INTERIOR newsletter with the
- *     "Ocean boho" hero, "shop now" button and a product grid) plus a
- *     floating glassy "Open rate 31%" stat card with a sparkline.
- *
- * The photographic parts of the email are reconstructed with warm gradient
- * placeholders (no source imagery was available). Swap the gradient blocks
- * marked `PHOTO` for real <img> tags to reach full pixel-parity.
- * -------------------------------------------------------------------------
- */
-
-/* -------------------------------------------------------------- mockups */
-
-/** Floating white stat card overlapping the dashboard's bottom-left corner. */
 function RetentionStatCard() {
   return (
-    <div className="absolute -left-6 bottom-16 z-20 w-[190px] overflow-hidden rounded-2xl border border-white/40 bg-white p-4 shadow-2xl">
+    <div className="absolute -left-6 bottom-16 z-20 w-[190px] overflow-hidden rounded-2xl border border-[#FFC900]/30 bg-white p-4 shadow-2xl">
       <div className="flex items-center gap-2">
         <p className="text-4xl font-bold tracking-tight text-neutral-900">98%</p>
         <svg
@@ -47,16 +27,15 @@ function RetentionStatCard() {
   );
 }
 
-/** Clean strategy-dashboard mockup — small labelled workstream tiles. */
 function StrategyDashboardMockup() {
   const tiles = [
-    { label: "Strategy", accent: "bg-sky-400" },
-    { label: "Content", accent: "bg-fuchsia-400" },
-    { label: "SEO", accent: "bg-emerald-400" },
+    { label: "Strategy", accent: "bg-[#FFC900]" },
+    { label: "Content", accent: "bg-[#F59E0B]" },
+    { label: "SEO", accent: "bg-[#E6A800]" },
   ];
 
   return (
-    <div className="relative w-[300px] overflow-hidden rounded-2xl bg-white shadow-2xl">
+    <div className="relative w-[300px] overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-[#FFC900]/20">
       <div className="flex items-center justify-between border-b border-neutral-100 px-5 py-3">
         <p className="text-[13px] font-semibold text-neutral-900">Growth Dashboard</p>
         <span className="flex items-center gap-1">
@@ -86,45 +65,44 @@ function StrategyDashboardMockup() {
   );
 }
 
-/* ------------------------------------------------------------ component */
-
 export default function CampaignsSection() {
   return (
     <section className="w-full bg-white py-12 sm:py-16">
       <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-16">
-        <div className="relative rounded-[32px] bg-[#0B1D3A]">
+        <div
+          className="relative overflow-hidden rounded-[40px] border border-[#FFC900]/25 sm:rounded-[48px]"
+          style={{ backgroundColor: MARKETING_HOME.paleYellow }}
+        >
           <div className="grid items-center gap-8 md:grid-cols-2">
-            {/* Left: copy */}
-            <div className="px-8 py-12 sm:px-12 sm:py-16 lg:pl-16">
-              <span className="inline-flex w-fit items-center rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white">
+            <div className="px-6 py-10 sm:px-12 sm:py-16 lg:pl-16">
+              <span
+                className="inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-medium text-[#3d4a5c]"
+                style={{ backgroundColor: `${MARKETING_HOME.primary}33` }}
+              >
                 FyerX Marketing
               </span>
 
-              <h2
-                className="mt-8 font-medium text-white"
-                style={{ fontSize: "46px", lineHeight: 1.12, letterSpacing: "-0.02em" }}
-              >
-                A marketing team that actually understands your business
+              <h2 className="section-title-lg mt-8 text-[var(--ink)] sm:mt-8">
+                Marketing should feel less fragmented.
               </h2>
 
-              <p className="mt-6 max-w-sm text-sm font-medium leading-relaxed text-neutral-300">
-                We take the time to understand what you sell and who you sell to, so the
-                strategy fits your business instead of a generic playbook. One team, clear
-                reporting, and people who stay involved as your business grows.
+              <p className="mt-4 max-w-sm text-sm font-medium leading-relaxed text-[#52525b] sm:mt-6">
+                FyerX gives you a team that can think through the bigger picture and
+                take responsibility for the work that follows—without losing sight of
+                day-to-day delivery.
               </p>
 
-              <div className="mt-8 flex items-center gap-6">
-                <PrimaryCtaLink href="/contact" className="text-black!" color="#FFC900">Get Started</PrimaryCtaLink>
-                <a
-                  href="#"
-                  className="text-sm font-medium text-white underline underline-offset-4 hover:text-neutral-200"
+              <div className="mt-6 sm:mt-8">
+                <PrimaryCtaLink
+                  href="/contact#marketing"
+                  className="w-[234px] justify-center text-black!"
+                  color={MARKETING_HOME.primary}
                 >
-                  Learn More
-                </a>
+                  Get Started
+                </PrimaryCtaLink>
               </div>
             </div>
 
-            {/* Right: strategy dashboard mockup */}
             <div
               className="relative hidden h-[420px] items-center justify-center md:flex"
               role="img"

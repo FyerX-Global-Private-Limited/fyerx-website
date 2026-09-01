@@ -11,7 +11,7 @@ const logos = [
   { name: "Avekshaa", img: "/avatar/avekshaa.png" },
   { name: "Orihiro" },
   { name: "Hoshitry" },
-  { name: "TrnDigital" },
+  { name: "TrnDigital", img: "/trustbarlogos/trndigital.png" },
   { name: "Digitathya", img: "/avatar/digitathya.png" },
   { name: "Cinepebble" },
   { name: "WinExch" },
@@ -27,7 +27,7 @@ export default function TrustBar() {
           "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+      <div className="mx-auto w-full max-w-[1400px]">
 
       </div>
 

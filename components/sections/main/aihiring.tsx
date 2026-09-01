@@ -41,48 +41,34 @@ const FEATURES: Feature[] = [
 
 export default function AiHiring() {
   return (
-    <section className="cg">
-      <div className="cg__inner">
-        {/* Left column */}
-        <div className="cg__left">
-          <p className="cg__eyebrow">The FyerX standard</p>
+    <section className="home-section cg">
+      <div className="section-shell section-shell--wide">
+        <div className="cg__inner">
+          <div className="cg__left">
+            <h2 className="cg__heading section-heading">
+              <span className="brand-gradient-text">Built for work</span>
+              <br />
+              that moves business forward
+            </h2>
 
-          <h2 className="cg__heading">
-            <span
-              style={{
-                background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                color: "transparent",
-              }}
-            >
-              Built for work
-            </span>
-            <br />
-            that moves business forward
-          </h2>
+            <p className="cg__sub section-subheading">
+              Clear thinking, reliable execution, and a working relationship designed around your priorities.
+            </p>
 
-          <p className="cg__sub">
-            Clear thinking, reliable execution, and a working relationship designed around your priorities.
-          </p>
+            <PrimaryCtaLink href="/contact" className="mt-10">
+              Work with FyerX
+            </PrimaryCtaLink>
+          </div>
 
-          <PrimaryCtaLink href="#" className="mt-10">
-            Work with FyerX
-          </PrimaryCtaLink>
-
-          <p className="cg__trust">Strategy-led · Outcome-focused · Built to last</p>
-        </div>
-
-        {/* Right column: 2x2 feature grid */}
-        <div className="cg__grid">
-          {FEATURES.map((f) => (
-            <article className="cg__card" key={f.title}>
-              <div className={`cg__iconBox cg__iconBox--${f.tint}`}>{f.icon}</div>
-              <h3 className="cg__cardTitle">{f.title}</h3>
-              <p className="cg__cardBody">{f.body}</p>
-            </article>
-          ))}
+          <div className="cg__grid">
+            {FEATURES.map((f) => (
+              <article className="cg__card" key={f.title}>
+                <div className={`cg__iconBox cg__iconBox--${f.tint}`}>{f.icon}</div>
+                <h3 className="cg__cardTitle">{f.title}</h3>
+                <p className="cg__cardBody">{f.body}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -97,7 +83,6 @@ export default function AiHiring() {
 
           background: #ffffff;
           color: var(--ink);
-          padding: 96px 40px;
           font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
             Roboto, Helvetica, Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
@@ -119,7 +104,7 @@ export default function AiHiring() {
         }
 
         .cg__eyebrow {
-          margin: 0 0 22px;
+          margin: 0 0 var(--heading-sub-gap);
           font-size: 15px;
           font-weight: 400;
           color: var(--ink);
@@ -127,20 +112,13 @@ export default function AiHiring() {
 
         .cg__heading {
           margin: 0;
-          font-family: var(--font-poppins), Arial, sans-serif;
-          font-size: 36px;
-          line-height: 1.25;
-          font-weight: 500;
-          letter-spacing: -0.02em;
-          color: var(--ink);
+          text-align: left;
         }
 
         .cg__sub {
-          margin: 26px 0 0;
+          margin: var(--heading-sub-gap) 0 0;
           max-width: 30ch;
-          font-size: 18px;
-          line-height: 1.55;
-          color: var(--muted);
+          text-align: left;
         }
 
         .cg__trust {
@@ -181,24 +159,24 @@ export default function AiHiring() {
         }
 
         .cg__iconBox--red {
-          background: transparent;
-          border: 1.5px solid #d8534a;
-          color: #d8534a;
+          background: #FFE8E6;
+          border: none;
+          color: #E2445C;
         }
         .cg__iconBox--purple {
-          background: transparent;
-          border: 1.5px solid #6d5efc;
-          color: #6d5efc;
+          background: #F3EEFF;
+          border: none;
+          color: #6161FF;
         }
         .cg__iconBox--yellow {
-          background: transparent;
-          border: 1.5px solid #d1a12e;
-          color: #d1a12e;
+          background: #FFF6E6;
+          border: none;
+          color: #FDAB3D;
         }
         .cg__iconBox--green {
-          background: transparent;
-          border: 1.5px solid #2fa360;
-          color: #2fa360;
+          background: #E8F8EF;
+          border: none;
+          color: #00CA72;
         }
 
         .cg__cardTitle {
@@ -220,21 +198,27 @@ export default function AiHiring() {
 
         /* ---------- Responsive ---------- */
         @media (max-width: 960px) {
-          .cg {
-            padding: 64px 24px;
-          }
           .cg__inner {
             grid-template-columns: 1fr;
-            gap: 48px;
+            gap: 32px;
           }
         }
 
         @media (max-width: 560px) {
           .cg__grid {
             grid-template-columns: 1fr;
+            gap: 16px;
           }
-          .cg__heading {
-            font-size: 34px;
+          .cg__card {
+            padding: 1rem 1.125rem;
+          }
+          .cg__cardTitle {
+            margin: 20px 0 1rem;
+            font-size: 1rem;
+          }
+          .cg__iconBox {
+            width: 44px;
+            height: 44px;
           }
         }
       `}</style>

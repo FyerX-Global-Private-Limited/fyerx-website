@@ -79,51 +79,51 @@ type ServiceCard = {
 
 const SERVICE_CARDS: ServiceCard[] = [
   {
-    id: "roles-filled-with-fewer-better-matches",
-    title: "Roles filled with fewer, better matches",
+    id: "profiles-worth-reviewing",
+    title: "Profiles worth reviewing",
     description:
-      "We screen for fit before we send a profile, so you review fewer candidates and make faster decisions.",
-    alt: "Roles filled with fewer, better matches — FyerX Talent",
+      "We focus on role relevance, availability, communication, and practical fit before putting a profile in front of you.",
+    alt: "Profiles worth reviewing — FyerX Talent",
     image: "/avatar/ai1.avif",
   },
   {
-    id: "built-for-both-speed-and-scale",
-    title: "Built for both speed and scale",
+    id: "flexible-by-design",
+    title: "Flexible by design",
     description:
-      "Whether you need one specialist or twenty hires, the same process holds up without slowing down.",
-    alt: "Built for both speed and scale — FyerX Talent",
+      "Use contract staffing, a managed recruitment model, a permanent search, or a blended approach based on what the role needs.",
+    alt: "Flexible by design — FyerX Talent",
     image: "/avatar/ai2.avif",
   },
   {
-    id: "compliance-handled-properly",
-    title: "Compliance handled properly",
+    id: "technology-roles-understood-properly",
+    title: "Technology roles understood properly",
     description:
-      "Background checks, contracts, and cross-border requirements are managed correctly from day one.",
-    alt: "Compliance handled properly — FyerX Talent",
+      "Specialist talent needs more than keyword matching; screening is shaped around the platform, stack, project context, and seniority.",
+    alt: "Technology roles understood properly — FyerX Talent",
     image: "/avatar/ai3.avif",
   },
   {
-    id: "one-point-of-contact-throughout",
-    title: "One point of contact throughout",
+    id: "a-clear-hiring-process",
+    title: "A clear hiring process",
     description:
-      "You work with a consistent recruiter who understands your roles, not a rotating queue of new contacts.",
-    alt: "One point of contact throughout — FyerX Talent",
+      "Role scoping, sourcing, screening, interviews, offers, and onboarding are managed with visible ownership and next steps.",
+    alt: "A clear hiring process — FyerX Talent",
     image: "/avatar/ai4.avif",
   },
   {
-    id: "transparent-on-timelines-and-cost",
-    title: "Transparent on timelines and cost",
+    id: "support-beyond-sourcing",
+    title: "Support beyond sourcing",
     description:
-      "You know what a role will cost and roughly how long it will take to fill, before you commit.",
-    alt: "Transparent on timelines and cost — FyerX Talent",
+      "Assessments, verification, compensation context, contracts, and cross-border considerations can sit within one coordinated process.",
+    alt: "Support beyond sourcing — FyerX Talent",
     image: "/avatar/ai5.avif",
   },
   {
-    id: "support-that-continues-after-the-offer",
-    title: "Support that continues after the offer",
+    id: "one-accountable-partner",
+    title: "One accountable partner",
     description:
-      "We stay involved through onboarding and the first few weeks, not just until the offer letter is signed.",
-    alt: "Support that continues after the offer — FyerX Talent",
+      "You work with a consistent point of contact who understands the brief as it evolves.",
+    alt: "One accountable partner — FyerX Talent",
     image: "/avatar/ai6.avif",
   },
 ];
@@ -159,19 +159,16 @@ export default function ServicesGrid() {
 
   return (
     <section className="w-full bg-white py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
+      <div className="mx-auto w-full max-w-[1400px]">
         {/* Heading */}
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-[46px] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)]">
-            Why businesses choose FyerX Talent over a typical staffing firm
+          <h2 className="section-title-lg">
+            Hiring support that stays close to the actual requirement
             <SparkleIcon className="ml-2 inline-block h-7 w-7 align-middle sm:h-8 sm:w-8" />
           </h2>
 
           <div className="mt-8 flex flex-col items-center">
-            <PrimaryCtaLink href="/talent/book-session" color="#2935a3">Get Started</PrimaryCtaLink>
-            <p className="mt-3 text-sm text-neutral-500">
-              Get full access, no commitment required
-            </p>
+            <PrimaryCtaLink href="/contact#talent" color="#11551C" textColor="#9EEBAA">See How We Support Hiring</PrimaryCtaLink>
           </div>
         </div>
 

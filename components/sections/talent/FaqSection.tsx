@@ -3,46 +3,45 @@
 import React, { useState } from "react";
 
 /**
- * "Common Questions From B2B Marketing Leaders" FAQ section.
- * Each item expands on click.
+ * Frequently Asked Questions — Talent homepage.
  */
 
 const faqs = [
   {
-    q: "What does FyerX Talent's staffing service include?",
-    a: "FyerX Talent covers contract staffing, RPO, permanent hiring, executive search, IT talent sourcing, and HR advisory, all under one team.",
+    q: "What talent solutions does FyerX Talent provide?",
+    a: "We support contract staffing, RPO, permanent hiring, executive search, technology hiring, HR advisory, and global staffing requirements.",
   },
   {
-    q: "How is FyerX Talent different from a typical staffing agency?",
-    a: "We screen candidates for fit before sending profiles, stay involved through onboarding, and give you one consistent point of contact throughout.",
+    q: "When should we use contract staffing?",
+    a: "Contract staffing is useful when a project has a defined duration, demand changes quickly, or you need specialist capability without a long-term headcount commitment.",
   },
   {
-    q: "Do you support hiring for US-based roles?",
-    a: "Yes, we support US contract staffing and cross-border compliance for businesses hiring remote or distributed teams.",
+    q: "Can you support a hiring surge?",
+    a: "Yes. On-demand RPO and volume staffing are designed for periods when internal recruitment capacity needs to increase quickly.",
   },
   {
-    q: "How long does it typically take to fill a role?",
-    a: "Timelines vary by role type and seniority, but most contract roles are filled within two to four weeks, and we'll give you a realistic estimate upfront.",
+    q: "What technology roles can you help fill?",
+    a: "We support software development, enterprise platforms, data and AI, cloud and DevOps, quality engineering, and related technology roles.",
   },
   {
-    q: "Can FyerX Talent handle bulk or volume hiring?",
-    a: "Yes, we support volume staffing for seasonal or large-scale hiring needs without compromising on screening quality.",
+    q: "Do you support ServiceNow and other enterprise platforms?",
+    a: "Yes. We support hiring for ServiceNow and enterprise-platform talent, with screening aligned to the specific platform, role, and delivery requirement.",
   },
   {
-    q: "Do you provide background verification?",
-    a: "Yes, background verification and hiring assessments are part of our HR advisory service, available as standalone support or bundled with staffing.",
+    q: "Can you help with permanent and leadership hires?",
+    a: "Yes. Permanent hiring and executive search support full-time and senior appointments through a focused search process.",
   },
   {
-    q: "Is FyerX Talent suited for startups or only larger businesses?",
-    a: "We work with startups, SMEs, and enterprise clients, adjusting the process based on your size and hiring volume.",
+    q: "Do you offer assessments and verification?",
+    a: "Yes. Hiring assessments, background verification, and compensation benchmarking are available as advisory services or within a wider engagement.",
   },
   {
-    q: "What does it cost to work with FyerX Talent?",
-    a: "Pricing depends on the role type and engagement model. Share your hiring needs with our team for a plan built around your budget.",
+    q: "Can you support US or cross-border staffing?",
+    a: "Yes. We support US-facing contract staffing, remote team building, and cross-border compliance guidance. Exact requirements are assessed case by case.",
   },
   {
-    q: "How do I get started with FyerX Talent?",
-    a: "Fill out the contact form on this page or request a callback, and our team will follow up to understand your hiring needs.",
+    q: "How do we begin?",
+    a: "Share your role requirement, target start date, hiring volume, and engagement preference. We will recommend a practical next step.",
   },
 ];
 
@@ -58,7 +57,7 @@ function ChevronIcon({ open }: { open: boolean }) {
     >
       <path
         d="M6 9l6 6 6-6"
-        stroke="#18181b"
+        stroke="#11551C"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -86,14 +85,17 @@ export default function FaqSection() {
   };
 
   return (
-    <section className="faq">
+    <section className="faq" id="faqs">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="faq__inner">
         <div className="faq__left">
-          <h2 className="faq__heading">Frequently Asked Questions</h2>
+          <h2 className="faq__heading">
+            Frequently Asked{" "}
+            <span className="talent-gradient-text">Questions</span>
+          </h2>
         </div>
 
         <div className="faq__right">
@@ -128,34 +130,35 @@ export default function FaqSection() {
         .faq {
           width: 100%;
           background: #ffffff;
-          padding: 48px 24px;
+          padding: 0;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           box-sizing: border-box;
-        }
-        @media (min-width: 640px) {
-          .faq {
-            padding: 56px 40px;
-          }
-        }
-        @media (min-width: 1024px) {
-          .faq {
-            padding: 64px 64px;
-          }
         }
         .faq__inner {
           max-width: 1180px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: 0.85fr 1.15fr;
-          gap: 60px;
+          grid-template-columns: 1fr;
+          gap: 28px;
           align-items: start;
         }
+        @media (min-width: 821px) {
+          .faq__inner {
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 60px;
+          }
+        }
         .faq__left {
-          padding-top: 8px;
+          padding-top: 0;
+        }
+        @media (min-width: 821px) {
+          .faq__left {
+            padding-top: 8px;
+          }
         }
         .faq__heading {
           margin: 0;
-          font-size: 46px;
+          font-size: clamp(1.75rem, 5vw, 2.875rem);
           line-height: 1.12;
           font-weight: 500;
           letter-spacing: -0.02em;
@@ -166,26 +169,30 @@ export default function FaqSection() {
           flex-direction: column;
         }
         .faq__item {
-          border-top: 1px solid #dcdce0;
-        }
-        .faq__item:last-child {
-          border-bottom: 1px solid #dcdce0;
+          margin-top: 10px;
         }
         .faq__question {
           width: 100%;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 24px;
-          background: none;
+          gap: 16px;
+          background: #f6f7f7;
           border: none;
+          border-radius: 12px;
           cursor: pointer;
           text-align: left;
-          padding: 24px 4px;
+          padding: 16px;
           font-family: inherit;
         }
+        @media (min-width: 640px) {
+          .faq__question {
+            gap: 24px;
+            padding: 20px;
+          }
+        }
         .faq__question-text {
-          font-size: 16px;
+          font-size: clamp(0.875rem, 2.5vw, 1rem);
           font-weight: 500;
           line-height: 1.4;
           color: #18181b;
@@ -200,17 +207,15 @@ export default function FaqSection() {
         }
         .faq__answer {
           margin: 0;
-          padding: 0 4px 24px;
-          font-size: 15px;
+          padding: 12px 8px 12px;
+          font-size: clamp(0.875rem, 2.5vw, 0.9375rem);
           line-height: 1.6;
           color: #52525b;
           max-width: 620px;
         }
-
-        @media (max-width: 820px) {
-          .faq__inner {
-            grid-template-columns: 1fr;
-            gap: 28px;
+        @media (min-width: 640px) {
+          .faq__answer {
+            padding: 13px 12px 13px;
           }
         }
       `}</style>

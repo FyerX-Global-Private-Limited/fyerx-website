@@ -3,46 +3,45 @@
 import React, { useState } from "react";
 
 /**
- * "Common Questions From B2B Marketing Leaders" FAQ section.
- * Each item expands on click.
+ * Frequently Asked Questions — Marketing homepage.
  */
 
 const faqs = [
   {
-    q: "What does FyerX's B2B marketing service include?",
-    a: "FyerX covers strategy, demand generation, SEO and AI visibility, content, performance marketing, branding, and marketing automation, all under one team.",
+    q: "What does FyerX Marketing do?",
+    a: "We provide strategy, demand generation, search visibility, AI marketing, social, content, performance, branding, web, and automation support.",
   },
   {
-    q: "How is FyerX different from a typical marketing agency?",
-    a: "FyerX combines B2B strategy with focused execution and reporting tied to pipeline, instead of running generic campaigns disconnected from results.",
+    q: "Do we need every service?",
+    a: "No. We begin with the business objective and build the service mix around the work that will make the biggest difference.",
   },
   {
-    q: "Do you work with account-based marketing (ABM)?",
-    a: "Yes, account-based marketing is a core part of our demand generation service, built around targeting the accounts most likely to convert.",
+    q: "Can FyerX work with our in-house team?",
+    a: "Yes. We can operate as an extension of your team, lead a defined workstream, or deliver a focused project.",
   },
   {
-    q: "How long does it take to see pipeline impact?",
-    a: "Most B2B clients see measurable pipeline movement within 60 to 90 days, depending on sales cycle length and starting point.",
+    q: "Do you manage both creative and media?",
+    a: "Yes. We can develop the message and assets, manage distribution, and improve the journey after the click.",
   },
   {
-    q: "Can FyerX integrate with our existing CRM?",
-    a: "Yes, our marketing automation service includes CRM integration to keep lead data and follow-ups synced automatically.",
+    q: "Can you help with a new launch or repositioning?",
+    a: "Yes. Go-to-market strategy, audience definition, positioning, identity, campaign planning, and launch execution are core capabilities.",
   },
   {
-    q: "Is FyerX suited for SaaS and enterprise businesses?",
-    a: "FyerX works with SaaS, enterprise IT, financial services, manufacturing, and other B2B sectors with longer, considered sales cycles.",
+    q: "How do you use AI?",
+    a: "We use it to speed up appropriate work and build useful automations, with human review and brand judgement throughout.",
   },
   {
-    q: "How does FyerX report on pipeline and revenue impact?",
-    a: "We provide attribution reporting that ties campaigns directly to pipeline generated and revenue closed, not just clicks or impressions.",
+    q: "Can you improve our website?",
+    a: "Yes. We support website strategy, UX/UI, design, development, landing pages, and conversion optimisation.",
   },
   {
-    q: "What does it cost to get started?",
-    a: "Pricing depends on scope and service mix. Share your goals with our team for a plan built around your budget.",
+    q: "How is work measured?",
+    a: "The reporting approach is set against the objective: visibility, engagement, leads, lead quality, conversion, pipeline, or other agreed business measures.",
   },
   {
-    q: "How do I get started with FyerX?",
-    a: "Fill out the contact form on this page or request a callback, and our team will follow up to understand your goals.",
+    q: "How do we start?",
+    a: "Share the opportunity or problem with us. We will recommend the right discovery step and a sensible scope.",
   },
 ];
 
@@ -58,7 +57,7 @@ function ChevronIcon({ open }: { open: boolean }) {
     >
       <path
         d="M6 9l6 6 6-6"
-        stroke="#18181b"
+        stroke="#B8860B"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -86,14 +85,17 @@ export default function FaqSection() {
   };
 
   return (
-    <section className="faq">
+    <section className="faq" id="faqs">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="faq__inner">
         <div className="faq__left">
-          <h2 className="faq__heading">Frequently Asked Questions</h2>
+          <h2 className="faq__heading">
+            Frequently Asked{" "}
+            <span className="marketing-gradient-text">Questions</span>
+          </h2>
         </div>
 
         <div className="faq__right">
@@ -128,34 +130,35 @@ export default function FaqSection() {
         .faq {
           width: 100%;
           background: #ffffff;
-          padding: 48px 24px;
+          padding: 0;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           box-sizing: border-box;
         }
-        @media (min-width: 640px) {
-          .faq {
-            padding: 56px 40px;
-          }
-        }
-        @media (min-width: 1024px) {
-          .faq {
-            padding: 64px 64px;
-          }
-        }
         .faq__inner {
-          max-width: 1180px;
+          max-width: 1400px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: 0.85fr 1.15fr;
-          gap: 60px;
+          grid-template-columns: 1fr;
+          gap: 28px;
           align-items: start;
         }
+        @media (min-width: 821px) {
+          .faq__inner {
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 60px;
+          }
+        }
         .faq__left {
-          padding-top: 8px;
+          padding-top: 0;
+        }
+        @media (min-width: 821px) {
+          .faq__left {
+            padding-top: 8px;
+          }
         }
         .faq__heading {
           margin: 0;
-          font-size: 46px;
+          font-size: clamp(1.75rem, 5vw, 2.875rem);
           line-height: 1.12;
           font-weight: 500;
           letter-spacing: -0.02em;
@@ -173,17 +176,23 @@ export default function FaqSection() {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 24px;
-          background: #FFC900;
+          gap: 16px;
+          background: #f6f7f7;
           border: none;
           border-radius: 12px;
           cursor: pointer;
           text-align: left;
-          padding: 20px 20px;
+          padding: 16px;
           font-family: inherit;
         }
+        @media (min-width: 640px) {
+          .faq__question {
+            gap: 24px;
+            padding: 20px;
+          }
+        }
         .faq__question-text {
-          font-size: 16px;
+          font-size: clamp(0.875rem, 2.5vw, 1rem);
           font-weight: 500;
           line-height: 1.4;
           color: #18181b;
@@ -198,17 +207,16 @@ export default function FaqSection() {
         }
         .faq__answer {
           margin: 0;
-          padding: 0 4px 24px;
-          font-size: 15px;
+          padding: 12px 8px 12px;
+          font-size: clamp(0.875rem, 2.5vw, 0.9375rem);
           line-height: 1.6;
           color: #52525b;
           max-width: 620px;
         }
 
-        @media (max-width: 820px) {
-          .faq__inner {
-            grid-template-columns: 1fr;
-            gap: 28px;
+        @media (min-width: 640px) {
+          .faq__answer {
+            padding: 13px 12px 13px;
           }
         }
       `}</style>

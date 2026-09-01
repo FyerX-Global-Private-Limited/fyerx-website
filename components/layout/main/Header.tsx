@@ -2,8 +2,26 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import {
+  MenuDetailIcon,
+  MenuGlyphBold,
+  type MenuIconName,
+} from "@/components/ui/MenuGlyph";
+import {
+  CategoryThumb,
+  allowsMenuLabelWrap,
+  menuLabelNowrapClass,
+  MobileMegaMenuSection,
+} from "@/components/layout/shared/MobileMegaMenuSection";
+import { TALENT_ACCENT, TALENT_PRIMARY } from "@/lib/talent-brand";
+import { TECH_ACCENT, TECH_PRIMARY } from "@/lib/technology-brand";
+import { MARKETING_MENU_CATEGORIES } from "@/lib/marketing-menu";
+import { TECHNOLOGY_MENU_CATEGORIES } from "@/lib/technology-menu";
+
+const MARKETING_CRIMSON = "#730031";
 
 // ── Logo ───────────────────────────────────────────────────────────────────────
 function FyerxLogo() {
@@ -49,57 +67,8 @@ function CloseIcon() {
   );
 }
 
-// ── Dropdown row icons — minimal single-stroke glyphs ───────────────────────────
-type IconName =
-  | "clipboardCheck" | "megaphone" | "gear" | "headset" | "personPlus" | "funnel"
-  | "link" | "sparkle" | "heart" | "chart" | "doc" | "formEdit" | "plug" | "robot" | "database" | "tag"
-  | "search" | "globe";
-
-function Glyph({ name }: { name: IconName }) {
-  const c = {
-    width: 18, height: 18, viewBox: "0 0 24 24", fill: "none",
-    stroke: "currentColor", strokeWidth: 1.6,
-    strokeLinecap: "round" as const, strokeLinejoin: "round" as const,
-  };
-  switch (name) {
-    case "clipboardCheck":
-      return <svg {...c}><rect x="5.5" y="4" width="13" height="17" rx="2" /><rect x="9" y="2.5" width="6" height="3" rx="1" /><polyline points="9 12.5 11 14.5 15 10.5" /></svg>;
-    case "megaphone":
-      return <svg {...c}><path d="M3 10v4h2l1 5h2l-1-5h1l10 4V6L8 10H3z" /><line x1="18" y1="9" x2="18" y2="15" /></svg>;
-    case "gear":
-      return <svg {...c}><circle cx="12" cy="12" r="3" /><path d="M12 3v2.4M12 18.6V21M21 12h-2.4M5.4 12H3M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7M18.4 18.4l-1.7-1.7M7.3 7.3 5.6 5.6" /></svg>;
-    case "headset":
-      return <svg {...c}><path d="M4 13.5v-1.5a8 8 0 0 1 16 0v1.5" /><rect x="3" y="13" width="4" height="6" rx="1.5" /><rect x="17" y="13" width="4" height="6" rx="1.5" /><path d="M20 19.5v.5a3 3 0 0 1-3 3h-3" /></svg>;
-    case "personPlus":
-      return <svg {...c}><circle cx="10" cy="8" r="3.5" /><path d="M3.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6" /><line x1="18" y1="7" x2="18" y2="13" /><line x1="15" y1="10" x2="21" y2="10" /></svg>;
-    case "funnel":
-      return <svg {...c}><polygon points="4 4 20 4 14 12 14 19 10 21 10 12 4 4" /></svg>;
-    case "link":
-      return <svg {...c}><path d="M10 14 14 10" /><path d="M8.5 12.5 6 15a3 3 0 0 0 4.2 4.2l2.5-2.5" /><path d="M15.5 11.5 18 9a3 3 0 0 0-4.2-4.2L11.3 7.3" /></svg>;
-    case "sparkle":
-      return <svg {...c}><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18" /></svg>;
-    case "heart":
-      return <svg {...c}><path d="M12 20s-7-4.3-9.3-8.8A5 5 0 0 1 12 6a5 5 0 0 1 9.3 5.2C19 15.7 12 20 12 20z" /></svg>;
-    case "chart":
-      return <svg {...c}><line x1="5" y1="19" x2="5" y2="12" /><line x1="12" y1="19" x2="12" y2="6" /><line x1="19" y1="19" x2="19" y2="15" /></svg>;
-    case "doc":
-      return <svg {...c}><rect x="5.5" y="3" width="13" height="18" rx="1.8" /><line x1="8.5" y1="8" x2="15.5" y2="8" /><line x1="8.5" y1="12" x2="15.5" y2="12" /><line x1="8.5" y1="16" x2="13" y2="16" /></svg>;
-    case "formEdit":
-      return <svg {...c}><rect x="5" y="3" width="12" height="18" rx="1.8" /><line x1="7.5" y1="8" x2="14.5" y2="8" /><line x1="7.5" y1="12" x2="14.5" y2="12" /><path d="M15 19.3 20 14.3l1.7 1.7-5 5-2.2.5z" /></svg>;
-    case "plug":
-      return <svg {...c}><path d="M9 2.5v4M15 2.5v4M6 6.5h12v4a6 6 0 0 1-12 0z" /><path d="M9 16.5v5M15 16.5v5" /></svg>;
-    case "robot":
-      return <svg {...c}><rect x="5" y="8" width="14" height="11" rx="2.5" /><circle cx="9.5" cy="13.2" r="1.1" fill="currentColor" stroke="none" /><circle cx="14.5" cy="13.2" r="1.1" fill="currentColor" stroke="none" /><line x1="12" y1="8" x2="12" y2="4.5" /><circle cx="12" cy="3" r="1.3" /><line x1="3" y1="12" x2="5" y2="12" /><line x1="19" y1="12" x2="21" y2="12" /></svg>;
-    case "database":
-      return <svg {...c}><ellipse cx="12" cy="5.5" rx="7" ry="2.5" /><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13" /><path d="M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5" /></svg>;
-    case "tag":
-      return <svg {...c}><path d="M11.7 3.5H5.8a2.3 2.3 0 0 0-2.3 2.3v5.9l10.8 10.8 8.2-8.2L11.7 3.5z" /><circle cx="8.3" cy="8.3" r="1.3" fill="currentColor" stroke="none" /></svg>;
-    case "search":
-      return <svg {...c}><circle cx="10.8" cy="10.8" r="6.8" /><line x1="15.8" y1="15.8" x2="21" y2="21" /></svg>;
-    case "globe":
-      return <svg {...c}><circle cx="12" cy="12" r="9" /><ellipse cx="12" cy="12" rx="4" ry="9" /><line x1="3" y1="12" x2="21" y2="12" /></svg>;
-  }
-}
+// ── Dropdown row icons — bold Monday-style glyphs (shared component) ───────────
+type IconName = MenuIconName;
 
 // ── Data ───────────────────────────────────────────────────────────────────────
 type MarketingItem = {
@@ -151,124 +120,31 @@ const capabilityCols: ConsultingCol[] = [
 ];
 
 const simpleLinks = [
+  { label: "Careers", href: "https://fyerx.zohorecruit.in/jobs/Careers", external: true },
   { label: "Blog", href: "/blog" },
-  { label: "Request a demo", href: "/contact" },
 ];
 
 type MenuCategory = {
   label: string;
   subtitle?: string;
   avatar: string;
+  icon?: IconName;
+  tint?: string;
+  iconColor?: string;
   items: { label: string; href: string; icon: IconName }[];
 };
 
-const marketingCategories: MenuCategory[] = [
-  {
-    label: "Marketing & Consulting",
-    subtitle: "Planning & positioning",
-    avatar: "/avatar/1.avif",
-    items: [
-      { label: "Go-to-Market Strategy", icon: "chart", href: "#" },
-      { label: "ICP & Buyer Persona Definition", icon: "personPlus", href: "#" },
-      { label: "Marketing Audits", icon: "clipboardCheck", href: "#" },
-      { label: "Competitive Positioning", icon: "tag", href: "#" },
-    ],
-  },
-  {
-    label: "Demand Generation",
-    subtitle: "Leads & pipeline",
-    avatar: "/avatar/2.avif",
-    items: [
-      { label: "Account-Based Marketing", icon: "funnel", href: "#" },
-      { label: "LinkedIn Lead Generation", icon: "link", href: "#" },
-      { label: "Outbound & Cold Outreach", icon: "headset", href: "#" },
-      { label: "Email Nurture Sequences", icon: "doc", href: "#" },
-      { label: "Webinar & Event Marketing", icon: "megaphone", href: "#" },
-      { label: "Revenue Attribution & Pipeline Reporting", icon: "chart", href: "#" },
-    ],
-  },
-  {
-    label: "Search & AI Visibility",
-    subtitle: "Search & discovery",
-    avatar: "/avatar/3.avif",
-    items: [
-      { label: "SEO", icon: "search", href: "#" },
-      { label: "AEO", icon: "sparkle", href: "#" },
-      { label: "GEO", icon: "robot", href: "#" },
-      { label: "Local SEO", icon: "search", href: "#" },
-    ],
-  },
-  {
-    label: "AI Marketing",
-    subtitle: "Automation & insights",
-    avatar: "/avatar/4.avif",
-    items: [
-      { label: "AI-Powered Content Generation", icon: "sparkle", href: "#" },
-      { label: "AI Ad Creative & Personalization", icon: "heart", href: "#" },
-      { label: "Marketing Automation Agents", icon: "robot", href: "#" },
-      { label: "Conversational AI", icon: "headset", href: "#" },
-    ],
-  },
-  {
-    label: "Social Media Marketing",
-    subtitle: "Content & community",
-    avatar: "/avatar/5.avif",
-    items: [
-      { label: "Social Media Strategy & Management", icon: "megaphone", href: "#" },
-      { label: "Community Management", icon: "personPlus", href: "#" },
-      { label: "Paid Social Campaigns", icon: "chart", href: "#" },
-    ],
-  },
-  {
-    label: "Content Production",
-    subtitle: "Videos & storytelling",
-    avatar: "/avatar/6.avif",
-    items: [
-      { label: "Content Strategy & Editorial Calendars", icon: "doc", href: "#" },
-      { label: "Thought Leadership & Whitepapers", icon: "formEdit", href: "#" },
-      { label: "Video Production & Editing", icon: "sparkle", href: "#" },
-      { label: "Motion Graphics & Animation", icon: "heart", href: "#" },
-      { label: "Collaterals", icon: "tag", href: "#" },
-    ],
-  },
-  {
-    label: "Performance Marketing",
-    subtitle: "Ads & conversions",
-    avatar: "/avatar/1.avif",
-    items: [
-      { label: "Paid Search", icon: "search", href: "#" },
-      { label: "Paid Social", icon: "megaphone", href: "#" },
-      { label: "Retargeting & Conversion Optimization", icon: "funnel", href: "#" },
-      { label: "Landing Page Design & Optimization", icon: "formEdit", href: "#" },
-      { label: "Marketing Analytics & ROI Tracking", icon: "chart", href: "#" },
-    ],
-  },
-  {
-    label: "Branding & Design",
-    subtitle: "Identity & design",
-    avatar: "/avatar/2.avif",
-    items: [
-      { label: "Brand Identity & Guidelines", icon: "tag", href: "#" },
-      { label: "Brand Strategy & Positioning", icon: "clipboardCheck", href: "#" },
-      { label: "UI/UX Design", icon: "gear", href: "#" },
-      { label: "Website Design & Development", icon: "doc", href: "#" },
-    ],
-  },
-  {
-    label: "Marketing Automation",
-    subtitle: "Workflows & CRM",
-    avatar: "/avatar/3.avif",
-    items: [
-      { label: "Marketing Automation", icon: "robot", href: "#" },
-      { label: "CRM Integration", icon: "database", href: "#" },
-    ],
-  },
-];
+const marketingCategories: MenuCategory[] = MARKETING_MENU_CATEGORIES;
+const technologyCategories: MenuCategory[] = TECHNOLOGY_MENU_CATEGORIES;
 
 const talentCategories: MenuCategory[] = [
   {
     label: "Contract Staffing",
+    subtitle: "Flexibility & scale",
     avatar: "/avatar/1.avif",
+    icon: "personPlus",
+    tint: "#E8F8EF",
+    iconColor: "#00CA72",
     items: [
       { label: "IT & Tech Contract Roles", icon: "gear", href: "#" },
       { label: "Project-Based Staffing", icon: "clipboardCheck", href: "#" },
@@ -278,7 +154,11 @@ const talentCategories: MenuCategory[] = [
   },
   {
     label: "RPO",
+    subtitle: "Sourcing & management",
     avatar: "/avatar/2.avif",
+    icon: "funnel",
+    tint: "#F3EEFF",
+    iconColor: "#6161FF",
     items: [
       { label: "End-to-End Recruitment Outsourcing", icon: "funnel", href: "#" },
       { label: "On-Demand RPO", icon: "sparkle", href: "#" },
@@ -287,7 +167,11 @@ const talentCategories: MenuCategory[] = [
   },
   {
     label: "Permanent Hiring & Executive Search",
+    subtitle: "Placement & leadership",
     avatar: "/avatar/3.avif",
+    icon: "search",
+    tint: "#E8F4FF",
+    iconColor: "#579BFC",
     items: [
       { label: "Permanent Hiring", icon: "personPlus", href: "#" },
       { label: "Executive Search", icon: "search", href: "#" },
@@ -295,7 +179,11 @@ const talentCategories: MenuCategory[] = [
   },
   {
     label: "IT & Tech Talent",
+    subtitle: "Tech & engineering",
     avatar: "/avatar/4.avif",
+    icon: "gear",
+    tint: "#FFF6E6",
+    iconColor: "#FDAB3D",
     items: [
       { label: "Software Development Roles", icon: "doc", href: "#" },
       { label: "ServiceNow & Enterprise Platform Talent", icon: "plug", href: "#" },
@@ -305,7 +193,11 @@ const talentCategories: MenuCategory[] = [
   },
   {
     label: "HR Advisory",
+    subtitle: "Strategy & compliance",
     avatar: "/avatar/5.avif",
+    icon: "clipboardCheck",
+    tint: "#E8F8EF",
+    iconColor: "#00CA72",
     items: [
       { label: "Hiring Assessments", icon: "clipboardCheck", href: "#" },
       { label: "Background Verification", icon: "tag", href: "#" },
@@ -314,7 +206,11 @@ const talentCategories: MenuCategory[] = [
   },
   {
     label: "Global Staffing",
+    subtitle: "Reach & expansion",
     avatar: "/avatar/6.avif",
+    icon: "globe",
+    tint: "#E8F4FF",
+    iconColor: "#0086C0",
     items: [
       { label: "US Contract Staffing", icon: "globe", href: "#" },
       { label: "Remote Team Building", icon: "personPlus", href: "#" },
@@ -329,48 +225,89 @@ const talentCategories: MenuCategory[] = [
 // a caller into the Platform dropdown's exact layout (header nested in the
 // left column, no shared top bar) while leaving the default layout — used by
 // Talent — untouched.
-function CategoryMenu({ categories, onClose, heading, headingSubtitle, headingIcon = "megaphone", platformStyle = false }: {
-  categories: MenuCategory[]; onClose: () => void; heading?: string; headingSubtitle?: string; headingIcon?: IconName; platformStyle?: boolean;
+function CategoryMenu({
+  categories,
+  onClose,
+  heading,
+  headingSubtitle,
+  headingIcon = "megaphone",
+  platformStyle = false,
+  hoverColor = "#5c4fe0",
+  visitHomeHref,
+  visitHomeLabel = "Visit Homepage",
+  visitHomeColor = "#86013A",
+  visitHomeTextColor = "#ffffff",
+  activeItemBg = "#fce8ef",
+}: {
+  categories: MenuCategory[];
+  onClose: () => void;
+  heading?: string;
+  headingSubtitle?: string;
+  headingIcon?: IconName;
+  platformStyle?: boolean;
+  hoverColor?: string;
+  visitHomeHref?: string;
+  visitHomeLabel?: string;
+  visitHomeColor?: string;
+  visitHomeTextColor?: string;
+  activeItemBg?: string;
 }) {
   const [active, setActive] = useState(0);
   const category = categories[active];
 
   if (platformStyle) {
     return (
-      <div className="animate-dropdown bg-white border-t border-[#e6e9ef] rounded-b-[12px] shadow-[0_16px_36px_rgba(20,20,43,0.12),0_2px_8px_rgba(20,20,43,0.06)]">
-        <div className="flex px-10 pt-6 pb-6">
+      <div className="animate-dropdown rounded-b-[16px] border border-[#e6e9ef] bg-white shadow-[0_16px_36px_rgba(20,20,43,0.12),0_2px_8px_rgba(20,20,43,0.06)]">
+        <div className="flex px-10 pt-7 pb-8">
 
           {/* Left — heading + main headings, 2 per row */}
-          <div className="w-[560px] pr-8">
+          <div className="w-[52%] min-w-[480px] shrink-0 pr-8" style={{ ["--menu-hover" as string]: hoverColor }}>
             {heading && (
-              <div className="flex items-center gap-3 text-[#9a9ea8]">
-                <Glyph name={headingIcon} />
-                <span className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">
-                  {heading}
-                </span>
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-2.5 text-[#9a9ea8]">
+                  <MenuGlyphBold name={headingIcon} color="#8b8fa3" size={18} />
+                  <span className="mb-0 text-[13px] font-normal uppercase leading-[1.5] tracking-[0.06em] text-[#7c7b7b]">
+                    {heading}
+                  </span>
+                </div>
+                {visitHomeHref && (
+                  <PrimaryCtaLink
+                    href={visitHomeHref}
+                    onClick={onClose}
+                    color={visitHomeColor}
+                    textColor={visitHomeTextColor}
+                    variant="menu"
+                  >
+                    {visitHomeLabel}
+                  </PrimaryCtaLink>
+                )}
               </div>
             )}
             {headingSubtitle && (
-              <p className="mt-[1.125rem] mb-[1.125rem] text-[0.75rem] leading-[1.6] text-[#676879]">{headingSubtitle}</p>
+              <p className="mb-5 mt-3 text-[13px] leading-[1.5] text-[#676879]">{headingSubtitle}</p>
             )}
-            <div className="grid grid-cols-2 gap-x-6 gap-y-5">
+            <div className="grid grid-cols-2 gap-x-8 gap-y-2.5">
               {categories.map((cat, i) => (
                 <button
                   key={cat.label}
                   type="button"
                   onClick={() => setActive(i)}
-                  onMouseEnter={() => setActive(i)}
-                  className="flex items-center gap-3 text-left group"
+                  aria-pressed={active === i}
+                  className={`flex w-full cursor-pointer gap-3 rounded-[12px] px-3 py-2.5 text-left transition-colors duration-100 ${
+                    allowsMenuLabelWrap(cat.label) ? "items-start" : "items-center"
+                  } ${active === i ? "" : "hover:bg-[#f5f6f8]"}`}
+                  style={active === i ? { backgroundColor: activeItemBg } : undefined}
                 >
-                  <Image src={cat.avatar} alt="" width={40} height={40}
-                    className="w-10 h-10 rounded-[10px] object-cover shrink-0" />
-                  <span className="flex flex-col gap-[0.35rem]">
-                    <span className={`text-[0.875rem] font-normal leading-[1] transition-colors duration-100 group-hover:text-[#5c4fe0]
-                      ${active === i ? "text-[#5c4fe0]" : "text-black"}`}>
+                  <CategoryThumb cat={cat} />
+                  <span className="flex min-w-0 flex-col gap-0.5">
+                    <span
+                      className={`${menuLabelNowrapClass(cat.label)} text-[14px] font-medium leading-[1.2] transition-colors duration-100`}
+                      style={{ color: active === i ? hoverColor : "#323338" }}
+                    >
                       {cat.label}
                     </span>
                     {cat.subtitle && (
-                      <span className="text-[0.75rem] font-normal leading-[1.3] text-[#676879]">
+                      <span className="whitespace-nowrap text-[12px] font-normal leading-[1.35] text-[#676879]">
                         {cat.subtitle}
                       </span>
                     )}
@@ -381,24 +318,23 @@ function CategoryMenu({ categories, onClose, heading, headingSubtitle, headingIc
           </div>
 
           {/* Divider */}
-          <div className="w-px bg-[#eef0f4] mx-2" />
+          <div className="mx-2 w-px self-stretch bg-[#eef0f4]" />
 
-          {/* Right — Service Details, sub-headed by the active main heading */}
-          <div className="flex-1 pl-8">
-            <p className="text-[1rem] font-light uppercase tracking-[0.06rem] leading-[1.5] mb-0 text-[#7c7b7b]">Service Details</p>
-            <p className="mt-[1.125rem] mb-[1.125rem] text-[0.75rem] leading-[1.6] text-[#676879] whitespace-nowrap">{category.label}</p>
-            <ul className="flex flex-col gap-1">
+          {/* Right — Service Details in Monday-style columns */}
+          <div className="min-w-0 flex-1 pl-8" style={{ ["--menu-hover" as string]: hoverColor }}>
+            <p className="mb-0 text-[13px] font-normal uppercase leading-[1.5] tracking-[0.06em] text-[#7c7b7b]">Service Details</p>
+            <p className={`mb-5 mt-3 text-[13px] leading-[1.5] text-[#676879] ${menuLabelNowrapClass(category.label)}`}>{category.label}</p>
+            <ul className="grid grid-cols-2 content-start gap-x-8 gap-y-2">
               {category.items.map((item) => (
-                <li key={item.label}>
+                <li key={item.label} className="min-w-0">
                   <Link
                     href={item.href} onClick={onClose}
-                    className="flex items-center gap-2 py-1 text-[0.875rem] font-normal leading-[1.4] text-black
-                               hover:text-[#5c4fe0] transition-colors duration-100"
+                    className={`flex gap-2.5 py-1.5 text-[14px] font-normal leading-[1.35] text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)] ${
+                      allowsMenuLabelWrap(item.label) ? "items-start" : "items-center whitespace-nowrap"
+                    }`}
                   >
-                    <span className="text-[#8b8fa3] shrink-0">
-                      <Glyph name={item.icon} />
-                    </span>
-                    {item.label}
+                    <MenuDetailIcon name={item.icon} />
+                    <span className={menuLabelNowrapClass(item.label)}>{item.label}</span>
                   </Link>
                 </li>
               ))}
@@ -412,40 +348,42 @@ function CategoryMenu({ categories, onClose, heading, headingSubtitle, headingIc
   return (
     <div className="animate-dropdown bg-white border-t border-[#e6e9ef] rounded-b-[12px] shadow-[0_16px_36px_rgba(20,20,43,0.12),0_2px_8px_rgba(20,20,43,0.06)]">
       {heading && (
-        <div className="px-10 pt-6 pb-[3px] border-b border-[#eef0f4]">
-          <div className="flex items-center gap-3 text-[#9a9ea8]">
-            <Glyph name={headingIcon} />
-            <span className="text-[20px] font-normal uppercase tracking-[0.1em]"
+        <div className="border-b border-[#eef0f4] px-8 pt-4 pb-[3px]">
+          <div className="flex items-center gap-2.5 text-[#9a9ea8]">
+            <MenuGlyphBold name={headingIcon} color="#8b8fa3" size={18} />
+            <span className="text-[19px] font-normal uppercase tracking-[0.1em]"
               style={{ color: "rgb(124, 123, 123)" }}>
               {heading}
             </span>
           </div>
           {headingSubtitle && (
-            <p className="mt-2 text-[14px] font-normal text-[#323338]">{headingSubtitle}</p>
+            <p className="mt-2 text-[13px] font-normal text-[#323338]">{headingSubtitle}</p>
           )}
         </div>
       )}
-      <div className="flex px-10 pt-6 pb-6">
+      <div className="flex px-8 pt-4 pb-5">
 
         {/* Left — main headings, 2 per row */}
-        <div className="w-[560px] pr-8 grid grid-cols-2 gap-x-6 gap-y-5 content-start">
+        <div className="grid w-[520px] shrink-0 grid-cols-2 content-start gap-x-4 gap-y-1 pr-6">
           {categories.map((cat, i) => (
             <button
               key={cat.label}
               type="button"
               onClick={() => setActive(i)}
-              onMouseEnter={() => setActive(i)}
-              className="flex items-center gap-3 text-left group"
+              aria-pressed={active === i}
+              className={`flex w-full cursor-pointer items-center gap-2.5 rounded-[8px] px-2 py-1 text-left transition-colors duration-100 ${
+                active === i ? "" : "hover:bg-[#f5f6f8]"
+              }`}
+              style={active === i ? { backgroundColor: activeItemBg } : undefined}
             >
-              <Image src={cat.avatar} alt="" width={40} height={40}
-                className="w-10 h-10 rounded-[10px] object-cover shrink-0" />
+              <CategoryThumb cat={cat} />
               <span className="flex flex-col leading-tight">
-                <span className={`text-[15px] font-medium whitespace-nowrap transition-colors duration-100 group-hover:text-[#5c4fe0]
+                <span className={`text-[14px] font-medium whitespace-nowrap transition-colors duration-100 group-hover:text-[#5c4fe0]
                   ${active === i ? "text-[#5c4fe0]" : "text-[#323338]"}`}>
                   {cat.label}
                 </span>
                 {cat.subtitle && (
-                  <span className="text-[13px] font-normal text-[#8b8fa3] whitespace-nowrap">
+                  <span className="text-[12px] font-normal whitespace-nowrap text-[#8b8fa3]">
                     {cat.subtitle}
                   </span>
                 )}
@@ -455,22 +393,20 @@ function CategoryMenu({ categories, onClose, heading, headingSubtitle, headingIc
         </div>
 
         {/* Divider */}
-        <div className="w-px bg-[#eef0f4] mx-2" />
+        <div className="mx-2 w-px bg-[#eef0f4]" />
 
         {/* Right — sub-headings for the active main heading */}
-        <div className="flex-1 pl-8">
-          <p className="text-[15px] font-normal text-[#8b8fa3] mb-5">{category.label}</p>
-          <ul className="flex flex-col gap-1">
+        <div className="min-w-0 flex-1 pl-6">
+          <p className="mb-4 text-[14px] font-normal text-[#8b8fa3]">{category.label}</p>
+          <ul className="flex flex-col gap-0.5">
             {category.items.map((item) => (
               <li key={item.label}>
                 <Link
                   href={item.href} onClick={onClose}
-                  className="flex items-center gap-2 py-1 text-[15px] font-medium text-[#323338]
-                             hover:text-[#5c4fe0] transition-colors duration-100"
+                  className="flex items-center gap-2 py-0.5 text-[14px] font-medium text-[#323338]
+                             transition-colors duration-100 hover:text-[#5c4fe0]"
                 >
-                  <span className="text-[#8b8fa3] shrink-0">
-                    <Glyph name={item.icon} />
-                  </span>
+                  <MenuDetailIcon name={item.icon} />
                   {item.label}
                 </Link>
               </li>
@@ -484,10 +420,22 @@ function CategoryMenu({ categories, onClose, heading, headingSubtitle, headingIc
 
 // ── Main header ────────────────────────────────────────────────────────────────
 export default function MainHeader() {
+  const pathname = usePathname();
   const [openMenu, setOpenMenu]   = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileExpanded, setMobileExpanded] = useState<"Marketing" | "Talent" | "Technology" | null>(null);
   const [scrolled, setScrolled]   = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const isActive = (href: string) =>
+    href === "/"
+      ? pathname === "/"
+      : pathname === href || pathname.startsWith(`${href}/`);
+
+  const navLinkClass = (href: string, activeBg = "bg-[#fce8ef] text-[#730031]") =>
+    `flex items-center justify-center text-center gap-2 px-4 py-2 rounded-[8px]
+     cursor-pointer text-[0.875rem] font-light leading-[100%] transition-colors duration-100 whitespace-nowrap
+     ${isActive(href) ? activeBg : "bg-transparent text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"}`;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4);
@@ -498,7 +446,7 @@ export default function MainHeader() {
   const open  = (label: string) => { if (closeTimer.current) clearTimeout(closeTimer.current); setOpenMenu(label); };
   const scheduleClose = () => { closeTimer.current = setTimeout(() => setOpenMenu(null), 200); };
   const cancelClose   = () => { if (closeTimer.current) clearTimeout(closeTimer.current); };
-  const closeAll      = () => { setOpenMenu(null); setMobileOpen(false); };
+  const closeAll      = () => { setOpenMenu(null); setMobileOpen(false); setMobileExpanded(null); };
 
   return (
     <header
@@ -509,136 +457,207 @@ export default function MainHeader() {
       onMouseLeave={scheduleClose}
     >
       {/* ─── Header bar ────────────────────────────────────────────────── */}
-      <div className="h-[76px] flex items-center">
+      <div className="relative mx-auto w-full max-w-[1400px]">
+        <div className="flex h-[56px] w-full items-center px-4 sm:h-[60px] sm:px-6 lg:px-16">
 
-        {/* ── Logo column (content-width, hugs the left edge) ── */}
-        <div className="pl-10 shrink-0 flex items-center h-full">
-          <Link href="/" onClick={closeAll} className="flex items-center h-full">
+          {/* Logo */}
+          <Link href="/" onClick={closeAll} className="flex shrink-0 items-center">
             <FyerxLogo />
           </Link>
-        </div>
 
-        {/* ── Nav + CTAs + Dropdown container ── */}
-        <div className="flex-1 relative flex items-center h-full pr-10">
+          {/* Nav + CTAs */}
+          <div className="ml-8 flex min-w-0 flex-1 items-center sm:ml-10 lg:ml-12">
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-[2px] ml-8">
+            {/* Desktop nav */}
+            <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
 
-            {/* Marketing — icon-list mega-menu */}
-            <div onMouseEnter={() => open("Marketing")}>
-              <Link href="/marketing" onClick={closeAll} className={`flex items-center justify-center text-center gap-2 px-4 py-[9px] rounded-[8px]
-                cursor-pointer text-[0.875rem] font-light leading-[100%] transition-colors duration-100
-                ${openMenu === "Marketing" ? "bg-[#eeecfc] text-[#5c4fe0]" : "bg-transparent text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"}`}>
-                Marketing <ChevronDown open={openMenu === "Marketing"} />
-              </Link>
-            </div>
+              {/* Marketing — icon-list mega-menu */}
+              <div onMouseEnter={() => open("Marketing")}>
+                <Link href="/marketing" onClick={closeAll} className={`${navLinkClass("/marketing")} gap-2
+                  ${openMenu === "Marketing" && !isActive("/marketing") ? "bg-[#fce8ef] text-[#730031]" : ""}`}>
+                  Marketing <ChevronDown open={openMenu === "Marketing"} />
+                </Link>
+              </div>
 
-            {/* Talent — column mega-menu */}
-            <div onMouseEnter={() => open("Talent")}>
-              <Link href="/talent" onClick={closeAll} className={`flex items-center justify-center text-center gap-2 px-4 py-[9px] rounded-[8px]
-                cursor-pointer text-[0.875rem] font-light leading-[100%] transition-colors duration-100
-                ${openMenu === "Talent" ? "bg-[#eeecfc] text-[#5c4fe0]" : "bg-transparent text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"}`}>
-                Talent <ChevronDown open={openMenu === "Talent"} />
-              </Link>
-            </div>
+              {/* Talent — column mega-menu */}
+              <div onMouseEnter={() => open("Talent")}>
+                <Link href="/talent" onClick={closeAll} className={`${navLinkClass("/talent", "bg-[#9EEBAA]/25 text-[#11551C]")} gap-2
+                  ${openMenu === "Talent" && !isActive("/talent") ? "bg-[#9EEBAA]/25 text-[#11551C]" : ""}`}>
+                  Talent <ChevronDown open={openMenu === "Talent"} />
+                </Link>
+              </div>
 
-            {/* Plain links */}
-            {simpleLinks.map((item) => (
-              <Link key={item.label} href={item.href} onClick={closeAll}
+              {/* Technology — column mega-menu */}
+              <div onMouseEnter={() => open("Technology")}>
+                <Link href="/technology" onClick={closeAll} className={`${navLinkClass("/technology", "bg-[#20287A1F] text-[#20287A]")} gap-2
+                  ${openMenu === "Technology" && !isActive("/technology") ? "bg-[#20287A1F] text-[#20287A]" : ""}`}>
+                  Technology <ChevronDown open={openMenu === "Technology"} />
+                </Link>
+              </div>
+
+              {/* Plain links */}
+              {simpleLinks.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={closeAll}
+                  onMouseEnter={() => setOpenMenu(null)}
+                  className={navLinkClass(item.href)}
+                  {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Desktop CTA — Get Started */}
+            <div className="ml-auto hidden shrink-0 items-center md:flex">
+              <PrimaryCtaLink
+                href="/contact"
+                onClick={closeAll}
                 onMouseEnter={() => setOpenMenu(null)}
-                className="flex items-center justify-center text-center gap-2 px-4 py-[9px] rounded-[8px]
-                           cursor-pointer text-[0.875rem] font-light leading-[100%] text-[rgb(83,87,104)] bg-transparent
-                           hover:bg-[#f5f6f8] transition-colors duration-100 whitespace-nowrap">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+                variant="nav"
+              >
+                Get Started
+              </PrimaryCtaLink>
+            </div>
 
-          {/* Desktop CTAs — Contact Now · Get Started */}
-          <div className="hidden md:flex items-center gap-[6px] ml-auto shrink-0">
-            <Link href="/contact" onClick={closeAll} onMouseEnter={() => setOpenMenu(null)}
-              className="h-[40px] flex items-center justify-center text-center gap-2 px-6 rounded-full border-[1.5px] border-[#5c4fe0]
-                         cursor-pointer text-[0.875rem] font-light leading-[100%] text-[#5c4fe0] hover:bg-[#eeecfc]
-                         transition-colors duration-100 whitespace-nowrap">
-              Contact Now
-            </Link>
-            <PrimaryCtaLink href="/contact" onClick={closeAll} onMouseEnter={() => setOpenMenu(null)}
-              className="h-[40px] whitespace-nowrap">
-              Get Started
-            </PrimaryCtaLink>
+            {/* Mobile hamburger */}
+            <button className="ml-auto rounded-[6px] p-1.5 text-[#323338] hover:bg-[#f5f6f8] md:hidden"
+              onClick={() => setMobileOpen((v) => !v)} aria-label="Toggle menu">
+              {mobileOpen ? <CloseIcon /> : <HamburgerIcon />}
+            </button>
           </div>
-
-          {/* Mobile hamburger */}
-          <button className="md:hidden ml-auto p-1.5 text-[#323338] hover:bg-[#f5f6f8] rounded-[6px]"
-            onClick={() => setMobileOpen((v) => !v)} aria-label="Toggle menu">
-            {mobileOpen ? <CloseIcon /> : <HamburgerIcon />}
-          </button>
-
-          {/* Dropdown — Marketing and Talent */}
-          {openMenu === "Marketing" && (
-            <div className="absolute top-full left-0 right-10 max-w-[1040px] z-50"
-              onMouseEnter={cancelClose}>
-              <CategoryMenu categories={marketingCategories} onClose={closeAll}
-                heading="MARKETING SERVICES"
-                headingSubtitle="An overview of what we offer"
-                headingIcon="megaphone"
-                platformStyle />
-            </div>
-          )}
-          {openMenu === "Talent" && (
-            <div className="absolute top-full left-0 right-10 max-w-[1040px] z-50"
-              onMouseEnter={cancelClose}>
-              <CategoryMenu categories={talentCategories} onClose={closeAll}
-                heading="TALENT SOLUTIONS"
-                headingSubtitle="An overview of what we offer"
-                headingIcon="personPlus"
-                platformStyle />
-            </div>
-          )}
         </div>
+
+        {/* Dropdown — full header width like Monday */}
+        {openMenu === "Marketing" && (
+          <div
+            className="absolute top-full right-4 left-4 z-50 sm:right-6 sm:left-6 lg:right-16 lg:left-16"
+            onMouseEnter={cancelClose}
+          >
+            <CategoryMenu categories={marketingCategories} onClose={closeAll}
+              heading="MARKETING SERVICES"
+              headingSubtitle="An overview of what we offer"
+              headingIcon="megaphone"
+              platformStyle
+              hoverColor={MARKETING_CRIMSON}
+              activeItemBg="#fce8ef"
+              visitHomeHref="/marketing"
+              visitHomeLabel="Visit Homepage"
+              visitHomeColor="#FFC900"
+              visitHomeTextColor="#111111" />
+          </div>
+        )}
+        {openMenu === "Talent" && (
+          <div
+            className="absolute top-full right-4 left-4 z-50 sm:right-6 sm:left-6 lg:right-16 lg:left-16"
+            onMouseEnter={cancelClose}
+          >
+            <CategoryMenu categories={talentCategories} onClose={closeAll}
+              heading="TALENT SOLUTIONS"
+              headingSubtitle="An overview of what we offer"
+              headingIcon="personPlus"
+              platformStyle
+              hoverColor={TALENT_PRIMARY}
+              activeItemBg="rgba(158, 235, 170, 0.25)"
+              visitHomeHref="/talent"
+              visitHomeLabel="Visit Homepage"
+              visitHomeColor={TALENT_PRIMARY}
+              visitHomeTextColor={TALENT_ACCENT} />
+          </div>
+        )}
+        {openMenu === "Technology" && (
+          <div
+            className="absolute top-full right-4 left-4 z-50 sm:right-6 sm:left-6 lg:right-16 lg:left-16"
+            onMouseEnter={cancelClose}
+          >
+            <CategoryMenu categories={technologyCategories} onClose={closeAll}
+              heading="TECHNOLOGY SERVICES"
+              headingSubtitle="An overview of what we offer"
+              headingIcon="gear"
+              platformStyle
+              hoverColor={TECH_PRIMARY}
+              activeItemBg="rgba(32, 40, 122, 0.12)"
+              visitHomeHref="/technology"
+              visitHomeLabel="Visit Homepage"
+              visitHomeColor={TECH_PRIMARY}
+              visitHomeTextColor={TECH_ACCENT} />
+          </div>
+        )}
       </div>
 
       {/* ─── Mobile drawer ─────────────────────────────────────────────── */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-[#e6e9ef] bg-white">
-          <div className="px-4 py-4 flex flex-col gap-0.5">
-            <p className="px-3 pt-1 pb-2 text-[11px] font-semibold uppercase tracking-[0.07em] text-[#8b8fa3]">
-              Platform
-            </p>
-            {platformItems.map((item) => (
-              <Link key={item.label} href={item.href} onClick={closeAll}
-                className="flex items-center gap-3 px-3 py-[10px] rounded-[8px] hover:bg-[#f5f6f8] transition-colors">
-                <Image src={item.avatar} alt="" width={30} height={30}
-                  className="w-[30px] h-[30px] rounded-[8px] object-cover shrink-0" />
-                <span className="text-[15px] font-semibold text-[#323338]">{item.label}</span>
-              </Link>
-            ))}
-            <p className="px-3 pt-4 pb-2 text-[11px] font-semibold uppercase tracking-[0.07em] text-[#8b8fa3]">
-              Capabilities
-            </p>
-            {capabilityCols[1].items.map((item) => (
-              <Link key={item.label} href={item.href} onClick={closeAll}
-                className="flex items-center gap-3 px-3 py-[10px] rounded-[8px] text-[15px] font-semibold text-[#323338] hover:bg-[#f5f6f8] transition-colors">
-                <span className="text-[#8b8fa3]"><Glyph name={item.icon} /></span>
-                {item.label}
-              </Link>
-            ))}
-            <div className="my-2 h-px bg-[#e6e9ef]" />
+        <div className="md:hidden max-h-[calc(100dvh-60px)] overflow-y-auto border-t border-[#e6e9ef] bg-white">
+          <div className="flex flex-col px-4 py-4 sm:px-6 lg:px-16">
+            <MobileMegaMenuSection
+              label="Marketing"
+              expanded={mobileExpanded === "Marketing"}
+              onToggle={() =>
+                setMobileExpanded((current) => (current === "Marketing" ? null : "Marketing"))
+              }
+              activeClass="bg-[#fce8ef] text-[#730031]"
+              activeItemBg="#fce8ef"
+              categories={marketingCategories}
+              hoverColor={MARKETING_CRIMSON}
+              visitHomeHref="/marketing"
+              visitHomeLabel="Visit Homepage"
+              visitHomeColor="#FFC900"
+              visitHomeTextColor="#111111"
+              onClose={closeAll}
+            />
+
+            <MobileMegaMenuSection
+              label="Talent"
+              expanded={mobileExpanded === "Talent"}
+              onToggle={() =>
+                setMobileExpanded((current) => (current === "Talent" ? null : "Talent"))
+              }
+              activeClass="bg-[#9EEBAA]/25 text-[#11551C]"
+              activeItemBg="rgba(158, 235, 170, 0.25)"
+              categories={talentCategories}
+              hoverColor={TALENT_PRIMARY}
+              visitHomeHref="/talent"
+              visitHomeLabel="Visit Homepage"
+              visitHomeColor={TALENT_PRIMARY}
+              visitHomeTextColor={TALENT_ACCENT}
+              onClose={closeAll}
+            />
+
+            <MobileMegaMenuSection
+              label="Technology"
+              expanded={mobileExpanded === "Technology"}
+              onToggle={() =>
+                setMobileExpanded((current) => (current === "Technology" ? null : "Technology"))
+              }
+              activeClass="bg-[#20287A1F] text-[#20287A]"
+              activeItemBg="rgba(32, 40, 122, 0.12)"
+              categories={technologyCategories}
+              hoverColor={TECH_PRIMARY}
+              visitHomeHref="/technology"
+              visitHomeLabel="Visit Homepage"
+              visitHomeColor={TECH_PRIMARY}
+              visitHomeTextColor={TECH_ACCENT}
+              onClose={closeAll}
+            />
+
             {simpleLinks.map((item) => (
-              <Link key={item.label} href={item.href} onClick={closeAll}
-                className="px-3 py-[10px] rounded-[8px] text-[15px] font-medium text-[#323338] hover:bg-[#f5f6f8] transition-colors">
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={closeAll}
+                className={`${navLinkClass(item.href)} border-b border-[#e6e9ef] px-3 py-[10px] justify-start`}
+                {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              >
                 {item.label}
               </Link>
             ))}
-            <div className="mt-3 pt-3 border-t border-[#e6e9ef] flex flex-col gap-2.5">
-              <PrimaryCtaLink href="/contact" onClick={closeAll}>
+
+            <div className="mt-3 pt-3">
+              <PrimaryCtaLink href="/contact" onClick={closeAll} variant="nav">
                 Get Started
               </PrimaryCtaLink>
-              <Link href="/contact" onClick={closeAll}
-                className="flex items-center justify-center border-[1.5px] border-[#5c4fe0] text-[#5c4fe0]
-                           text-[15px] font-semibold px-4 py-3 rounded-full hover:bg-[#eeecfc] transition-colors">
-                Contact Now
-              </Link>
             </div>
           </div>
         </div>

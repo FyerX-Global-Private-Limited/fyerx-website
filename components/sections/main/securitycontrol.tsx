@@ -3,7 +3,7 @@
 import React from 'react';
 
 /**
- * "Built for businesses moving forward" section — single-file Next.js + React.
+ * "Capability for Every Stage of Growth" section — single-file Next.js + React.
  * Drop this in as app/page.tsx (App Router) or pages/index.tsx (Pages Router),
  * or import <SecurityControl /> anywhere.
  * Fully self-contained: no Tailwind, no icon library, no extra dependencies.
@@ -14,58 +14,56 @@ type Card = {
   icon: React.ReactNode;
   title: React.ReactNode;
   body: string;
+  tint: "orange" | "purple" | "pink" | "green";
 };
 
 const CARDS: Card[] = [
   {
-    icon: <GrowthPathIcon />,
+    icon: <TargetIcon />,
     title: 'Growth initiatives',
     body: 'From new-market plans to demand creation, we help turn commercial priorities into focused action.',
+    tint: 'orange',
   },
   {
-    icon: <PuzzleGapIcon />,
+    icon: <PuzzleIcon />,
     title: 'Capability gaps',
     body: 'When internal capacity falls short, bring in the expertise needed to keep work progressing.',
+    tint: 'purple',
   },
   {
-    icon: <ConnectedArrowsIcon />,
+    icon: <SyncIcon />,
     title: 'Business change',
     body: 'New systems, new teams, or new direction require support that works with the wider business.',
+    tint: 'pink',
   },
   {
-    icon: <ForwardArrowIcon />,
+    icon: <BoltIcon />,
     title: 'Execution at pace',
     body: 'Move from decision to delivery with a team built to take responsibility for the work.',
+    tint: 'green',
   },
 ];
 
 export default function SecurityControl() {
   return (
-    <section className="sc">
-      <h2 className="sc__heading">
-        Built for businesses
-        <br />
-        <span
-          style={{
-            background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
-            backgroundClip: "text",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            color: "transparent",
-          }}
-        >
-          moving forward
-        </span>
-      </h2>
+    <section className="home-section sc">
+      <div className="section-shell">
+        <div className="section-header section-header--center mb-[var(--section-content-gap)]">
+          <h2 className="section-heading">
+            Capability for Every Stage of{" "}
+            <span className="brand-gradient-text">Growth</span>
+          </h2>
+        </div>
 
-      <div className="sc__grid">
+        <div className="section-body mt-0 sc__grid">
         {CARDS.map((c, i) => (
           <article className="sc__card" key={i}>
             <h3 className="sc__cardTitle">{c.title}</h3>
-            <div className="sc__icon">{c.icon}</div>
+            <div className={`sc__icon sc__icon--${c.tint}`}>{c.icon}</div>
             <p className="sc__cardBody">{c.body}</p>
           </article>
         ))}
+        </div>
       </div>
 
       <style jsx>{`
@@ -75,38 +73,23 @@ export default function SecurityControl() {
           --line: #ececec;
           background: #ffffff;
           color: var(--ink);
-          padding: 40px 40px 80px;
           font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
             Roboto, Helvetica, Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
-        }
-
-        .sc__heading {
-          margin-left: auto;
-          margin-right: auto;
-          margin-bottom: 55px;
-          max-width: 29ch;
-          text-align: center;
-          font-family: var(--font-poppins), Arial, sans-serif;
-          font-size: 36px;
-          line-height: 1.25;
-          font-weight: 500;
-          letter-spacing: -0.02em;
-          color: var(--ink);
         }
 
         .sc__grid {
           max-width: 1320px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 24px;
+          grid-template-columns: 1fr;
+          gap: 16px;
         }
 
         .sc__card {
           border: 1px solid var(--line);
           border-radius: 22px;
-          padding: 44px 30px 40px;
+          padding: 28px 20px 32px;
           background: #fff;
           text-align: center;
           display: flex;
@@ -120,8 +103,8 @@ export default function SecurityControl() {
         }
 
         .sc__cardTitle {
-          margin: 0;
-          font-size: 1.5rem;
+          margin: 0 0 1.25rem;
+          font-size: 1.25rem;
           line-height: 1.25;
           font-weight: 500;
           letter-spacing: -0.01em;
@@ -129,44 +112,86 @@ export default function SecurityControl() {
         }
 
         .sc__icon {
-          height: 120px;
-          margin: 34px 0 30px;
+          height: 72px;
+          width: 72px;
+          margin: 0 0 1.5rem;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: var(--ink);
+          border-radius: 999px;
+          box-shadow: 0 6px 16px rgba(20, 20, 43, 0.1);
         }
+        .sc__icon--orange { background: #FFF0E6; color: #FDAB3D; }
+        .sc__icon--purple { background: #F3EEFF; color: #6161FF; }
+        .sc__icon--pink { background: #FFE8F5; color: #FF5AC4; }
+        .sc__icon--green { background: #E8F8EF; color: #00CA72; }
 
         .sc__cardBody {
-          margin: 0;
+          margin: 0 auto;
           max-width: 30ch;
-          font-size: 1rem;
+          font-size: 0.9375rem;
           font-weight: 400;
           line-height: 1.6;
           color: var(--muted);
+          text-align: center;
         }
 
         /* ---------- Responsive ---------- */
-        @media (max-width: 1080px) {
-          .sc__grid {
-            grid-template-columns: repeat(2, 1fr);
-            max-width: 720px;
+        @media (max-width: 559px) {
+          .sc__card {
+            padding: 22px 16px 26px;
           }
-          .sc__heading {
-            font-size: 36px;
+          .sc__cardTitle {
+            font-size: 1.125rem;
+          }
+          .sc__cardBody {
+            max-width: none;
+            font-size: 0.875rem;
+          }
+          .sc__icon {
+            height: 64px;
+            width: 64px;
           }
         }
 
-        @media (max-width: 560px) {
-          .sc {
-            padding: 32px 20px 56px;
-          }
+        @media (min-width: 640px) {
           .sc__grid {
-            grid-template-columns: 1fr;
-            max-width: 420px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 720px;
           }
-          .sc__heading {
-            font-size: 30px;
+          .sc__card {
+            padding: 36px 24px 32px;
+          }
+          .sc__cardTitle {
+            font-size: 1.375rem;
+          }
+          .sc__icon {
+            height: 84px;
+            width: 84px;
+          }
+        }
+
+        @media (min-width: 1080px) {
+          .sc__grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            max-width: 1320px;
+          }
+          .sc__card {
+            padding: 44px 30px 40px;
+          }
+          .sc__cardTitle {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+          }
+          .sc__icon {
+            height: 96px;
+            width: 96px;
+            margin-bottom: 1.875rem;
+          }
+          .sc__cardBody {
+            font-size: 1rem;
           }
         }
       `}</style>
@@ -175,49 +200,74 @@ export default function SecurityControl() {
 }
 
 /* ============================================================= */
-/* Card icons (inline SVG)                                       */
+/* Monday-style bold glyphs (target, puzzle, sync, bolt)         */
 /* ============================================================= */
 
-function GrowthPathIcon() {
-  // Upward path — an ascending line ending in an arrow, for "Growth initiatives"
+function TargetIcon() {
   return (
-    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M18 68 L36 50 L50 62 L74 34" />
-      <path d="M58 34 H74 V50" />
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <circle cx="20" cy="20" r="15" fill="currentColor" opacity="0.18" />
+      <circle cx="20" cy="20" r="15" stroke="currentColor" strokeWidth="2.8" />
+      <circle cx="20" cy="20" r="8.5" stroke="currentColor" strokeWidth="2.8" />
+      <circle cx="20" cy="20" r="3.2" fill="currentColor" />
     </svg>
   );
 }
 
-function PuzzleGapIcon() {
-  // Missing puzzle piece — a solid piece and a dashed, separated piece, for "Capability gaps"
+function PuzzleIcon() {
   return (
-    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M14 28 H40 V38 A6 6 0 0 1 40 50 V60 H14 Z" />
-      <path d="M82 28 H56 V38 A6 6 0 0 0 56 50 V60 H82 Z" strokeDasharray="4 5" />
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <circle cx="20" cy="20" r="15" fill="currentColor" opacity="0.16" />
+      <path
+        d="M14 11h6.2v-1.8a3 3 0 1 1 6 0V11H27a1.2 1.2 0 0 1 1.2 1.2v5h1.8a3 3 0 1 1 0 6h-1.8v5A1.2 1.2 0 0 1 27 29.4h-6.2v1.8a3 3 0 1 1-6 0v-1.8H12a1.2 1.2 0 0 1-1.2-1.2v-5H9a3 3 0 1 1 0-6h1.8v-5A1.2 1.2 0 0 1 12 11h2z"
+        fill="currentColor"
+      />
     </svg>
   );
 }
 
-function ConnectedArrowsIcon() {
-  // Two curved arrows forming a loop, for "Business change"
+function SyncIcon() {
   return (
-    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M16 36 A34 34 0 0 1 74 26" />
-      <path d="M60 18 H76 V34" />
-      <path d="M80 60 A34 34 0 0 1 22 70" />
-      <path d="M36 78 H20 V62" />
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <circle cx="20" cy="20" r="15" fill="currentColor" opacity="0.16" />
+      <path
+        d="M12 18.5a8.5 8.5 0 0 1 14.2-5.4"
+        stroke="currentColor"
+        strokeWidth="2.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M24.5 8.5h5v5"
+        stroke="currentColor"
+        strokeWidth="2.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M28 21.5a8.5 8.5 0 0 1-14.2 5.4"
+        stroke="currentColor"
+        strokeWidth="2.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M15.5 31.5h-5v-5"
+        stroke="currentColor"
+        strokeWidth="2.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
-function ForwardArrowIcon() {
-  // Forward arrow with motion lines, for "Execution at pace"
+function BoltIcon() {
   return (
-    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M14 40 H26" />
-      <path d="M14 56 H26" />
-      <path d="M34 48 H70" />
-      <path d="M58 34 L74 48 L58 62" />
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <circle cx="20" cy="20" r="15" fill="currentColor" opacity="0.16" />
+      <path
+        d="M21.8 7.5 11.5 22.2h7.2L17.8 32.5 28.5 17.8h-7.2L21.8 7.5z"
+        fill="currentColor"
+      />
     </svg>
   );
 }
