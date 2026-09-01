@@ -12,8 +12,9 @@ type GoogleSiteVerifyResponse = {
 };
 
 function minScore(): number {
-  const raw = Number(process.env.RECAPTCHA_MIN_SCORE ?? 0.5);
-  return Number.isFinite(raw) ? raw : 0.5;
+  // 0.3 is a practical production default; 0.5 often blocks real mobile/VPN users.
+  const raw = Number(process.env.RECAPTCHA_MIN_SCORE ?? 0.3);
+  return Number.isFinite(raw) ? raw : 0.3;
 }
 
 export async function verifyRecaptchaToken(
@@ -57,15 +58,23 @@ export async function verifyRecaptchaToken(
   const score = typeof payload.score === "number" ? payload.score : 0;
   const action = payload.action ?? "";
   const threshold = minScore();
+  const hostname = payload.hostname ?? "unknown";
+
+  console.log(
+    `[recaptcha] success score=${score} action=${action || "n/a"} hostname=${hostname} threshold=${threshold}`
+  );
 
   if (score < threshold) {
-    console.error(`[recaptcha] Score too low: ${score} < ${threshold}`);
-    return { ok: false, error: "reCAPTCHA score too low. Please try again." };
+    console.error(`[recaptcha] Score too low: ${score} < ${threshold} hostname=${hostname}`);
+    return {
+      ok: false,
+      error: "Security check could not be completed. Please try again.",
+    };
   }
 
   if (expectedAction && action && action !== expectedAction) {
     console.error(`[recaptcha] Action mismatch: got=${action} expected=${expectedAction}`);
-    return { ok: false, error: "reCAPTCHA action mismatch. Please try again." };
+    return { ok: false, error: "Security check could not be completed. Please try again." };
   }
 
   return { ok: true, score, action };
