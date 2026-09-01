@@ -12,9 +12,9 @@ type GoogleSiteVerifyResponse = {
 };
 
 function minScore(): number {
-  // 0.3 is a practical production default; 0.5 often blocks real mobile/VPN users.
-  const raw = Number(process.env.RECAPTCHA_MIN_SCORE ?? 0.3);
-  return Number.isFinite(raw) ? raw : 0.3;
+  // New domains / mobile often score ~0.1. Hostinger env RECAPTCHA_MIN_SCORE overrides this.
+  const raw = Number(process.env.RECAPTCHA_MIN_SCORE ?? 0.1);
+  return Number.isFinite(raw) ? raw : 0.1;
 }
 
 export async function verifyRecaptchaToken(
