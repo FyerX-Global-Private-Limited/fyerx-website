@@ -157,7 +157,7 @@ export default function TechServicesSection() {
           </p>
           <h2 className="section-title-lg mt-3">
             Services for critical{" "}
-            <span className="tech-gradient-text">business systems</span>.
+            <span className="tech-gradient-text">business systems</span>
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-[#52525b] sm:mt-4 sm:text-base sm:text-[17px]">
             Select a service area to see how FyerX supports platform change,

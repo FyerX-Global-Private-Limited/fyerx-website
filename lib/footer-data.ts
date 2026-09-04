@@ -122,7 +122,7 @@ export const FOOTER_TALENT_RESOURCES_LINKS: FooterLink[] = [
 ];
 
 export const FOOTER_TECHNOLOGY_TAGLINE =
-  "Systems that keep the business moving." as const;
+  "Systems that keep the business moving" as const;
 
 export const FOOTER_TECHNOLOGY_SERVICES: FooterLink[] = [
   { label: "Enterprise Platforms", href: "/technology#services" },
@@ -150,7 +150,7 @@ export const FOOTER_TECHNOLOGY_EXPLORE_LINKS: FooterLink[] = [
 
 export const FOOTER_TECHNOLOGY_RESOURCES_LINKS: FooterLink[] = [
   { label: "Technology Insights", href: "/blog" },
-  { label: "Case Studies", href: "/technology/case-studies" },
+  { label: "Delivery Blueprints", href: "/technology/case-studies" },
   { label: "Technology FAQs", href: "/technology#faqs" },
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms of Service", href: "/terms-of-service" },

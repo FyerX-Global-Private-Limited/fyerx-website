@@ -41,7 +41,8 @@ export default function IntegrationsSection() {
     <section className="integrations">
       <div className="integrations__inner">
         <h2 className="integrations__title">
-          Built with businesses that are moving forward
+          Built with businesses that are moving{" "}
+          <span className="marketing-gradient-text">forward</span>
         </h2>
 
         <p className="integrations__subtitle">

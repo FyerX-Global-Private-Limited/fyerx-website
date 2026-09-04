@@ -44,7 +44,7 @@ export default function TechStartSection() {
             </p>
             <h2 className="section-title-lg mt-3 max-w-md">
               Bring us the challenge{" "}
-              <span className="tech-gradient-text">in front of you</span>.
+              <span className="tech-gradient-text">in front of you</span>
             </h2>
             <p className="mt-3 max-w-md text-sm leading-relaxed text-[#52525b] sm:mt-4 sm:text-base">
               You do not need a fully defined scope to begin. We help you assess

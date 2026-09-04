@@ -83,7 +83,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "Strategy, creative, performance, search, social, web, and automation work together instead of in silos.",
     alt: "One connected team — FyerX Marketing",
-    image: "/avatar/ai1.avif",
+    image: "/avatar/ai1.webp",
   },
   {
     id: "built-around-your-next-business-goal",
@@ -91,7 +91,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "We begin with what must change—launch, leads, visibility, conversion, or brand perception.",
     alt: "Built around your next business goal — FyerX Marketing",
-    image: "/avatar/ai2.avif",
+    image: "/avatar/ai2.webp",
   },
   {
     id: "ideas-that-can-be-executed",
@@ -99,7 +99,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "Recommendations are translated into campaigns, assets, pages, workflows, and clear next actions.",
     alt: "Ideas that can be executed — FyerX Marketing",
-    image: "/avatar/ai3.avif",
+    image: "/avatar/ai3.webp",
   },
   {
     id: "creative-with-commercial-purpose",
@@ -107,7 +107,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "Every design, message, and video is shaped to make the brand clearer and the audience response stronger.",
     alt: "Creative with commercial purpose — FyerX Marketing",
-    image: "/avatar/ai4.avif",
+    image: "/avatar/ai4.webp",
   },
   {
     id: "ai-used-with-judgement",
@@ -115,7 +115,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "We use AI to accelerate research, production, testing, and automation; people remain accountable for the output.",
     alt: "AI used with judgement — FyerX Marketing",
-    image: "/avatar/ai5.avif",
+    image: "/avatar/ai5.webp",
   },
   {
     id: "clear-useful-reporting",
@@ -123,7 +123,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "You see the measures that guide decisions: activity, response, lead quality, conversion, and commercial progress.",
     alt: "Clear, useful reporting — FyerX Marketing",
-    image: "/avatar/ai6.avif",
+    image: "/avatar/ai6.webp",
   },
 ];
 

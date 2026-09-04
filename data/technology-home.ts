@@ -12,7 +12,7 @@ export const TECH_PRIORITY_CARDS: TechScrollCard[] = [
     title: "Enterprise platform change",
     description:
       "Implement, enhance or connect the platforms that support customer, employee, service and operational workflows.",
-    image: "/avatar/ai1.avif",
+    image: "/avatar/ai1.webp",
     alt: "Enterprise platform change",
   },
   {
@@ -20,7 +20,7 @@ export const TECH_PRIORITY_CARDS: TechScrollCard[] = [
     title: "Legacy modernisation",
     description:
       "Replace ageing applications and manual workarounds without losing sight of business continuity.",
-    image: "/avatar/ai2.avif",
+    image: "/avatar/ai2.webp",
     alt: "Legacy modernisation",
   },
   {
@@ -28,7 +28,7 @@ export const TECH_PRIORITY_CARDS: TechScrollCard[] = [
     title: "Data and AI adoption",
     description:
       "Create trusted data foundations, practical intelligence and controlled AI use cases.",
-    image: "/avatar/ai3.avif",
+    image: "/avatar/ai3.webp",
     alt: "Data and AI adoption",
   },
   {
@@ -36,7 +36,7 @@ export const TECH_PRIORITY_CARDS: TechScrollCard[] = [
     title: "Cloud operating maturity",
     description:
       "Improve cloud readiness, release discipline, service reliability and cost visibility.",
-    image: "/avatar/ai4.avif",
+    image: "/avatar/ai4.webp",
     alt: "Cloud operating maturity",
   },
   {
@@ -44,7 +44,7 @@ export const TECH_PRIORITY_CARDS: TechScrollCard[] = [
     title: "Process automation",
     description:
       "Connect systems and automate repeatable work with defined controls and accountability.",
-    image: "/avatar/ai5.avif",
+    image: "/avatar/ai5.webp",
     alt: "Process automation",
   },
   {
@@ -52,7 +52,7 @@ export const TECH_PRIORITY_CARDS: TechScrollCard[] = [
     title: "Strategic direction",
     description:
       "Clarify the architecture, roadmap, vendor approach and investment priorities for the next stage of growth.",
-    image: "/avatar/ai6.avif",
+    image: "/avatar/ai6.webp",
     alt: "Strategic direction",
   },
 ];
@@ -63,7 +63,7 @@ export const TECH_ENGAGE_CARDS: TechScrollCard[] = [
     title: "Current-State Assessment",
     description:
       "A structured review of the current environment, key constraints and the most valuable next actions.",
-    image: "/avatar/ai1.avif",
+    image: "/avatar/ai1.webp",
     alt: "Current-state assessment",
   },
   {
@@ -71,7 +71,7 @@ export const TECH_ENGAGE_CARDS: TechScrollCard[] = [
     title: "Advisory Engagement",
     description:
       "Architecture, roadmap, vendor or investment guidance for a defined business decision.",
-    image: "/avatar/ai2.avif",
+    image: "/avatar/ai2.webp",
     alt: "Advisory engagement",
   },
   {
@@ -79,7 +79,7 @@ export const TECH_ENGAGE_CARDS: TechScrollCard[] = [
     title: "Implementation Project",
     description:
       "A scoped programme to configure, build, integrate, migrate or modernise a solution.",
-    image: "/avatar/ai3.avif",
+    image: "/avatar/ai3.webp",
     alt: "Implementation project",
   },
   {
@@ -87,7 +87,7 @@ export const TECH_ENGAGE_CARDS: TechScrollCard[] = [
     title: "Managed Support",
     description:
       "Agreed support, optimisation and operational ownership after implementation.",
-    image: "/avatar/ai4.avif",
+    image: "/avatar/ai4.webp",
     alt: "Managed support",
   },
   {
@@ -95,7 +95,7 @@ export const TECH_ENGAGE_CARDS: TechScrollCard[] = [
     title: "Delivery Pod",
     description:
       "A cross-functional team aligned to a transformation workstream or milestone.",
-    image: "/avatar/ai5.avif",
+    image: "/avatar/ai5.webp",
     alt: "Delivery pod",
   },
   {
@@ -103,7 +103,7 @@ export const TECH_ENGAGE_CARDS: TechScrollCard[] = [
     title: "Specialist Capability",
     description:
       "Targeted access to specialist expertise required for a specific programme need.",
-    image: "/avatar/ai6.avif",
+    image: "/avatar/ai6.webp",
     alt: "Specialist capability",
   },
 ];

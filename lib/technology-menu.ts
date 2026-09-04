@@ -7,7 +7,7 @@ export const TECHNOLOGY_MENU_CATEGORIES: MobileMenuCategory[] = [
   {
     label: "Enterprise Platforms",
     subtitle: "ServiceNow, SAP, Salesforce",
-    avatar: "/avatar/1.avif",
+    avatar: "/avatar/1.webp",
     icon: "plug",
     tint: "#E8F4FF",
     iconColor: "#20287A",
@@ -21,7 +21,7 @@ export const TECHNOLOGY_MENU_CATEGORIES: MobileMenuCategory[] = [
   {
     label: "Digital Transformation",
     subtitle: "Applications & automation",
-    avatar: "/avatar/2.avif",
+    avatar: "/avatar/2.webp",
     icon: "sparkle",
     tint: "#F3EEFF",
     iconColor: "#6161FF",
@@ -35,7 +35,7 @@ export const TECHNOLOGY_MENU_CATEGORIES: MobileMenuCategory[] = [
   {
     label: "Data & AI",
     subtitle: "Intelligence & decisions",
-    avatar: "/avatar/3.avif",
+    avatar: "/avatar/3.webp",
     icon: "database",
     tint: "#E8F8EF",
     iconColor: "#00CA72",
@@ -49,7 +49,7 @@ export const TECHNOLOGY_MENU_CATEGORIES: MobileMenuCategory[] = [
   {
     label: "Cloud & DevOps",
     subtitle: "Foundations & reliability",
-    avatar: "/avatar/4.avif",
+    avatar: "/avatar/4.webp",
     icon: "globe",
     tint: "#FFF6E6",
     iconColor: "#FDAB3D",
@@ -63,7 +63,7 @@ export const TECHNOLOGY_MENU_CATEGORIES: MobileMenuCategory[] = [
   {
     label: "Strategic Advisory",
     subtitle: "Roadmaps & decisions",
-    avatar: "/avatar/5.avif",
+    avatar: "/avatar/5.webp",
     icon: "search",
     tint: "#EEF0FA",
     iconColor: "#4B5FDB",

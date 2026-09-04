@@ -64,7 +64,7 @@ export default function TechBuiltToSection() {
                 style={{ backgroundColor: dot }}
                 aria-hidden="true"
               />
-              <span className="leading-none">{w}.</span>
+              <span className="leading-none">{w}</span>
             </span>
           </span>
         </h2>

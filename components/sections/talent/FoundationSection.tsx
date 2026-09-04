@@ -1,6 +1,6 @@
 "use client";
 
-type CardIcon = "clover" | "sparkle" | "flower";
+import Image from "next/image";
 
 const CARDS = [
   {
@@ -12,8 +12,7 @@ const CARDS = [
     bodyColor: "#5c5c66",
     tagBg: "#E84A7F",
     tagColor: "#FFFFFF",
-    icon: "clover" as CardIcon,
-    iconColor: "#C2185B",
+    icon: "/updatedtalentimage/section2 (1).webp",
   },
   {
     title: "Structured hiring process",
@@ -24,8 +23,7 @@ const CARDS = [
     bodyColor: "#5c5c66",
     tagBg: "#C9A227",
     tagColor: "#FFFFFF",
-    icon: "sparkle" as CardIcon,
-    iconColor: "#C9A227",
+    icon: "/updatedtalentimage/section2 (2).webp",
   },
   {
     title: "Compliance-ready staffing",
@@ -36,55 +34,9 @@ const CARDS = [
     bodyColor: "#5c5c66",
     tagBg: "#2E9B4E",
     tagColor: "#FFFFFF",
-    icon: "flower" as CardIcon,
-    iconColor: "#1B7A3A",
+    icon: "/updatedtalentimage/section2 (3).webp",
   },
 ] as const;
-
-function CardGlyph({ name, color }: { name: CardIcon; color: string }) {
-  const common = {
-    width: 28,
-    height: 28,
-    viewBox: "0 0 24 24",
-    fill: color,
-    "aria-hidden": true as const,
-  };
-
-  if (name === "clover") {
-    return (
-      <svg {...common}>
-        <circle cx="12" cy="6.2" r="3.5" />
-        <circle cx="6.2" cy="12" r="3.5" />
-        <circle cx="17.8" cy="12" r="3.5" />
-        <circle cx="12" cy="17.8" r="3.5" />
-        <circle cx="12" cy="12" r="1.7" fill="#FFE4EC" />
-      </svg>
-    );
-  }
-
-  if (name === "sparkle") {
-    return (
-      <svg {...common}>
-        <path d="M12 2.2c.4 3.6 2.2 5.4 5.8 5.8-3.6.4-5.4 2.2-5.8 5.8-.4-3.6-2.2-5.4-5.8-5.8 3.6-.4 5.4-2.2 5.8-5.8Z" />
-        <path d="M18.5 14.5c.22 1.85 1.15 2.78 3 3-1.85.22-2.78 1.15-3 3-.22-1.85-1.15-2.78-3-3 1.85-.22 2.78-1.15 3-3Z" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg {...common}>
-      <circle cx="12" cy="5.2" r="2.5" />
-      <circle cx="12" cy="18.8" r="2.5" />
-      <circle cx="5.2" cy="12" r="2.5" />
-      <circle cx="18.8" cy="12" r="2.5" />
-      <circle cx="7.1" cy="7.1" r="2.1" />
-      <circle cx="16.9" cy="7.1" r="2.1" />
-      <circle cx="7.1" cy="16.9" r="2.1" />
-      <circle cx="16.9" cy="16.9" r="2.1" />
-      <circle cx="12" cy="12" r="1.8" fill="#DDF7E3" />
-    </svg>
-  );
-}
 
 export default function FoundationSection() {
   return (
@@ -108,10 +60,17 @@ export default function FoundationSection() {
               style={{ background: card.bg }}
             >
               <span
-                className="absolute right-5 top-5 sm:right-6 sm:top-6"
+                className="absolute right-5 top-5 h-9 w-9 sm:right-6 sm:top-6 sm:h-10 sm:w-10"
                 aria-hidden="true"
               >
-                <CardGlyph name={card.icon} color={card.iconColor} />
+                <Image
+                  src={card.icon}
+                  alt=""
+                  fill
+                  unoptimized
+                  sizes="40px"
+                  className="object-contain"
+                />
               </span>
 
               <h3

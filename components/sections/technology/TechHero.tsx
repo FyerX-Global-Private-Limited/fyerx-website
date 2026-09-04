@@ -106,12 +106,12 @@ export default function TechHero() {
             className="inline-flex rounded-full px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
             style={{ backgroundColor: TECH_HOME.pale, color: TECH_HOME.primary }}
           >
-            FyerX Digital Systems
+            Enterprise Technology & Delivery
           </span>
 
           <h1 className="mt-3 max-w-[18ch] text-[clamp(1.625rem,5vw,3.25rem)] font-medium leading-[1.12] tracking-[-0.03em] text-[var(--ink)] sm:mt-5">
             Systems that keep the{" "}
-            <span className="tech-gradient-text">business moving</span>.
+            <span className="tech-gradient-text">business moving</span>
           </h1>
 
           <p className="mt-3 max-w-[32rem] text-sm leading-relaxed text-[#3d4a5c] sm:mt-5 sm:text-[15px] lg:text-[17px]">

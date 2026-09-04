@@ -7,35 +7,35 @@ import { TALENT_HOME } from "@/lib/talent-home-palette";
 
 const STAFFING_SERVICES = [
   {
-    icon: "/images/talent/icon/contract.svg",
+    icon: "/updatedtalentimage/section4 (2).webp",
     label: ["Contract", "Staffing"] as [string, string?],
   },
   {
-    icon: "/images/talent/icon/it-tech.svg",
+    icon: "/updatedtalentimage/section4 (3).webp",
     label: ["IT & Tech", "Staffing"] as [string, string?],
   },
   {
-    icon: "/images/talent/icon/project.svg",
+    icon: "/updatedtalentimage/section4 (4).webp",
     label: ["Project-Based", "Staffing"] as [string, string?],
   },
   {
-    icon: "/images/talent/icon/rpo.svg",
+    icon: "/updatedtalentimage/section4 (5).webp",
     label: ["Recruitment", "Outsourcing"] as [string, string?],
   },
   {
-    icon: "/images/talent/icon/permanent.svg",
+    icon: "/updatedtalentimage/section4 (6).webp",
     label: ["Permanent", "Hiring"] as [string, string?],
   },
   {
-    icon: "/images/talent/icon/executive.svg",
+    icon: "/updatedtalentimage/section4 (7).webp",
     label: ["Executive", "Search"] as [string, string?],
   },
   {
-    icon: "/images/talent/icon/bulk.svg",
+    icon: "/updatedtalentimage/section4 (8).webp",
     label: ["Bulk & Volume", "Hiring"] as [string, string?],
   },
   {
-    icon: "/images/talent/icon/global.svg",
+    icon: "/updatedtalentimage/section4 (1).webp",
     label: ["Global", "Staffing"] as [string, string?],
   },
 ] as const;

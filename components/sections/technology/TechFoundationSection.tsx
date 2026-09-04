@@ -99,7 +99,7 @@ export default function TechFoundationSection() {
           </p>
           <h2 className="section-title-lg mt-3">
             Delivery with clear{" "}
-            <span className="tech-gradient-text">business ownership</span>.
+            <span className="tech-gradient-text">business ownership</span>
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-[#52525b] sm:mt-4 sm:text-base sm:text-[17px]">
             We combine business context, solution design and delivery discipline

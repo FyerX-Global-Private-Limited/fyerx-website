@@ -20,19 +20,40 @@ export type MobileMenuCategory = {
   items: { label: string; href: string; icon: MenuIconName }[];
 };
 
-/** Long Talent labels that may wrap to a second line to avoid overlap. */
+/** Labels that should wrap instead of overflowing the mega-menu column. */
 const MENU_LABELS_ALLOW_WRAP = new Set([
   "Permanent Hiring & Executive Search",
   "Cross-Border Contract Staffing (US)",
+  "Service & Workflow Platforms",
+  "CRM & Productivity Platforms",
+  "ERP & Business Platforms",
+  "Automation & Integration",
+  "Marketing & Consulting",
+  "Search & AI Visibility",
+  "Social Media Marketing",
+  "Performance Marketing",
+  "Marketing Automation",
+  "Branding & Design",
+  "Demand Generation",
+  "Content Production",
+  "AI Marketing",
 ]);
 
+/** Wrap earlier so 2-column mega-menu cells don't clip into the next column. */
+const MENU_LABEL_WRAP_LENGTH = 16;
+
 export function allowsMenuLabelWrap(label: string) {
-  return MENU_LABELS_ALLOW_WRAP.has(label);
+  return MENU_LABELS_ALLOW_WRAP.has(label) || label.length > MENU_LABEL_WRAP_LENGTH;
 }
 
 export function menuLabelNowrapClass(label: string) {
-  return allowsMenuLabelWrap(label) ? "leading-snug" : "whitespace-nowrap";
+  return allowsMenuLabelWrap(label)
+    ? "min-w-0 break-words leading-snug"
+    : "whitespace-nowrap";
 }
+
+/** Always-safe text class for cramped mega-menu grids (never nowrap). */
+export const MENU_LABEL_WRAP_CLASS = "min-w-0 break-words leading-snug";
 
 function ChevronDown({ open }: { open: boolean }) {
   return (

@@ -15,6 +15,11 @@ import {
   type MobileMenuCategory,
 } from "@/components/layout/shared/MobileMegaMenuSection";
 import { VisitHomeNavButton } from "@/components/layout/shared/VisitHomeNavButton";
+import {
+  HEADER_LOGO_CLASS,
+  HEADER_LOGO_HEIGHT,
+  HEADER_LOGO_WIDTH,
+} from "@/lib/header-logo";
 
 // ── Icons ──────────────────────────────────────────────────────────────────────
 function ChevronDown({ open }: { open: boolean }) {
@@ -97,7 +102,7 @@ const talentCategories: MobileMenuCategory[] = [
   {
     label: "Contract Staffing",
     subtitle: "Flexibility & scale",
-    avatar: "/avatar/1.avif",
+    avatar: "/avatar/1.webp",
     icon: "personPlus",
     tint: "#E8F8EF",
     iconColor: "#00CA72",
@@ -111,7 +116,7 @@ const talentCategories: MobileMenuCategory[] = [
   {
     label: "RPO",
     subtitle: "Sourcing & management",
-    avatar: "/avatar/2.avif",
+    avatar: "/avatar/2.webp",
     icon: "funnel",
     tint: "#F3EEFF",
     iconColor: "#6161FF",
@@ -124,7 +129,7 @@ const talentCategories: MobileMenuCategory[] = [
   {
     label: "Permanent Hiring & Executive Search",
     subtitle: "Placement & leadership",
-    avatar: "/avatar/3.avif",
+    avatar: "/avatar/3.webp",
     icon: "search",
     tint: "#E8F4FF",
     iconColor: "#579BFC",
@@ -136,7 +141,7 @@ const talentCategories: MobileMenuCategory[] = [
   {
     label: "IT & Tech Talent",
     subtitle: "Tech & engineering",
-    avatar: "/avatar/4.avif",
+    avatar: "/avatar/4.webp",
     icon: "gear",
     tint: "#FFF6E6",
     iconColor: "#FDAB3D",
@@ -150,7 +155,7 @@ const talentCategories: MobileMenuCategory[] = [
   {
     label: "HR Advisory",
     subtitle: "Strategy & compliance",
-    avatar: "/avatar/5.avif",
+    avatar: "/avatar/5.webp",
     icon: "clipboardCheck",
     tint: "#E8F8EF",
     iconColor: "#00CA72",
@@ -163,7 +168,7 @@ const talentCategories: MobileMenuCategory[] = [
   {
     label: "Global Staffing",
     subtitle: "Reach & expansion",
-    avatar: "/avatar/6.avif",
+    avatar: "/avatar/6.webp",
     icon: "globe",
     tint: "#E8F4FF",
     iconColor: "#0086C0",
@@ -295,7 +300,7 @@ export default function TalentHeader() {
       : pathname === href || pathname.startsWith(`${href}/`);
 
   const navLinkClass = (href: string) =>
-    `px-4 py-2 rounded-[8px] text-[0.875rem] font-light transition-colors duration-100 whitespace-nowrap ${
+    `px-2.5 py-2 rounded-[8px] text-[0.875rem] font-light transition-colors duration-100 whitespace-nowrap lg:px-3.5 ${
       isActive(href) ? "bg-[#9EEBAA]/25 text-[#11551C]" : "text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"
     }`;
 
@@ -335,15 +340,15 @@ export default function TalentHeader() {
             <Image
               src={TALENT_LOGO}
               alt="FyerX Talent"
-              width={140}
-              height={32}
-              className="h-8 w-auto object-contain"
+              width={HEADER_LOGO_WIDTH}
+              height={HEADER_LOGO_HEIGHT}
+              className={HEADER_LOGO_CLASS}
               priority
             />
           </Link>
 
-          <div className="ml-8 flex min-w-0 flex-1 items-center sm:ml-10 lg:ml-12">
-            <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
+          <div className="ml-4 flex min-w-0 flex-1 items-center sm:ml-6 lg:ml-8">
+            <nav className="hidden min-w-0 md:flex items-center gap-0.5 lg:gap-1">
               <div onMouseEnter={openMenu}>
                 <button
                   type="button"

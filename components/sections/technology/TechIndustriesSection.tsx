@@ -52,21 +52,24 @@ export default function TechIndustriesSection() {
           </p>
           <h2 className="section-heading mt-3">
             Delivery shaped by the{" "}
-            <span className="tech-gradient-text">operating environment</span>.
+            <span className="tech-gradient-text">operating environment</span>
           </h2>
-          <p className="section-subheading mx-auto max-w-2xl">
+          <p className="section-subheading mx-auto max-w-2xl px-1 sm:px-0">
             We adapt platforms, delivery models and governance to the systems,
             regulations and operating priorities of each sector.
           </p>
         </div>
 
-        <div className="section-body mt-6 grid grid-cols-2 gap-2 sm:mt-8 sm:gap-3 lg:grid-cols-4">
+        <div className="section-body mt-5 grid grid-cols-2 gap-2 sm:mt-8 sm:gap-3 md:grid-cols-3 lg:grid-cols-4">
           {INDUSTRIES.map((industry) => (
             <div
               key={industry.label}
-              className="flex min-w-0 items-center gap-2 rounded-xl border border-[#E6E9EF] bg-white px-2.5 py-2.5 transition-colors hover:border-[#C9CCD4] sm:gap-3 sm:px-4 sm:py-4"
+              className="flex min-h-[5.5rem] min-w-0 flex-col items-center justify-center gap-1.5 rounded-xl border border-[#E6E9EF] bg-white px-2 py-2.5 text-center transition-colors hover:border-[#C9CCD4] sm:min-h-0 sm:flex-row sm:items-center sm:justify-start sm:gap-3 sm:px-4 sm:py-4 sm:text-left"
             >
-              <span className="relative h-9 w-9 shrink-0 sm:h-11 sm:w-11" aria-hidden="true">
+              <span
+                className="relative h-8 w-8 shrink-0 sm:h-11 sm:w-11"
+                aria-hidden="true"
+              >
                 <Image
                   src={industry.iconSrc}
                   alt=""
@@ -76,7 +79,7 @@ export default function TechIndustriesSection() {
                   className="object-contain"
                 />
               </span>
-              <p className="min-w-0 text-[12px] font-medium leading-snug text-[#323338] sm:text-[0.875rem]">
+              <p className="min-w-0 max-w-[9.5rem] text-[11px] font-medium leading-tight text-[#323338] text-pretty sm:max-w-none sm:text-[0.875rem] sm:leading-snug">
                 {industry.label}
               </p>
             </div>
