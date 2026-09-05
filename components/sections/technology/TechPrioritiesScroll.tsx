@@ -13,7 +13,7 @@ export default function TechPrioritiesScroll() {
           </p>
           <h2 className="section-title-lg mt-3">
             Priorities that need a{" "}
-            <span className="tech-gradient-text">clear path forward</span>.
+            <span className="tech-gradient-text">clear path forward</span>
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-[#52525b] sm:mt-4 sm:text-base sm:text-[17px]">
             For organisations that know the challenge but are still defining the right response.

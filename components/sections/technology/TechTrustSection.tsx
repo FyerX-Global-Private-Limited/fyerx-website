@@ -45,10 +45,10 @@ export default function TechTrustSection() {
             Enterprise-ready technology delivery
           </p>
           <h2 className="mt-3 text-[clamp(1.75rem,4.5vw,2.75rem)] font-medium leading-[1.15] tracking-[-0.03em] text-[var(--ink)]">
-            Trusted by enterprises.
+            Trusted by enterprises
             <br />
             Recognized for{" "}
-            <span className="tech-gradient-text">practical delivery</span>.
+            <span className="tech-gradient-text">practical delivery</span>
           </h2>
         </div>
 

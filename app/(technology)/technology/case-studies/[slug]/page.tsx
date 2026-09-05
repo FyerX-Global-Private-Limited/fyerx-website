@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import TechCaseStudyDetail from "@/components/sections/technology/TechCaseStudyDetail";
 import {
@@ -7,6 +8,20 @@ import {
 
 export function generateStaticParams() {
   return TECHNOLOGY_CASE_STUDIES.map((study) => ({ slug: study.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const study = getTechCaseStudyBySlug(slug);
+  if (!study) return { title: "Delivery Blueprint | FyerX Technology" };
+  return {
+    title: `${study.title} | Delivery Blueprint | FyerX Technology`,
+    description: study.summary,
+  };
 }
 
 export default async function TechnologyCaseStudyPage({

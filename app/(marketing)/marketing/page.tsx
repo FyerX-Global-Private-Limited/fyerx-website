@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import MarketingHero from "@/components/sections/marketing/MarketingHero";
 import ServicesGrid from "@/components/sections/marketing/ServicesGrid";
+import MarketingCapabilityAreas from "@/components/sections/marketing/MarketingCapabilityAreas";
 import TrackRecord from "@/components/sections/marketing/TrackRecord";
 import TrustBar from "@/components/sections/main/TrustBar";
 import Leadership from "@/components/sections/marketing/Leadership";
@@ -27,6 +28,7 @@ export default function MarketingPage() {
       <TrackRecord />
       <TrustBar highlightClassName="marketing-gradient-text" />
       <ServicesGrid />
+      <MarketingCapabilityAreas />
       <AIPlatformHero />
       <StackedScrollSection />
       <Leadership />

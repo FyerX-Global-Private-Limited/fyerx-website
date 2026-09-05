@@ -123,7 +123,7 @@ export default function Leadership() {
           {/* Image card */}
           <div className="ldr-card-image">
             <Image
-              src="/leadership.avif"
+              src="/leadership.webp"
               alt="Two colleagues smiling while reviewing work on a laptop"
               fill
               sizes="(min-width: 1024px) 33vw, 100vw"

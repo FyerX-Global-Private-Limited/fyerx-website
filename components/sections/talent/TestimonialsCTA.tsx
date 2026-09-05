@@ -31,10 +31,10 @@ export default function TestimonialsCTA() {
             <div className="relative mt-1 w-full min-w-0 shrink-0 sm:mx-auto sm:mt-4 sm:max-w-[462px] lg:mx-0 lg:mt-0 lg:w-[462px] lg:max-w-none">
               <div className="absolute -top-[22px] left-1/2 z-10 -translate-x-1/2">
                 <Image
-                  src="/images/talent/contactformimg.svg"
+                  src="/updatedtalentimage/section12.webp"
                   alt=""
-                  width={188}
-                  height={44}
+                  width={904}
+                  height={200}
                   unoptimized
                   className="h-9 w-auto select-none sm:h-11"
                   draggable={false}

@@ -27,7 +27,7 @@ export default function TechInsightsSection() {
         <p className="res__eyebrow">Insights</p>
         <h2 className="res__heading">
           Practical perspectives for{" "}
-          <span className="tech-gradient-text">better decisions</span>.
+          <span className="tech-gradient-text">better decisions</span>
         </h2>
 
         <div className="res__grid">

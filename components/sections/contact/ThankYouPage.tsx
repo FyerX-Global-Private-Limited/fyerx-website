@@ -56,7 +56,7 @@ const NAV_CARDS = [
     headerTint: "#FFFBEB",
     accent: "#FFC900",
     image: {
-      src: "/contact/contact-marketing.png",
+      src: "/contact/contact-marketing.webp",
       alt: "Marketing team collaborating on campaigns and growth strategy",
     },
   },
@@ -66,7 +66,7 @@ const NAV_CARDS = [
     headerTint: "#EFF9F6",
     accent: "#00A88A",
     image: {
-      src: "/contact/contact-talent.png",
+      src: "/contact/contact-talent.webp",
       alt: "Talent team supporting staffing and recruitment",
     },
   },
@@ -76,7 +76,7 @@ const NAV_CARDS = [
     headerTint: "#EEF1FA",
     accent: "#2A35A1",
     image: {
-      src: "/contact/contact-technology.png",
+      src: "/contact/contact-technology.webp",
       alt: "Technology team working on cloud, data, and digital transformation",
     },
   },

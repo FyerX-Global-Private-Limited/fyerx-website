@@ -20,7 +20,7 @@ const CARDS: UseCaseCard[] = [
     description:
       "Modernise systems and unlock new capability through platforms, cloud, data, AI, and transformation.",
     href: "#",
-    image: "/g3.webp",
+    image: "/images/main/technology.webp",
     imageAlt: "Technology services screenshot",
     ctaLabel: "Explore Technology",
     buttonColor: "#20287A",

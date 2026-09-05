@@ -316,12 +316,12 @@ button:disabled,
   }
 
   .home-main--technology {
-    gap: 1.75rem;
-    padding-block: 0.5rem 1.75rem;
+    gap: clamp(2.5rem, 8vw, 3.25rem);
+    padding-block: 1.5rem 2.5rem;
   }
 
   .home-main--technology .section-title-lg {
-    font-size: clamp(1.5rem, 5.5vw, 1.75rem);
+    font-size: clamp(1.625rem, 6vw, 1.875rem);
   }
 }
 

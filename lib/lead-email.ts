@@ -120,11 +120,11 @@ export async function sendLeadNotificationEmail(lead: LeadPayload, id: number): 
   }
 
   try {
-    const logoPath = path.join(process.cwd(), "public", "logo.png");
+    const logoPath = path.join(process.cwd(), "public", "logo.webp");
     const attachments = fs.existsSync(logoPath)
       ? [
           {
-            filename: "logo.png",
+            filename: "logo.webp",
             path: logoPath,
             cid: LEAD_EMAIL_LOGO_CID,
             contentDisposition: "inline" as const,
@@ -133,7 +133,7 @@ export async function sendLeadNotificationEmail(lead: LeadPayload, id: number): 
       : [];
 
     if (attachments.length === 0) {
-      mailLog("Logo attachment missing at public/logo.png; sending without logo.", true);
+      mailLog("Logo attachment missing at public/logo.webp; sending without logo.", true);
     }
 
     const info = await getTransporter(config).sendMail({

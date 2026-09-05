@@ -13,7 +13,7 @@ export default function TechEngageScroll() {
           </p>
           <h2 className="section-title-lg mt-3">
             The right level of support for the{" "}
-            <span className="tech-gradient-text">priority in front of you</span>.
+            <span className="tech-gradient-text">priority in front of you</span>
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-[#52525b] sm:mt-4 sm:text-base sm:text-[17px]">
             Start with a focused assessment or engage FyerX across a broader

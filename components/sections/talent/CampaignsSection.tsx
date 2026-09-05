@@ -46,7 +46,7 @@ export default function CampaignsSection() {
 
             <div className="relative flex min-h-[280px] items-center justify-center px-6 pb-10 md:min-h-[380px] md:pb-8 md:pr-8">
               <Image
-                src="/images/talent/fyerxopenrole.svg"
+                src="/updatedtalentimage/section9.webp"
                 alt="Hiring pipeline dashboard showing role scoping, shortlist, and interviews"
                 width={440}
                 height={371}

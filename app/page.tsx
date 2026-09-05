@@ -4,6 +4,7 @@ import Hero from "@/components/sections/main/Hero";
 import TrustBar from "@/components/sections/main/TrustBar";
 import WhoWeAre from "@/components/sections/main/WhoWeAre";
 import Capabilities from "@/components/sections/main/Capabilities";
+import MainCapabilityAreas from "@/components/sections/main/MainCapabilityAreas";
 import HowWeWork from "@/components/sections/main/HowWeWork";
 import TrackRecord from "@/components/sections/main/TrackRecord";
 import Leadership from "@/components/sections/main/Leadership";
@@ -22,6 +23,7 @@ export default function Home() {
         <WhoWeAre />
         <HowWeWork />
         <Capabilities />
+        <MainCapabilityAreas />
         <TrackRecord />
         <AiHiring />
         <Leadership />

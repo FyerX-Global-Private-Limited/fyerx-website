@@ -5,17 +5,17 @@ import { TALENT_HOME } from "@/lib/talent-home-palette";
 
 const cards = [
   {
-    img: "/images/talent/blog-rpo.svg",
+    img: "/updatedtalentimage/section11 (3).webp",
     title: "What RPO Looks Like in Practice",
     body: "When outsourced recruitment support is useful—and what the working model should include.",
   },
   {
-    img: "/images/talent/blog-distributed.svg",
+    img: "/updatedtalentimage/section11 (2).webp",
     title: "Building a Distributed Technology Team",
     body: "How to choose the model that fits your timeline, budget structure, and ongoing capability need.",
   },
   {
-    img: "/images/talent/blog-enterprise.svg",
+    img: "/updatedtalentimage/section11 (1).webp",
     title: "How to Hire for Enterprise Platforms",
     body: "What to clarify before hiring ServiceNow, Salesforce, SAP, and other platform specialists.",
   },

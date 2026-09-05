@@ -5,7 +5,7 @@ export const MARKETING_MENU_CATEGORIES: MobileMenuCategory[] = [
   {
     label: "Marketing & Consulting",
     subtitle: "Planning & positioning",
-    avatar: "/avatar/1.avif",
+    avatar: "/avatar/1.webp",
     icon: "chart",
     tint: "#FFF6E6",
     iconColor: "#FDAB3D",
@@ -19,7 +19,7 @@ export const MARKETING_MENU_CATEGORIES: MobileMenuCategory[] = [
   {
     label: "Demand Generation",
     subtitle: "Leads & pipeline",
-    avatar: "/avatar/2.avif",
+    avatar: "/avatar/2.webp",
     icon: "funnel",
     tint: "#F3EEFF",
     iconColor: "#6161FF",
@@ -33,7 +33,7 @@ export const MARKETING_MENU_CATEGORIES: MobileMenuCategory[] = [
   {
     label: "Search & AI Visibility",
     subtitle: "Search & discovery",
-    avatar: "/avatar/3.avif",
+    avatar: "/avatar/3.webp",
     icon: "search",
     tint: "#E8F4FF",
     iconColor: "#579BFC",
@@ -47,7 +47,7 @@ export const MARKETING_MENU_CATEGORIES: MobileMenuCategory[] = [
   {
     label: "AI Marketing",
     subtitle: "Automation & insights",
-    avatar: "/avatar/4.avif",
+    avatar: "/avatar/4.webp",
     icon: "sparkle",
     tint: "#FFE8F5",
     iconColor: "#FF5AC4",
@@ -61,7 +61,7 @@ export const MARKETING_MENU_CATEGORIES: MobileMenuCategory[] = [
   {
     label: "Social Media Marketing",
     subtitle: "Content & community",
-    avatar: "/avatar/5.avif",
+    avatar: "/avatar/5.webp",
     icon: "megaphone",
     tint: "#E8F8EF",
     iconColor: "#00CA72",
@@ -74,7 +74,7 @@ export const MARKETING_MENU_CATEGORIES: MobileMenuCategory[] = [
   {
     label: "Content Production",
     subtitle: "Videos & storytelling",
-    avatar: "/avatar/6.avif",
+    avatar: "/avatar/6.webp",
     icon: "doc",
     tint: "#FFE8E6",
     iconColor: "#E2445C",
@@ -88,7 +88,7 @@ export const MARKETING_MENU_CATEGORIES: MobileMenuCategory[] = [
   {
     label: "Performance Marketing",
     subtitle: "Ads & conversions",
-    avatar: "/avatar/1.avif",
+    avatar: "/avatar/1.webp",
     icon: "chart",
     tint: "#FFF0E6",
     iconColor: "#FDAB3D",
@@ -102,7 +102,7 @@ export const MARKETING_MENU_CATEGORIES: MobileMenuCategory[] = [
   {
     label: "Branding & Design",
     subtitle: "Identity & design",
-    avatar: "/avatar/2.avif",
+    avatar: "/avatar/2.webp",
     icon: "heart",
     tint: "#F3EEFF",
     iconColor: "#A25DDC",
@@ -116,7 +116,7 @@ export const MARKETING_MENU_CATEGORIES: MobileMenuCategory[] = [
   {
     label: "Marketing Automation",
     subtitle: "Workflows & CRM",
-    avatar: "/avatar/3.avif",
+    avatar: "/avatar/3.webp",
     icon: "robot",
     tint: "#E8F4FF",
     iconColor: "#0086C0",
