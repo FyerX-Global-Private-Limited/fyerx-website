@@ -3,47 +3,53 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { TALENT_CAPABILITY_TABS, type TalentCapabilityTab } from "@/data/talent-capabilities";
-import { TALENT_HOME } from "@/lib/talent-home-palette";
 
-/** Pleasant tab themes — purple, blue, pink, green (no red). */
+/** Tab themes matched to each capability's icon color. */
 const TAB_THEMES = [
-  { bg: "#E8F5EA", activeBg: "#F0FAF2", iconBg: TALENT_HOME.primary, iconColor: TALENT_HOME.accent, accent: TALENT_HOME.primary },
-  { bg: "#D8E9FB", activeBg: "#E8F1FB", iconBg: "#1F5C99", iconColor: "#ffffff", accent: "#0B2E59" },
-  { bg: "#FCE7F3", activeBg: "#FFF0F7", iconBg: "#db2777", iconColor: "#ffffff", accent: "#9d174d" },
-  { bg: "#E8F5EA", activeBg: "#F0FAF2", iconBg: TALENT_HOME.primary, iconColor: TALENT_HOME.accent, accent: TALENT_HOME.primary },
-  { bg: "#D5EED3", activeBg: "#EEF6EF", iconBg: "#36a852", iconColor: "#ffffff", accent: "#0d4216" },
-  { bg: "#E6E0FF", activeBg: "#F3F0FF", iconBg: "#8b5cf6", iconColor: "#ffffff", accent: "#6d28d9" },
-  { bg: "#D8E9FB", activeBg: "#E8F1FB", iconBg: "#2383e2", iconColor: "#ffffff", accent: "#1F5C99" },
-  { bg: "#FCE7F3", activeBg: "#FFF0F7", iconBg: "#ec4899", iconColor: "#ffffff", accent: "#be185d" },
+  // servicenow — dark teal icon
+  { bg: "#E3F6F1", activeBg: "#EEFBF7", iconBg: "#0B3D3A", iconColor: "#ffffff", accent: "#0B3D3A" },
+  // engineering — sky blue icon
+  { bg: "#E0F2FE", activeBg: "#EFF8FF", iconBg: "#0284C7", iconColor: "#ffffff", accent: "#0369A1" },
+  // data-ai — navy indigo icon
+  { bg: "#E5E7FB", activeBg: "#EEF0FE", iconBg: "#2E3192", iconColor: "#ffffff", accent: "#312E81" },
+  // cloud-devops — amber icon
+  { bg: "#FEF3E2", activeBg: "#FFF8ED", iconBg: "#D97706", iconColor: "#000000", accent: "#B45309" },
+  // enterprise — violet icon
+  { bg: "#EDE9FE", activeBg: "#F5F3FF", iconBg: "#7C5CFC", iconColor: "#ffffff", accent: "#6D28D9" },
+  // quality — maroon icon
+  { bg: "#FCE7ED", activeBg: "#FFF0F3", iconBg: "#9F1239", iconColor: "#ffffff", accent: "#9F1239" },
+  // cybersecurity — orange-red icon
+  { bg: "#FDECE3", activeBg: "#FFF4EE", iconBg: "#C2410C", iconColor: "#ffffff", accent: "#C2410C" },
+  // digital — pink/magenta icon
+  { bg: "#FCE7F3", activeBg: "#FFF0F7", iconBg: "#DB2777", iconColor: "#ffffff", accent: "#9D174D" },
 ] as const;
 
 const TAB_ICON_SRC: Record<string, string> = {
-  servicenow: "/images/talent/tabicon/servicenow.svg",
-  engineering: "/images/talent/tabicon/engineering.svg",
-  "data-ai": "/images/talent/tabicon/data-ai.svg",
-  "cloud-devops": "/images/talent/tabicon/cloud-devops.svg",
-  enterprise: "/images/talent/tabicon/enterprise.svg",
-  quality: "/images/talent/tabicon/quality.svg",
-  cybersecurity: "/images/talent/tabicon/cybersecurity.svg",
-  digital: "/images/talent/tabicon/digital.svg",
+  servicenow: "/updatedtalentimage/section5 (7).webp",
+  engineering: "/updatedtalentimage/section5 (4).webp",
+  "data-ai": "/updatedtalentimage/section5 (1).webp",
+  "cloud-devops": "/updatedtalentimage/section5 (2).webp",
+  enterprise: "/updatedtalentimage/section5 (3).webp",
+  quality: "/updatedtalentimage/section5 (8).webp",
+  cybersecurity: "/updatedtalentimage/section5 (5).webp",
+  digital: "/updatedtalentimage/section5 (6).webp",
 };
 
-function TabIcon({ id, iconBg }: { id: string; iconBg: string; iconColor?: string }) {
+function TabIcon({ id }: { id: string; iconBg?: string; iconColor?: string }) {
   const src = TAB_ICON_SRC[id];
   return (
     <span
-      className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg sm:h-10 sm:w-10"
-      style={{ backgroundColor: iconBg }}
+      className="inline-flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg sm:h-10 sm:w-10"
       aria-hidden="true"
     >
       {src ? (
         <Image
           src={src}
           alt=""
-          width={20}
-          height={20}
+          width={40}
+          height={40}
           unoptimized
-          className="h-5 w-5 brightness-0 invert"
+          className="h-full w-full object-cover"
         />
       ) : null}
     </span>

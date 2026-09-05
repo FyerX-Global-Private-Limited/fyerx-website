@@ -33,7 +33,7 @@ export default function TechApproachSection() {
 
               <h2 className="section-title-lg mt-4 text-[var(--ink)] sm:mt-8">
                 A delivery partner that stays close to the{" "}
-                <span className="tech-gradient-text">outcome</span>.
+                <span className="tech-gradient-text">outcome</span>
               </h2>
 
               <p className="mt-3 max-w-md text-sm font-medium leading-relaxed text-[#52525b] sm:mt-6">

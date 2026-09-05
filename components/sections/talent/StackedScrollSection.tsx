@@ -48,7 +48,7 @@ function CaseStudyBadge({
         style={{ backgroundColor: accentColor }}
         aria-hidden="true"
       />
-      {label} · {clientName}
+      <span className="min-w-0 break-words">{label} · {clientName}</span>
     </span>
   );
 }
@@ -158,11 +158,11 @@ function StackedCaseStudyCard({
       suppressHydrationWarning
     >
       <div
-        className="mb-8 overflow-hidden rounded-[28px] shadow-[0_24px_64px_-28px_rgba(16,16,20,0.22)]"
+        className="mb-6 overflow-hidden rounded-[24px] shadow-[0_24px_64px_-28px_rgba(16,16,20,0.22)] sm:mb-8 sm:rounded-[28px]"
         style={{ backgroundColor: palette.cardBg }}
       >
         <div className="grid md:grid-cols-2">
-          <div className="flex flex-col p-8 sm:p-10 md:p-12" style={{ backgroundColor: palette.cardBg }}>
+          <div className="flex min-w-0 flex-col p-5 sm:p-10 md:p-12" style={{ backgroundColor: palette.cardBg }}>
             <CaseStudyBadge
               label={study.label}
               clientName={study.clientName}
@@ -171,7 +171,7 @@ function StackedCaseStudyCard({
             <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-[#5a5f6b]">
               {study.categoryLabel}
             </p>
-            <h3 className="mt-3 text-2xl font-semibold leading-[1.15] tracking-tight text-[var(--ink)] sm:text-[1.75rem]">
+            <h3 className="mt-3 text-[1.375rem] font-semibold leading-[1.2] tracking-tight break-words text-[var(--ink)] sm:text-[1.75rem]">
               {study.title}
             </h3>
             <p className="mt-4 max-w-md text-sm leading-relaxed text-[#3d4a5c]">{study.summary}</p>

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TALENT_HOME } from "@/lib/talent-home-palette";
 
-const PEOPLE_IMAGE = "/images/talent/subimage.svg";
+const HERO_IMAGE = "/updatedtalentimage/herosection.webp";
 
 const PILLARS = [
   {
@@ -43,7 +43,7 @@ function TalentPeopleMarquee() {
         {[0, 1].map((copy) => (
           <Image
             key={copy}
-            src={PEOPLE_IMAGE}
+            src={HERO_IMAGE}
             alt=""
             width={642}
             height={640}

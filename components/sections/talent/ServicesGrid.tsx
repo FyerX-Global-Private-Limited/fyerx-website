@@ -84,7 +84,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "We focus on role relevance, availability, communication, and practical fit before putting a profile in front of you.",
     alt: "Profiles worth reviewing — FyerX Talent",
-    image: "/avatar/ai1.avif",
+    image: "/avatar/ai1.webp",
   },
   {
     id: "flexible-by-design",
@@ -92,7 +92,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "Use contract staffing, a managed recruitment model, a permanent search, or a blended approach based on what the role needs.",
     alt: "Flexible by design — FyerX Talent",
-    image: "/avatar/ai2.avif",
+    image: "/avatar/ai2.webp",
   },
   {
     id: "technology-roles-understood-properly",
@@ -100,7 +100,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "Specialist talent needs more than keyword matching; screening is shaped around the platform, stack, project context, and seniority.",
     alt: "Technology roles understood properly — FyerX Talent",
-    image: "/avatar/ai3.avif",
+    image: "/avatar/ai3.webp",
   },
   {
     id: "a-clear-hiring-process",
@@ -108,7 +108,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "Role scoping, sourcing, screening, interviews, offers, and onboarding are managed with visible ownership and next steps.",
     alt: "A clear hiring process — FyerX Talent",
-    image: "/avatar/ai4.avif",
+    image: "/avatar/ai4.webp",
   },
   {
     id: "support-beyond-sourcing",
@@ -116,7 +116,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "Assessments, verification, compensation context, contracts, and cross-border considerations can sit within one coordinated process.",
     alt: "Support beyond sourcing — FyerX Talent",
-    image: "/avatar/ai5.avif",
+    image: "/avatar/ai5.webp",
   },
   {
     id: "one-accountable-partner",
@@ -124,7 +124,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "You work with a consistent point of contact who understands the brief as it evolves.",
     alt: "One accountable partner — FyerX Talent",
-    image: "/avatar/ai6.avif",
+    image: "/avatar/ai6.webp",
   },
 ];
 

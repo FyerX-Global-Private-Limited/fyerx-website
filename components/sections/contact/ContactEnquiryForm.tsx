@@ -206,8 +206,8 @@ export const FORM_CONFIG: Record<FormKey, FormConfig> = {
       "Data & AI / Analytics",
       "Cloud & DevOps",
       "Quality Engineering & Testing",
-      "Cybersecurity",
       "Ongoing Maintenance & Support",
+      "Cybersecurity",
       "Other",
     ],
     variant: "standard",
@@ -313,6 +313,33 @@ function CompactExpectedStartSelect({ error }: { error?: boolean }) {
   );
 }
 
+/** Long labels = full row. Short labels pair 2-up; a leftover short also goes full-width. */
+function helpOptionSpansFull(options: string[], index: number, longAt: number) {
+  const isLong = options.map((opt) => opt.length > longAt);
+  if (isLong[index]) return true;
+
+  let pendingShort: number | null = null;
+  const fullWidth = options.map(() => false);
+
+  for (let i = 0; i < options.length; i++) {
+    if (isLong[i]) {
+      fullWidth[i] = true;
+      if (pendingShort !== null) {
+        fullWidth[pendingShort] = true;
+        pendingShort = null;
+      }
+      continue;
+    }
+    if (pendingShort === null) {
+      pendingShort = i;
+    } else {
+      pendingShort = null;
+    }
+  }
+  if (pendingShort !== null) fullWidth[pendingShort] = true;
+  return fullWidth[index];
+}
+
 function CompactHelpMultiselect({
   config,
   options,
@@ -328,22 +355,29 @@ function CompactHelpMultiselect({
   onToggle: (opt: string) => void;
   error: boolean;
 }) {
+  const LONG_AT = 22;
+
   return (
     <div>
       <p className="mb-2 text-[13px] font-semibold text-[#181b34]">
         {label}
         <RequiredMark />
       </p>
-      <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
-        {options.map((opt) => {
+      <div className="grid grid-cols-2 gap-2">
+        {options.map((opt, index) => {
           const isSelected = selected.includes(opt);
+          const fullWidth = helpOptionSpansFull(options, index, LONG_AT);
           return (
             <button
               key={opt}
               type="button"
               onClick={() => onToggle(opt)}
               aria-pressed={isSelected}
-              className="flex min-h-[40px] w-full min-w-0 cursor-pointer items-center justify-center rounded-full border px-2 py-2 text-center text-[11px] font-medium leading-tight break-words transition-colors sm:min-h-[38px] sm:px-3 sm:text-xs sm:leading-snug"
+              className={`flex min-h-[40px] w-full min-w-0 cursor-pointer items-center rounded-full border px-3 py-2 font-medium transition-colors sm:min-h-[42px] sm:px-3.5 ${
+                fullWidth
+                  ? "col-span-2 justify-center text-center text-[11px] leading-none sm:text-[12px]"
+                  : "justify-center text-center text-[11px] leading-snug sm:text-[12px]"
+              }`}
               style={
                 isSelected
                   ? {
@@ -354,7 +388,9 @@ function CompactHelpMultiselect({
                   : { background: "#f7f9fc", borderColor: "#e6e9ef", color: "#3d4a5c" }
               }
             >
-              {opt}
+              <span className={fullWidth ? "whitespace-nowrap" : "text-balance"}>
+                {opt}
+              </span>
             </button>
           );
         })}

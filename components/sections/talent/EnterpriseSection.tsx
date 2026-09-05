@@ -66,12 +66,12 @@ export default function EnterpriseSection() {
 
           <div className="order-1 flex justify-center lg:order-2">
             <Image
-              src="/images/talent/hardesttofill.svg"
+              src="/updatedtalentimage/section10.webp"
               alt="Team collaborating on hiring plans"
               width={615}
               height={476}
               unoptimized
-              className="h-auto w-full max-w-[480px] select-none"
+              className="h-auto w-full select-none rounded-2xl shadow-sm"
               draggable={false}
             />
           </div>

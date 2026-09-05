@@ -6,14 +6,17 @@ import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import {
+  HEADER_LOGO_CLASS,
+  HEADER_LOGO_HEIGHT,
+  HEADER_LOGO_WIDTH,
+} from "@/lib/header-logo";
+import {
   MenuDetailIcon,
   MenuGlyphBold,
   type MenuIconName,
 } from "@/components/ui/MenuGlyph";
 import {
   CategoryThumb,
-  allowsMenuLabelWrap,
-  menuLabelNowrapClass,
   MobileMegaMenuSection,
 } from "@/components/layout/shared/MobileMegaMenuSection";
 import { TALENT_ACCENT, TALENT_PRIMARY } from "@/lib/talent-brand";
@@ -29,9 +32,9 @@ function FyerxLogo() {
     <Image
       src="/logo.webp"
       alt="FyerX"
-      width={140}
-      height={32}
-      className="h-8 w-auto object-contain select-none"
+      width={HEADER_LOGO_WIDTH}
+      height={HEADER_LOGO_HEIGHT}
+      className={HEADER_LOGO_CLASS}
       priority
     />
   );
@@ -83,12 +86,12 @@ type ConsultingCol = {
 };
 
 const platformItems: MarketingItem[] = [
-  { avatar: "/avatar/6.avif", label: "PMO", subtitle: "Projects & delivery", href: "#" },
-  { avatar: "/avatar/5.avif", label: "Marketing", subtitle: "Campaigns & creative", href: "#" },
-  { avatar: "/avatar/4.avif", label: "Operations", subtitle: "Processes & efficiency", href: "#" },
-  { avatar: "/avatar/3.avif", label: "IT", subtitle: "Tickets & support", href: "#" },
-  { avatar: "/avatar/2.avif", label: "HR", subtitle: "Hiring & onboarding", href: "#" },
-  { avatar: "/avatar/1.avif", label: "Sales", subtitle: "Pipeline & deals", href: "#" },
+  { avatar: "/avatar/6.webp", label: "PMO", subtitle: "Projects & delivery", href: "#" },
+  { avatar: "/avatar/5.webp", label: "Marketing", subtitle: "Campaigns & creative", href: "#" },
+  { avatar: "/avatar/4.webp", label: "Operations", subtitle: "Processes & efficiency", href: "#" },
+  { avatar: "/avatar/3.webp", label: "IT", subtitle: "Tickets & support", href: "#" },
+  { avatar: "/avatar/2.webp", label: "HR", subtitle: "Hiring & onboarding", href: "#" },
+  { avatar: "/avatar/1.webp", label: "Sales", subtitle: "Pipeline & deals", href: "#" },
 ];
 
 const capabilityCols: ConsultingCol[] = [
@@ -141,7 +144,7 @@ const talentCategories: MenuCategory[] = [
   {
     label: "Contract Staffing",
     subtitle: "Flexibility & scale",
-    avatar: "/avatar/1.avif",
+    avatar: "/avatar/1.webp",
     icon: "personPlus",
     tint: "#E8F8EF",
     iconColor: "#00CA72",
@@ -155,7 +158,7 @@ const talentCategories: MenuCategory[] = [
   {
     label: "RPO",
     subtitle: "Sourcing & management",
-    avatar: "/avatar/2.avif",
+    avatar: "/avatar/2.webp",
     icon: "funnel",
     tint: "#F3EEFF",
     iconColor: "#6161FF",
@@ -168,7 +171,7 @@ const talentCategories: MenuCategory[] = [
   {
     label: "Permanent Hiring & Executive Search",
     subtitle: "Placement & leadership",
-    avatar: "/avatar/3.avif",
+    avatar: "/avatar/3.webp",
     icon: "search",
     tint: "#E8F4FF",
     iconColor: "#579BFC",
@@ -180,7 +183,7 @@ const talentCategories: MenuCategory[] = [
   {
     label: "IT & Tech Talent",
     subtitle: "Tech & engineering",
-    avatar: "/avatar/4.avif",
+    avatar: "/avatar/4.webp",
     icon: "gear",
     tint: "#FFF6E6",
     iconColor: "#FDAB3D",
@@ -194,7 +197,7 @@ const talentCategories: MenuCategory[] = [
   {
     label: "HR Advisory",
     subtitle: "Strategy & compliance",
-    avatar: "/avatar/5.avif",
+    avatar: "/avatar/5.webp",
     icon: "clipboardCheck",
     tint: "#E8F8EF",
     iconColor: "#00CA72",
@@ -207,7 +210,7 @@ const talentCategories: MenuCategory[] = [
   {
     label: "Global Staffing",
     subtitle: "Reach & expansion",
-    avatar: "/avatar/6.avif",
+    avatar: "/avatar/6.webp",
     icon: "globe",
     tint: "#E8F4FF",
     iconColor: "#0086C0",
@@ -258,13 +261,16 @@ function CategoryMenu({
   if (platformStyle) {
     return (
       <div className="animate-dropdown rounded-b-[16px] border border-[#e6e9ef] bg-white shadow-[0_16px_36px_rgba(20,20,43,0.12),0_2px_8px_rgba(20,20,43,0.06)]">
-        <div className="flex px-10 pt-7 pb-8">
+        <div className="flex min-w-0 px-6 pt-7 pb-8 lg:px-10">
 
-          {/* Left — heading + main headings, 2 per row */}
-          <div className="w-[52%] min-w-[480px] shrink-0 pr-8" style={{ ["--menu-hover" as string]: hoverColor }}>
+          {/* Left — 2-col grid; text stays fully visible and wraps inside its own cell */}
+          <div
+            className="min-w-0 w-[55%] shrink-0 pr-5 lg:w-[54%] lg:pr-8"
+            style={{ ["--menu-hover" as string]: hoverColor }}
+          >
             {heading && (
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-2.5 text-[#9a9ea8]">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex min-w-0 items-center gap-2.5 text-[#9a9ea8]">
                   <MenuGlyphBold name={headingIcon} color="#8b8fa3" size={18} />
                   <span className="mb-0 text-[13px] font-normal uppercase leading-[1.5] tracking-[0.06em] text-[#7c7b7b]">
                     {heading}
@@ -277,6 +283,7 @@ function CategoryMenu({
                     color={visitHomeColor}
                     textColor={visitHomeTextColor}
                     variant="menu"
+                    className="shrink-0"
                   >
                     {visitHomeLabel}
                   </PrimaryCtaLink>
@@ -286,28 +293,28 @@ function CategoryMenu({
             {headingSubtitle && (
               <p className="mb-5 mt-3 text-[13px] leading-[1.5] text-[#676879]">{headingSubtitle}</p>
             )}
-            <div className="grid grid-cols-2 gap-x-8 gap-y-2.5">
+            <div className="grid grid-cols-2 items-start gap-x-4 gap-y-3 lg:gap-x-6">
               {categories.map((cat, i) => (
                 <button
                   key={cat.label}
                   type="button"
                   onClick={() => setActive(i)}
                   aria-pressed={active === i}
-                  className={`flex w-full cursor-pointer gap-3 rounded-[12px] px-3 py-2.5 text-left transition-colors duration-100 ${
-                    allowsMenuLabelWrap(cat.label) ? "items-start" : "items-center"
-                  } ${active === i ? "" : "hover:bg-[#f5f6f8]"}`}
+                  className={`flex w-full min-w-0 cursor-pointer items-start gap-2.5 rounded-[12px] px-2.5 py-2.5 text-left transition-colors duration-100 lg:gap-3 lg:px-3 ${
+                    active === i ? "" : "hover:bg-[#f5f6f8]"
+                  }`}
                   style={active === i ? { backgroundColor: activeItemBg } : undefined}
                 >
                   <CategoryThumb cat={cat} />
-                  <span className="flex min-w-0 flex-col gap-0.5">
+                  <span className="flex min-w-0 flex-1 flex-col gap-0.5 text-left">
                     <span
-                      className={`${menuLabelNowrapClass(cat.label)} text-[14px] font-medium leading-[1.2] transition-colors duration-100`}
+                      className="text-[13px] font-medium leading-snug hyphens-none [overflow-wrap:anywhere] lg:text-[14px]"
                       style={{ color: active === i ? hoverColor : "#323338" }}
                     >
                       {cat.label}
                     </span>
                     {cat.subtitle && (
-                      <span className="whitespace-nowrap text-[12px] font-normal leading-[1.35] text-[#676879]">
+                      <span className="text-[11px] font-normal leading-snug text-[#676879] [overflow-wrap:anywhere] lg:text-[12px]">
                         {cat.subtitle}
                       </span>
                     )}
@@ -318,23 +325,28 @@ function CategoryMenu({
           </div>
 
           {/* Divider */}
-          <div className="mx-2 w-px self-stretch bg-[#eef0f4]" />
+          <div className="mx-2 w-px shrink-0 self-stretch bg-[#eef0f4] lg:mx-3" />
 
-          {/* Right — Service Details in Monday-style columns */}
-          <div className="min-w-0 flex-1 pl-8" style={{ ["--menu-hover" as string]: hoverColor }}>
-            <p className="mb-0 text-[13px] font-normal uppercase leading-[1.5] tracking-[0.06em] text-[#7c7b7b]">Service Details</p>
-            <p className={`mb-5 mt-3 text-[13px] leading-[1.5] text-[#676879] ${menuLabelNowrapClass(category.label)}`}>{category.label}</p>
-            <ul className="grid grid-cols-2 content-start gap-x-8 gap-y-2">
+          {/* Right — Service Details */}
+          <div className="min-w-0 flex-1 pl-5 lg:pl-8" style={{ ["--menu-hover" as string]: hoverColor }}>
+            <p className="mb-0 text-[13px] font-normal uppercase leading-[1.5] tracking-[0.06em] text-[#7c7b7b]">
+              Service Details
+            </p>
+            <p className="mb-5 mt-3 text-[13px] leading-snug text-[#676879] [overflow-wrap:anywhere]">
+              {category.label}
+            </p>
+            <ul className="grid grid-cols-1 content-start items-start gap-x-5 gap-y-2 xl:grid-cols-2">
               {category.items.map((item) => (
                 <li key={item.label} className="min-w-0">
                   <Link
-                    href={item.href} onClick={onClose}
-                    className={`flex gap-2.5 py-1.5 text-[14px] font-normal leading-[1.35] text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)] ${
-                      allowsMenuLabelWrap(item.label) ? "items-start" : "items-center whitespace-nowrap"
-                    }`}
+                    href={item.href}
+                    onClick={onClose}
+                    className="flex min-w-0 items-start gap-2.5 py-1.5 text-[14px] font-normal leading-snug text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)]"
                   >
-                    <MenuDetailIcon name={item.icon} />
-                    <span className={menuLabelNowrapClass(item.label)}>{item.label}</span>
+                    <span className="mt-0.5 shrink-0">
+                      <MenuDetailIcon name={item.icon} />
+                    </span>
+                    <span className="min-w-0 [overflow-wrap:anywhere]">{item.label}</span>
                   </Link>
                 </li>
               ))}
@@ -471,11 +483,11 @@ export default function MainHeader() {
             {/* Desktop nav */}
             <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
 
-              {/* Marketing — icon-list mega-menu */}
-              <div onMouseEnter={() => open("Marketing")}>
-                <Link href="/marketing" onClick={closeAll} className={`${navLinkClass("/marketing")} gap-2
-                  ${openMenu === "Marketing" && !isActive("/marketing") ? "bg-[#fce8ef] text-[#730031]" : ""}`}>
-                  Marketing <ChevronDown open={openMenu === "Marketing"} />
+              {/* Technology — column mega-menu */}
+              <div onMouseEnter={() => open("Technology")}>
+                <Link href="/technology" onClick={closeAll} className={`${navLinkClass("/technology", "bg-[#20287A1F] text-[#20287A]")} gap-2
+                  ${openMenu === "Technology" && !isActive("/technology") ? "bg-[#20287A1F] text-[#20287A]" : ""}`}>
+                  Technology <ChevronDown open={openMenu === "Technology"} />
                 </Link>
               </div>
 
@@ -487,11 +499,11 @@ export default function MainHeader() {
                 </Link>
               </div>
 
-              {/* Technology — column mega-menu */}
-              <div onMouseEnter={() => open("Technology")}>
-                <Link href="/technology" onClick={closeAll} className={`${navLinkClass("/technology", "bg-[#20287A1F] text-[#20287A]")} gap-2
-                  ${openMenu === "Technology" && !isActive("/technology") ? "bg-[#20287A1F] text-[#20287A]" : ""}`}>
-                  Technology <ChevronDown open={openMenu === "Technology"} />
+              {/* Marketing — icon-list mega-menu */}
+              <div onMouseEnter={() => open("Marketing")}>
+                <Link href="/marketing" onClick={closeAll} className={`${navLinkClass("/marketing")} gap-2
+                  ${openMenu === "Marketing" && !isActive("/marketing") ? "bg-[#fce8ef] text-[#730031]" : ""}`}>
+                  Marketing <ChevronDown open={openMenu === "Marketing"} />
                 </Link>
               </div>
 
@@ -592,19 +604,19 @@ export default function MainHeader() {
         <div className="md:hidden max-h-[calc(100dvh-60px)] overflow-y-auto border-t border-[#e6e9ef] bg-white">
           <div className="flex flex-col px-4 py-4 sm:px-6 lg:px-16">
             <MobileMegaMenuSection
-              label="Marketing"
-              expanded={mobileExpanded === "Marketing"}
+              label="Technology"
+              expanded={mobileExpanded === "Technology"}
               onToggle={() =>
-                setMobileExpanded((current) => (current === "Marketing" ? null : "Marketing"))
+                setMobileExpanded((current) => (current === "Technology" ? null : "Technology"))
               }
-              activeClass="bg-[#fce8ef] text-[#730031]"
-              activeItemBg="#fce8ef"
-              categories={marketingCategories}
-              hoverColor={MARKETING_CRIMSON}
-              visitHomeHref="/marketing"
+              activeClass="bg-[#20287A1F] text-[#20287A]"
+              activeItemBg="rgba(32, 40, 122, 0.12)"
+              categories={technologyCategories}
+              hoverColor={TECH_PRIMARY}
+              visitHomeHref="/technology"
               visitHomeLabel="Visit Homepage"
-              visitHomeColor="#FFC900"
-              visitHomeTextColor="#111111"
+              visitHomeColor={TECH_PRIMARY}
+              visitHomeTextColor={TECH_ACCENT}
               onClose={closeAll}
             />
 
@@ -626,19 +638,19 @@ export default function MainHeader() {
             />
 
             <MobileMegaMenuSection
-              label="Technology"
-              expanded={mobileExpanded === "Technology"}
+              label="Marketing"
+              expanded={mobileExpanded === "Marketing"}
               onToggle={() =>
-                setMobileExpanded((current) => (current === "Technology" ? null : "Technology"))
+                setMobileExpanded((current) => (current === "Marketing" ? null : "Marketing"))
               }
-              activeClass="bg-[#20287A1F] text-[#20287A]"
-              activeItemBg="rgba(32, 40, 122, 0.12)"
-              categories={technologyCategories}
-              hoverColor={TECH_PRIMARY}
-              visitHomeHref="/technology"
+              activeClass="bg-[#fce8ef] text-[#730031]"
+              activeItemBg="#fce8ef"
+              categories={marketingCategories}
+              hoverColor={MARKETING_CRIMSON}
+              visitHomeHref="/marketing"
               visitHomeLabel="Visit Homepage"
-              visitHomeColor={TECH_PRIMARY}
-              visitHomeTextColor={TECH_ACCENT}
+              visitHomeColor="#FFC900"
+              visitHomeTextColor="#111111"
               onClose={closeAll}
             />
 

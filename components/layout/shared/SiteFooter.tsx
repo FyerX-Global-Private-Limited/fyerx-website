@@ -4,6 +4,14 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
+  HEADER_LOGO_CLASS,
+  HEADER_LOGO_HEIGHT,
+  HEADER_LOGO_TECH_CLASS,
+  HEADER_LOGO_TECH_HEIGHT,
+  HEADER_LOGO_TECH_WIDTH,
+  HEADER_LOGO_WIDTH,
+} from "@/lib/header-logo";
+import {
   FOOTER_CAPABILITIES,
   FOOTER_CONTACT,
   FOOTER_EXPLORE_LINKS,
@@ -40,33 +48,33 @@ const LOGO_BY_VARIANT: Record<
     src: "/logo.webp",
     alt: "FyerX",
     href: "/",
-    width: 140,
-    height: 32,
-    className: "h-8 w-auto object-contain",
+    width: HEADER_LOGO_WIDTH,
+    height: HEADER_LOGO_HEIGHT,
+    className: HEADER_LOGO_CLASS,
   },
   marketing: {
-    src: "/images/marketing/marketinglogo.png",
+    src: "/images/marketing/marketinglogo.webp",
     alt: "FyerX Marketing",
     href: "/marketing",
-    width: 160,
-    height: 48,
-    className: "h-10 w-auto object-contain",
+    width: HEADER_LOGO_WIDTH,
+    height: HEADER_LOGO_HEIGHT,
+    className: HEADER_LOGO_CLASS,
   },
   talent: {
-    src: "/images/marketing/technologylogo.png",
+    src: "/images/marketing/technologylogo.webp",
     alt: "FyerX Talent",
     href: "/talent",
-    width: 160,
-    height: 48,
-    className: "h-10 w-auto object-contain",
+    width: HEADER_LOGO_WIDTH,
+    height: HEADER_LOGO_HEIGHT,
+    className: HEADER_LOGO_CLASS,
   },
   technology: {
     src: "/technologylogo.svg",
     alt: "FyerX Technology",
     href: "/technology",
-    width: 160,
-    height: 48,
-    className: "h-10 w-auto object-contain",
+    width: HEADER_LOGO_TECH_WIDTH,
+    height: HEADER_LOGO_TECH_HEIGHT,
+    className: HEADER_LOGO_TECH_CLASS,
   },
 };
 
@@ -74,7 +82,7 @@ const TAGLINE_BY_VARIANT: Record<SiteFooterVariant, string> = {
   main: "One partner for every part of your business.",
   marketing: "Campaigns, content, and growth that drive pipeline.",
   talent: "Staffing, hiring, and recruitment support for your team.",
-  technology: "Systems that keep the business moving.",
+  technology: "Systems that keep the business moving",
 };
 
 const headingCls =
@@ -212,7 +220,10 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
         >
           {/* Brand + contact — left column */}
           <div className="col-span-2 min-w-0 sm:col-span-3 lg:col-span-1">
-            <Link href={logo.href} className="inline-flex h-10 items-center">
+            <Link
+              href={logo.href}
+              className={`inline-flex items-center ${variant === "technology" ? "h-10" : "h-8"}`}
+            >
               <Image
                 src={logo.src}
                 alt={logo.alt}

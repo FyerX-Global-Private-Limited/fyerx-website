@@ -11,6 +11,11 @@ import {
   MobileMegaMenuSection,
 } from "@/components/layout/shared/MobileMegaMenuSection";
 import { VisitHomeNavButton } from "@/components/layout/shared/VisitHomeNavButton";
+import {
+  HEADER_LOGO_CLASS,
+  HEADER_LOGO_HEIGHT,
+  HEADER_LOGO_WIDTH,
+} from "@/lib/header-logo";
 import { MARKETING_MENU_CATEGORIES } from "@/lib/marketing-menu";
 
 // ── Icons ──────────────────────────────────────────────────────────────────────
@@ -72,7 +77,7 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
     <div className="animate-dropdown rounded-b-[16px] border border-[#e6e9ef] bg-white shadow-[0_16px_36px_rgba(20,20,43,0.12),0_2px_8px_rgba(20,20,43,0.06)]">
       <div className="flex px-10 pt-7 pb-8">
         {/* Left — heading + main headings, 2 per row */}
-        <div className="w-[52%] min-w-[480px] shrink-0 pr-8" style={{ ["--menu-hover" as string]: MARKETING_CRIMSON }}>
+        <div className="w-[52%] min-w-0 shrink-0 pr-6 lg:pr-8" style={{ ["--menu-hover" as string]: MARKETING_CRIMSON }}>
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2.5 text-[#9a9ea8]">
               <MenuGlyphBold name="megaphone" color="#8b8fa3" size={18} />
@@ -109,13 +114,13 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
                 <CategoryThumb cat={cat} />
                 <span className="flex flex-col gap-0.5">
                   <span
-                    className="whitespace-nowrap text-[14px] font-medium leading-[1.2] transition-colors duration-100"
+                    className="text-[14px] font-medium leading-[1.2] break-words transition-colors duration-100"
                     style={{ color: active === i ? MARKETING_CRIMSON : "#323338" }}
                   >
                     {cat.label}
                   </span>
                   {cat.subtitle && (
-                    <span className="whitespace-nowrap text-[12px] font-normal leading-[1.35] text-[#676879]">
+                    <span className="text-[12px] font-normal leading-[1.35] text-[#676879] break-words">
                       {cat.subtitle}
                     </span>
                   )}
@@ -133,19 +138,19 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
           <p className="mb-0 text-[13px] font-normal uppercase leading-[1.5] tracking-[0.06em] text-[#7c7b7b]">
             Service Details
           </p>
-          <p className="mb-5 mt-3 whitespace-nowrap text-[13px] leading-[1.5] text-[#676879]">
+          <p className="mb-5 mt-3 text-[13px] leading-[1.5] text-[#676879] break-words">
             {category.label}
           </p>
-          <ul className="grid grid-cols-2 content-start gap-x-8 gap-y-2">
+          <ul className="grid grid-cols-1 content-start gap-x-8 gap-y-2 xl:grid-cols-2">
             {category.items.map((item) => (
               <li key={item.label} className="min-w-0">
                 <Link
                   href={item.href}
                   onClick={onClose}
-                  className="flex items-center gap-2.5 whitespace-nowrap py-1.5 text-[14px] font-normal leading-[1.35] text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)]"
+                  className="flex items-start gap-2.5 py-1.5 text-[14px] font-normal leading-[1.35] text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)]"
                 >
-                  <MenuDetailIcon name={item.icon} />
-                  {item.label}
+                  <span className="mt-0.5 shrink-0"><MenuDetailIcon name={item.icon} /></span>
+                  <span className="min-w-0 break-words">{item.label}</span>
                 </Link>
               </li>
             ))}
@@ -208,11 +213,11 @@ export default function MarketingHeader() {
         <div className="flex h-[56px] w-full items-center px-4 sm:h-[60px] sm:px-6 lg:px-16">
           <Link href="/marketing" className="flex shrink-0 items-center" onClick={closeAll}>
             <Image
-              src="/images/marketing/marketinglogo.png"
+              src="/images/marketing/marketinglogo.webp"
               alt="FyerX Marketing"
-              width={140}
-              height={32}
-              className="h-8 w-auto object-contain"
+              width={HEADER_LOGO_WIDTH}
+              height={HEADER_LOGO_HEIGHT}
+              className={HEADER_LOGO_CLASS}
               priority
             />
           </Link>

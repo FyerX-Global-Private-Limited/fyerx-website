@@ -3,6 +3,7 @@ import MarketingHero from "@/components/sections/talent/MarketingHero";
 import FoundationSection from "@/components/sections/talent/FoundationSection";
 import TrackRecord from "@/components/sections/talent/TrackRecord";
 import TalentCapabilitySection from "@/components/sections/talent/TalentCapabilitySection";
+import ProjectStaffingPods from "@/components/sections/talent/ProjectStaffingPods";
 import StackedScrollSection from "@/components/sections/talent/StackedScrollSection";
 import IndustriesSection from "@/components/sections/talent/IndustriesSection";
 import CampaignsSection from "@/components/sections/talent/CampaignsSection";
@@ -26,6 +27,7 @@ export default function TalentHomePage() {
       <TrackRecord />
       <FoundationSection />
       <TalentCapabilitySection />
+      <ProjectStaffingPods />
       <StackedScrollSection />
       <IndustriesSection />
       <CampaignsSection />

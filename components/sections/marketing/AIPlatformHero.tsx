@@ -65,7 +65,7 @@ const PANEL_GRADIENTS = [
 ];
 
 const TAB_IMAGES: Record<string, string> = Object.fromEntries(
-  ALL_TABS.map((tab, i) => [tab, `/avatar/ai${(i % 6) + 1}.avif`])
+  ALL_TABS.map((tab, i) => [tab, `/avatar/ai${(i % 6) + 1}.webp`])
 );
 
 const TAB_PANEL_BG: Record<string, string> = Object.fromEntries(

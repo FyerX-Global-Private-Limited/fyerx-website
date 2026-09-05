@@ -13,6 +13,11 @@ import {
   MobileMegaMenuSection,
 } from "@/components/layout/shared/MobileMegaMenuSection";
 import { VisitHomeNavButton } from "@/components/layout/shared/VisitHomeNavButton";
+import {
+  HEADER_LOGO_TECH_CLASS,
+  HEADER_LOGO_TECH_HEIGHT,
+  HEADER_LOGO_TECH_WIDTH,
+} from "@/lib/header-logo";
 
 function ChevronDown({ open }: { open: boolean }) {
   return (
@@ -90,7 +95,7 @@ function Glyph({ name }: { name: IconName }) {
 }
 
 const simpleLinks = [
-  { label: "Our Work", href: "/technology/case-studies" },
+  { label: "Blueprints", href: "/technology/case-studies" },
   { label: "Careers", href: "https://fyerx.zohorecruit.in/jobs/Careers", external: true },
   { label: "Blog", href: "/blog" },
 ];
@@ -104,8 +109,8 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="animate-dropdown rounded-b-[16px] border border-[#e6e9ef] bg-white shadow-[0_16px_36px_rgba(20,20,43,0.12),0_2px_8px_rgba(20,20,43,0.06)]">
-      <div className="flex px-10 pt-7 pb-8">
-        <div className="w-[52%] min-w-[480px] shrink-0 pr-8" style={{ ["--menu-hover" as string]: TECH_MENU_HOVER }}>
+      <div className="flex min-w-0 px-6 pt-7 pb-8 lg:px-10">
+        <div className="w-[52%] min-w-0 shrink-0 pr-6 lg:pr-8" style={{ ["--menu-hover" as string]: TECH_MENU_HOVER }}>
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2.5 text-[#9a9ea8]">
               <Glyph name="gear" />
@@ -139,15 +144,15 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
                 style={active === i ? { backgroundColor: TECH_ACTIVE_BG } : undefined}
               >
                 <CategoryThumb cat={cat} />
-                <span className="flex flex-col gap-0.5">
+                <span className="flex min-w-0 flex-col gap-0.5">
                   <span
-                    className="whitespace-nowrap text-[14px] font-medium leading-[1.2] transition-colors duration-100"
+                    className="text-[14px] font-medium leading-[1.2] break-words transition-colors duration-100"
                     style={{ color: active === i ? TECH_MENU_HOVER : "#323338" }}
                   >
                     {cat.label}
                   </span>
                   {cat.subtitle && (
-                    <span className="whitespace-nowrap text-[12px] font-normal leading-[1.35] text-[#676879]">
+                    <span className="text-[12px] font-normal leading-[1.35] text-[#676879] break-words">
                       {cat.subtitle}
                     </span>
                   )}
@@ -163,21 +168,21 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
           <p className="mb-0 text-[13px] font-normal uppercase leading-[1.5] tracking-[0.06em] text-[#7c7b7b]">
             Service Details
           </p>
-          <p className="mb-5 mt-3 whitespace-nowrap text-[13px] leading-[1.5] text-[#676879]">
+          <p className="mb-5 mt-3 text-[13px] leading-[1.5] text-[#676879] break-words">
             {category.label}
           </p>
-          <ul className="grid grid-cols-2 content-start gap-x-8 gap-y-2">
+          <ul className="grid grid-cols-1 content-start gap-x-8 gap-y-2 xl:grid-cols-2">
             {category.items.map((item) => (
               <li key={item.label} className="min-w-0">
                 <Link
                   href={item.href}
                   onClick={onClose}
-                  className="flex items-center gap-2.5 whitespace-nowrap py-1.5 text-[14px] font-normal leading-[1.35] text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)]"
+                  className="flex items-start gap-2.5 py-1.5 text-[14px] font-normal leading-[1.35] text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)]"
                 >
-                  <span className="shrink-0 text-[#8b8fa3]">
+                  <span className="mt-0.5 shrink-0 text-[#8b8fa3]">
                     <MenuDetailIcon name={item.icon} />
                   </span>
-                  {item.label}
+                  <span className="min-w-0 break-words">{item.label}</span>
                 </Link>
               </li>
             ))}
@@ -202,7 +207,7 @@ export default function TechnologyHeader() {
       : pathname === href || pathname.startsWith(`${href}/`);
 
   const navLinkClass = (href: string) =>
-    `px-4 py-2 rounded-[8px] text-[0.875rem] font-light transition-colors duration-100 whitespace-nowrap ${
+    `px-2.5 py-2 rounded-[8px] text-[0.875rem] font-light transition-colors duration-100 whitespace-nowrap lg:px-3.5 ${
       isActive(href) ? "bg-[#B8C5FF]/35 text-[#20287A]" : "text-[rgb(83,87,104)] hover:bg-[#f5f6f8]"
     }`;
 
@@ -240,18 +245,18 @@ export default function TechnologyHeader() {
         <div className="flex h-[56px] w-full items-center px-4 sm:h-[60px] sm:px-6 lg:px-16">
           <Link href="/technology" className="flex shrink-0 items-center" onClick={closeAll}>
             <Image
-              src={TECH_LOGO}
+              src={`${TECH_LOGO}?v=3`}
               alt="FyerX Technology"
-              width={180}
-              height={44}
+              width={HEADER_LOGO_TECH_WIDTH}
+              height={HEADER_LOGO_TECH_HEIGHT}
               unoptimized
-              className="h-9 w-auto object-contain sm:h-10 md:h-11"
+              className={HEADER_LOGO_TECH_CLASS}
               priority
             />
           </Link>
 
-          <div className="ml-8 flex min-w-0 flex-1 items-center sm:ml-10 lg:ml-12">
-            <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
+          <div className="ml-4 flex min-w-0 flex-1 items-center sm:ml-6 lg:ml-8">
+            <nav className="hidden min-w-0 md:flex items-center gap-0.5 lg:gap-1">
               <div onMouseEnter={openMenu}>
                 <button
                   type="button"
@@ -293,7 +298,7 @@ export default function TechnologyHeader() {
                 textColor="#ffffff"
                 variant="nav"
               >
-                Talk to an Expert
+                Get Started
               </PrimaryCtaLink>
             </div>
 
@@ -362,7 +367,7 @@ export default function TechnologyHeader() {
                 variant="nav"
                 className="!w-full justify-center"
               >
-                Talk to an Expert
+                Get Started
               </PrimaryCtaLink>
             </div>
           </div>

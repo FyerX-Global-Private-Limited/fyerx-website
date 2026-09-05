@@ -14,7 +14,7 @@ export default function TechSolutionsSection() {
           </p>
           <h2 className="section-title-lg mt-3">
             From strategy through to{" "}
-            <span className="tech-gradient-text">sustained delivery</span>.
+            <span className="tech-gradient-text">sustained delivery</span>
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-[#52525b] sm:mt-4 sm:text-base sm:text-[17px]">
             Engage FyerX for a focused initiative or a connected programme spanning

@@ -40,7 +40,7 @@ export default function TalentClosingSection() {
       <div className="mx-auto max-w-[1360px] text-center">
         <div className="flex justify-center">
           <Image
-            src="/images/talent/centericons.svg"
+            src="/updatedtalentimage/section3.webp"
             alt=""
             width={399}
             height={74}
