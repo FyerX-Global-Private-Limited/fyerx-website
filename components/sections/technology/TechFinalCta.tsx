@@ -4,10 +4,10 @@ import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TECH_HOME } from "@/lib/technology-home-palette";
 
 const PIPELINE_STEPS = [
-  { label: "Discovery", detail: "Priority & landscape mapped", done: true },
-  { label: "Design", detail: "Target operating model defined", done: true },
+  { label: "Discovery", detail: "Priority & landscape mapped", done: true, active: false },
+  { label: "Design", detail: "Target operating model defined", done: true, active: false },
   { label: "Delivery", detail: "Configuration & release in flight", done: false, active: true },
-  { label: "Adoption", detail: "Handover & improvement rhythm", done: false },
+  { label: "Adoption", detail: "Handover & improvement rhythm", done: false, active: false },
 ] as const;
 
 function DeliveryPipelineCard() {
