@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import Image from "next/image";
 
 export type MenuIconName =
   | "clipboardCheck"
@@ -281,7 +282,15 @@ export function MenuHeroCircle({
   );
 }
 
-export function MenuDetailIcon({ name }: { name: MenuIconName }) {
+export function MenuDetailIcon({ name, src }: { name: MenuIconName; src?: string }) {
+  if (src) {
+    return (
+      <span className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-[7px]">
+        <Image src={src} alt="" width={28} height={28} className="h-7 w-7 object-contain" />
+      </span>
+    );
+  }
+
   const palette = MENU_ICON_PALETTE[name];
   return (
     <span

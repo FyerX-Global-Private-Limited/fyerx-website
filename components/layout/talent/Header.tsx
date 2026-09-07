@@ -7,12 +7,12 @@ import { useEffect, useRef, useState } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { MenuDetailIcon } from "@/components/ui/MenuGlyph";
 import { TALENT_ACCENT, TALENT_LOGO, TALENT_PRIMARY } from "@/lib/talent-brand";
+import { TALENT_MENU_CATEGORIES, TALENT_MENU_HEADING_ICON } from "@/lib/talent-menu";
 import {
   CategoryThumb,
   allowsMenuLabelWrap,
   menuLabelNowrapClass,
   MobileMegaMenuSection,
-  type MobileMenuCategory,
 } from "@/components/layout/shared/MobileMegaMenuSection";
 import { VisitHomeNavButton } from "@/components/layout/shared/VisitHomeNavButton";
 import {
@@ -98,87 +98,7 @@ function Glyph({ name }: { name: IconName }) {
 }
 
 // ── Data ───────────────────────────────────────────────────────────────────────
-const talentCategories: MobileMenuCategory[] = [
-  {
-    label: "Contract Staffing",
-    subtitle: "Flexibility & scale",
-    avatar: "/avatar/1.webp",
-    icon: "personPlus",
-    tint: "#E8F8EF",
-    iconColor: "#00CA72",
-    items: [
-      { label: "IT & Tech Contract Roles", icon: "gear", href: "#" },
-      { label: "Project-Based Staffing", icon: "clipboardCheck", href: "#" },
-      { label: "Volume/Bulk Staffing", icon: "personPlus", href: "#" },
-      { label: "Cross-Border Contract Staffing (US)", icon: "globe", href: "#" },
-    ],
-  },
-  {
-    label: "RPO",
-    subtitle: "Sourcing & management",
-    avatar: "/avatar/2.webp",
-    icon: "funnel",
-    tint: "#F3EEFF",
-    iconColor: "#6161FF",
-    items: [
-      { label: "End-to-End Recruitment Outsourcing", icon: "funnel", href: "#" },
-      { label: "On-Demand RPO", icon: "sparkle", href: "#" },
-      { label: "Enterprise RPO", icon: "database", href: "#" },
-    ],
-  },
-  {
-    label: "Permanent Hiring & Executive Search",
-    subtitle: "Placement & leadership",
-    avatar: "/avatar/3.webp",
-    icon: "search",
-    tint: "#E8F4FF",
-    iconColor: "#579BFC",
-    items: [
-      { label: "Permanent Hiring", icon: "personPlus", href: "#" },
-      { label: "Executive Search", icon: "search", href: "#" },
-    ],
-  },
-  {
-    label: "IT & Tech Talent",
-    subtitle: "Tech & engineering",
-    avatar: "/avatar/4.webp",
-    icon: "gear",
-    tint: "#FFF6E6",
-    iconColor: "#FDAB3D",
-    items: [
-      { label: "Software Development Roles", icon: "doc", href: "#" },
-      { label: "ServiceNow & Enterprise Platform Talent", icon: "plug", href: "#" },
-      { label: "Data & AI Talent", icon: "sparkle", href: "#" },
-      { label: "DevOps & Cloud Talent", icon: "database", href: "#" },
-    ],
-  },
-  {
-    label: "HR Advisory",
-    subtitle: "Strategy & compliance",
-    avatar: "/avatar/5.webp",
-    icon: "clipboardCheck",
-    tint: "#E8F8EF",
-    iconColor: "#00CA72",
-    items: [
-      { label: "Hiring Assessments", icon: "clipboardCheck", href: "#" },
-      { label: "Background Verification", icon: "tag", href: "#" },
-      { label: "Compensation Benchmarking", icon: "chart", href: "#" },
-    ],
-  },
-  {
-    label: "Global Staffing",
-    subtitle: "Reach & expansion",
-    avatar: "/avatar/6.webp",
-    icon: "globe",
-    tint: "#E8F4FF",
-    iconColor: "#0086C0",
-    items: [
-      { label: "US Contract Staffing", icon: "globe", href: "#" },
-      { label: "Remote Team Building", icon: "personPlus", href: "#" },
-      { label: "Cross-Border Compliance Support", icon: "globe", href: "#" },
-    ],
-  },
-];
+const talentCategories = TALENT_MENU_CATEGORIES;
 
 const simpleLinks = [
   { label: "Case Studies", href: "/talent/case-studies" },
@@ -202,7 +122,7 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
         <div className="w-[52%] min-w-[480px] shrink-0 pr-8" style={{ ["--menu-hover" as string]: TALENT_MENU_HOVER }}>
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2.5 text-[#9a9ea8]">
-              <Glyph name="personPlus" />
+              <Image src={TALENT_MENU_HEADING_ICON} alt="" width={18} height={18} className="h-[18px] w-[18px] object-contain" />
               <span className="mb-0 text-[13px] font-normal uppercase leading-[1.5] tracking-[0.06em] text-[#7c7b7b]">
                 Talent Solutions
               </span>
@@ -273,7 +193,7 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
                   }`}
                 >
                   <span className="shrink-0 text-[#8b8fa3]">
-                    <MenuDetailIcon name={item.icon} />
+                    <MenuDetailIcon name={item.icon} src={item.image} />
                   </span>
                   <span className={menuLabelNowrapClass(item.label)}>{item.label}</span>
                 </Link>
