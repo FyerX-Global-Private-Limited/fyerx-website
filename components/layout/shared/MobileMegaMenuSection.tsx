@@ -17,7 +17,9 @@ export type MobileMenuCategory = {
   icon?: MenuIconName;
   tint?: string;
   iconColor?: string;
-  items: { label: string; href: string; icon: MenuIconName }[];
+  /** Raster icon for category thumb (overrides glyph when set). */
+  image?: string;
+  items: { label: string; href: string; icon: MenuIconName; image?: string }[];
 };
 
 /** Labels that should wrap instead of overflowing the mega-menu column. */
@@ -28,15 +30,12 @@ const MENU_LABELS_ALLOW_WRAP = new Set([
   "CRM & Productivity Platforms",
   "ERP & Business Platforms",
   "Automation & Integration",
-  "Marketing & Consulting",
+  "Marketing Strategy & Consulting",
+  "Demand & Lead Generation",
   "Search & AI Visibility",
-  "Social Media Marketing",
+  "AI Marketing & Automation",
   "Performance Marketing",
-  "Marketing Automation",
-  "Branding & Design",
-  "Demand Generation",
-  "Content Production",
-  "AI Marketing",
+  "Brand & Digital Experience",
 ]);
 
 /** Wrap earlier so 2-column mega-menu cells don't clip into the next column. */
@@ -80,6 +79,19 @@ export function CategoryThumb({
   cat: MobileMenuCategory;
   size?: number;
 }) {
+  if (cat.image) {
+    return (
+      <Image
+        src={cat.image}
+        alt=""
+        width={size}
+        height={size}
+        className="shrink-0 rounded-[10px] object-contain"
+        style={{ width: size, height: size }}
+      />
+    );
+  }
+
   if (cat.icon && cat.tint) {
     return (
       <MenuCategoryThumb
@@ -205,7 +217,7 @@ export function MobileMegaMenuSection({
                           onClick={onClose}
                           className="flex items-center gap-2 py-2 text-[0.8125rem] leading-snug text-[#323338] transition-colors hover:text-[var(--menu-hover)]"
                         >
-                          <MenuDetailIcon name={item.icon} />
+                          <MenuDetailIcon name={item.icon} src={item.image} />
                           <span>{item.label}</span>
                         </Link>
                       </li>

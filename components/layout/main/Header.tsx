@@ -21,8 +21,9 @@ import {
 } from "@/components/layout/shared/MobileMegaMenuSection";
 import { TALENT_ACCENT, TALENT_PRIMARY } from "@/lib/talent-brand";
 import { TECH_ACCENT, TECH_PRIMARY } from "@/lib/technology-brand";
-import { MARKETING_MENU_CATEGORIES } from "@/lib/marketing-menu";
-import { TECHNOLOGY_MENU_CATEGORIES } from "@/lib/technology-menu";
+import { MARKETING_MENU_CATEGORIES, MARKETING_MENU_HEADING_ICON } from "@/lib/marketing-menu";
+import { TALENT_MENU_CATEGORIES, TALENT_MENU_HEADING_ICON } from "@/lib/talent-menu";
+import { TECHNOLOGY_MENU_CATEGORIES, TECHNOLOGY_MENU_HEADING_ICON } from "@/lib/technology-menu";
 
 const MARKETING_CRIMSON = "#730031";
 
@@ -134,93 +135,13 @@ type MenuCategory = {
   icon?: IconName;
   tint?: string;
   iconColor?: string;
-  items: { label: string; href: string; icon: IconName }[];
+  image?: string;
+  items: { label: string; href: string; icon: IconName; image?: string }[];
 };
 
 const marketingCategories: MenuCategory[] = MARKETING_MENU_CATEGORIES;
 const technologyCategories: MenuCategory[] = TECHNOLOGY_MENU_CATEGORIES;
-
-const talentCategories: MenuCategory[] = [
-  {
-    label: "Contract Staffing",
-    subtitle: "Flexibility & scale",
-    avatar: "/avatar/1.webp",
-    icon: "personPlus",
-    tint: "#E8F8EF",
-    iconColor: "#00CA72",
-    items: [
-      { label: "IT & Tech Contract Roles", icon: "gear", href: "#" },
-      { label: "Project-Based Staffing", icon: "clipboardCheck", href: "#" },
-      { label: "Volume/Bulk Staffing", icon: "personPlus", href: "#" },
-      { label: "Cross-Border Contract Staffing (US)", icon: "globe", href: "#" },
-    ],
-  },
-  {
-    label: "RPO",
-    subtitle: "Sourcing & management",
-    avatar: "/avatar/2.webp",
-    icon: "funnel",
-    tint: "#F3EEFF",
-    iconColor: "#6161FF",
-    items: [
-      { label: "End-to-End Recruitment Outsourcing", icon: "funnel", href: "#" },
-      { label: "On-Demand RPO", icon: "sparkle", href: "#" },
-      { label: "Enterprise RPO", icon: "database", href: "#" },
-    ],
-  },
-  {
-    label: "Permanent Hiring & Executive Search",
-    subtitle: "Placement & leadership",
-    avatar: "/avatar/3.webp",
-    icon: "search",
-    tint: "#E8F4FF",
-    iconColor: "#579BFC",
-    items: [
-      { label: "Permanent Hiring", icon: "personPlus", href: "#" },
-      { label: "Executive Search", icon: "search", href: "#" },
-    ],
-  },
-  {
-    label: "IT & Tech Talent",
-    subtitle: "Tech & engineering",
-    avatar: "/avatar/4.webp",
-    icon: "gear",
-    tint: "#FFF6E6",
-    iconColor: "#FDAB3D",
-    items: [
-      { label: "Software Development Roles", icon: "doc", href: "#" },
-      { label: "ServiceNow & Enterprise Platform Talent", icon: "plug", href: "#" },
-      { label: "Data & AI Talent", icon: "sparkle", href: "#" },
-      { label: "DevOps & Cloud Talent", icon: "database", href: "#" },
-    ],
-  },
-  {
-    label: "HR Advisory",
-    subtitle: "Strategy & compliance",
-    avatar: "/avatar/5.webp",
-    icon: "clipboardCheck",
-    tint: "#E8F8EF",
-    iconColor: "#00CA72",
-    items: [
-      { label: "Hiring Assessments", icon: "clipboardCheck", href: "#" },
-      { label: "Background Verification", icon: "tag", href: "#" },
-      { label: "Compensation Benchmarking", icon: "chart", href: "#" },
-    ],
-  },
-  {
-    label: "Global Staffing",
-    subtitle: "Reach & expansion",
-    avatar: "/avatar/6.webp",
-    icon: "globe",
-    tint: "#E8F4FF",
-    iconColor: "#0086C0",
-    items: [
-      { label: "US Contract Staffing", icon: "globe", href: "#" },
-      { label: "Remote Team Building", icon: "personPlus", href: "#" },
-      { label: "Cross-Border Compliance Support", icon: "globe", href: "#" },
-    ],
-  },
-];
+const talentCategories: MenuCategory[] = TALENT_MENU_CATEGORIES;
 
 // ── Category menu — left = clickable main headings (avatar + label), 2 per
 // row; right = sub-headings (icon + label) for whichever heading is active.
@@ -234,6 +155,7 @@ function CategoryMenu({
   heading,
   headingSubtitle,
   headingIcon = "megaphone",
+  headingImage,
   platformStyle = false,
   hoverColor = "#5c4fe0",
   visitHomeHref,
@@ -247,6 +169,7 @@ function CategoryMenu({
   heading?: string;
   headingSubtitle?: string;
   headingIcon?: IconName;
+  headingImage?: string;
   platformStyle?: boolean;
   hoverColor?: string;
   visitHomeHref?: string;
@@ -271,7 +194,11 @@ function CategoryMenu({
             {heading && (
               <div className="flex items-center justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-2.5 text-[#9a9ea8]">
-                  <MenuGlyphBold name={headingIcon} color="#8b8fa3" size={18} />
+                  {headingImage ? (
+                    <Image src={headingImage} alt="" width={18} height={18} className="h-[18px] w-[18px] object-contain" />
+                  ) : (
+                    <MenuGlyphBold name={headingIcon} color="#8b8fa3" size={18} />
+                  )}
                   <span className="mb-0 text-[13px] font-normal uppercase leading-[1.5] tracking-[0.06em] text-[#7c7b7b]">
                     {heading}
                   </span>
@@ -344,7 +271,7 @@ function CategoryMenu({
                     className="flex min-w-0 items-start gap-2.5 py-1.5 text-[14px] font-normal leading-snug text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)]"
                   >
                     <span className="mt-0.5 shrink-0">
-                      <MenuDetailIcon name={item.icon} />
+                      <MenuDetailIcon name={item.icon} src={item.image} />
                     </span>
                     <span className="min-w-0 [overflow-wrap:anywhere]">{item.label}</span>
                   </Link>
@@ -418,7 +345,7 @@ function CategoryMenu({
                   className="flex items-center gap-2 py-0.5 text-[14px] font-medium text-[#323338]
                              transition-colors duration-100 hover:text-[#5c4fe0]"
                 >
-                  <MenuDetailIcon name={item.icon} />
+                  <MenuDetailIcon name={item.icon} src={item.image} />
                   {item.label}
                 </Link>
               </li>
@@ -552,6 +479,7 @@ export default function MainHeader() {
               heading="MARKETING SERVICES"
               headingSubtitle="An overview of what we offer"
               headingIcon="megaphone"
+              headingImage={MARKETING_MENU_HEADING_ICON}
               platformStyle
               hoverColor={MARKETING_CRIMSON}
               activeItemBg="#fce8ef"
@@ -570,6 +498,7 @@ export default function MainHeader() {
               heading="TALENT SOLUTIONS"
               headingSubtitle="An overview of what we offer"
               headingIcon="personPlus"
+              headingImage={TALENT_MENU_HEADING_ICON}
               platformStyle
               hoverColor={TALENT_PRIMARY}
               activeItemBg="rgba(158, 235, 170, 0.25)"
@@ -588,6 +517,7 @@ export default function MainHeader() {
               heading="TECHNOLOGY SERVICES"
               headingSubtitle="An overview of what we offer"
               headingIcon="gear"
+              headingImage={TECHNOLOGY_MENU_HEADING_ICON}
               platformStyle
               hoverColor={TECH_PRIMARY}
               activeItemBg="rgba(32, 40, 122, 0.12)"

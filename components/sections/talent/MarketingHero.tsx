@@ -4,7 +4,12 @@ import Image from "next/image";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TALENT_HOME } from "@/lib/talent-home-palette";
 
-const HERO_IMAGE = "/updatedtalentimage/herosection.webp";
+const HERO_COLUMNS = [
+  { src: "/Talent 1.webp", duration: "36s", reverse: false, delay: "0s" },
+  { src: "/Talent 2.webp", duration: "44s", reverse: true, delay: "-10s" },
+  { src: "/Talent 3.webp", duration: "40s", reverse: false, delay: "-18s" },
+  { src: "/Talent 4.webp", duration: "48s", reverse: true, delay: "-6s" },
+] as const;
 
 const PILLARS = [
   {
@@ -22,45 +27,63 @@ const PILLARS = [
 function TalentPeopleMarquee() {
   return (
     <div
-      className="relative mx-auto aspect-[642/640] h-auto w-full max-w-[642px] overflow-hidden rounded-xl sm:rounded-2xl"
+      className="relative mx-auto aspect-[642/640] h-auto w-full max-w-[642px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_14%,black_86%,transparent)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_14%,black_86%,transparent)]"
       aria-hidden="true"
     >
       <style>{`
-        @keyframes talent-hero-scroll-up {
+        @keyframes talent-hero-col-up {
           from { transform: translateY(0); }
           to { transform: translateY(-50%); }
         }
-        .talent-hero-marquee-track {
-          animation: talent-hero-scroll-up 48s linear infinite;
+        @keyframes talent-hero-col-down {
+          from { transform: translateY(-50%); }
+          to { transform: translateY(0); }
+        }
+        .talent-hero-col-up {
+          animation: talent-hero-col-up var(--talent-col-duration, 40s) linear infinite;
+          animation-delay: var(--talent-col-delay, 0s);
+          will-change: transform;
+        }
+        .talent-hero-col-down {
+          animation: talent-hero-col-down var(--talent-col-duration, 40s) linear infinite;
+          animation-delay: var(--talent-col-delay, 0s);
           will-change: transform;
         }
         @media (prefers-reduced-motion: reduce) {
-          .talent-hero-marquee-track { animation: none; }
+          .talent-hero-col-up, .talent-hero-col-down { animation: none; }
         }
       `}</style>
 
-      <div className="talent-hero-marquee-track flex w-full flex-col">
-        {[0, 1].map((copy) => (
-          <Image
-            key={copy}
-            src={HERO_IMAGE}
-            alt=""
-            width={642}
-            height={640}
-            unoptimized
-            priority={copy === 0}
-            sizes="(max-width: 1024px) 90vw, 480px"
-            className="h-auto w-full shrink-0 select-none"
-            draggable={false}
-          />
+      <div className="absolute inset-0 grid grid-cols-4 gap-2 sm:gap-2.5">
+        {HERO_COLUMNS.map((col, index) => (
+          <div key={col.src} className="relative min-h-0 min-w-0 overflow-hidden">
+            <div
+              className={`flex flex-col ${col.reverse ? "talent-hero-col-down" : "talent-hero-col-up"}`}
+              style={{
+                ["--talent-col-duration" as string]: col.duration,
+                ["--talent-col-delay" as string]: col.delay,
+              }}
+            >
+              {[0, 1].map((copy) => (
+                <Image
+                  key={copy}
+                  src={col.src}
+                  alt=""
+                  width={640}
+                  height={5232}
+                  priority={index === 0 && copy === 0}
+                  sizes="(max-width: 1024px) 22vw, 160px"
+                  className="block h-auto w-full shrink-0 select-none"
+                  draggable={false}
+                />
+              ))}
+            </div>
+          </div>
         ))}
       </div>
 
-      {/* Soft edge fades so the loop reads like the reference crop */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-white via-white/85 to-transparent sm:h-20" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-white via-white/85 to-transparent sm:h-20" />
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-white to-transparent sm:w-10" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-white to-transparent sm:w-10" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-16 bg-gradient-to-b from-white via-white/80 to-transparent sm:h-24" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-16 bg-gradient-to-t from-white via-white/80 to-transparent sm:h-24" />
     </div>
   );
 }

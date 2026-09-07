@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 interface TabData {
   label: string;
   para: string;
-  video: string;
+  image: string;
   cta: string;
   activeBg: string;
   activeColor: string;
@@ -23,7 +24,7 @@ const TABS: TabData[] = [
   {
     label: "Technology",
     para: "From ServiceNow and cloud to data, AI, and transformation, we help businesses build technology that is ready for what comes next.",
-    video: "/marketing-video.mp4",
+    image: "/updatedmainpage/section3 technology.webp",
     cta: "Get Started",
     activeBg: "#20287A1F",
     activeColor: "#20287A",
@@ -31,7 +32,7 @@ const TABS: TabData[] = [
   {
     label: "Talent",
     para: "We source, screen, and place people suited to your business, cutting down the time it usually takes to build a reliable team.",
-    video: "/talent.mp4",
+    image: "/updatedmainpage/section3 talent.webp",
     cta: "Get Started",
     activeBg: "#11551C1F",
     activeColor: "#11551C",
@@ -39,7 +40,7 @@ const TABS: TabData[] = [
   {
     label: "Marketing",
     para: "Our marketing team plans, launches, and manages campaigns end to end, so you get consistent visibility without having to manage the details yourself.",
-    video: "/marketing-video.mp4",
+    image: "/updatedmainpage/section3 marketing.webp",
     cta: "Get Started",
     activeBg: "#FFC9001F",
     activeColor: "#111111",
@@ -47,7 +48,7 @@ const TABS: TabData[] = [
   {
     label: "Learning",
     para: "FyerX Learning offers practical, job-ready courses in marketing, technology, and business skills, built for both individuals and teams looking to upskill.",
-    video: "/whowe.mp4",
+    image: "/updatedmainpage/section3 learning.webp",
     cta: "Explore Courses",
     activeBg: "#86013A1F",
     activeColor: "#86013A",
@@ -125,15 +126,15 @@ export default function HowWeWork() {
           </div>
 
           <div className="board-card">
-            <div className="board video-board fade-swap" key={`video-${active}`}>
-              <video
-                className="board-video"
-                src={t.video}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
+            <div className="board video-board fade-swap" key={`image-${active}`}>
+              <Image
+                className="board-image"
+                src={t.image}
+                alt={`${t.label} overview`}
+                width={1600}
+                height={1000}
+                sizes="(max-width: 1024px) 100vw, 65vw"
+                priority={active === 0}
               />
             </div>
           </div>
@@ -208,9 +209,9 @@ const css = `
     overflow:hidden;
   }
   .hww-hero .board.video-board{display:block;overflow:hidden;}
-  .hww-hero .board-video{
-    display:block;width:100%;height:100%;min-height:320px;
-    object-fit:cover;border-radius:8px;
+  .hww-hero .board-image{
+    display:block;width:100%;height:auto;min-height:320px;
+    object-fit:contain;border-radius:8px;background:#fff;
   }
   .hww-hero .fade-swap{animation:hwwFadeUp .35s ease;}
   @keyframes hwwFadeUp{
@@ -219,7 +220,7 @@ const css = `
   }
   @media (max-width:1024px){
     .hww-hero .panel{grid-template-columns:1fr;gap:32px;}
-    .hww-hero .board-video{min-height:240px;}
+    .hww-hero .board-image{min-height:240px;}
   }
   @media (max-width:767px){
     .hww-hero .section-header{margin-bottom:1.5rem;}
@@ -227,7 +228,7 @@ const css = `
     .hww-hero .tabbar{margin-top:0;width:100%;border-radius:16px;padding:6px;gap:3px;}
     .hww-hero .tab{flex:1 1 calc(50% - 3px);min-width:0;padding:0.45rem 0.65rem;font-size:0.75rem;white-space:normal;text-align:center;line-height:1.2;}
     .hww-hero .board-card{padding:12px;}
-    .hww-hero .board-video{min-height:200px;}
+    .hww-hero .board-image{min-height:200px;}
     .hww-hero .board{min-height:200px;}
   }
   @media (max-width:640px){

@@ -1,41 +1,31 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { PrimaryCtaLink } from '@/components/ui/PrimaryCta';
 
-/**
- * Control & governance section — single-file Next.js + React.
- * Drop this in as app/page.tsx (App Router) or pages/index.tsx (Pages Router).
- * Fully self-contained: no Tailwind, no icon library, no extra dependencies.
- * Styling uses Next.js's built-in styled-jsx.
- */
-
-type Feature = { icon: React.ReactNode; title: string; body: string; tint: 'red' | 'purple' | 'yellow' | 'green' };
+type Feature = { image: string; title: string; body: string };
 
 const FEATURES: Feature[] = [
   {
-    icon: <KeyIcon />,
+    image: '/updatedmainpage/section6 (2).webp',
     title: 'Strategic by design',
     body: 'Every engagement begins with a clear understanding of the business objective, not a pre-set solution.',
-    tint: 'red',
   },
   {
-    icon: <HistoryIcon />,
+    image: '/updatedmainpage/section6 (3).webp',
     title: 'Disciplined execution',
     body: 'Defined plans, clear ownership, and consistent follow-through keep work progressing without unnecessary friction.',
-    tint: 'purple',
   },
   {
-    icon: <UserCheckIcon />,
+    image: '/updatedmainpage/section6 (4).webp',
     title: 'Partnership mindset',
     body: 'We work as an extension of your team, bringing context, judgement, and continuity to every engagement.',
-    tint: 'yellow',
   },
   {
-    icon: <ShieldIcon />,
+    image: '/updatedmainpage/section6 (1).webp',
     title: 'Built for progress',
     body: 'Our work is structured to create measurable movement today while supporting what the business needs next.',
-    tint: 'green',
   },
 ];
 
@@ -45,6 +35,7 @@ export default function AiHiring() {
       <div className="section-shell section-shell--wide">
         <div className="cg__inner">
           <div className="cg__left">
+            <p className="cg__eyebrow">The FyerX standard</p>
             <h2 className="cg__heading section-heading">
               <span className="brand-gradient-text">Built for work</span>
               <br />
@@ -58,12 +49,21 @@ export default function AiHiring() {
             <PrimaryCtaLink href="/contact" className="mt-10">
               Work with FyerX
             </PrimaryCtaLink>
+            <p className="cg__trust">Strategy-led · Outcome-focused · Built to last</p>
           </div>
 
           <div className="cg__grid">
             {FEATURES.map((f) => (
               <article className="cg__card" key={f.title}>
-                <div className={`cg__iconBox cg__iconBox--${f.tint}`}>{f.icon}</div>
+                <div className="cg__iconBox">
+                  <Image
+                    src={f.image}
+                    alt=""
+                    width={52}
+                    height={52}
+                    className="cg__icon"
+                  />
+                </div>
                 <h3 className="cg__cardTitle">{f.title}</h3>
                 <p className="cg__cardBody">{f.body}</p>
               </article>
@@ -150,33 +150,17 @@ export default function AiHiring() {
         .cg__iconBox {
           width: 52px;
           height: 52px;
-          border-radius: 12px;
-          background: var(--iconbg);
+          border-radius: 50%;
+          overflow: hidden;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: var(--ink);
         }
-
-        .cg__iconBox--red {
-          background: #FFE8E6;
-          border: none;
-          color: #E2445C;
-        }
-        .cg__iconBox--purple {
-          background: #F3EEFF;
-          border: none;
-          color: #6161FF;
-        }
-        .cg__iconBox--yellow {
-          background: #FFF6E6;
-          border: none;
-          color: #FDAB3D;
-        }
-        .cg__iconBox--green {
-          background: #E8F8EF;
-          border: none;
-          color: #00CA72;
+        .cg__icon {
+          width: 52px;
+          height: 52px;
+          display: block;
+          object-fit: contain;
         }
 
         .cg__cardTitle {
@@ -216,57 +200,14 @@ export default function AiHiring() {
             margin: 20px 0 1rem;
             font-size: 1rem;
           }
-          .cg__iconBox {
+          .cg__iconBox,
+          .cg__icon {
             width: 44px;
             height: 44px;
           }
         }
       `}</style>
     </section>
-  );
-}
-
-/* ============================================================= */
-/* Feature icons (inline SVG, stroke = currentColor)             */
-/* ============================================================= */
-
-function KeyIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4" />
-      <path d="m21 2-9.6 9.6" />
-      <circle cx="7.5" cy="15.5" r="5.5" />
-    </svg>
-  );
-}
-
-function HistoryIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-      <path d="M3 3v5h5" />
-      <path d="M12 7v5l4 2" />
-    </svg>
-  );
-}
-
-function UserCheckIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="m16 11 2 2 4-4" />
-    </svg>
-  );
-}
-
-function ShieldIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
-      <rect x="9.3" y="11" width="5.4" height="4.2" rx="1" />
-      <path d="M10.4 11v-1a1.6 1.6 0 0 1 3.2 0v1" />
-    </svg>
   );
 }
 

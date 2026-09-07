@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 const BRAND = {
@@ -10,9 +11,11 @@ const BRAND = {
   home: "#86013A",
 } as const;
 
+const HERO_IMAGE_ASPECT = "3056 / 2560";
+
 const pillars: {
   label: string;
-  video: string;
+  image: string;
   brandColor: string;
   activeText: string;
   checkText: string;
@@ -20,26 +23,8 @@ const pillars: {
   ctaTextColor: string;
 }[] = [
   {
-    label: "Technology",
-    video: "/marketing-video.mp4",
-    brandColor: BRAND.technology,
-    activeText: BRAND.technology,
-    checkText: "#ffffff",
-    ctaHref: "/technology",
-    ctaTextColor: "#ffffff",
-  },
-  {
-    label: "Talent",
-    video: "/talent.mp4",
-    brandColor: BRAND.talent,
-    activeText: BRAND.talent,
-    checkText: "#ffffff",
-    ctaHref: "/talent",
-    ctaTextColor: "#ffffff",
-  },
-  {
     label: "Marketing",
-    video: "/marketing-video.mp4",
+    image: "/updatedmainpage/Marketing.webp",
     brandColor: BRAND.marketing,
     activeText: "#111111",
     checkText: "#111111",
@@ -47,8 +32,26 @@ const pillars: {
     ctaTextColor: "#111111",
   },
   {
+    label: "Talent",
+    image: "/updatedmainpage/Talent.webp",
+    brandColor: BRAND.talent,
+    activeText: BRAND.talent,
+    checkText: "#ffffff",
+    ctaHref: "/talent",
+    ctaTextColor: "#ffffff",
+  },
+  {
+    label: "Technology",
+    image: "/updatedmainpage/Technology.webp",
+    brandColor: BRAND.technology,
+    activeText: BRAND.technology,
+    checkText: "#ffffff",
+    ctaHref: "/technology",
+    ctaTextColor: "#ffffff",
+  },
+  {
     label: "Learning",
-    video: "/whowe.mp4",
+    image: "/updatedmainpage/Learning.webp",
     brandColor: BRAND.home,
     activeText: BRAND.home,
     checkText: "#ffffff",
@@ -72,7 +75,7 @@ export default function Hero() {
   return (
     <section className="home-section relative w-full bg-white font-calibri">
       <div className="section-shell section-shell--wide">
-        <div className="flex flex-col gap-6 sm:gap-8 lg:flex-row lg:items-center lg:gap-12">
+        <div className="flex flex-col gap-6 sm:gap-8 lg:flex-row lg:items-center lg:gap-10">
           <div className="order-2 flex w-full min-w-0 flex-col justify-start text-left lg:order-1 lg:max-w-[23rem] lg:shrink-0 lg:pt-4">
             <h1 className="text-balance text-[clamp(1.375rem,5.5vw,2.25rem)] font-medium leading-[1.2] tracking-[-0.03em] text-black">
               You{" "}
@@ -103,8 +106,10 @@ export default function Hero() {
                     key={pillar.label}
                     type="button"
                     onClick={() => setActive(i)}
-                    className={`inline-flex h-9 w-full cursor-pointer items-center justify-center gap-1.5 rounded-full px-3 text-[13px] transition-all duration-200 sm:h-8 sm:w-auto sm:justify-start sm:px-3.5 sm:text-sm ${
-                      isActive ? "font-medium shadow-sm" : "bg-[#f2f3f5] font-normal text-slate"
+                    className={`inline-flex h-9 w-full cursor-pointer items-center justify-center gap-1.5 rounded-full border px-3 text-[13px] transition-all duration-200 sm:h-8 sm:w-auto sm:justify-start sm:px-3.5 sm:text-sm ${
+                      isActive
+                        ? "border-transparent font-medium shadow-sm"
+                        : "border-[#e6e9ef] bg-white font-normal text-slate"
                     }`}
                     style={
                       isActive
@@ -156,21 +161,25 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="relative order-1 aspect-[4/3] w-full min-w-0 flex-1 overflow-hidden rounded-2xl sm:aspect-[16/10] lg:order-2 lg:aspect-auto lg:min-h-[26rem] lg:rounded-tl-[28px] lg:rounded-tr-none lg:rounded-br-none lg:rounded-bl-none">
-            {pillars.map((pillar, i) => (
-              <video
-                key={pillar.label}
-                src={pillar.video}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
-                  active === i ? "opacity-100" : "opacity-0"
-                }`}
-              />
-            ))}
+          <div className="relative order-1 flex w-full min-w-0 flex-1 items-center justify-center bg-white lg:order-2">
+            <div
+              className="relative w-full max-w-[720px] lg:max-w-none"
+              style={{ aspectRatio: HERO_IMAGE_ASPECT }}
+            >
+              {pillars.map((pillar, i) => (
+                <Image
+                  key={pillar.label}
+                  src={pillar.image}
+                  alt={`${pillar.label} overview`}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 58vw"
+                  priority={i === 0}
+                  className={`bg-white object-contain object-center transition-opacity duration-500 ${
+                    active === i ? "opacity-100" : "pointer-events-none opacity-0"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

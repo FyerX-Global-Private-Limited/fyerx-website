@@ -1,110 +1,21 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
+import Image from "next/image";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
-const ICON_COLORS = ["#6161FF", "#FF5AC4", "#00CA72", "#FDAB3D", "#E2445C", "#A25DDC", "#0086C0", "#579BFC"];
+const ICON_COLORS = ["#86013A", "#20287A", "#FDAB3D", "#11551C", "#A25DDC", "#0086C0", "#E2445C", "#FF5AC4"];
 
-function ColorIcon({ color, children }: { color: string; children: ReactNode }) {
-  return (
-    <span
-      className="tr-iconWrap"
-      style={{ backgroundColor: `${color}18`, color }}
-      aria-hidden="true"
-    >
-      {children}
-    </span>
-  );
-}
-
-const ICONS: Record<string, (color: string) => ReactNode> = {
-  growth: (c) => (
-    <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <path d="M8 38h32" stroke={c} strokeWidth="2.4" strokeLinecap="round" />
-        <path d="M12 30l9-11 8 7 11-14" stroke={c} strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M30 8h8v8" stroke={c} strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="34" cy="14" r="3" fill={`${c}55`} />
-      </svg>
-    </ColorIcon>
-  ),
-  brand: (c) => (
-    <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <circle cx="24" cy="24" r="16" fill={`${c}22`} stroke={c} strokeWidth="2.2" />
-        <circle cx="24" cy="24" r="8" fill={`${c}44`} />
-        <circle cx="24" cy="24" r="3" fill={c} />
-      </svg>
-    </ColorIcon>
-  ),
-  hiring: (c) => (
-    <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <circle cx="17" cy="16" r="6" fill={`${c}33`} stroke={c} strokeWidth="2.2" />
-        <path d="M6 38v-2a10 10 0 0118-6" stroke={c} strokeWidth="2.4" strokeLinecap="round" />
-        <circle cx="33" cy="14" r="5" fill={c} />
-        <path d="M27 38v-1a7 7 0 017-7h1a7 7 0 017 7v1" stroke={c} strokeWidth="2.2" strokeLinecap="round" />
-      </svg>
-    </ColorIcon>
-  ),
-  specialist: (c) => (
-    <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <path d="M24 8L6 18l18 10 18-10-18-10z" fill={`${c}22`} stroke={c} strokeWidth="2.2" strokeLinejoin="round" />
-        <path d="M12 26v12c0 3 5 8 12 8s12-5 12-8V26" stroke={c} strokeWidth="2.2" strokeLinecap="round" />
-      </svg>
-    </ColorIcon>
-  ),
-  tech: (c) => (
-    <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <rect x="10" y="10" width="28" height="18" rx="3" fill={`${c}22`} stroke={c} strokeWidth="2.2" />
-        <path d="M4 34h40l-3 5H7l-3-5z" fill={c} />
-        <rect x="18" y="16" width="12" height="2.5" rx="1.2" fill={c} />
-      </svg>
-    </ColorIcon>
-  ),
-  ai: (c) => (
-    <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <circle cx="24" cy="24" r="9" fill={`${c}33`} stroke={c} strokeWidth="2.2" />
-        <path d="M24 6v5M24 37v5M6 24h5M37 24h5M11.5 11.5l3.5 3.5M33 33l3.5 3.5M11.5 36.5l3.5-3.5M33 15l3.5-3.5" stroke={c} strokeWidth="2.2" strokeLinecap="round" />
-      </svg>
-    </ColorIcon>
-  ),
-  cloud: (c) => (
-    <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <path d="M14 36h22a8 8 0 000-16 10 10 0 00-19.2-3.2A7 7 0 0014 36z" fill={`${c}22`} stroke={c} strokeWidth="2.2" strokeLinejoin="round" />
-      </svg>
-    </ColorIcon>
-  ),
-  skills: (c) => (
-    <ColorIcon color={c}>
-      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <path d="M8 38V18l16-10 16 10v20" fill={`${c}18`} stroke={c} strokeWidth="2.2" strokeLinejoin="round" />
-        <path d="M18 38V26h12v12" fill={c} />
-        <path d="M8 18l16 10 16-10" stroke={c} strokeWidth="2.2" strokeLinecap="round" />
-      </svg>
-    </ColorIcon>
-  ),
-};
-
-interface Industry {
-  icon: keyof typeof ICONS;
-  label: string;
-}
-
-const INDUSTRIES: Industry[] = [
-  { icon: "growth", label: "Growth & Demand" },
-  { icon: "brand", label: "Brand & Market Presence" },
-  { icon: "hiring", label: "Hiring & Workforce" },
-  { icon: "specialist", label: "Specialist Talent" },
-  { icon: "tech", label: "Technology Modernization" },
-  { icon: "ai", label: "Data, AI & Automation" },
-  { icon: "cloud", label: "Cloud & Enterprise Platforms" },
-  { icon: "skills", label: "Skills & Capability Building" },
-];
+const INDUSTRIES = [
+  { icon: "/updatedmainpage/icons (4).webp", label: "Growth & Demand" },
+  { icon: "/updatedmainpage/icons (5).webp", label: "Brand & Market Presence" },
+  { icon: "/updatedmainpage/icons (6).webp", label: "Hiring & Workforce" },
+  { icon: "/updatedmainpage/icons (2).webp", label: "Specialist Talent" },
+  { icon: "/updatedmainpage/icons (8).webp", label: "Technology Modernization" },
+  { icon: "/updatedmainpage/icons (1).webp", label: "Data, AI & Automation" },
+  { icon: "/updatedmainpage/icons (7).webp", label: "Cloud & Enterprise Platforms" },
+  { icon: "/updatedmainpage/icons (3).webp", label: "Skills & Capability Building" },
+] as const;
 
 export default function TrackRecord() {
   const [selected, setSelected] = useState<Set<number>>(new Set());
@@ -155,7 +66,15 @@ export default function TrackRecord() {
                   </svg>
                 )}
               </span>
-              {ICONS[ind.icon](color)}
+              <span className="tr-iconWrap">
+                <Image
+                  src={ind.icon}
+                  alt=""
+                  width={48}
+                  height={48}
+                  className="tr-icon"
+                />
+              </span>
               <span className="tr-label">{ind.label}</span>
             </button>
           );
@@ -253,9 +172,14 @@ const css = `
     justify-content:center;
     width:40px;
     height:40px;
-    border-radius:10px;
+    flex-shrink:0;
   }
-  .tr-hero .tr-iconWrap svg{width:24px;height:24px;}
+  .tr-hero .tr-icon{
+    width:40px;
+    height:40px;
+    display:block;
+    object-fit:contain;
+  }
   .tr-hero .tr-label{
     text-align:center;
     font-size:0.625rem;
@@ -266,15 +190,13 @@ const css = `
   }
   @media (max-width:380px){
     .tr-hero .tr-card{min-height:96px;padding:12px 6px;gap:4px;}
-    .tr-hero .tr-iconWrap{width:36px;height:36px;}
-    .tr-hero .tr-iconWrap svg{width:22px;height:22px;}
+    .tr-hero .tr-iconWrap,.tr-hero .tr-icon{width:36px;height:36px;}
     .tr-hero .tr-label{font-size:0.5625rem;}
   }
   @media (min-width:640px){
     .tr-hero .tr-cards{gap:10px;}
     .tr-hero .tr-card{min-height:115px;padding:16px 10px;}
-    .tr-hero .tr-iconWrap{width:44px;height:44px;}
-    .tr-hero .tr-iconWrap svg{width:28px;height:28px;}
+    .tr-hero .tr-iconWrap,.tr-hero .tr-icon{width:44px;height:44px;}
     .tr-hero .tr-label{font-size:0.72rem;padding:0 4px;}
   }
   @media (min-width:768px){
