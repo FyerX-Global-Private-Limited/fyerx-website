@@ -117,7 +117,7 @@ function StackedCaseStudyCard({
       suppressHydrationWarning
     >
       <div
-        className="mb-6 overflow-hidden rounded-[20px] shadow-[0_24px_64px_-28px_rgba(16,16,20,0.22)] sm:mb-8 sm:rounded-[28px]"
+        className="mb-6 overflow-hidden rounded-[20px] shadow-[0_24px_64px_-28px_rgba(16,16,20,0.22)] last:mb-0 sm:mb-8 sm:rounded-[28px] sm:last:mb-0"
         style={{ backgroundColor: palette.cardBg }}
       >
         <div className="grid md:grid-cols-2">
@@ -201,11 +201,7 @@ export default function StackedScrollSection() {
           </h2>
         </div>
 
-        <div
-          className={`relative mt-8 md:mt-12 ${
-            stackEnabled ? "pb-[20vh]" : "pb-4 sm:pb-6"
-          }`}
-        >
+        <div className="relative mt-8 pb-4 sm:pb-6 md:mt-12">
           {MARKETING_CASE_STUDIES.map((study, index) => (
             <StackedCaseStudyCard
               key={study.slug}
