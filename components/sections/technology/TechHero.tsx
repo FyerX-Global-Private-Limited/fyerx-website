@@ -4,7 +4,7 @@ import Image from "next/image";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TECH_HOME } from "@/lib/technology-home-palette";
 
-const PEOPLE_IMAGE = "/images/talent/subimage.svg";
+const PEOPLE_IMAGE = "/images/main/technology.webp";
 
 const PILLARS = [
   {
@@ -24,47 +24,19 @@ const PILLARS = [
   },
 ] as const;
 
-function TechPeopleMarquee() {
+function TechHeroVisual() {
   return (
     <div
-      className="relative mx-auto aspect-[4/3] h-auto w-full max-w-[280px] overflow-hidden sm:aspect-[642/640] sm:max-w-[420px] lg:max-w-[642px]"
-      aria-hidden="true"
+      className="relative mx-auto aspect-[3056/2560] h-auto w-full max-w-[280px] overflow-hidden sm:max-w-[420px] lg:max-w-[642px]"
     >
-      <style>{`
-        @keyframes tech-hero-scroll-up {
-          from { transform: translateY(0); }
-          to { transform: translateY(-50%); }
-        }
-        .tech-hero-marquee-track {
-          animation: tech-hero-scroll-up 48s linear infinite;
-          will-change: transform;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .tech-hero-marquee-track { animation: none; }
-        }
-      `}</style>
-
-      <div className="tech-hero-marquee-track flex w-full flex-col">
-        {[0, 1].map((copy) => (
-          <Image
-            key={copy}
-            src={PEOPLE_IMAGE}
-            alt=""
-            width={642}
-            height={640}
-            unoptimized
-            priority={copy === 0}
-            sizes="(max-width: 1024px) 90vw, 480px"
-            className="h-auto w-full shrink-0 select-none"
-            draggable={false}
-          />
-        ))}
-      </div>
-
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-white via-white/85 to-transparent sm:h-20" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-white via-white/85 to-transparent sm:h-20" />
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-white to-transparent sm:w-10" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-white to-transparent sm:w-10" />
+      <Image
+        src={PEOPLE_IMAGE}
+        alt="Enterprise technology delivery"
+        fill
+        sizes="(max-width: 1024px) 90vw, 480px"
+        className="object-contain object-center"
+        priority
+      />
     </div>
   );
 }
@@ -90,8 +62,8 @@ function PillarCard({
         />
       </span>
       <div className="min-w-0 text-left">
-        <p className="text-sm font-semibold leading-snug text-[var(--ink)] sm:text-[15px]">{title}</p>
-        <p className="mt-0.5 text-xs leading-snug text-[#52525b] sm:text-[13px]">{subtitle}</p>
+        <p className="text-sm font-semibold leading-snug break-words text-[var(--ink)] sm:text-[15px]">{title}</p>
+        <p className="mt-0.5 text-xs leading-snug break-words text-[#52525b] sm:text-[13px]">{subtitle}</p>
       </div>
     </div>
   );
@@ -127,14 +99,14 @@ export default function TechHero() {
           </div>
 
           <div className="mt-5 sm:mt-7">
-            <PrimaryCtaLink href="/technology#contact" color={TECH_HOME.primary} textColor={TECH_HOME.accent}>
+            <PrimaryCtaLink href="/contact?form=technology" color={TECH_HOME.primary} textColor={TECH_HOME.accent}>
               Talk to Our Team
             </PrimaryCtaLink>
           </div>
         </div>
 
         <div className="order-1 flex min-w-0 items-center justify-center lg:order-2 lg:justify-end">
-          <TechPeopleMarquee />
+          <TechHeroVisual />
         </div>
       </div>
     </section>

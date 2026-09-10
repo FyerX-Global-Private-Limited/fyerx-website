@@ -8,9 +8,9 @@ import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { MenuDetailIcon } from "@/components/ui/MenuGlyph";
 import { TALENT_ACCENT, TALENT_LOGO, TALENT_PRIMARY } from "@/lib/talent-brand";
 import { TALENT_MENU_CATEGORIES, TALENT_MENU_HEADING_ICON } from "@/lib/talent-menu";
+import { encodePublicSrc } from "@/lib/public-src";
 import {
   CategoryThumb,
-  allowsMenuLabelWrap,
   menuLabelNowrapClass,
   MobileMegaMenuSection,
 } from "@/components/layout/shared/MobileMegaMenuSection";
@@ -103,7 +103,6 @@ const talentCategories = TALENT_MENU_CATEGORIES;
 const simpleLinks = [
   { label: "Case Studies", href: "/talent/case-studies" },
   { label: "Careers", href: "https://fyerx.zohorecruit.in/jobs/Careers", external: true },
-  { label: "Blog", href: "/blog" },
 ];
 
 const TALENT_MENU_HOVER = TALENT_PRIMARY;
@@ -122,7 +121,7 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
         <div className="w-[52%] min-w-[480px] shrink-0 pr-8" style={{ ["--menu-hover" as string]: TALENT_MENU_HOVER }}>
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2.5 text-[#9a9ea8]">
-              <Image src={TALENT_MENU_HEADING_ICON} alt="" width={18} height={18} className="h-[18px] w-[18px] object-contain" />
+              <Image src={encodePublicSrc(TALENT_MENU_HEADING_ICON)} alt="" width={18} height={18} unoptimized className="h-[18px] w-[18px] object-contain" />
               <span className="mb-0 text-[13px] font-normal uppercase leading-[1.5] tracking-[0.06em] text-[#7c7b7b]">
                 Talent Solutions
               </span>
@@ -147,9 +146,9 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
                 type="button"
                 onClick={() => setActive(i)}
                 aria-pressed={active === i}
-                className={`flex w-full cursor-pointer gap-3 rounded-[12px] px-3 py-2.5 text-left transition-colors duration-100 ${
-                  allowsMenuLabelWrap(cat.label) ? "items-start" : "items-center"
-                } ${active === i ? "" : "hover:bg-[#f5f6f8]"}`}
+                className={`flex w-full cursor-pointer items-center gap-3 rounded-[12px] px-3 py-2.5 text-left transition-colors duration-100 ${
+                  active === i ? "" : "hover:bg-[#f5f6f8]"
+                }`}
                 style={active === i ? { backgroundColor: TALENT_ACTIVE_BG } : undefined}
               >
                 <CategoryThumb cat={cat} />
@@ -188,9 +187,7 @@ function TalentMenu({ onClose }: { onClose: () => void }) {
                 <Link
                   href={item.href}
                   onClick={onClose}
-                  className={`flex gap-2.5 py-1.5 text-[14px] font-normal leading-[1.35] text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)] ${
-                    allowsMenuLabelWrap(item.label) ? "items-start" : "items-center whitespace-nowrap"
-                  }`}
+                  className="flex items-center gap-3 py-1.5 text-[14px] font-normal leading-[1.35] text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)]"
                 >
                   <span className="shrink-0 text-[#8b8fa3]">
                     <MenuDetailIcon name={item.icon} src={item.image} />

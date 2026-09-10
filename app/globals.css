@@ -305,9 +305,18 @@ button:disabled,
 }
 
 @media (max-width: 767px) {
+  .home-main {
+    padding-inline:
+      max(0.75rem, env(safe-area-inset-left))
+      max(0.75rem, env(safe-area-inset-right));
+  }
+
   .home-main--site {
     gap: 1.25rem;
     padding-block: 1.25rem;
+    padding-inline:
+      max(0.75rem, env(safe-area-inset-left))
+      max(0.75rem, env(safe-area-inset-right));
   }
 
   .home-main--talent {
@@ -414,6 +423,11 @@ button:disabled,
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+}
+
+/* Hide the default reCAPTCHA badge; disclosure is shown next to each form. */
+.grecaptcha-badge {
+  visibility: hidden !important;
 }
 
 .talent-gradient-text {

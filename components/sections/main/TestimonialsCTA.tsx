@@ -10,6 +10,7 @@ import { readFormString } from "@/lib/submit-lead";
 import { useSubmitLead } from "@/lib/use-submit-lead";
 import { TRUSTBAR_LOGOS } from "@/lib/trustbar-logos";
 import { CONTACT_TEAM_AVATARS } from "@/lib/contact-team-avatars";
+import { RecaptchaLegalNote } from "@/components/RecaptchaLegalNote";
 
 const AVATARS = CONTACT_TEAM_AVATARS;
 
@@ -100,10 +101,10 @@ export default function TestimonialsCTA() {
   return (
     <section
       id="contact"
-      className="home-section bg-white"
+      className="home-section home-section--contact bg-white max-sm:relative max-sm:left-1/2 max-sm:w-screen max-sm:max-w-[100vw] max-sm:-translate-x-1/2"
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
-      <div className="section-shell section-shell--wide">
+      <div className="section-shell section-shell--wide max-sm:max-w-none max-sm:px-3">
         <div className="section-inset rounded-2xl border border-[#E6E9EF] bg-[#b0064817] sm:rounded-[24px]">
         <div className="mx-auto flex w-full max-w-[1040px] flex-col gap-6 sm:gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-[var(--section-content-gap)]">
           <div className="flex min-w-0 flex-1 flex-col">
@@ -283,6 +284,7 @@ export default function TestimonialsCTA() {
                   <a href="/privacy-policy" className="underline">Privacy Policy</a>{" "}
                   and consent to be contacted regarding your enquiry.
                 </p>
+                <RecaptchaLegalNote />
               </form>
             </div>
           </div>

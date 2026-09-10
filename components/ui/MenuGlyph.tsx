@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
+import { encodePublicSrc } from "@/lib/public-src";
 
 export type MenuIconName =
   | "clipboardCheck"
@@ -242,7 +243,7 @@ export function MenuCategoryThumb({
   const iconSize = size >= 40 ? 24 : 20;
   return (
     <span
-      className="flex shrink-0 items-center justify-center rounded-[10px] shadow-[0_2px_10px_rgba(20,20,43,0.1)]"
+      className="flex shrink-0 self-center items-center justify-center rounded-[10px] shadow-[0_2px_10px_rgba(20,20,43,0.1)]"
       style={{ backgroundColor: tint, width: size, height: size }}
     >
       <MenuGlyphBold name={icon} color={color} size={iconSize} />
@@ -285,8 +286,15 @@ export function MenuHeroCircle({
 export function MenuDetailIcon({ name, src }: { name: MenuIconName; src?: string }) {
   if (src) {
     return (
-      <span className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-[7px]">
-        <Image src={src} alt="" width={28} height={28} className="h-7 w-7 object-contain" />
+      <span className="flex h-7 w-7 shrink-0 self-center items-center justify-center overflow-hidden rounded-[7px]">
+        <Image
+          src={encodePublicSrc(src)}
+          alt=""
+          width={28}
+          height={28}
+          unoptimized
+          className="h-7 w-7 object-contain object-center"
+        />
       </span>
     );
   }
@@ -294,7 +302,7 @@ export function MenuDetailIcon({ name, src }: { name: MenuIconName; src?: string
   const palette = MENU_ICON_PALETTE[name];
   return (
     <span
-      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[7px]"
+      className="flex h-7 w-7 shrink-0 self-center items-center justify-center rounded-[7px]"
       style={{ backgroundColor: palette.tint }}
     >
       <MenuGlyphBold name={name} color={palette.color} size={15} />

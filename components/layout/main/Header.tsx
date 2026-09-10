@@ -21,6 +21,7 @@ import {
 } from "@/components/layout/shared/MobileMegaMenuSection";
 import { TALENT_ACCENT, TALENT_PRIMARY } from "@/lib/talent-brand";
 import { TECH_ACCENT, TECH_PRIMARY } from "@/lib/technology-brand";
+import { encodePublicSrc } from "@/lib/public-src";
 import { MARKETING_MENU_CATEGORIES, MARKETING_MENU_HEADING_ICON } from "@/lib/marketing-menu";
 import { TALENT_MENU_CATEGORIES, TALENT_MENU_HEADING_ICON } from "@/lib/talent-menu";
 import { TECHNOLOGY_MENU_CATEGORIES, TECHNOLOGY_MENU_HEADING_ICON } from "@/lib/technology-menu";
@@ -125,7 +126,6 @@ const capabilityCols: ConsultingCol[] = [
 
 const simpleLinks = [
   { label: "Careers", href: "https://fyerx.zohorecruit.in/jobs/Careers", external: true },
-  { label: "Blog", href: "/blog" },
 ];
 
 type MenuCategory = {
@@ -195,7 +195,7 @@ function CategoryMenu({
               <div className="flex items-center justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-2.5 text-[#9a9ea8]">
                   {headingImage ? (
-                    <Image src={headingImage} alt="" width={18} height={18} className="h-[18px] w-[18px] object-contain" />
+                    <Image src={encodePublicSrc(headingImage)} alt="" width={18} height={18} unoptimized className="h-[18px] w-[18px] object-contain" />
                   ) : (
                     <MenuGlyphBold name={headingIcon} color="#8b8fa3" size={18} />
                   )}
@@ -220,14 +220,14 @@ function CategoryMenu({
             {headingSubtitle && (
               <p className="mb-5 mt-3 text-[13px] leading-[1.5] text-[#676879]">{headingSubtitle}</p>
             )}
-            <div className="grid grid-cols-2 items-start gap-x-4 gap-y-3 lg:gap-x-6">
+            <div className="grid grid-cols-2 items-center gap-x-4 gap-y-3 lg:gap-x-6">
               {categories.map((cat, i) => (
                 <button
                   key={cat.label}
                   type="button"
                   onClick={() => setActive(i)}
                   aria-pressed={active === i}
-                  className={`flex w-full min-w-0 cursor-pointer items-start gap-2.5 rounded-[12px] px-2.5 py-2.5 text-left transition-colors duration-100 lg:gap-3 lg:px-3 ${
+                  className={`flex w-full min-w-0 cursor-pointer items-center gap-2.5 rounded-[12px] px-2.5 py-2.5 text-left transition-colors duration-100 lg:gap-3 lg:px-3 ${
                     active === i ? "" : "hover:bg-[#f5f6f8]"
                   }`}
                   style={active === i ? { backgroundColor: activeItemBg } : undefined}
@@ -262,15 +262,15 @@ function CategoryMenu({
             <p className="mb-5 mt-3 text-[13px] leading-snug text-[#676879] [overflow-wrap:anywhere]">
               {category.label}
             </p>
-            <ul className="grid grid-cols-1 content-start items-start gap-x-5 gap-y-2 xl:grid-cols-2">
+            <ul className="grid grid-cols-1 content-start items-center gap-x-5 gap-y-2 xl:grid-cols-2">
               {category.items.map((item) => (
                 <li key={item.label} className="min-w-0">
                   <Link
                     href={item.href}
                     onClick={onClose}
-                    className="flex min-w-0 items-start gap-2.5 py-1.5 text-[14px] font-normal leading-snug text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)]"
+                    className="flex min-w-0 items-center gap-3 py-1.5 text-[14px] font-normal leading-snug text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)]"
                   >
-                    <span className="mt-0.5 shrink-0">
+                    <span className="shrink-0">
                       <MenuDetailIcon name={item.icon} src={item.image} />
                     </span>
                     <span className="min-w-0 [overflow-wrap:anywhere]">{item.label}</span>

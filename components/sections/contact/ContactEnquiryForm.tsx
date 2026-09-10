@@ -7,6 +7,7 @@ import { DEFAULT_PHONE_COUNTRY, PhoneInput } from "@/components/ui/PhoneInput";
 import { validateEmail, validatePhone } from "@/lib/form-validation";
 import { readFormString } from "@/lib/submit-lead";
 import { useSubmitLead } from "@/lib/use-submit-lead";
+import { RecaptchaLegalNote } from "@/components/RecaptchaLegalNote";
 
 export const BRAND = {
   crimson: "#730031",
@@ -130,13 +131,12 @@ export const FORM_CONFIG: Record<FormKey, FormConfig> = {
       "Explore campaigns, demand generation, SEO, branding, or content support for your business.",
     helpLabel: "What are you looking for help with?",
     helpOptions: [
-      "Demand & Lead Generation",
-      "SEO & AI Search Visibility",
-      "Content & Creative Production",
-      "Performance Marketing",
-      "Marketing Automation & CRM",
-      "Branding & Website Design",
       "Marketing Strategy & Consulting",
+      "Demand & Lead Generation",
+      "Search & AI Visibility",
+      "AI Marketing & Automation",
+      "Performance Marketing",
+      "Brand & Digital Experience",
       "Other",
     ],
     budgetOptions: [
@@ -202,7 +202,7 @@ export const FORM_CONFIG: Record<FormKey, FormConfig> = {
     helpLabel: "What are you looking for help with?",
     helpOptions: [
       "ServiceNow Implementation & Support",
-      "Enterprise Platforms (SAP, Salesforce, Dynamics, Oracle)",
+      "Enterprise Platforms",
       "Data & AI / Analytics",
       "Cloud & DevOps",
       "Quality Engineering & Testing",
@@ -313,31 +313,9 @@ function CompactExpectedStartSelect({ error }: { error?: boolean }) {
   );
 }
 
-/** Long labels = full row. Short labels pair 2-up; a leftover short also goes full-width. */
-function helpOptionSpansFull(options: string[], index: number, longAt: number) {
-  const isLong = options.map((opt) => opt.length > longAt);
-  if (isLong[index]) return true;
-
-  let pendingShort: number | null = null;
-  const fullWidth = options.map(() => false);
-
-  for (let i = 0; i < options.length; i++) {
-    if (isLong[i]) {
-      fullWidth[i] = true;
-      if (pendingShort !== null) {
-        fullWidth[pendingShort] = true;
-        pendingShort = null;
-      }
-      continue;
-    }
-    if (pendingShort === null) {
-      pendingShort = i;
-    } else {
-      pendingShort = null;
-    }
-  }
-  if (pendingShort !== null) fullWidth[pendingShort] = true;
-  return fullWidth[index];
+/** Pair options 2-up. Only a leftover last item spans the full row. */
+function helpOptionSpansFull(options: string[], index: number) {
+  return options.length % 2 === 1 && index === options.length - 1;
 }
 
 function CompactHelpMultiselect({
@@ -355,8 +333,6 @@ function CompactHelpMultiselect({
   onToggle: (opt: string) => void;
   error: boolean;
 }) {
-  const LONG_AT = 22;
-
   return (
     <div>
       <p className="mb-2 text-[13px] font-semibold text-[#181b34]">
@@ -366,7 +342,7 @@ function CompactHelpMultiselect({
       <div className="grid grid-cols-2 gap-2">
         {options.map((opt, index) => {
           const isSelected = selected.includes(opt);
-          const fullWidth = helpOptionSpansFull(options, index, LONG_AT);
+          const fullWidth = helpOptionSpansFull(options, index);
           return (
             <button
               key={opt}
@@ -375,7 +351,7 @@ function CompactHelpMultiselect({
               aria-pressed={isSelected}
               className={`flex min-h-[40px] w-full min-w-0 cursor-pointer items-center rounded-full border px-3 py-2 font-medium transition-colors sm:min-h-[42px] sm:px-3.5 ${
                 fullWidth
-                  ? "col-span-2 justify-center text-center text-[11px] leading-none sm:text-[12px]"
+                  ? "col-span-2 justify-center text-center text-[11px] leading-snug sm:text-[12px]"
                   : "justify-center text-center text-[11px] leading-snug sm:text-[12px]"
               }`}
               style={
@@ -388,7 +364,7 @@ function CompactHelpMultiselect({
                   : { background: "#f7f9fc", borderColor: "#e6e9ef", color: "#3d4a5c" }
               }
             >
-              <span className={fullWidth ? "whitespace-nowrap" : "text-balance"}>
+              <span className="min-w-0 text-balance break-words">
                 {opt}
               </span>
             </button>
@@ -669,6 +645,7 @@ export function ContactEnquiryForm({
             ? "and consent to be contacted regarding your application."
             : "and consent to be contacted regarding your enquiry."}
         </p>
+        <RecaptchaLegalNote />
       </form>
     </>
   );

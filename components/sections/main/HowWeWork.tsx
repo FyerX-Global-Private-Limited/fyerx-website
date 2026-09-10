@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import { PublicImage as Image } from "@/components/ui/PublicImage";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 interface TabData {
@@ -24,7 +24,7 @@ const TABS: TabData[] = [
   {
     label: "Technology",
     para: "From ServiceNow and cloud to data, AI, and transformation, we help businesses build technology that is ready for what comes next.",
-    image: "/updatedmainpage/section3 technology.webp",
+    image: "/updatedmainpage/section3-technology.webp",
     cta: "Get Started",
     activeBg: "#20287A1F",
     activeColor: "#20287A",
@@ -32,7 +32,7 @@ const TABS: TabData[] = [
   {
     label: "Talent",
     para: "We source, screen, and place people suited to your business, cutting down the time it usually takes to build a reliable team.",
-    image: "/updatedmainpage/section3 talent.webp",
+    image: "/updatedmainpage/section3-talent.webp",
     cta: "Get Started",
     activeBg: "#11551C1F",
     activeColor: "#11551C",
@@ -40,7 +40,7 @@ const TABS: TabData[] = [
   {
     label: "Marketing",
     para: "Our marketing team plans, launches, and manages campaigns end to end, so you get consistent visibility without having to manage the details yourself.",
-    image: "/updatedmainpage/section3 marketing.webp",
+    image: "/updatedmainpage/section3-marketing.webp",
     cta: "Get Started",
     activeBg: "#FFC9001F",
     activeColor: "#111111",
@@ -48,7 +48,7 @@ const TABS: TabData[] = [
   {
     label: "Learning",
     para: "FyerX Learning offers practical, job-ready courses in marketing, technology, and business skills, built for both individuals and teams looking to upskill.",
-    image: "/updatedmainpage/section3 learning.webp",
+    image: "/updatedmainpage/section3-learning.webp",
     cta: "Explore Courses",
     activeBg: "#86013A1F",
     activeColor: "#86013A",
@@ -220,6 +220,7 @@ const css = `
   }
   @media (max-width:1024px){
     .hww-hero .panel{grid-template-columns:1fr;gap:32px;}
+    .hww-hero .board-card{order:-1;}
     .hww-hero .board-image{min-height:240px;}
   }
   @media (max-width:767px){

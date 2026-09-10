@@ -35,10 +35,10 @@ const MARKETING_TAB_THEMES: TabTheme[] = [
 ];
 
 const MAIN_TAB_THEMES: TabTheme[] = [
-  { bg: "#FFE8EE", activeBg: "#FFF5F8", iconBg: "#86013A", iconColor: "#ffffff", accent: "#730031" },
-  { bg: "#E8F5EA", activeBg: "#F0FAF2", iconBg: "#11551C", iconColor: "#9EEBAA", accent: "#11551C" },
   { bg: "#EEF0FA", activeBg: "#F5F6FC", iconBg: "#20287A", iconColor: "#B8C5FF", accent: "#20287A" },
+  { bg: "#E8F5EA", activeBg: "#F0FAF2", iconBg: "#11551C", iconColor: "#9EEBAA", accent: "#11551C" },
   { bg: "#FFF3CD", activeBg: "#FFF9E6", iconBg: "#FFC900", iconColor: "#111111", accent: "#8a6a00" },
+  { bg: "#FFE8EE", activeBg: "#FFF5F8", iconBg: "#86013A", iconColor: "#ffffff", accent: "#730031" },
 ];
 
 function themesForVariant(variant: "talent" | "marketing" | "main"): TabTheme[] {

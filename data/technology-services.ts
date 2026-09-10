@@ -73,7 +73,7 @@ export const TECHNOLOGY_SERVICE_TABS: TechServiceTab[] = [
       },
     ],
     cta: "Explore Enterprise Platforms",
-    ctaHref: "#contact",
+    ctaHref: "/contact?form=technology",
   },
   {
     id: "digital-transformation",
@@ -110,7 +110,7 @@ export const TECHNOLOGY_SERVICE_TABS: TechServiceTab[] = [
       },
     ],
     cta: "Explore Digital Transformation",
-    ctaHref: "#contact",
+    ctaHref: "/contact?form=technology",
   },
   {
     id: "data-ai",
@@ -162,7 +162,7 @@ export const TECHNOLOGY_SERVICE_TABS: TechServiceTab[] = [
       },
     ],
     cta: "Explore Data & AI",
-    ctaHref: "#contact",
+    ctaHref: "/contact?form=technology",
   },
   {
     id: "cloud-devops",
@@ -217,7 +217,7 @@ export const TECHNOLOGY_SERVICE_TABS: TechServiceTab[] = [
       },
     ],
     cta: "Explore Cloud & DevOps",
-    ctaHref: "#contact",
+    ctaHref: "/contact?form=technology",
   },
   {
     id: "strategic-advisory",
@@ -264,6 +264,6 @@ export const TECHNOLOGY_SERVICE_TABS: TechServiceTab[] = [
       },
     ],
     cta: "Speak to an Advisor",
-    ctaHref: "#contact",
+    ctaHref: "/contact?form=technology",
   },
 ];

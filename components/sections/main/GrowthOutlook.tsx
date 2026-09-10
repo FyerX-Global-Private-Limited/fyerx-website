@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
+import { PublicImage as Image } from "@/components/ui/PublicImage";
 import Link from "next/link";
 import { Inter } from "next/font/google";
 
@@ -44,21 +44,21 @@ type ResourceCard = {
 const CARDS: ResourceCard[] = [
   {
     href: "#",
-    image: "/updatedmainpage/section9 (1).webp",
+    image: "/updatedmainpage/section9-1.webp",
     alt: "Team reviewing marketing analytics and growth metrics",
     title: "Building a stronger demand engine",
     body: "How focused strategy and execution turn marketing activity into qualified business opportunities.",
   },
   {
     href: "#",
-    image: "/updatedmainpage/section9 (2).webp",
+    image: "/updatedmainpage/section9-2.webp",
     alt: "Team collaborating on hiring and workforce planning",
     title: "Hiring for what comes next",
     body: "How to build teams with the skills your business needs to grow.",
   },
   {
     href: "#",
-    image: "/updatedmainpage/section9 (3).webp",
+    image: "/updatedmainpage/section9-3.webp",
     alt: "Enterprise software development and technology delivery",
     title: "Making technology work harder",
     body: "Where to focus when systems, data, and operations need to move forward.",

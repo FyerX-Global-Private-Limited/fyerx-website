@@ -1,20 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import { PublicImage as Image } from "@/components/ui/PublicImage";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 const ICON_COLORS = ["#86013A", "#20287A", "#FDAB3D", "#11551C", "#A25DDC", "#0086C0", "#E2445C", "#FF5AC4"];
 
 const INDUSTRIES = [
-  { icon: "/updatedmainpage/icons (4).webp", label: "Growth & Demand" },
-  { icon: "/updatedmainpage/icons (5).webp", label: "Brand & Market Presence" },
-  { icon: "/updatedmainpage/icons (6).webp", label: "Hiring & Workforce" },
-  { icon: "/updatedmainpage/icons (2).webp", label: "Specialist Talent" },
-  { icon: "/updatedmainpage/icons (8).webp", label: "Technology Modernization" },
-  { icon: "/updatedmainpage/icons (1).webp", label: "Data, AI & Automation" },
-  { icon: "/updatedmainpage/icons (7).webp", label: "Cloud & Enterprise Platforms" },
-  { icon: "/updatedmainpage/icons (3).webp", label: "Skills & Capability Building" },
+  { icon: "/updatedmainpage/icons-4.webp", label: "Growth & Demand" },
+  { icon: "/updatedmainpage/icons-5.webp", label: "Brand & Market Presence" },
+  { icon: "/updatedmainpage/icons-6.webp", label: "Hiring & Workforce" },
+  { icon: "/updatedmainpage/icons-2.webp", label: "Specialist Talent" },
+  { icon: "/updatedmainpage/icons-8.webp", label: "Technology Modernization" },
+  { icon: "/updatedmainpage/icons-1.webp", label: "Data, AI & Automation" },
+  { icon: "/updatedmainpage/icons-7.webp", label: "Cloud & Enterprise Platforms" },
+  { icon: "/updatedmainpage/icons-3.webp", label: "Skills & Capability Building" },
 ] as const;
 
 export default function TrackRecord() {
@@ -72,6 +72,7 @@ export default function TrackRecord() {
                   alt=""
                   width={48}
                   height={48}
+                  unoptimized
                   className="tr-icon"
                 />
               </span>

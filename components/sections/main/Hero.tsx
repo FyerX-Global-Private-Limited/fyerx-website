@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
@@ -23,13 +23,13 @@ const pillars: {
   ctaTextColor: string;
 }[] = [
   {
-    label: "Marketing",
-    image: "/updatedmainpage/Marketing.webp",
-    brandColor: BRAND.marketing,
-    activeText: "#111111",
-    checkText: "#111111",
-    ctaHref: "/marketing",
-    ctaTextColor: "#111111",
+    label: "Technology",
+    image: "/updatedmainpage/Technology.webp",
+    brandColor: BRAND.technology,
+    activeText: BRAND.technology,
+    checkText: "#ffffff",
+    ctaHref: "/technology",
+    ctaTextColor: "#ffffff",
   },
   {
     label: "Talent",
@@ -41,13 +41,13 @@ const pillars: {
     ctaTextColor: "#ffffff",
   },
   {
-    label: "Technology",
-    image: "/updatedmainpage/Technology.webp",
-    brandColor: BRAND.technology,
-    activeText: BRAND.technology,
-    checkText: "#ffffff",
-    ctaHref: "/technology",
-    ctaTextColor: "#ffffff",
+    label: "Marketing",
+    image: "/images/main/Marketing.webp",
+    brandColor: BRAND.marketing,
+    activeText: "#111111",
+    checkText: "#111111",
+    ctaHref: "/marketing",
+    ctaTextColor: "#111111",
   },
   {
     label: "Learning",
@@ -70,7 +70,21 @@ function CheckIcon() {
 
 export default function Hero() {
   const [active, setActive] = useState(0);
+  const stoppedRef = useRef(false);
   const activePillar = pillars[active];
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      if (stoppedRef.current) return;
+      setActive((i) => (i + 1) % pillars.length);
+    }, 5000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const selectPillar = (i: number) => {
+    stoppedRef.current = true;
+    setActive(i);
+  };
 
   return (
     <section className="home-section relative w-full bg-white font-calibri">
@@ -105,7 +119,7 @@ export default function Hero() {
                   <button
                     key={pillar.label}
                     type="button"
-                    onClick={() => setActive(i)}
+                    onClick={() => selectPillar(i)}
                     className={`inline-flex h-9 w-full cursor-pointer items-center justify-center gap-1.5 rounded-full border px-3 text-[13px] transition-all duration-200 sm:h-8 sm:w-auto sm:justify-start sm:px-3.5 sm:text-sm ${
                       isActive
                         ? "border-transparent font-medium shadow-sm"
@@ -177,6 +191,7 @@ export default function Hero() {
                   className={`bg-white object-contain object-center transition-opacity duration-500 ${
                     active === i ? "opacity-100" : "pointer-events-none opacity-0"
                   }`}
+                  unoptimized={pillar.label === "Marketing"}
                 />
               ))}
             </div>

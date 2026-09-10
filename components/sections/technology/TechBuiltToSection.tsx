@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TECH_HOME } from "@/lib/technology-home-palette";
@@ -12,13 +12,18 @@ const WORDS = [
   { w: "SCALE", bg: "#E4E8F8", dot: "#20287A", text: "#181E5C" },
 ] as const;
 
-const ROTATE_MS = 2500;
+const ROTATE_MS = 5000;
 
 export default function TechBuiltToSection() {
   const [index, setIndex] = useState(0);
+  const pausedRef = useRef(false);
+  const stoppedRef = useRef(false);
 
   useEffect(() => {
-    const id = setInterval(() => setIndex((i) => (i + 1) % WORDS.length), ROTATE_MS);
+    const id = setInterval(() => {
+      if (pausedRef.current || stoppedRef.current) return;
+      setIndex((i) => (i + 1) % WORDS.length);
+    }, ROTATE_MS);
     return () => clearInterval(id);
   }, []);
 
@@ -53,6 +58,15 @@ export default function TechBuiltToSection() {
           <span
             className="inline-flex h-[1.22em] -translate-y-[0.06em] items-center rounded-full pl-[0.4em] pr-[0.48em] align-middle transition-colors duration-300"
             style={{ backgroundColor: bg }}
+            onMouseEnter={() => {
+              pausedRef.current = true;
+            }}
+            onMouseLeave={() => {
+              pausedRef.current = false;
+            }}
+            onClick={() => {
+              stoppedRef.current = true;
+            }}
           >
             <span
               key={w}

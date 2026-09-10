@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { PublicImage as Image } from "@/components/ui/PublicImage";
 
 type Industry = {
   label: string;
@@ -10,35 +10,35 @@ type Industry = {
 const INDUSTRIES: Industry[] = [
   {
     label: "IT Services & Consulting",
-    iconSrc: "/updatedtalentimage/section8 (2).webp",
+    iconSrc: "/updatedtalentimage/section8-2.webp",
   },
   {
     label: "SaaS & Technology",
-    iconSrc: "/updatedtalentimage/section8 (3).webp",
+    iconSrc: "/updatedtalentimage/section8-3.webp",
   },
   {
     label: "GCCs & Enterprise IT",
-    iconSrc: "/updatedtalentimage/section8 (4).webp",
+    iconSrc: "/updatedtalentimage/section8-4.webp",
   },
   {
     label: "BFSI",
-    iconSrc: "/updatedtalentimage/section8 (5).webp",
+    iconSrc: "/updatedtalentimage/section8-5.webp",
   },
   {
     label: "Retail & E-commerce",
-    iconSrc: "/updatedtalentimage/section8 (6).webp",
+    iconSrc: "/updatedtalentimage/section8-6.webp",
   },
   {
     label: "Manufacturing & Logistics",
-    iconSrc: "/updatedtalentimage/section8 (7).webp",
+    iconSrc: "/updatedtalentimage/section8-7.webp",
   },
   {
     label: "Healthcare & Life Sciences",
-    iconSrc: "/updatedtalentimage/section8 (8).webp",
+    iconSrc: "/updatedtalentimage/section8-8.webp",
   },
   {
     label: "Media & Digital Businesses",
-    iconSrc: "/updatedtalentimage/section8 (1).webp",
+    iconSrc: "/updatedtalentimage/section8-1.webp",
   },
 ];
 
