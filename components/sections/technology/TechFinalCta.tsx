@@ -132,7 +132,7 @@ export default function TechFinalCta() {
 
               <div className="mt-5 flex w-full flex-col gap-2.5 sm:mt-8 sm:flex-row sm:flex-wrap sm:gap-3">
                 <PrimaryCtaLink
-                  href="#contact"
+                  href="/contact?form=technology"
                   className="w-full justify-center sm:w-auto"
                   color={TECH_HOME.primary}
                   textColor={TECH_HOME.accent}
@@ -140,7 +140,7 @@ export default function TechFinalCta() {
                   Discuss Your Requirement
                 </PrimaryCtaLink>
                 <a
-                  href="#contact"
+                  href="/contact?form=technology"
                   className="inline-flex w-full items-center justify-center rounded-full border px-4 py-2.5 text-sm font-semibold transition-opacity hover:opacity-80 sm:w-auto sm:px-6 sm:py-3 sm:text-[15px]"
                   style={{
                     borderColor: TECH_HOME.primary,

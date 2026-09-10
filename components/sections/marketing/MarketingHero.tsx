@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { MenuHeroCircle, type MenuIconName } from "@/components/ui/MenuGlyph";
 import { MARKETING_HOME } from "@/lib/marketing-home-palette";
@@ -22,16 +22,18 @@ const HERO_ICONS: { label: string; icon: MenuIconName }[] = [
   { label: "AI marketing", icon: "robot" },
 ];
 
-const ROTATE_MS = 2000;
+const ROTATE_MS = 5000;
 
 export default function MarketingHero() {
   const [index, setIndex] = useState(0);
+  const pausedRef = useRef(false);
+  const stoppedRef = useRef(false);
 
   useEffect(() => {
-    const id = setInterval(
-      () => setIndex((i) => (i + 1) % WORDS.length),
-      ROTATE_MS
-    );
+    const id = setInterval(() => {
+      if (pausedRef.current || stoppedRef.current) return;
+      setIndex((i) => (i + 1) % WORDS.length);
+    }, ROTATE_MS);
     return () => clearInterval(id);
   }, []);
 
@@ -77,6 +79,15 @@ export default function MarketingHero() {
           <span
             className="inline-flex h-[1.22em] -translate-y-[0.06em] items-center rounded-full pl-[0.4em] pr-[0.48em] align-middle transition-colors duration-300"
             style={{ backgroundColor: bg }}
+            onMouseEnter={() => {
+              pausedRef.current = true;
+            }}
+            onMouseLeave={() => {
+              pausedRef.current = false;
+            }}
+            onClick={() => {
+              stoppedRef.current = true;
+            }}
           >
             <span
               key={w}

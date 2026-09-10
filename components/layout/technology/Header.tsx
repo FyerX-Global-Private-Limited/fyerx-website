@@ -8,6 +8,7 @@ import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { MenuDetailIcon } from "@/components/ui/MenuGlyph";
 import { TECH_ACCENT, TECH_LOGO, TECH_PRIMARY } from "@/lib/technology-brand";
 import { TECHNOLOGY_MENU_CATEGORIES, TECHNOLOGY_MENU_HEADING_ICON } from "@/lib/technology-menu";
+import { encodePublicSrc } from "@/lib/public-src";
 import {
   CategoryThumb,
   MobileMegaMenuSection,
@@ -97,7 +98,6 @@ function Glyph({ name }: { name: IconName }) {
 const simpleLinks = [
   { label: "Blueprints", href: "/technology/case-studies" },
   { label: "Careers", href: "https://fyerx.zohorecruit.in/jobs/Careers", external: true },
-  { label: "Blog", href: "/blog" },
 ];
 
 const TECH_MENU_HOVER = TECH_PRIMARY;
@@ -113,7 +113,7 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
         <div className="w-[52%] min-w-0 shrink-0 pr-6 lg:pr-8" style={{ ["--menu-hover" as string]: TECH_MENU_HOVER }}>
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2.5 text-[#9a9ea8]">
-              <Image src={TECHNOLOGY_MENU_HEADING_ICON} alt="" width={18} height={18} className="h-[18px] w-[18px] object-contain" />
+              <Image src={encodePublicSrc(TECHNOLOGY_MENU_HEADING_ICON)} alt="" width={18} height={18} unoptimized className="h-[18px] w-[18px] object-contain" />
               <span className="mb-0 text-[13px] font-normal uppercase leading-[1.5] tracking-[0.06em] text-[#7c7b7b]">
                 Technology Services
               </span>
@@ -177,9 +177,9 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
                 <Link
                   href={item.href}
                   onClick={onClose}
-                  className="flex items-start gap-2.5 py-1.5 text-[14px] font-normal leading-[1.35] text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)]"
+                  className="flex items-center gap-3 py-1.5 text-[14px] font-normal leading-[1.35] text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)]"
                 >
-                  <span className="mt-0.5 shrink-0 text-[#8b8fa3]">
+                  <span className="shrink-0 text-[#8b8fa3]">
                     <MenuDetailIcon name={item.icon} src={item.image} />
                   </span>
                   <span className="min-w-0 break-words">{item.label}</span>
@@ -291,7 +291,7 @@ export default function TechnologyHeader() {
                 onMouseEnter={() => setMenuOpen(false)}
               />
               <PrimaryCtaLink
-                href="/technology#contact"
+                href="/contact?form=technology"
                 onClick={closeAll}
                 onMouseEnter={() => setMenuOpen(false)}
                 color={TECH_PRIMARY}
@@ -360,7 +360,7 @@ export default function TechnologyHeader() {
                 className="w-full justify-center"
               />
               <PrimaryCtaLink
-                href="/technology#contact"
+                href="/contact?form=technology"
                 onClick={closeAll}
                 color={TECH_PRIMARY}
                 textColor="#ffffff"

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { PublicImage as Image } from "@/components/ui/PublicImage";
 
 const CARDS = [
   {
@@ -12,7 +12,7 @@ const CARDS = [
     bodyColor: "#5c5c66",
     tagBg: "#E84A7F",
     tagColor: "#FFFFFF",
-    icon: "/updatedtalentimage/section2 (1).webp",
+    icon: "/updatedtalentimage/section2-1.webp",
   },
   {
     title: "Structured hiring process",
@@ -23,7 +23,7 @@ const CARDS = [
     bodyColor: "#5c5c66",
     tagBg: "#C9A227",
     tagColor: "#FFFFFF",
-    icon: "/updatedtalentimage/section2 (2).webp",
+    icon: "/updatedtalentimage/section2-2.webp",
   },
   {
     title: "Compliance-ready staffing",
@@ -34,7 +34,7 @@ const CARDS = [
     bodyColor: "#5c5c66",
     tagBg: "#2E9B4E",
     tagColor: "#FFFFFF",
-    icon: "/updatedtalentimage/section2 (3).webp",
+    icon: "/updatedtalentimage/section2-3.webp",
   },
 ] as const;
 

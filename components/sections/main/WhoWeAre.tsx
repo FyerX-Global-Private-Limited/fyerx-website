@@ -18,7 +18,6 @@ interface UseCaseCard {
   buttonTextColor?: string;
   cardBg: string;
   cardBorder: string;
-  imageBg: string;
   metricsBg: string;
   metricCardBg: string;
   metricValueColor: string;
@@ -34,13 +33,12 @@ const CARDS: UseCaseCard[] = [
     image: "/updatedmainpage/sec-technology.webp",
     imageAlt: "Technology platform overview",
     ctaLabel: "Explore Technology",
-    buttonColor: "#20287A",
-    cardBg: "#EEF0FA",
-    cardBorder: "#20287A14",
-    imageBg: "#EEF0FA",
-    metricsBg: "#E4E9F8",
-    metricCardBg: "#F3F6FC",
-    metricValueColor: "#20287A",
+    buttonColor: "#2A35A1",
+    cardBg: "#EBFAFF",
+    cardBorder: "#D7F0FA",
+    metricsBg: "transparent",
+    metricCardBg: "#FFFFFF",
+    metricValueColor: "#2A35A1",
     metrics: [
       { value: "99.9%", label: "System Reliability", sublabel: "Built for scale" },
       { value: "2.8x", label: "Faster Deployment", sublabel: "Accelerate delivery" },
@@ -55,13 +53,12 @@ const CARDS: UseCaseCard[] = [
     image: "/updatedmainpage/sec-talent.webp",
     imageAlt: "Talent workspace overview",
     ctaLabel: "Explore Talent",
-    buttonColor: "#11551C",
-    cardBg: "#EEF6EF",
-    cardBorder: "#11551C14",
-    imageBg: "#EEF6EF",
-    metricsBg: "#E0EFE4",
-    metricCardBg: "#F2F9F4",
-    metricValueColor: "#11551C",
+    buttonColor: "#006B6B",
+    cardBg: "#EEFCF0",
+    cardBorder: "#D4EED8",
+    metricsBg: "transparent",
+    metricCardBg: "#FFFFFF",
+    metricValueColor: "#006B6B",
     metrics: [
       { value: "2,350+", label: "Expert Professionals", sublabel: "Across our Network" },
       { value: "92%", label: "Skill Match Rate", sublabel: "For better outcomes" },
@@ -76,13 +73,12 @@ const CARDS: UseCaseCard[] = [
     image: "/updatedmainpage/sec-marketing.webp",
     imageAlt: "Marketing performance overview",
     ctaLabel: "Explore Marketing",
-    buttonColor: "#FFC900",
+    buttonColor: "#F9B106",
     buttonTextColor: "#111111",
-    cardBg: "#FFF9EF",
-    cardBorder: "#FFC9002E",
-    imageBg: "#FFF9EF",
-    metricsBg: "#FFF5D6",
-    metricCardBg: "#FFFCF5",
+    cardBg: "#FFF9EB",
+    cardBorder: "#F3E4C2",
+    metricsBg: "transparent",
+    metricCardBg: "#FFFFFF",
     metricValueColor: "#92400E",
     metrics: [
       { value: "124", label: "Active Campaigns", sublabel: "Across channels" },
@@ -105,14 +101,14 @@ function MetricsRow({
 }) {
   return (
     <div
-      className="rounded-2xl p-1.5 sm:p-2"
+      className="rounded-2xl p-0"
       style={{ backgroundColor }}
     >
-      <div className="grid grid-cols-3 gap-1 sm:gap-1.5">
+      <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
         {metrics.map((metric) => (
           <div
             key={metric.label}
-            className="flex min-h-[4.75rem] min-w-0 flex-col justify-start rounded-xl px-1.5 py-2.5 sm:min-h-[5rem] sm:px-2 sm:py-3"
+            className="flex min-h-[4.75rem] min-w-0 flex-col justify-start rounded-[14px] px-1.5 py-2.5 shadow-[0_1px_2px_rgba(16,24,40,0.04)] sm:min-h-[5.25rem] sm:px-2.5 sm:py-3"
             style={{ backgroundColor: cardBackgroundColor }}
           >
             <p
@@ -137,23 +133,22 @@ function MetricsRow({
 function CaseCard({ card }: { card: UseCaseCard }) {
   return (
     <article
-      className="flex h-full flex-col overflow-hidden rounded-[28px] p-5 sm:p-8"
+      className="flex h-full flex-col overflow-hidden rounded-[28px] p-4 sm:p-5"
       style={{ backgroundColor: card.cardBg, border: `1px solid ${card.cardBorder}` }}
     >
-      <div
-        className="relative aspect-[1572/1120] w-full overflow-hidden rounded-2xl"
-        style={{ backgroundColor: card.imageBg }}
-      >
+      <div className="relative w-full overflow-hidden">
         <Image
           src={card.image}
           alt={card.imageAlt}
-          fill
+          width={1572}
+          height={1120}
           sizes="(max-width: 1024px) 100vw, 33vw"
-          className="object-contain object-center"
+          unoptimized
+          className="h-auto w-full object-contain object-center"
         />
       </div>
 
-      <div className="-mx-1 mt-5 sm:-mx-2 sm:mt-5">
+      <div className="mt-4 sm:mt-5">
         <MetricsRow
           metrics={card.metrics}
           backgroundColor={card.metricsBg}
@@ -162,7 +157,7 @@ function CaseCard({ card }: { card: UseCaseCard }) {
         />
       </div>
 
-      <h3 className="mt-5 text-2xl font-bold leading-[1.15] tracking-[-0.02em] text-[#111111] sm:mt-6 sm:text-[28px]">
+      <h3 className="mt-5 text-[22px] font-medium leading-[1.2] tracking-[-0.02em] text-[#111111] sm:mt-6 sm:text-[24px]">
         {card.title}
       </h3>
 

@@ -404,8 +404,16 @@ function MarketingCapabilityBlock({
   const [openTabs, setOpenTabs] = useState<Set<string>>(() => new Set([tabs[0]]));
   const itemRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const pendingScroll = useRef<string | null>(null);
+  const pausedRef = useRef(false);
+  const stoppedRef = useRef(false);
+
+  const selectTab = (tab: string, fromUser = false) => {
+    if (fromUser) stoppedRef.current = true;
+    setActiveTab(tab);
+  };
 
   const toggleAccordion = (tab: string) => {
+    stoppedRef.current = true;
     const willOpen = !openTabs.has(tab);
     setOpenTabs((prev) => {
       const next = new Set(prev);
@@ -423,6 +431,17 @@ function MarketingCapabilityBlock({
     pendingScroll.current = null;
     itemRefs.current[tab]?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [openTabs]);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      if (pausedRef.current || stoppedRef.current) return;
+      setActiveTab((current) => {
+        const i = tabs.indexOf(current);
+        return tabs[(i + 1) % tabs.length];
+      });
+    }, 5000);
+    return () => window.clearInterval(id);
+  }, [tabs]);
 
   return (
     <section className="mx-auto w-full max-w-[1400px]">
@@ -460,12 +479,20 @@ function MarketingCapabilityBlock({
       </div>
 
       {/* Desktop: pill tabs with shared panel below */}
-      <nav className="mt-6 hidden items-center justify-center gap-x-4 gap-y-2 border-b border-gray-200 pb-3 sm:flex sm:flex-wrap sm:gap-x-6 md:gap-x-8">
+      <nav
+        className="mt-6 hidden items-center justify-center gap-x-4 gap-y-2 border-b border-gray-200 pb-3 sm:flex sm:flex-wrap sm:gap-x-6 md:gap-x-8"
+        onMouseEnter={() => {
+          pausedRef.current = true;
+        }}
+        onMouseLeave={() => {
+          pausedRef.current = false;
+        }}
+      >
         {tabs.map((tab) => (
           <button
             key={tab}
             type="button"
-            onClick={() => setActiveTab(tab)}
+            onClick={() => selectTab(tab, true)}
             className={`whitespace-nowrap rounded-full px-3 py-1 text-[14px] transition-colors ${
               activeTab === tab
                 ? "bg-[#FFC900] font-semibold text-black"
@@ -477,7 +504,15 @@ function MarketingCapabilityBlock({
         ))}
       </nav>
 
-      <div className="mt-6 hidden sm:block">
+      <div
+        className="mt-6 hidden sm:block"
+        onMouseEnter={() => {
+          pausedRef.current = true;
+        }}
+        onMouseLeave={() => {
+          pausedRef.current = false;
+        }}
+      >
         <CapabilityPanel tab={activeTab} />
       </div>
     </section>

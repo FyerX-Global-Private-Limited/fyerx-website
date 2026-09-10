@@ -201,7 +201,11 @@ export default function StackedScrollSection() {
           </h2>
         </div>
 
-        <div className="relative mt-8 pb-4 sm:pb-6 md:mt-12">
+        <div
+          className={`relative mt-8 md:mt-12 ${
+            stackEnabled ? "pb-4 sm:pb-6" : "pb-4 sm:pb-6"
+          }`}
+        >
           {MARKETING_CASE_STUDIES.map((study, index) => (
             <StackedCaseStudyCard
               key={study.slug}

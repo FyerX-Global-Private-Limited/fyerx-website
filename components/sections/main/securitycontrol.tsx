@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+import { PublicImage as Image } from '@/components/ui/PublicImage';
 
 type Card = {
   image: string;
@@ -11,22 +11,22 @@ type Card = {
 
 const CARDS: Card[] = [
   {
-    image: '/updatedmainpage/section8 (1).webp',
+    image: '/updatedmainpage/section8-1.webp',
     title: 'Growth initiatives',
     body: 'From new-market plans to demand creation, we help turn commercial priorities into focused action.',
   },
   {
-    image: '/updatedmainpage/section8 (2).webp',
+    image: '/updatedmainpage/section8-2.webp',
     title: 'Capability gaps',
     body: 'When internal capacity falls short, bring in the expertise needed to keep work progressing.',
   },
   {
-    image: '/updatedmainpage/section8 (3).webp',
+    image: '/updatedmainpage/section8-3.webp',
     title: 'Business change',
     body: 'New systems, new teams, or new direction require support that works with the wider business.',
   },
   {
-    image: '/updatedmainpage/section8 (4).webp',
+    image: '/updatedmainpage/section8-4.webp',
     title: 'Execution at pace',
     body: 'Move from decision to delivery with a team built to take responsibility for the work.',
   },
@@ -51,8 +51,9 @@ export default function SecurityControl() {
                 <Image
                   src={c.image}
                   alt=""
-                  width={80}
-                  height={80}
+                  width={384}
+                  height={384}
+                  unoptimized
                   className="sc__iconImg"
                 />
               </div>
@@ -109,16 +110,17 @@ export default function SecurityControl() {
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: 50%;
-          overflow: hidden;
           flex-shrink: 0;
+          overflow: visible;
+          background: transparent;
         }
 
         .sc :global(.sc__iconImg) {
-          width: 80px;
-          height: 80px;
+          width: 80px !important;
+          height: 80px !important;
           display: block;
           object-fit: contain;
+          object-position: center;
         }
 
         .sc__cardBody {
@@ -139,11 +141,14 @@ export default function SecurityControl() {
             font-size: 18px;
             margin-bottom: 16px;
           }
-          .sc__icon,
-          .sc :global(.sc__iconImg) {
+          .sc__icon {
             width: 72px;
             height: 72px;
             margin-bottom: 16px;
+          }
+          .sc :global(.sc__iconImg) {
+            width: 72px !important;
+            height: 72px !important;
           }
           .sc__cardBody {
             max-width: none;
@@ -176,11 +181,14 @@ export default function SecurityControl() {
             font-size: 22px;
             margin-bottom: 24px;
           }
-          .sc__icon,
-          .sc :global(.sc__iconImg) {
+          .sc__icon {
             width: 80px;
             height: 80px;
             margin-bottom: 24px;
+          }
+          .sc :global(.sc__iconImg) {
+            width: 80px !important;
+            height: 80px !important;
           }
           .sc__cardBody {
             font-size: 15px;

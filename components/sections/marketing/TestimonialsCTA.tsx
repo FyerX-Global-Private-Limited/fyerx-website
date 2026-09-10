@@ -12,10 +12,10 @@ export default function TestimonialsCTA() {
   return (
     <section
       id="contact"
-      className="home-section bg-white"
+      className="home-section home-section--contact bg-white max-sm:relative max-sm:left-1/2 max-sm:w-screen max-sm:max-w-[100vw] max-sm:-translate-x-1/2"
       style={{ fontFamily: "'Poppins', sans-serif" }}
     >
-      <div className="section-shell section-shell--wide">
+      <div className="section-shell section-shell--wide max-sm:max-w-none max-sm:px-3">
         <div
           className="section-inset rounded-2xl border sm:rounded-[24px]"
           style={{

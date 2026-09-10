@@ -100,11 +100,11 @@ const containerCls = "mx-auto w-full min-w-0 max-w-6xl";
 
 function HeroSection() {
   return (
-    <section className={`relative w-full overflow-x-clip bg-white py-8 sm:py-12 md:py-14 ${sectionPad}`}>
+    <section className={`relative w-full overflow-x-clip bg-white py-6 sm:py-8 md:py-10 ${sectionPad}`}>
       <div className="pointer-events-none absolute inset-y-0 right-0 w-full sm:w-3/5" aria-hidden="true">
-        <div className="absolute -right-8 top-1/4 h-[220px] w-[220px] rounded-full opacity-20 blur-[80px] sm:-right-16 sm:h-[420px] sm:w-[420px] sm:opacity-25 sm:blur-[100px]" style={{ background: BRAND.yellow }} />
-        <div className="absolute right-4 top-1/2 h-[180px] w-[180px] -translate-y-1/2 rounded-full opacity-20 blur-[70px] sm:right-16 sm:h-[360px] sm:w-[360px] sm:opacity-25 sm:blur-[90px]" style={{ background: BRAND.blue }} />
-        <div className="absolute -right-6 bottom-0 h-[160px] w-[160px] rounded-full opacity-20 blur-[70px] sm:-right-10 sm:h-[320px] sm:w-[320px] sm:blur-[90px]" style={{ background: BRAND.crimson }} />
+        <div className="absolute -right-8 top-[8%] h-[240px] w-[240px] rounded-full opacity-45 blur-[70px] sm:-right-10 sm:h-[460px] sm:w-[460px] sm:opacity-50 sm:blur-[90px]" style={{ background: BRAND.crimson }} />
+        <div className="absolute right-6 top-1/3 h-[200px] w-[200px] rounded-full opacity-40 blur-[60px] sm:right-20 sm:h-[380px] sm:w-[380px] sm:opacity-45 sm:blur-[80px]" style={{ background: BRAND.yellow }} />
+        <div className="absolute -right-4 bottom-0 h-[180px] w-[180px] rounded-full opacity-35 blur-[60px] sm:-right-6 sm:h-[340px] sm:w-[340px] sm:opacity-40 sm:blur-[80px]" style={{ background: BRAND.blue }} />
       </div>
 
       <div className={`relative ${containerCls}`}>
@@ -130,7 +130,7 @@ function HeroSection() {
 
 function ContactHub({ onSelect }: { onSelect: (key: FormKey) => void }) {
   return (
-    <section className={`w-full overflow-x-clip bg-white py-8 sm:py-12 md:py-14 ${sectionPad}`}>
+    <section className={`w-full overflow-x-clip bg-white pb-8 pt-2 sm:pb-12 sm:pt-3 md:pb-14 ${sectionPad}`}>
       <div className={`${containerCls} grid grid-cols-1 gap-6 rounded-2xl border border-[#e6e9ef] bg-white p-4 sm:gap-8 sm:rounded-[28px] sm:p-6 md:p-8 lg:grid-cols-2 lg:gap-10`}>
         {/* Left — heading + category cards */}
         <div className="min-w-0">

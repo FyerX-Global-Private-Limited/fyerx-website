@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { PublicImage as Image } from "@/components/ui/PublicImage";
 import { TALENT_CAPABILITY_TABS, type TalentCapabilityTab } from "@/data/talent-capabilities";
 
 /** Tab themes matched to each capability's icon color. */
@@ -25,14 +25,14 @@ const TAB_THEMES = [
 ] as const;
 
 const TAB_ICON_SRC: Record<string, string> = {
-  servicenow: "/updatedtalentimage/section5 (7).webp",
-  engineering: "/updatedtalentimage/section5 (4).webp",
-  "data-ai": "/updatedtalentimage/section5 (1).webp",
-  "cloud-devops": "/updatedtalentimage/section5 (2).webp",
-  enterprise: "/updatedtalentimage/section5 (3).webp",
-  quality: "/updatedtalentimage/section5 (8).webp",
-  cybersecurity: "/updatedtalentimage/section5 (5).webp",
-  digital: "/updatedtalentimage/section5 (6).webp",
+  servicenow: "/updatedtalentimage/section5-7.webp",
+  engineering: "/updatedtalentimage/section5-4.webp",
+  "data-ai": "/updatedtalentimage/section5-1.webp",
+  "cloud-devops": "/updatedtalentimage/section5-2.webp",
+  enterprise: "/updatedtalentimage/section5-3.webp",
+  quality: "/updatedtalentimage/section5-8.webp",
+  cybersecurity: "/updatedtalentimage/section5-5.webp",
+  digital: "/updatedtalentimage/section5-6.webp",
 };
 
 function TabIcon({ id }: { id: string; iconBg?: string; iconColor?: string }) {

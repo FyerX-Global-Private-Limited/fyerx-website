@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import type { TechScrollCard } from "@/data/technology-home";
 import { TECH_HOME } from "@/lib/technology-home-palette";
@@ -28,6 +28,8 @@ function ChevronIcon({
 export default function TechHorizontalScroll({ cards }: { cards: TechScrollCard[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const pausedRef = useRef(false);
+  const stoppedRef = useRef(false);
 
   const getStep = () => {
     const el = scrollRef.current;
@@ -42,6 +44,18 @@ export default function TechHorizontalScroll({ cards }: { cards: TechScrollCard[
     el.scrollBy({ left: direction * getStep(), behavior: "smooth" });
   };
 
+  const advance = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const step = getStep();
+    const max = el.scrollWidth - el.clientWidth;
+    if (el.scrollLeft + step >= max - 8) {
+      el.scrollTo({ left: 0, behavior: "smooth" });
+    } else {
+      el.scrollBy({ left: step, behavior: "smooth" });
+    }
+  };
+
   const handleScroll = () => {
     const el = scrollRef.current;
     if (!el) return;
@@ -50,8 +64,28 @@ export default function TechHorizontalScroll({ cards }: { cards: TechScrollCard[
     setActiveIndex(Math.max(0, Math.min(index, cards.length - 1)));
   };
 
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      if (pausedRef.current || stoppedRef.current) return;
+      advance();
+    }, 5000);
+    return () => window.clearInterval(id);
+  }, [cards.length]);
+
+  const stopAuto = () => {
+    stoppedRef.current = true;
+  };
+
   return (
-    <div className="relative mt-6 sm:mt-10 lg:mt-14">
+    <div
+      className="relative mt-6 sm:mt-10 lg:mt-14"
+      onMouseEnter={() => {
+        pausedRef.current = true;
+      }}
+      onMouseLeave={() => {
+        pausedRef.current = false;
+      }}
+    >
       <div
         ref={scrollRef}
         onScroll={handleScroll}
@@ -97,7 +131,10 @@ export default function TechHorizontalScroll({ cards }: { cards: TechScrollCard[
           <button
             type="button"
             aria-label="Previous"
-            onClick={() => scrollByCard(-1)}
+            onClick={() => {
+              stopAuto();
+              scrollByCard(-1);
+            }}
             className="flex h-9 w-9 items-center justify-center rounded-full border text-white shadow-sm transition-opacity hover:opacity-90"
             style={{ backgroundColor: TECH_HOME.primary, borderColor: TECH_HOME.primary }}
           >
@@ -106,7 +143,10 @@ export default function TechHorizontalScroll({ cards }: { cards: TechScrollCard[
           <button
             type="button"
             aria-label="Next"
-            onClick={() => scrollByCard(1)}
+            onClick={() => {
+              stopAuto();
+              scrollByCard(1);
+            }}
             className="flex h-9 w-9 items-center justify-center rounded-full border text-white shadow-sm transition-opacity hover:opacity-90"
             style={{ backgroundColor: TECH_HOME.primary, borderColor: TECH_HOME.primary }}
           >

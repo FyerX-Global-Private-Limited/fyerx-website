@@ -1,8 +1,8 @@
 import type { MobileMenuCategory } from "@/components/layout/shared/MobileMegaMenuSection";
 
-const ICONS = "/Talent menu";
+const ICONS = "/Talent-menu";
 
-export const TALENT_MENU_HEADING_ICON = `${ICONS}/Talent Solutions.webp`;
+export const TALENT_MENU_HEADING_ICON = `${ICONS}/Talent-Solutions.webp`;
 
 /** Shared Talent mega-menu — used by the homepage Talent tab and the talent site Services dropdown. */
 export const TALENT_MENU_CATEGORIES: MobileMenuCategory[] = [
@@ -13,12 +13,12 @@ export const TALENT_MENU_CATEGORIES: MobileMenuCategory[] = [
     icon: "personPlus",
     tint: "#E8F8EF",
     iconColor: "#00CA72",
-    image: `${ICONS}/Contract Staffing.webp`,
+    image: `${ICONS}/Contract-Staffing.webp`,
     items: [
-      { label: "IT & Tech Contract Roles", icon: "gear", href: "#", image: `${ICONS}/IT & Tech Contract Roles.webp` },
-      { label: "Project-Based Staffing", icon: "clipboardCheck", href: "#", image: `${ICONS}/Project-Based Staffing.webp` },
-      { label: "Volume/Bulk Staffing", icon: "personPlus", href: "#", image: `${ICONS}/Bulk Staffing.webp` },
-      { label: "Cross-Border Contract Staffing (US)", icon: "globe", href: "#", image: `${ICONS}/Cross-Border Contract Staffing (US).webp` },
+      { label: "IT & Tech Contract Roles", icon: "gear", href: "#", image: `${ICONS}/IT-and-Tech-Contract-Roles.webp` },
+      { label: "Project-Based Staffing", icon: "clipboardCheck", href: "#", image: `${ICONS}/Project-Based-Staffing.webp` },
+      { label: "Volume/Bulk Staffing", icon: "personPlus", href: "#", image: `${ICONS}/Bulk-Staffing.webp` },
+      { label: "Cross-Border Contract Staffing (US)", icon: "globe", href: "#", image: `${ICONS}/Cross-Border-Contract-Staffing-US.webp` },
     ],
   },
   {
@@ -30,9 +30,9 @@ export const TALENT_MENU_CATEGORIES: MobileMenuCategory[] = [
     iconColor: "#6161FF",
     image: `${ICONS}/RPO.webp`,
     items: [
-      { label: "End-to-End Recruitment Outsourcing", icon: "funnel", href: "#", image: `${ICONS}/End-to-End Recruitment Outsourcing.webp` },
-      { label: "On-Demand RPO", icon: "sparkle", href: "#", image: `${ICONS}/On-Demand RPO.webp` },
-      { label: "Enterprise RPO", icon: "database", href: "#", image: `${ICONS}/Enterprise RPO.webp` },
+      { label: "End-to-End Recruitment Outsourcing", icon: "funnel", href: "#", image: `${ICONS}/End-to-End-Recruitment-Outsourcing.webp` },
+      { label: "On-Demand RPO", icon: "sparkle", href: "#", image: `${ICONS}/On-Demand-RPO.webp` },
+      { label: "Enterprise RPO", icon: "database", href: "#", image: `${ICONS}/Enterprise-RPO.webp` },
     ],
   },
   {
@@ -42,10 +42,10 @@ export const TALENT_MENU_CATEGORIES: MobileMenuCategory[] = [
     icon: "search",
     tint: "#E8F4FF",
     iconColor: "#579BFC",
-    image: `${ICONS}/Permanent Hiring &  Executive Search.webp`,
+    image: `${ICONS}/Permanent-Hiring-and-Executive-Search.webp`,
     items: [
-      { label: "Permanent Hiring", icon: "personPlus", href: "#", image: `${ICONS}/Permanent Hiring.webp` },
-      { label: "Executive Search", icon: "search", href: "#", image: `${ICONS}/Executive Search.webp` },
+      { label: "Permanent Hiring", icon: "personPlus", href: "#", image: `${ICONS}/Permanent-Hiring.webp` },
+      { label: "Executive Search", icon: "search", href: "#", image: `${ICONS}/Executive-Search.webp` },
     ],
   },
   {
@@ -55,12 +55,12 @@ export const TALENT_MENU_CATEGORIES: MobileMenuCategory[] = [
     icon: "gear",
     tint: "#FFF6E6",
     iconColor: "#FDAB3D",
-    image: `${ICONS}/IT & Tech Talent.webp`,
+    image: `${ICONS}/IT-and-Tech-Talent.webp`,
     items: [
-      { label: "Software Development Roles", icon: "doc", href: "#", image: `${ICONS}/Software Development Roles.webp` },
-      { label: "ServiceNow & Enterprise Platform Talent", icon: "plug", href: "#", image: `${ICONS}/ServiceNow & Enterprise Platform Talent.webp` },
-      { label: "Data & AI Talent", icon: "sparkle", href: "#", image: `${ICONS}/Data & AI Talent.webp` },
-      { label: "DevOps & Cloud Talent", icon: "database", href: "#", image: `${ICONS}/DevOps & Cloud Talent.webp` },
+      { label: "Software Development Roles", icon: "doc", href: "#", image: `${ICONS}/Software-Development-Roles.webp` },
+      { label: "ServiceNow & Enterprise Platform Talent", icon: "plug", href: "#", image: `${ICONS}/ServiceNow-and-Enterprise-Platform-Talent.webp` },
+      { label: "Data & AI Talent", icon: "sparkle", href: "#", image: `${ICONS}/Data-and-AI-Talent.webp` },
+      { label: "DevOps & Cloud Talent", icon: "database", href: "#", image: `${ICONS}/DevOps-and-Cloud-Talent.webp` },
     ],
   },
   {
@@ -70,11 +70,11 @@ export const TALENT_MENU_CATEGORIES: MobileMenuCategory[] = [
     icon: "clipboardCheck",
     tint: "#E8F8EF",
     iconColor: "#00CA72",
-    image: `${ICONS}/HR Advisory.webp`,
+    image: `${ICONS}/HR-Advisory.webp`,
     items: [
-      { label: "Hiring Assessments", icon: "clipboardCheck", href: "#", image: `${ICONS}/Hiring Assessments.webp` },
-      { label: "Background Verification", icon: "tag", href: "#", image: `${ICONS}/Background Verification.webp` },
-      { label: "Compensation Benchmarking", icon: "chart", href: "#", image: `${ICONS}/Compensation Benchmarking.webp` },
+      { label: "Hiring Assessments", icon: "clipboardCheck", href: "#", image: `${ICONS}/Hiring-Assessments.webp` },
+      { label: "Background Verification", icon: "tag", href: "#", image: `${ICONS}/Background-Verification.webp` },
+      { label: "Compensation Benchmarking", icon: "chart", href: "#", image: `${ICONS}/Compensation-Benchmarking.webp` },
     ],
   },
   {
@@ -84,11 +84,11 @@ export const TALENT_MENU_CATEGORIES: MobileMenuCategory[] = [
     icon: "globe",
     tint: "#E8F4FF",
     iconColor: "#0086C0",
-    image: `${ICONS}/Global Staffing.webp`,
+    image: `${ICONS}/Global-Staffing.webp`,
     items: [
-      { label: "US Contract Staffing", icon: "globe", href: "#", image: `${ICONS}/US Contract Staffing.webp` },
-      { label: "Remote Team Building", icon: "personPlus", href: "#", image: `${ICONS}/Remote Team Building.webp` },
-      { label: "Cross-Border Compliance Support", icon: "globe", href: "#", image: `${ICONS}/Cross-Border Compliance Support.webp` },
+      { label: "US Contract Staffing", icon: "globe", href: "#", image: `${ICONS}/US-Contract-Staffing.webp` },
+      { label: "Remote Team Building", icon: "personPlus", href: "#", image: `${ICONS}/Remote-Team-Building.webp` },
+      { label: "Cross-Border Compliance Support", icon: "globe", href: "#", image: `${ICONS}/Cross-Border-Compliance-Support.webp` },
     ],
   },
 ];
