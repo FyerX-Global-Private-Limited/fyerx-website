@@ -17,6 +17,7 @@ import {
   HEADER_LOGO_WIDTH,
 } from "@/lib/header-logo";
 import { MARKETING_MENU_CATEGORIES, MARKETING_MENU_HEADING_ICON } from "@/lib/marketing-menu";
+import { encodePublicSrc } from "@/lib/public-src";
 
 // ── Icons ──────────────────────────────────────────────────────────────────────
 function ChevronDown({ open }: { open: boolean }) {
@@ -61,7 +62,6 @@ const servicesCategories = MARKETING_MENU_CATEGORIES;
 const simpleLinks = [
   { label: "Our Work", href: "/marketing/case-studies" },
   { label: "Careers", href: "https://fyerx.zohorecruit.in/jobs/Careers", external: true },
-  { label: "Blog", href: "/blog" },
 ];
 
 const MARKETING_CRIMSON = "#730031";
@@ -80,7 +80,7 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
         <div className="w-[52%] min-w-0 shrink-0 pr-6 lg:pr-8" style={{ ["--menu-hover" as string]: MARKETING_CRIMSON }}>
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2.5 text-[#9a9ea8]">
-              <Image src={MARKETING_MENU_HEADING_ICON} alt="" width={18} height={18} className="h-[18px] w-[18px] object-contain" />
+              <Image src={encodePublicSrc(MARKETING_MENU_HEADING_ICON)} alt="" width={18} height={18} unoptimized className="h-[18px] w-[18px] object-contain" />
               <span className="mb-0 text-[13px] font-normal uppercase leading-[1.5] tracking-[0.06em] text-[#7c7b7b]">
                 MARKETING SERVICES
               </span>
@@ -147,9 +147,9 @@ function ServicesMenu({ onClose }: { onClose: () => void }) {
                 <Link
                   href={item.href}
                   onClick={onClose}
-                  className="flex items-start gap-2.5 py-1.5 text-[14px] font-normal leading-[1.35] text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)]"
+                  className="flex items-center gap-3 py-1.5 text-[14px] font-normal leading-[1.35] text-[#323338] transition-colors duration-100 hover:text-[var(--menu-hover)]"
                 >
-                  <span className="mt-0.5 shrink-0"><MenuDetailIcon name={item.icon} src={item.image} /></span>
+                  <span className="shrink-0"><MenuDetailIcon name={item.icon} src={item.image} /></span>
                   <span className="min-w-0 break-words">{item.label}</span>
                 </Link>
               </li>

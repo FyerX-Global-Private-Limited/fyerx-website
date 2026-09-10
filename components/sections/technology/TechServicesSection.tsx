@@ -124,12 +124,20 @@ export default function TechServicesSection() {
   );
   const itemRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const pendingScroll = useRef<string | null>(null);
+  const pausedRef = useRef(false);
+  const stoppedRef = useRef(false);
 
   const active = TECHNOLOGY_SERVICE_TABS.find((tab) => tab.id === activeId) ?? TECHNOLOGY_SERVICE_TABS[0];
   const activeIndex = TECHNOLOGY_SERVICE_TABS.findIndex((tab) => tab.id === activeId);
   const theme = TAB_THEMES[activeIndex] ?? TAB_THEMES[0];
 
+  const selectId = (id: string, fromUser = false) => {
+    if (fromUser) stoppedRef.current = true;
+    setActiveId(id);
+  };
+
   const toggleAccordion = (id: string) => {
+    stoppedRef.current = true;
     const willOpen = !openIds.has(id);
     setOpenIds((prev) => {
       const next = new Set(prev);
@@ -147,6 +155,18 @@ export default function TechServicesSection() {
     pendingScroll.current = null;
     itemRefs.current[id]?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [openIds]);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      if (pausedRef.current || stoppedRef.current) return;
+      setActiveId((current) => {
+        const i = TECHNOLOGY_SERVICE_TABS.findIndex((tab) => tab.id === current);
+        const next = TECHNOLOGY_SERVICE_TABS[(i + 1) % TECHNOLOGY_SERVICE_TABS.length];
+        return next.id;
+      });
+    }, 5000);
+    return () => window.clearInterval(id);
+  }, []);
 
   return (
     <section id="services" className="scroll-mt-[80px] overflow-x-clip bg-white">
@@ -200,7 +220,7 @@ export default function TechServicesSection() {
                   >
                     <TabIcon id={tab.id} iconBg={tabTheme.iconBg} />
                     <span
-                      className={`min-w-0 flex-1 text-sm leading-snug ${
+                      className={`min-w-0 flex-1 text-sm leading-snug break-words ${
                         open ? "font-semibold" : "font-medium text-[#52525b]"
                       }`}
                       style={open ? { color: tabTheme.accent } : undefined}
@@ -217,7 +237,15 @@ export default function TechServicesSection() {
             })}
           </div>
 
-          <div className="hidden min-w-0 gap-5 lg:grid lg:grid-cols-[280px_1fr] lg:gap-6">
+          <div
+            className="hidden min-w-0 gap-5 lg:grid lg:grid-cols-[280px_1fr] lg:gap-6"
+            onMouseEnter={() => {
+              pausedRef.current = true;
+            }}
+            onMouseLeave={() => {
+              pausedRef.current = false;
+            }}
+          >
             <nav className="flex flex-col gap-2" aria-label="Service areas">
               {TECHNOLOGY_SERVICE_TABS.map((tab, i) => {
                 const isActive = tab.id === activeId;
@@ -226,7 +254,7 @@ export default function TechServicesSection() {
                   <button
                     key={tab.id}
                     type="button"
-                    onClick={() => setActiveId(tab.id)}
+                    onClick={() => selectId(tab.id, true)}
                     className={`flex items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition-all sm:px-4 sm:py-3 ${
                       isActive
                         ? "border-transparent shadow-sm"
@@ -240,7 +268,7 @@ export default function TechServicesSection() {
                   >
                     <TabIcon id={tab.id} iconBg={tabTheme.iconBg} />
                     <span
-                      className={`text-sm leading-snug ${isActive ? "font-semibold" : "font-medium text-[#52525b]"}`}
+                      className={`min-w-0 text-sm leading-snug break-words ${isActive ? "font-semibold" : "font-medium text-[#52525b]"}`}
                       style={isActive ? { color: tabTheme.accent } : undefined}
                     >
                       {tab.label}

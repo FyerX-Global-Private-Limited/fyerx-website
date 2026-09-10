@@ -2,20 +2,21 @@
 
 import React from "react";
 import { TALENT_HOME } from "@/lib/talent-home-palette";
+import { encodePublicSrc } from "@/lib/public-src";
 
 const cards = [
   {
-    img: "/updatedtalentimage/section11 (3).webp",
+    img: "/updatedtalentimage/section11-3.webp",
     title: "What RPO Looks Like in Practice",
     body: "When outsourced recruitment support is useful—and what the working model should include.",
   },
   {
-    img: "/updatedtalentimage/section11 (2).webp",
+    img: "/updatedtalentimage/section11-2.webp",
     title: "Building a Distributed Technology Team",
     body: "How to choose the model that fits your timeline, budget structure, and ongoing capability need.",
   },
   {
-    img: "/updatedtalentimage/section11 (1).webp",
+    img: "/updatedtalentimage/section11-1.webp",
     title: "How to Hire for Enterprise Platforms",
     body: "What to clarify before hiring ServiceNow, Salesforce, SAP, and other platform specialists.",
   },
@@ -34,7 +35,7 @@ export default function ResourcesSection() {
           {cards.map((c) => (
             <article className="res__card" key={c.title}>
               <div className="res-top res-top--photo">
-                <img src={c.img} alt={c.title} />
+                <img src={encodePublicSrc(c.img)} alt={c.title} />
               </div>
               <h3 className="res__card-title">{c.title}</h3>
               <p className="res__card-body">{c.body}</p>

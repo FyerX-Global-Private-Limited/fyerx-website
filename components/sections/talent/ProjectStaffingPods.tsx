@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { PublicImage as Image } from "@/components/ui/PublicImage";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TALENT_HOME } from "@/lib/talent-home-palette";
 
@@ -13,25 +13,25 @@ const CARDS: {
     title: "Defined team structure",
     description:
       "We work with your hiring or delivery lead to understand the requirement, identify the roles involved, and structure a practical team plan before profiles are shared.",
-    icon: "/updatedtalentimage/section6 (4).webp",
+    icon: "/updatedtalentimage/section6-4.webp",
   },
   {
     title: "Specialists aligned to the work",
     description:
       "Each pod is built around the skills, experience level, availability, work model, and delivery timeline required for the engagement.",
-    icon: "/updatedtalentimage/section6 (2).webp",
+    icon: "/updatedtalentimage/section6-2.webp",
   },
   {
     title: "One coordinated process",
     description:
       "FyerX manages sourcing, screening, submission, interview coordination, documentation, and onboarding across the roles involved.",
-    icon: "/updatedtalentimage/section6 (3).webp",
+    icon: "/updatedtalentimage/section6-3.webp",
   },
   {
     title: "Capacity that can adapt",
     description:
       "Start with the immediate requirement and add, replace, or reduce roles as the project moves through different stages.",
-    icon: "/updatedtalentimage/section6 (1).webp",
+    icon: "/updatedtalentimage/section6-1.webp",
   },
 ];
 

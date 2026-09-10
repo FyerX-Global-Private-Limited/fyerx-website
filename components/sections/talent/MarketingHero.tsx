@@ -1,14 +1,14 @@
 "use client";
 
-import Image from "next/image";
+import { PublicImage as Image } from "@/components/ui/PublicImage";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TALENT_HOME } from "@/lib/talent-home-palette";
 
 const HERO_COLUMNS = [
-  { src: "/Talent 1.webp", duration: "36s", reverse: false, delay: "0s" },
-  { src: "/Talent 2.webp", duration: "44s", reverse: true, delay: "-10s" },
-  { src: "/Talent 3.webp", duration: "40s", reverse: false, delay: "-18s" },
-  { src: "/Talent 4.webp", duration: "48s", reverse: true, delay: "-6s" },
+  { src: "/Talent-1.webp", duration: "36s", reverse: false, delay: "0s" },
+  { src: "/Talent-2.webp", duration: "44s", reverse: true, delay: "-10s" },
+  { src: "/Talent-3.webp", duration: "40s", reverse: false, delay: "-18s" },
+  { src: "/Talent-4.webp", duration: "48s", reverse: true, delay: "-6s" },
 ] as const;
 
 const PILLARS = [

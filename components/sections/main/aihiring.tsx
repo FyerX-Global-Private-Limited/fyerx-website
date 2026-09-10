@@ -1,29 +1,29 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+import { PublicImage as Image } from '@/components/ui/PublicImage';
 import { PrimaryCtaLink } from '@/components/ui/PrimaryCta';
 
 type Feature = { image: string; title: string; body: string };
 
 const FEATURES: Feature[] = [
   {
-    image: '/updatedmainpage/section6 (2).webp',
+    image: '/updatedmainpage/section6-2.webp',
     title: 'Strategic by design',
     body: 'Every engagement begins with a clear understanding of the business objective, not a pre-set solution.',
   },
   {
-    image: '/updatedmainpage/section6 (3).webp',
+    image: '/updatedmainpage/section6-3.webp',
     title: 'Disciplined execution',
     body: 'Defined plans, clear ownership, and consistent follow-through keep work progressing without unnecessary friction.',
   },
   {
-    image: '/updatedmainpage/section6 (4).webp',
+    image: '/updatedmainpage/section6-4.webp',
     title: 'Partnership mindset',
     body: 'We work as an extension of your team, bringing context, judgement, and continuity to every engagement.',
   },
   {
-    image: '/updatedmainpage/section6 (1).webp',
+    image: '/updatedmainpage/section6-1.webp',
     title: 'Built for progress',
     body: 'Our work is structured to create measurable movement today while supporting what the business needs next.',
   },

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { encodePublicSrc } from "@/lib/public-src";
 import {
   MenuCategoryThumb,
   MenuDetailIcon,
@@ -82,11 +83,12 @@ export function CategoryThumb({
   if (cat.image) {
     return (
       <Image
-        src={cat.image}
+        src={encodePublicSrc(cat.image)}
         alt=""
         width={size}
         height={size}
-        className="shrink-0 rounded-[10px] object-contain"
+        unoptimized
+        className="shrink-0 self-center rounded-[10px] object-contain object-center"
         style={{ width: size, height: size }}
       />
     );

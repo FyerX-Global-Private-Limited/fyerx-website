@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
+import { PublicImage as Image } from "@/components/ui/PublicImage";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
 interface CapabilityCard {
@@ -13,13 +13,13 @@ interface CapabilityCard {
 
 const COLUMN_ONE: CapabilityCard[] = [
   {
-    image: "/updatedmainpage/section4 (1).webp",
+    image: "/updatedmainpage/section4-1.webp",
     imageAlt: "Onboarding support",
     title: "Onboarding support",
     description: "Structured onboarding to get your engagement set up correctly from day one.",
   },
   {
-    image: "/updatedmainpage/section4 (2).webp",
+    image: "/updatedmainpage/section4-2.webp",
     imageAlt: "Dedicated account management",
     title: "Dedicated account management",
     description: "A single point of contact who understands your business and stays with you throughout.",
@@ -28,20 +28,20 @@ const COLUMN_ONE: CapabilityCard[] = [
 
 const COLUMN_TWO: CapabilityCard[] = [
   {
-    image: "/updatedmainpage/section4 (3).webp",
+    image: "/updatedmainpage/section4-3.webp",
     imageAlt: "Ongoing strategic guidance",
     title: "Ongoing strategic guidance",
     description: "Regular check-ins to keep your engagement aligned with your evolving goals.",
   },
   {
-    image: "/updatedmainpage/section4 (4).webp",
+    image: "/updatedmainpage/section4-4.webp",
     imageAlt: "Engagement continuity",
     title: "Engagement continuity",
     description:
       "Proactive follow-through to keep work moving, resolve issues early, and maintain momentum throughout the engagement.",
   },
   {
-    image: "/updatedmainpage/section4 (5).webp",
+    image: "/updatedmainpage/section4-5.webp",
     imageAlt: "Tailored engagements",
     title: "Tailored engagements",
     description: "Custom scopes of work for specific needs outside our standard offerings.",

@@ -264,7 +264,7 @@ function StackedBlueprintCard({
       suppressHydrationWarning
     >
       <div
-        className="mb-4 overflow-hidden rounded-[18px] shadow-[0_16px_40px_-24px_rgba(16,16,20,0.22)] sm:mb-8 sm:rounded-[28px] sm:shadow-[0_24px_64px_-28px_rgba(16,16,20,0.22)]"
+        className="mb-4 overflow-hidden rounded-[18px] shadow-[0_16px_40px_-24px_rgba(16,16,20,0.22)] last:mb-0 sm:mb-8 sm:rounded-[28px] sm:shadow-[0_24px_64px_-28px_rgba(16,16,20,0.22)] sm:last:mb-0"
         style={{ backgroundColor: palette.cardBg }}
       >
         <div className="grid md:grid-cols-2">
@@ -352,7 +352,7 @@ export default function TechStackedScrollSection() {
         </div>
 
         <div
-          className={`relative mt-6 md:mt-12 ${stackEnabled ? "pb-[20vh]" : "pb-3 sm:pb-6"}`}
+          className={`relative mt-6 md:mt-12 ${stackEnabled ? "pb-3 sm:pb-6" : "pb-3 sm:pb-6"}`}
         >
           {TECHNOLOGY_CASE_STUDIES.map((study, index) => (
             <StackedBlueprintCard

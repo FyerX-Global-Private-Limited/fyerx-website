@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
+import { PublicImage as Image } from "@/components/ui/PublicImage";
 import { Poppins } from "next/font/google";
 
 const poppins = Poppins({
@@ -74,20 +74,20 @@ export default function Leadership() {
 
         <div className="section-body ldr-grid">
           <FeatureCard
-            image="/updatedmainpage/section7 (2).webp"
+            image="/updatedmainpage/section7-2.webp"
             title="Every stage, connected"
             body="Information flows smoothly from planning through delivery, so nothing gets lost in handoffs."
           />
 
           <FeatureCard
-            image="/updatedmainpage/section7 (3).webp"
+            image="/updatedmainpage/section7-3.webp"
             title="More than one capability"
             body="Choose the expertise you need today, with the flexibility to access more as your business evolves."
           />
 
           <div className="ldr-card-image">
             <Image
-              src="/updatedmainpage/section7 (1).webp"
+              src="/updatedmainpage/section7-1.webp"
               alt="FyerX team collaborating together"
               fill
               sizes="(min-width: 1024px) 33vw, 100vw"

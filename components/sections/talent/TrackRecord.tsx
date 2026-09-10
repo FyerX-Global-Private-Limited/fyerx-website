@@ -1,41 +1,41 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import { PublicImage as Image } from "@/components/ui/PublicImage";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TALENT_HOME } from "@/lib/talent-home-palette";
 
 const STAFFING_SERVICES = [
   {
-    icon: "/updatedtalentimage/section4 (2).webp",
+    icon: "/updatedtalentimage/section4-2.webp",
     label: ["Contract", "Staffing"] as [string, string?],
   },
   {
-    icon: "/updatedtalentimage/section4 (3).webp",
+    icon: "/updatedtalentimage/section4-3.webp",
     label: ["IT & Tech", "Staffing"] as [string, string?],
   },
   {
-    icon: "/updatedtalentimage/section4 (4).webp",
+    icon: "/updatedtalentimage/section4-4.webp",
     label: ["Project-Based", "Staffing"] as [string, string?],
   },
   {
-    icon: "/updatedtalentimage/section4 (5).webp",
+    icon: "/updatedtalentimage/section4-5.webp",
     label: ["Recruitment", "Outsourcing"] as [string, string?],
   },
   {
-    icon: "/updatedtalentimage/section4 (6).webp",
+    icon: "/updatedtalentimage/section4-6.webp",
     label: ["Permanent", "Hiring"] as [string, string?],
   },
   {
-    icon: "/updatedtalentimage/section4 (7).webp",
+    icon: "/updatedtalentimage/section4-7.webp",
     label: ["Executive", "Search"] as [string, string?],
   },
   {
-    icon: "/updatedtalentimage/section4 (8).webp",
+    icon: "/updatedtalentimage/section4-8.webp",
     label: ["Bulk & Volume", "Hiring"] as [string, string?],
   },
   {
-    icon: "/updatedtalentimage/section4 (1).webp",
+    icon: "/updatedtalentimage/section4-1.webp",
     label: ["Global", "Staffing"] as [string, string?],
   },
 ] as const;

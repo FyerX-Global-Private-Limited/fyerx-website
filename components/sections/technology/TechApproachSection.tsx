@@ -57,7 +57,7 @@ export default function TechApproachSection() {
 
               <div className="mt-5 sm:mt-8">
                 <PrimaryCtaLink
-                  href="#contact"
+                  href="/contact?form=technology"
                   className="w-full justify-center sm:w-auto"
                   color={TECH_HOME.primary}
                   textColor={TECH_HOME.accent}
@@ -69,12 +69,11 @@ export default function TechApproachSection() {
 
             <div className="relative flex min-h-[180px] items-center justify-center px-4 pb-5 sm:min-h-[220px] sm:px-6 sm:pb-8 md:min-h-[380px] md:pr-8">
               <Image
-                src="/images/talent/fyerxopenrole.svg"
-                alt="Delivery dashboard showing programme ownership and progress"
-                width={440}
-                height={371}
-                unoptimized
-                className="h-auto w-full max-w-[320px] select-none sm:max-w-[440px]"
+                src="/updatedmainpage/Technology.webp"
+                alt="Technology platforms and delivery overview"
+                width={1600}
+                height={1340}
+                className="h-auto w-full max-w-[320px] select-none object-contain sm:max-w-[440px]"
                 draggable={false}
               />
             </div>

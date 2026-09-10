@@ -65,7 +65,7 @@ export default function TechStartSection() {
             </ul>
 
             <div className="mt-5 sm:mt-7">
-              <PrimaryCtaLink href="#contact" color={TECH_HOME.primary} textColor={TECH_HOME.accent}>
+              <PrimaryCtaLink href="/contact?form=technology" color={TECH_HOME.primary} textColor={TECH_HOME.accent}>
                 Discuss Your Requirement
               </PrimaryCtaLink>
             </div>
