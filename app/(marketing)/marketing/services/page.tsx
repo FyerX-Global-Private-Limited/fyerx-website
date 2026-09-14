@@ -1,3 +1,8 @@
+import type { Metadata } from "next";
+import { metadataForPath } from "@/lib/seo";
+
+export const metadata: Metadata = metadataForPath("/marketing/services");
+
 export default function ServicesPage() {
   return (
     <section className="max-w-5xl mx-auto px-6 py-24">

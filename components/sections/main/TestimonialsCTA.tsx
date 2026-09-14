@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, type FormEvent } from "react";
+import React, { useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import type { CountryCode } from "libphonenumber-js";
 import { PrimaryCtaButton } from "@/components/ui/PrimaryCta";
@@ -9,10 +9,9 @@ import { validateEmail, validatePhone } from "@/lib/form-validation";
 import { readFormString } from "@/lib/submit-lead";
 import { useSubmitLead } from "@/lib/use-submit-lead";
 import { TRUSTBAR_LOGOS } from "@/lib/trustbar-logos";
-import { CONTACT_TEAM_AVATARS } from "@/lib/contact-team-avatars";
+import { ContactFormAvatars } from "@/components/ui/ContactFormAvatars";
 import { RecaptchaLegalNote } from "@/components/RecaptchaLegalNote";
-
-const AVATARS = CONTACT_TEAM_AVATARS;
+import { trackEvent } from "@/lib/analytics";
 
 const inputBase =
   "w-full h-10 rounded-[8px] border border-[#c3c6d4] bg-white px-3.5 text-[13px] text-[#333333] placeholder-[#676879] outline-none transition-colors duration-150 focus:border-[#6161ff]";
@@ -56,6 +55,7 @@ export default function TestimonialsCTA() {
   const [phoneError, setPhoneError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const formStarted = useRef(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -95,6 +95,7 @@ export default function TestimonialsCTA() {
       return;
     }
 
+    trackEvent("generate_lead", { form_type: "home" });
     router.push(`/contact/thankyou-home?leadId=${result.id}`);
   };
 
@@ -152,24 +153,22 @@ export default function TestimonialsCTA() {
           </div>
 
           <div className="relative mt-8 w-full sm:mt-10 lg:mt-0 lg:w-[462px] lg:shrink-0">
-            <div className="absolute -top-[22px] left-1/2 z-10 flex -translate-x-1/2 -space-x-[6px]">
-              {AVATARS.map((avatar, i) => (
-                <img
-                  key={avatar.src}
-                  src={avatar.src}
-                  alt={avatar.alt}
-                  className="h-9 w-9 rounded-full border-2 border-[#0f0f10] object-cover"
-                  style={{ zIndex: AVATARS.length - i }}
-                />
-              ))}
-            </div>
+            <ContactFormAvatars />
 
             <div className="w-full rounded-[16px] bg-white px-4 py-6 shadow-[0px_6px_20px_rgba(29,37,45,0.05)] sm:px-9 sm:py-7">
               <h3 className="text-center text-[16px] font-semibold text-[#181b34]">
                 Contact our team
               </h3>
 
-              <form className="mt-4 flex flex-col gap-3" onSubmit={handleSubmit}>
+              <form
+                className="mt-4 flex flex-col gap-3"
+                onSubmit={handleSubmit}
+                onFocusCapture={() => {
+                  if (formStarted.current) return;
+                  formStarted.current = true;
+                  trackEvent("form_start", { form_type: "home" });
+                }}
+              >
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <input type="text" name="firstName" placeholder="First name*" required className={inputBase} />
                   <input type="text" name="lastName" placeholder="Last name*" required className={inputBase} />
