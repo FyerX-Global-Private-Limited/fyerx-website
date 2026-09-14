@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes, CSSProperties, ReactNode } from "react";
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, CSSProperties, MouseEvent, ReactNode } from "react";
+import { trackCtaClick } from "@/lib/analytics";
 
 /**
  * The site's one primary call-to-action style: a magenta pill with an
@@ -154,11 +157,16 @@ export function PrimaryCtaLink({
     ...style,
   };
 
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    trackCtaClick(href);
+    props.onClick?.(event);
+  };
+
   // Hash deep-links (e.g. /contact#talent) use a plain <a> so Next.js Link
   // client navigation cannot append the fragment twice (#talent#talent).
   if (href.includes("#")) {
     return (
-      <a href={href} className={classNameResolved} style={styleResolved} {...props}>
+      <a href={href} className={classNameResolved} style={styleResolved} {...props} onClick={handleClick}>
         {children}
         {resolvedIcon}
       </a>
@@ -166,7 +174,7 @@ export function PrimaryCtaLink({
   }
 
   return (
-    <Link href={href} className={classNameResolved} style={styleResolved} {...props}>
+    <Link href={href} className={classNameResolved} style={styleResolved} {...props} onClick={handleClick}>
       {children}
       {resolvedIcon}
     </Link>
@@ -194,6 +202,7 @@ export function PrimaryCtaButton({
   variant = "default",
   style,
   type = "button",
+  onClick,
   ...props
 }: PrimaryCtaButtonProps) {
   const resolvedIcon =
@@ -208,6 +217,10 @@ export function PrimaryCtaButton({
         ...style,
       }}
       {...props}
+      onClick={(event) => {
+        trackCtaClick("button");
+        onClick?.(event);
+      }}
     >
       {children}
       {resolvedIcon}

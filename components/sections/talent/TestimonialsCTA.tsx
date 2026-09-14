@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { ContactEnquiryForm } from "@/components/sections/contact/ContactEnquiryForm";
+import { ContactFormAvatars } from "@/components/ui/ContactFormAvatars";
 
 export default function TestimonialsCTA() {
   return (
@@ -29,17 +29,7 @@ export default function TestimonialsCTA() {
             </div>
 
             <div className="relative mt-1 w-full min-w-0 shrink-0 sm:mx-auto sm:mt-4 sm:max-w-[462px] lg:mx-0 lg:mt-0 lg:w-[462px] lg:max-w-none">
-              <div className="absolute -top-[22px] left-1/2 z-10 -translate-x-1/2">
-                <Image
-                  src="/updatedtalentimage/section12.webp"
-                  alt=""
-                  width={904}
-                  height={200}
-                  unoptimized
-                  className="h-9 w-auto select-none sm:h-11"
-                  draggable={false}
-                />
-              </div>
+              <ContactFormAvatars />
 
               <div className="w-full min-w-0 overflow-hidden rounded-[16px] bg-white px-4 py-5 shadow-[0px_6px_20px_rgba(29,37,45,0.05)] sm:px-9 sm:py-7">
                 <ContactEnquiryForm

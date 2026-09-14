@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import type { CountryCode } from "libphonenumber-js";
 import { DEFAULT_PHONE_COUNTRY, PhoneInput } from "@/components/ui/PhoneInput";
@@ -8,6 +8,7 @@ import { validateEmail, validatePhone } from "@/lib/form-validation";
 import { readFormString } from "@/lib/submit-lead";
 import { useSubmitLead } from "@/lib/use-submit-lead";
 import { RecaptchaLegalNote } from "@/components/RecaptchaLegalNote";
+import { trackEvent } from "@/lib/analytics";
 
 export const BRAND = {
   crimson: "#730031",
@@ -408,6 +409,7 @@ export function ContactEnquiryForm({
   const [expectedStartError, setExpectedStartError] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const formStarted = useRef(false);
 
   useEffect(() => {
     setSelected([]);
@@ -420,6 +422,7 @@ export function ContactEnquiryForm({
     setExpectedStartError(false);
     setSubmitting(false);
     setSubmitError(null);
+    formStarted.current = false;
   }, [formKey]);
 
   const toggleOption = (opt: string) => {
@@ -490,6 +493,7 @@ export function ContactEnquiryForm({
       return;
     }
 
+    trackEvent("generate_lead", { form_type: formKey });
     router.push(`${THANK_YOU_BY_FORM[formKey]}?leadId=${result.id}`);
   };
 
@@ -499,7 +503,16 @@ export function ContactEnquiryForm({
         <h3 className="text-center text-[16px] font-semibold text-[#181b34]">{title}</h3>
       )}
 
-      <form key={formKey} className={className} onSubmit={handleSubmit}>
+      <form
+        key={formKey}
+        className={className}
+        onSubmit={handleSubmit}
+        onFocusCapture={() => {
+          if (formStarted.current) return;
+          formStarted.current = true;
+          trackEvent("form_start", { form_type: formKey });
+        }}
+      >
         <div className={nameGridClassName}>
           <input type="text" name="firstName" placeholder="Your First Name*" required className={inputBase} />
           <input type="text" name="lastName" placeholder="Your Last Name*" required className={inputBase} />

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CaseStudyDetail from "@/components/sections/marketing/CaseStudyDetail";
+import { CaseStudyJsonLd } from "@/components/seo/SiteJsonLd";
 import { getCaseStudyBySlug, MARKETING_CASE_STUDIES } from "@/data/marketing-case-studies";
+import { metadataForPath } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -13,13 +15,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const study = MARKETING_CASE_STUDIES.find((item) => item.slug === slug);
-  if (!study) return { title: "Case Study | FyerX Marketing" };
-
-  return {
-    title: `${study.title} | FyerX Marketing`,
-    description: study.summary,
-  };
+  return metadataForPath(`/marketing/case-studies/${slug}`);
 }
 
 export default async function CaseStudyPage({ params }: PageProps) {
@@ -27,5 +23,18 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const study = getCaseStudyBySlug(slug);
   if (!study) notFound();
 
-  return <CaseStudyDetail study={study} />;
+  return (
+    <>
+      <CaseStudyJsonLd
+        section="marketing"
+        sectionName="Marketing"
+        listingName="Case studies"
+        listingPath="/marketing/case-studies"
+        studyTitle={study.title}
+        studyDescription={study.summary}
+        slug={study.slug}
+      />
+      <CaseStudyDetail study={study} />
+    </>
+  );
 }

@@ -4,11 +4,9 @@ import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TECHNOLOGY_CASE_STUDIES } from "@/data/technology-case-studies";
 import { TECH_HOME } from "@/lib/technology-home-palette";
 
-export const metadata: Metadata = {
-  title: "Delivery Blueprints | FyerX Technology",
-  description:
-    "Representative programme structures that show how FyerX can take a technology priority from discovery through to delivery, adoption and improvement.",
-};
+import { metadataForPath } from "@/lib/seo";
+
+export const metadata: Metadata = metadataForPath("/technology/case-studies");
 
 export default function TechnologyCaseStudiesPage() {
   return (

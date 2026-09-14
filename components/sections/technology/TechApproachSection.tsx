@@ -67,15 +67,16 @@ export default function TechApproachSection() {
               </div>
             </div>
 
-            <div className="relative flex min-h-[180px] items-center justify-center px-4 pb-5 sm:min-h-[220px] sm:px-6 sm:pb-8 md:min-h-[380px] md:pr-8">
-              <Image
-                src="/updatedmainpage/Technology.webp"
-                alt="Technology platforms and delivery overview"
-                width={1600}
-                height={1340}
-                className="h-auto w-full max-w-[320px] select-none object-contain sm:max-w-[440px]"
-                draggable={false}
-              />
+            <div className="relative flex items-center justify-center px-4 pb-5 sm:px-6 sm:pb-8 md:pr-8 md:py-10">
+              <div className="relative aspect-[4/5] w-full max-w-[280px] overflow-hidden rounded-[24px] sm:max-w-[360px] md:max-w-[400px]">
+                <Image
+                  src="/contact/contact-technology.webp"
+                  alt="Technology team working through delivery in a modern workspace"
+                  fill
+                  sizes="(max-width: 768px) 80vw, 400px"
+                  className="object-cover object-center"
+                />
+              </div>
             </div>
           </div>
         </div>

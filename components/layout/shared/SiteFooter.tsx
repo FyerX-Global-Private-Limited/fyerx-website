@@ -37,6 +37,7 @@ import {
   type FooterCapability,
   type FooterLink,
 } from "@/lib/footer-data";
+import { trackPhoneClick } from "@/lib/analytics";
 
 export type SiteFooterVariant = "main" | "marketing" | "talent" | "technology";
 
@@ -243,7 +244,11 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
                     : TAGLINE_BY_VARIANT[variant]}
             </p>
             <div className="mt-5 flex flex-col gap-1.5">
-              <a href={FOOTER_CONTACT.phoneHref} className={contactCls}>
+              <a
+                href={FOOTER_CONTACT.phoneHref}
+                className={contactCls}
+                onClick={() => trackPhoneClick(FOOTER_CONTACT.phoneHref)}
+              >
                 <ContactIcon type="phone" />
                 <span>{FOOTER_CONTACT.phone}</span>
               </a>

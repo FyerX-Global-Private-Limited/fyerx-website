@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import MainHeader from "@/components/layout/main/Header";
 import MainFooter from "@/components/layout/main/Footer";
 import Hero from "@/components/sections/main/Hero";
@@ -13,6 +14,10 @@ import TestimonialsCTA from "@/components/sections/main/TestimonialsCTA";
 import AiHiring from "@/components/sections/main/aihiring";
 import SecurityControl from "@/components/sections/main/securitycontrol";
 import Trust from "@/components/sections/main/trust";
+import { metadataForPath } from "@/lib/seo";
+
+export const metadata: Metadata = metadataForPath("/");
+
 export default function Home() {
   return (
     <>

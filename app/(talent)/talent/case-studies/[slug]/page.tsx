@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CaseStudyDetail from "@/components/sections/talent/CaseStudyDetail";
+import { CaseStudyJsonLd } from "@/components/seo/SiteJsonLd";
 import { getTalentCaseStudyBySlug, TALENT_CASE_STUDIES } from "@/data/talent-case-studies";
+import { metadataForPath } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -13,13 +15,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const study = TALENT_CASE_STUDIES.find((item) => item.slug === slug);
-  if (!study) return { title: "Case Study | FyerX Talent" };
-
-  return {
-    title: `${study.title} | FyerX Talent`,
-    description: study.summary,
-  };
+  return metadataForPath(`/talent/case-studies/${slug}`);
 }
 
 export default async function TalentCaseStudyPage({ params }: PageProps) {
@@ -27,5 +23,18 @@ export default async function TalentCaseStudyPage({ params }: PageProps) {
   const study = getTalentCaseStudyBySlug(slug);
   if (!study) notFound();
 
-  return <CaseStudyDetail study={study} />;
+  return (
+    <>
+      <CaseStudyJsonLd
+        section="talent"
+        sectionName="Talent"
+        listingName="Case studies"
+        listingPath="/talent/case-studies"
+        studyTitle={study.title}
+        studyDescription={study.summary}
+        slug={study.slug}
+      />
+      <CaseStudyDetail study={study} />
+    </>
+  );
 }
