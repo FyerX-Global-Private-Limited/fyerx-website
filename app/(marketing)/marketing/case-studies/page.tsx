@@ -1,6 +1,10 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { MARKETING_CASE_STUDIES } from "@/data/marketing-case-studies";
+import { metadataForPath } from "@/lib/seo";
+
+export const metadata: Metadata = metadataForPath("/marketing/case-studies");
 
 export default function CaseStudiesPage() {
   return (

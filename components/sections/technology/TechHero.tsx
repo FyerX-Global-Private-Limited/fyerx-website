@@ -4,7 +4,7 @@ import Image from "next/image";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TECH_HOME } from "@/lib/technology-home-palette";
 
-const PEOPLE_IMAGE = "/images/main/technology.webp";
+const PEOPLE_IMAGE = "/updatedmainpage/Technology.webp";
 
 const PILLARS = [
   {
@@ -27,7 +27,7 @@ const PILLARS = [
 function TechHeroVisual() {
   return (
     <div
-      className="relative mx-auto aspect-[3056/2560] h-auto w-full max-w-[280px] overflow-hidden sm:max-w-[420px] lg:max-w-[642px]"
+      className="relative mx-auto aspect-[3056/2560] h-auto w-full max-w-[320px] overflow-hidden sm:max-w-[480px] lg:max-w-[640px]"
     >
       <Image
         src={PEOPLE_IMAGE}

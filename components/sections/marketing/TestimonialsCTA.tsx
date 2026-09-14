@@ -3,10 +3,8 @@
 import React from "react";
 import { ContactEnquiryForm } from "@/components/sections/contact/ContactEnquiryForm";
 import { TRUSTBAR_LOGOS } from "@/lib/trustbar-logos";
-import { CONTACT_TEAM_AVATARS } from "@/lib/contact-team-avatars";
+import { ContactFormAvatars } from "@/components/ui/ContactFormAvatars";
 import { MARKETING_HOME } from "@/lib/marketing-home-palette";
-
-const AVATARS = CONTACT_TEAM_AVATARS;
 
 export default function TestimonialsCTA() {
   return (
@@ -69,17 +67,7 @@ export default function TestimonialsCTA() {
             </div>
 
             <div className="relative mx-auto mt-8 w-full max-w-[462px] shrink-0 sm:mt-10 lg:mx-0 lg:mt-0 lg:w-[462px]">
-              <div className="absolute -top-[22px] left-1/2 z-10 flex -translate-x-1/2 -space-x-[6px]">
-                {AVATARS.map((avatar, i) => (
-                  <img
-                    key={avatar.src}
-                    src={avatar.src}
-                    alt={avatar.alt}
-                    className="h-9 w-9 rounded-full border-2 border-[#0f0f10] object-cover"
-                    style={{ zIndex: AVATARS.length - i }}
-                  />
-                ))}
-              </div>
+              <ContactFormAvatars />
 
               <div className="w-full rounded-[16px] bg-white px-4 py-6 shadow-[0px_6px_20px_rgba(29,37,45,0.05)] sm:px-9 sm:py-7">
                 <ContactEnquiryForm

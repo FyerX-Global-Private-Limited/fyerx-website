@@ -13,11 +13,9 @@ import TestimonialsCTA from "@/components/sections/talent/TestimonialsCTA";
 import FaqSection from "@/components/sections/talent/FaqSection";
 import TalentClosingSection from "@/components/sections/talent/TalentClosingSection";
 
-export const metadata: Metadata = {
-  title: "IT Staffing & Technology Recruitment | FyerX Talent",
-  description:
-    "Hire contract professionals, permanent employees, and project teams across ServiceNow, SAP, Salesforce, Data & AI, Cloud, DevOps, and more.",
-};
+import { metadataForPath } from "@/lib/seo";
+
+export const metadata: Metadata = metadataForPath("/talent");
 
 export default function TalentHomePage() {
   return (

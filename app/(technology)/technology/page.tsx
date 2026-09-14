@@ -15,11 +15,9 @@ import TechFaqSection from "@/components/sections/technology/TechFaqSection";
 import TechFinalCta from "@/components/sections/technology/TechFinalCta";
 import TechContactSection from "@/components/sections/technology/TechContactSection";
 
-export const metadata: Metadata = {
-  title: "Enterprise Platforms, Digital Transformation & Cloud | FyerX Technology",
-  description:
-    "We help organisations modernise core systems, connect disconnected operations and turn data, cloud and AI investment into practical business value.",
-};
+import { metadataForPath } from "@/lib/seo";
+
+export const metadata: Metadata = metadataForPath("/technology");
 
 export default function TechnologyHomePage() {
   return (

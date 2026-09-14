@@ -11,6 +11,7 @@ import {
   type FormConfig,
   type FormKey,
 } from "@/components/sections/contact/ContactEnquiryForm";
+import { trackPhoneClick } from "@/lib/analytics";
 
 /* ============================================================= */
 /* Icons — 20x20 stroke line icons, colour set via currentColor  */
@@ -376,6 +377,7 @@ function ContactDetailsMap() {
                   href={item.href}
                   target={item.href.startsWith("http") ? "_blank" : undefined}
                   rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  onClick={() => trackPhoneClick(item.href)}
                   className={`flex items-start gap-3.5 px-4 py-4 text-left transition-colors active:bg-[#FFF7F9] ${
                     index > 0 ? "border-t border-[#F7E4EB]" : ""
                   }`}
@@ -424,6 +426,7 @@ function ContactDetailsMap() {
                     href={item.href}
                     target={item.href.startsWith("http") ? "_blank" : undefined}
                     rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    onClick={() => trackPhoneClick(item.href)}
                     className="mt-auto inline-flex min-h-[40px] items-center justify-center rounded-full border border-[rgba(115,0,49,0.28)] px-4 py-2 text-xs font-semibold text-[#730031] transition-colors hover:border-[#730031] hover:bg-[#FFE8EE]"
                   >
                     {item.actionLabel}

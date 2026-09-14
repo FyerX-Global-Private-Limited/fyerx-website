@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import TechCaseStudyDetail from "@/components/sections/technology/TechCaseStudyDetail";
+import { CaseStudyJsonLd } from "@/components/seo/SiteJsonLd";
 import {
   getTechCaseStudyBySlug,
   TECHNOLOGY_CASE_STUDIES,
 } from "@/data/technology-case-studies";
+import { metadataForPath } from "@/lib/seo";
 
 export function generateStaticParams() {
   return TECHNOLOGY_CASE_STUDIES.map((study) => ({ slug: study.slug }));
@@ -16,12 +18,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const study = getTechCaseStudyBySlug(slug);
-  if (!study) return { title: "Delivery Blueprint | FyerX Technology" };
-  return {
-    title: `${study.title} | Delivery Blueprint | FyerX Technology`,
-    description: study.summary,
-  };
+  return metadataForPath(`/technology/case-studies/${slug}`);
 }
 
 export default async function TechnologyCaseStudyPage({
@@ -32,5 +29,19 @@ export default async function TechnologyCaseStudyPage({
   const { slug } = await params;
   const study = getTechCaseStudyBySlug(slug);
   if (!study) notFound();
-  return <TechCaseStudyDetail study={study} />;
+  return (
+    <>
+      <CaseStudyJsonLd
+        section="technology"
+        sectionName="Technology"
+        listingName="Delivery blueprints"
+        listingPath="/technology/case-studies"
+        studyTitle={study.title}
+        studyDescription={study.summary}
+        slug={study.slug}
+        schemaType="CreativeWork"
+      />
+      <TechCaseStudyDetail study={study} />
+    </>
+  );
 }

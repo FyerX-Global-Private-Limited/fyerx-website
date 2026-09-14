@@ -15,11 +15,9 @@ import EnterpriseSection from "@/components/sections/marketing/EnterpriseSection
 import ResourcesSection from "@/components/sections/marketing/ResourcesSection";
 import FaqSection from "@/components/sections/marketing/FaqSection";
 
-export const metadata: Metadata = {
-  title: "Marketing Strategy, Demand Generation & Growth | FyerX",
-  description:
-    "FyerX helps growth-focused companies turn positioning, campaigns, content, search visibility, and automation into a connected marketing engine.",
-};
+import { metadataForPath } from "@/lib/seo";
+
+export const metadata: Metadata = metadataForPath("/marketing");
 
 export default function MarketingPage() {
   return (

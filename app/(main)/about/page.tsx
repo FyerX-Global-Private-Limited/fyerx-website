@@ -1,4 +1,9 @@
-﻿export default function AboutPage() {
+﻿import type { Metadata } from "next";
+import { metadataForPath } from "@/lib/seo";
+
+export const metadata: Metadata = metadataForPath("/about");
+
+export default function AboutPage() {
   return (
     <section className="max-w-4xl mx-auto px-6 py-24">
       <h1 className="text-4xl font-bold tracking-tight mb-6">About Fyerx</h1>
