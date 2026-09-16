@@ -21,6 +21,9 @@ export function trackEvent(event: string, params: AnalyticsParams = {}) {
 
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event, ...safe });
+  if (typeof window.gtag === "function") {
+    window.gtag("event", event, safe);
+  }
 }
 
 export function trackCtaClick(href: string) {

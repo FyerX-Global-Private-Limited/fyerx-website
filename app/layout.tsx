@@ -3,9 +3,9 @@ import { Geist, Geist_Mono, Inter, Inter_Tight, Poppins } from "next/font/google
 import "./globals.css";
 import StyledJsxRegistry from "./registry";
 import { RecaptchaProvider } from "@/components/RecaptchaProvider";
-import { GoogleTagManager, GoogleTagManagerNoscript } from "@/components/analytics/GoogleTagManager";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { SiteJsonLd } from "@/components/seo/SiteJsonLd";
-import { SITE_OG_IMAGE, SITE_URL } from "@/data/seo-metadata";
+import { SITE_OG_IMAGE, SITE_OG_IMAGE_META, SITE_URL } from "@/data/seo-metadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     siteName: "FyerX",
     locale: "en_IN",
     type: "website",
-    images: [{ url: SITE_OG_IMAGE }],
+    images: [SITE_OG_IMAGE_META],
   },
   twitter: {
     card: "summary_large_image",
@@ -78,8 +78,7 @@ export default function RootLayout({
       style={{ colorScheme: "light" }}
     >
       <body className="min-h-full flex flex-col bg-white text-[#171717]">
-        <GoogleTagManagerNoscript />
-        <GoogleTagManager />
+        <GoogleAnalytics />
         <SiteJsonLd />
         <RecaptchaProvider>
           <StyledJsxRegistry>{children}</StyledJsxRegistry>

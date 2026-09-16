@@ -1,5 +1,14 @@
 export const SITE_URL = "https://fyerx.com";
-export const SITE_OG_IMAGE = `${SITE_URL}/logo.webp`;
+export const SITE_LOGO_URL = `${SITE_URL}/logo.webp`;
+/** Padded 1200x1200 share image so WhatsApp/Teams do not crop the wide logo. */
+export const SITE_OG_IMAGE = `${SITE_URL}/og-image.png`;
+export const SITE_OG_IMAGE_META = {
+  url: SITE_OG_IMAGE,
+  width: 1200,
+  height: 1200,
+  alt: "FyerX Global",
+  type: "image/png",
+} as const;
 
 export type SeoRobots = "index,follow" | "noindex,follow";
 export type SeoOgType = "website" | "article";
