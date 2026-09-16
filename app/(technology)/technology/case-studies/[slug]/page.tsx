@@ -17,8 +17,12 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  return metadataForPath(`/technology/case-studies/${slug}`);
+  try {
+    const { slug } = await params;
+    return metadataForPath(`/technology/case-studies/${slug}`);
+  } catch {
+    return { title: { absolute: "FyerX" }, robots: { index: false, follow: true } };
+  }
 }
 
 export default async function TechnologyCaseStudyPage({
