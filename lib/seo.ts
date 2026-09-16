@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import {
   CONTACT_NOINDEX_FORMS,
   SITE_OG_IMAGE,
+  SITE_OG_IMAGE_META,
   SITE_URL,
   getSeoEntry,
   type SeoEntry,
@@ -32,7 +33,7 @@ export function buildMetadata(entry: SeoEntry): Metadata {
       type: entry.ogType === "article" ? "article" : "website",
       siteName: "FyerX",
       locale: "en_IN",
-      images: [{ url: SITE_OG_IMAGE }],
+      images: [SITE_OG_IMAGE_META],
     },
     twitter: {
       card: "summary_large_image",

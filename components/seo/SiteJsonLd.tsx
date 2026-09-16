@@ -1,5 +1,5 @@
 import { FOOTER_CONTACT, FOOTER_SOCIALS } from "@/lib/footer-data";
-import { SITE_OG_IMAGE, SITE_URL } from "@/data/seo-metadata";
+import { SITE_LOGO_URL, SITE_URL } from "@/data/seo-metadata";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 const organization = {
@@ -10,7 +10,7 @@ const organization = {
   url: SITE_URL,
   logo: {
     "@type": "ImageObject",
-    url: SITE_OG_IMAGE,
+    url: SITE_LOGO_URL,
   },
   email: FOOTER_CONTACT.email,
   telephone: FOOTER_CONTACT.phone,
@@ -68,7 +68,7 @@ export function articleJsonLd(input: {
       name: "FyerX Global",
       logo: {
         "@type": "ImageObject",
-        url: SITE_OG_IMAGE,
+        url: SITE_LOGO_URL,
       },
     },
   };
