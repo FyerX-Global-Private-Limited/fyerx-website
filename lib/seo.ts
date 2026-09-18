@@ -61,7 +61,7 @@ export function contactPageMetadata(form?: string): Metadata {
 
   const isNoindexForm =
     typeof form === "string" &&
-    (CONTACT_NOINDEX_FORMS as readonly string[]).includes(form);
+    (CONTACT_NOINDEX_FORMS as readonly string[]).includes(form.toLowerCase());
 
   if (!isNoindexForm) return buildMetadata(contact);
 

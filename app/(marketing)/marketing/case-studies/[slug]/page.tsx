@@ -14,8 +14,12 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  return metadataForPath(`/marketing/case-studies/${slug}`);
+  try {
+    const { slug } = await params;
+    return metadataForPath(`/marketing/case-studies/${slug}`);
+  } catch {
+    return { title: { absolute: "FyerX" }, robots: { index: false, follow: true } };
+  }
 }
 
 export default async function CaseStudyPage({ params }: PageProps) {
