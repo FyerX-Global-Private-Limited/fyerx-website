@@ -11,18 +11,45 @@ type GoogleSiteVerifyResponse = {
   "error-codes"?: string[];
 };
 
+function readEnvValue(value: string | undefined): string | undefined {
+  if (!value) return undefined;
+  let trimmed = value.trim().replace(/^\uFEFF/, "");
+  if (
+    (trimmed.startsWith("'") && trimmed.endsWith("'") && trimmed.length >= 2) ||
+    (trimmed.startsWith('"') && trimmed.endsWith('"') && trimmed.length >= 2)
+  ) {
+    trimmed = trimmed.slice(1, -1).trim();
+  }
+  return trimmed || undefined;
+}
+
 function minScore(): number {
-  // New domains / mobile often score ~0.1. Hostinger env RECAPTCHA_MIN_SCORE overrides this.
-  const raw = Number(process.env.RECAPTCHA_MIN_SCORE ?? 0.1);
+  // Prefer RECAPTCHA_MIN_SCORE; accept RECAPTCHA_SCORE_THRESHOLD used in some Hostinger/.env setups.
+  const raw = Number(
+    readEnvValue(process.env.RECAPTCHA_MIN_SCORE) ??
+      readEnvValue(process.env.RECAPTCHA_SCORE_THRESHOLD) ??
+      0.1
+  );
   return Number.isFinite(raw) ? raw : 0.1;
+}
+
+export function isRecaptchaSecretConfigured(): boolean {
+  return Boolean(readEnvValue(process.env.RECAPTCHA_SECRET_KEY));
+}
+
+export function isRecaptchaSiteKeyConfigured(): boolean {
+  return Boolean(readEnvValue(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY));
 }
 
 export async function verifyRecaptchaToken(
   token: unknown,
   expectedAction?: string
 ): Promise<RecaptchaVerifyResult> {
-  const secret = process.env.RECAPTCHA_SECRET_KEY?.trim();
+  const secret = readEnvValue(process.env.RECAPTCHA_SECRET_KEY);
   if (!secret) {
+    console.error(
+      "[recaptcha] RECAPTCHA_SECRET_KEY is missing in the server runtime environment."
+    );
     return { ok: false, error: "reCAPTCHA is not configured on the server." };
   }
 
