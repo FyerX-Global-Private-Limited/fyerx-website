@@ -8,9 +8,13 @@ type PageProps = {
 };
 
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
-  const params = await searchParams;
-  const form = Array.isArray(params.form) ? params.form[0] : params.form;
-  return contactPageMetadata(form);
+  try {
+    const params = await searchParams;
+    const form = Array.isArray(params?.form) ? params.form[0] : params?.form;
+    return contactPageMetadata(typeof form === "string" ? form : undefined);
+  } catch {
+    return contactPageMetadata();
+  }
 }
 
 export default function Page() {
