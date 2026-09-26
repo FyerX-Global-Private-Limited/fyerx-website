@@ -1,4 +1,5 @@
 import Script from "next/script";
+import { GOOGLE_ADS_ID } from "@/lib/google-ads";
 
 export const GA_MEASUREMENT_ID = "G-W14RWG185F";
 
@@ -13,7 +14,8 @@ export function GoogleAnalytics() {
         {`window.dataLayer=window.dataLayer||[];
 function gtag(){dataLayer.push(arguments);}
 gtag('js',new Date());
-gtag('config','${GA_MEASUREMENT_ID}');`}
+gtag('config','${GA_MEASUREMENT_ID}');
+gtag('config','${GOOGLE_ADS_ID}');`}
       </Script>
     </>
   );
