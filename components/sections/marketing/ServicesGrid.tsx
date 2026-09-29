@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
-import Image from "next/image";
+import { PublicImage } from "@/components/ui/PublicImage";
 
 /**
  * ServicesGrid — "Why B2B teams choose FyerX over a typical agency" section.
@@ -10,7 +10,7 @@ import Image from "next/image";
  * - Horizontally scrollable row of six reason cards (snap scrolling)
  * - Pagination dots (left) + prev/next circular nav buttons (right)
  *
- * Card illustrations reuse the existing ai1–ai6 images under /public/avatar.
+ * Card illustrations use the section4 images under /public/marketingpageimages.
  * The carousel, dots and nav buttons are data-driven off SERVICE_CARDS, so
  * they automatically expand to fit however many entries exist.
  * -------------------------------------------------------------------------
@@ -83,7 +83,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "Strategy, creative, performance, search, social, web, and automation work together instead of in silos.",
     alt: "One connected team — FyerX Marketing",
-    image: "/avatar/ai1.webp",
+    image: "/marketingpageimages/section4 (2).webp",
   },
   {
     id: "built-around-your-next-business-goal",
@@ -91,7 +91,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "We begin with what must change—launch, leads, visibility, conversion, or brand perception.",
     alt: "Built around your next business goal — FyerX Marketing",
-    image: "/avatar/ai2.webp",
+    image: "/marketingpageimages/section4 (4).webp",
   },
   {
     id: "ideas-that-can-be-executed",
@@ -99,7 +99,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "Recommendations are translated into campaigns, assets, pages, workflows, and clear next actions.",
     alt: "Ideas that can be executed — FyerX Marketing",
-    image: "/avatar/ai3.webp",
+    image: "/marketingpageimages/section4 (5).webp",
   },
   {
     id: "creative-with-commercial-purpose",
@@ -107,7 +107,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "Every design, message, and video is shaped to make the brand clearer and the audience response stronger.",
     alt: "Creative with commercial purpose — FyerX Marketing",
-    image: "/avatar/ai4.webp",
+    image: "/marketingpageimages/section4 (6).webp",
   },
   {
     id: "ai-used-with-judgement",
@@ -115,7 +115,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "We use AI to accelerate research, production, testing, and automation; people remain accountable for the output.",
     alt: "AI used with judgement — FyerX Marketing",
-    image: "/avatar/ai5.webp",
+    image: "/marketingpageimages/section4 (1).webp",
   },
   {
     id: "clear-useful-reporting",
@@ -123,7 +123,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     description:
       "You see the measures that guide decisions: activity, response, lead quality, conversion, and commercial progress.",
     alt: "Clear, useful reporting — FyerX Marketing",
-    image: "/avatar/ai6.webp",
+    image: "/marketingpageimages/section4 (3).webp",
   },
 ];
 
@@ -183,7 +183,7 @@ export default function ServicesGrid() {
                 className="w-[85%] flex-shrink-0 snap-start overflow-hidden rounded-2xl border border-neutral-200 bg-white sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-2.5rem)/3)]"
               >
                 <div className="relative h-[220px] w-full overflow-hidden">
-                  <Image
+                  <PublicImage
                     src={card.image}
                     alt={card.alt}
                     fill

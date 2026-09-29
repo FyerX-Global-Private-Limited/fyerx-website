@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { PublicImage } from "@/components/ui/PublicImage";
 import type { CaseStudy } from "@/data/marketing-case-studies";
 
 function CaseStudyHero({ study }: { study: CaseStudy }) {
@@ -30,6 +31,23 @@ function CaseStudyHero({ study }: { study: CaseStudy }) {
           {study.summary}
         </p>
 
+        {study.imageSrc ? (
+          <div
+            className="mt-10 overflow-hidden rounded-[24px]"
+            style={{ backgroundColor: study.cardBg }}
+          >
+            <PublicImage
+              src={study.imageSrc}
+              alt={`${study.clientName} case study`}
+              width={1888}
+              height={1676}
+              className="h-auto w-full object-contain"
+              sizes="(max-width: 768px) 100vw, 768px"
+              priority
+            />
+          </div>
+        ) : null}
+
         <div className="mt-8 flex flex-wrap gap-2">
           {study.services.map((service) => (
             <span
@@ -48,7 +66,11 @@ function CaseStudyHero({ study }: { study: CaseStudy }) {
 function MetricsStrip({ study }: { study: CaseStudy }) {
   return (
     <section className="border-b border-[#E6E9EF] bg-white">
-      <div className="mx-auto grid max-w-4xl grid-cols-1 divide-y divide-[#EEF1F6] px-6 sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:px-10">
+      <div
+        className={`mx-auto grid max-w-4xl grid-cols-1 divide-y divide-[#EEF1F6] px-6 sm:divide-x sm:divide-y-0 sm:px-10 ${
+          study.metrics.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"
+        }`}
+      >
         {study.metrics.map((metric) => (
           <div key={metric.label} className="py-8 text-center sm:py-10">
             <p className="text-3xl font-bold tracking-tight text-[var(--ink)] sm:text-4xl">

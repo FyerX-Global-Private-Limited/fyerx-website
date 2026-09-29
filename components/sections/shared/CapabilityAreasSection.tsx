@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { PublicImage } from "@/components/ui/PublicImage";
 import type { CapabilityAreasContent, CapabilityTab } from "@/data/capability-areas";
 
 type TabTheme = {
@@ -10,7 +11,28 @@ type TabTheme = {
   iconBg: string;
   iconColor: string;
   accent: string;
+  iconSrc?: string;
 };
+
+function mixHex(hex: string, other: string, amount: number) {
+  const parse = (value: string) =>
+    [1, 3, 5].map((i) => parseInt(value.slice(i, i + 2), 16));
+  const a = parse(hex);
+  const b = parse(other);
+  const mixed = a.map((v, i) => Math.round(v * (1 - amount) + b[i] * amount));
+  return `#${mixed.map((n) => n.toString(16).padStart(2, "0")).join("")}`;
+}
+
+function themeFromIcon(color: string, src: string): TabTheme {
+  return {
+    bg: mixHex(color, "#FFFFFF", 0.92),
+    activeBg: mixHex(color, "#FFFFFF", 0.8),
+    iconBg: color,
+    iconColor: "#ffffff",
+    accent: mixHex(color, "#000000", 0.28),
+    iconSrc: src,
+  };
+}
 
 const DEFAULT_TAB_THEMES: TabTheme[] = [
   { bg: "#E8F5EA", activeBg: "#F0FAF2", iconBg: "#11551C", iconColor: "#9EEBAA", accent: "#11551C" },
@@ -24,14 +46,12 @@ const DEFAULT_TAB_THEMES: TabTheme[] = [
 ];
 
 const MARKETING_TAB_THEMES: TabTheme[] = [
-  { bg: "#FFF6E6", activeBg: "#FFFBF0", iconBg: "#FDAB3D", iconColor: "#111111", accent: "#8a5a00" },
-  { bg: "#F3EEFF", activeBg: "#F9F6FF", iconBg: "#6161FF", iconColor: "#ffffff", accent: "#4040C7" },
-  { bg: "#E8F4FF", activeBg: "#F3F9FF", iconBg: "#579BFC", iconColor: "#ffffff", accent: "#1F5C99" },
-  { bg: "#FFE8F5", activeBg: "#FFF4FA", iconBg: "#FF5AC4", iconColor: "#ffffff", accent: "#C2187A" },
-  { bg: "#E8F8EF", activeBg: "#F3FBF6", iconBg: "#00CA72", iconColor: "#ffffff", accent: "#0A8F52" },
-  { bg: "#FFE8E6", activeBg: "#FFF5F4", iconBg: "#E2445C", iconColor: "#ffffff", accent: "#B12238" },
-  { bg: "#FFF3CD", activeBg: "#FFF9E6", iconBg: "#FFC900", iconColor: "#111111", accent: "#8a6a00" },
-  { bg: "#FCE7F3", activeBg: "#FFF0F7", iconBg: "#db2777", iconColor: "#ffffff", accent: "#9d174d" },
+  themeFromIcon("#FAB106", "/marketingpageimages/section5 (2).webp"),
+  themeFromIcon("#2935A3", "/marketingpageimages/section5 (1).webp"),
+  themeFromIcon("#C30852", "/marketingpageimages/section5 (5).webp"),
+  themeFromIcon("#006A6B", "/marketingpageimages/section5 (6).webp"),
+  themeFromIcon("#6941EE", "/marketingpageimages/section5 (4).webp"),
+  themeFromIcon("#009FFF", "/marketingpageimages/section5 (3).webp"),
 ];
 
 const MAIN_TAB_THEMES: TabTheme[] = [
@@ -47,12 +67,38 @@ function themesForVariant(variant: "talent" | "marketing" | "main"): TabTheme[] 
   return DEFAULT_TAB_THEMES;
 }
 
-function TabIcon({ iconId, iconBg }: { iconId: string; iconBg: string }) {
+function TabIcon({
+  iconId,
+  iconBg,
+  iconColor,
+  circular,
+  iconSrc,
+}: {
+  iconId: string;
+  iconBg: string;
+  iconColor?: string;
+  circular?: boolean;
+  iconSrc?: string;
+}) {
+  if (circular && iconSrc) {
+    return (
+      <span className="inline-flex h-10 w-10 shrink-0 overflow-hidden rounded-full" aria-hidden="true">
+        <PublicImage
+          src={iconSrc}
+          alt=""
+          width={160}
+          height={160}
+          className="h-10 w-10 object-cover"
+        />
+      </span>
+    );
+  }
+
   const src = `/images/talent/tabicon/${iconId}.svg`;
   return (
     <span
       className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg sm:h-10 sm:w-10"
-      style={{ backgroundColor: iconBg }}
+      style={{ backgroundColor: iconBg, color: iconColor }}
       aria-hidden="true"
     >
       <Image
@@ -88,15 +134,30 @@ function CapabilityPanel({
   tab,
   theme,
   metaLabel,
+  circular,
+  areasLabel,
 }: {
   tab: CapabilityTab;
   theme: TabTheme;
   metaLabel: string;
+  circular?: boolean;
+  areasLabel?: string;
 }) {
   return (
-    <article className="min-w-0 rounded-2xl bg-white p-5 shadow-sm sm:p-8">
+    <article className={`min-w-0 bg-white p-5 shadow-sm sm:p-8 ${circular ? "rounded-[28px]" : "rounded-2xl"}`}>
+      {circular && areasLabel ? (
+        <p className="mb-6 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-[#5B6472]">
+          {areasLabel}
+        </p>
+      ) : null}
       <div className="flex items-start gap-3">
-        <TabIcon iconId={tab.iconId} iconBg={theme.iconBg} />
+        <TabIcon
+          iconId={circular ? tab.id : tab.iconId}
+          iconBg={theme.iconBg}
+          iconColor={theme.iconColor}
+          circular={circular}
+          iconSrc={theme.iconSrc}
+        />
         <div className="min-w-0">
           <h3 className="text-xl font-semibold text-[var(--ink)] sm:text-2xl">{tab.title}</h3>
           <p className="mt-1 text-sm leading-relaxed text-[#52525b] sm:text-base">{tab.subtitle}</p>
@@ -108,7 +169,7 @@ function CapabilityPanel({
           <li key={bullet} className="flex gap-2.5 text-sm leading-relaxed text-[#3d4a5c]">
             <span
               className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
-              style={{ backgroundColor: theme.accent }}
+              style={{ backgroundColor: circular ? "#22A45B" : theme.accent }}
               aria-hidden="true"
             />
             {bullet}
@@ -117,8 +178,11 @@ function CapabilityPanel({
       </ul>
 
       <div
-        className="mt-6 rounded-xl border p-4"
-        style={{ borderColor: theme.bg, backgroundColor: `${theme.bg}55` }}
+        className="mt-6 rounded-xl p-4"
+        style={{
+          backgroundColor: circular ? theme.bg : `${theme.bg}55`,
+          border: circular ? "none" : `1px solid ${theme.bg}`,
+        }}
       >
         <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[#676879]">{metaLabel}</p>
         <p className="mt-2 text-sm leading-relaxed text-[#3d4a5c]">{tab.meta.join(" · ")}</p>
@@ -130,7 +194,7 @@ function CapabilityPanel({
             key={tag}
             className="rounded-full border px-2.5 py-1 text-[11px] font-medium"
             style={{
-              borderColor: theme.bg,
+              borderColor: circular ? theme.iconBg : theme.bg,
               backgroundColor: "#ffffff",
               color: theme.accent,
             }}
@@ -150,6 +214,7 @@ export default function CapabilityAreasSection({
   content: CapabilityAreasContent;
   variant?: "talent" | "marketing" | "main";
 }) {
+  const isMarketing = variant === "marketing";
   const themes = themesForVariant(variant);
   const tabs = content.tabs;
   const [activeId, setActiveId] = useState(tabs[0]?.id ?? "");
@@ -200,11 +265,13 @@ export default function CapabilityAreasSection({
           className="mt-10 rounded-3xl p-4 transition-colors duration-300 sm:mt-12 sm:p-6 lg:p-8"
           style={{ backgroundColor: theme.bg }}
         >
+          {isMarketing ? null : (
           <p className="mb-5 text-center text-xs font-bold uppercase tracking-[0.16em] text-[#3d4a5c] sm:mb-6">
             {content.areasLabel}
           </p>
+          )}
 
-          <div className="flex flex-col gap-2 lg:hidden">
+          <div className={`flex flex-col lg:hidden ${isMarketing ? "gap-3" : "gap-2"}`}>
             {tabs.map((tab, i) => {
               const open = openIds.has(tab.id);
               const tabTheme = themes[i % themes.length] ?? themes[0];
@@ -220,38 +287,68 @@ export default function CapabilityAreasSection({
                     type="button"
                     aria-expanded={open}
                     onClick={() => toggleAccordion(tab.id)}
-                    className={`flex w-full items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition-all ${
-                      open ? "border-transparent shadow-sm" : "border-white/60 bg-white/70"
-                    }`}
+                    className={
+                      isMarketing
+                        ? `flex w-full items-center gap-3 rounded-full px-2 py-2 pr-4 text-left ${
+                            open ? "font-semibold" : "bg-white font-medium text-[#6B7280]"
+                          }`
+                        : `flex w-full items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition-all ${
+                            open ? "border-transparent shadow-sm" : "border-white/60 bg-white/70"
+                          }`
+                    }
                     style={
-                      open
-                        ? { backgroundColor: tabTheme.activeBg, borderColor: tabTheme.bg }
-                        : undefined
+                      isMarketing
+                        ? open
+                          ? { backgroundColor: tabTheme.activeBg, color: tabTheme.accent }
+                          : undefined
+                        : open
+                          ? { backgroundColor: tabTheme.activeBg, borderColor: tabTheme.bg }
+                          : undefined
                     }
                   >
-                    <TabIcon iconId={tab.iconId} iconBg={tabTheme.iconBg} />
+                    <TabIcon
+                      iconId={isMarketing ? tab.id : tab.iconId}
+                      iconBg={tabTheme.iconBg}
+                      iconColor={tabTheme.iconColor}
+                      circular={isMarketing}
+                      iconSrc={tabTheme.iconSrc}
+                    />
                     <span
                       className={`min-w-0 flex-1 text-sm leading-snug ${
-                        open ? "font-semibold" : "font-medium text-[#52525b]"
+                        isMarketing
+                          ? open
+                            ? "font-semibold"
+                            : "font-medium text-[#6B7280]"
+                          : open
+                            ? "font-semibold"
+                            : "font-medium text-[#52525b]"
                       }`}
-                      style={open ? { color: tabTheme.accent } : undefined}
+                      style={!isMarketing && open ? { color: tabTheme.accent } : isMarketing && open ? { color: tabTheme.accent } : undefined}
                     >
                       {tab.label}
                     </span>
-                    <span style={{ color: open ? tabTheme.accent : "#8b8fa3" }}>
-                      <AccordionChevron open={open} />
-                    </span>
+                    {isMarketing ? null : (
+                      <span style={{ color: open ? tabTheme.accent : "#8b8fa3" }}>
+                        <AccordionChevron open={open} />
+                      </span>
+                    )}
                   </button>
                   {open ? (
-                    <CapabilityPanel tab={tab} theme={tabTheme} metaLabel={content.metaLabel} />
+                    <CapabilityPanel
+                      tab={tab}
+                      theme={tabTheme}
+                      metaLabel={content.metaLabel}
+                      circular={isMarketing}
+                      areasLabel={isMarketing ? content.areasLabel : undefined}
+                    />
                   ) : null}
                 </div>
               );
             })}
           </div>
 
-          <div className="hidden min-w-0 gap-5 lg:grid lg:grid-cols-[280px_1fr] lg:gap-6">
-            <nav className="flex flex-col gap-2" aria-label={content.areasLabel}>
+          <div className={`hidden min-w-0 lg:grid lg:grid-cols-[280px_1fr] ${isMarketing ? "gap-6" : "gap-5 lg:gap-6"}`}>
+            <nav className={`flex flex-col ${isMarketing ? "gap-3" : "gap-2"}`} aria-label={content.areasLabel}>
               {tabs.map((tab, i) => {
                 const isActive = tab.id === activeId;
                 const tabTheme = themes[i % themes.length] ?? themes[0];
@@ -260,20 +357,44 @@ export default function CapabilityAreasSection({
                     key={tab.id}
                     type="button"
                     onClick={() => setActiveId(tab.id)}
-                    className={`flex items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition-all sm:px-4 sm:py-3 ${
-                      isActive
-                        ? "border-transparent shadow-sm"
-                        : "border-white/60 bg-white/70 hover:bg-white"
-                    }`}
+                    className={
+                      isMarketing
+                        ? `flex items-center gap-3 rounded-full px-2 py-2 pr-5 text-left ${
+                            isActive ? "font-semibold" : "bg-white font-medium text-[#6B7280] hover:bg-white"
+                          }`
+                        : `flex items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition-all sm:px-4 sm:py-3 ${
+                            isActive
+                              ? "border-transparent shadow-sm"
+                              : "border-white/60 bg-white/70 hover:bg-white"
+                          }`
+                    }
                     style={
-                      isActive
-                        ? { backgroundColor: tabTheme.activeBg, borderColor: tabTheme.bg }
-                        : undefined
+                      isMarketing
+                        ? isActive
+                          ? { backgroundColor: tabTheme.activeBg, color: tabTheme.accent }
+                          : undefined
+                        : isActive
+                          ? { backgroundColor: tabTheme.activeBg, borderColor: tabTheme.bg }
+                          : undefined
                     }
                   >
-                    <TabIcon iconId={tab.iconId} iconBg={tabTheme.iconBg} />
+                    <TabIcon
+                      iconId={isMarketing ? tab.id : tab.iconId}
+                      iconBg={tabTheme.iconBg}
+                      iconColor={tabTheme.iconColor}
+                      circular={isMarketing}
+                      iconSrc={tabTheme.iconSrc}
+                    />
                     <span
-                      className={`text-sm leading-snug ${isActive ? "font-semibold" : "font-medium text-[#52525b]"}`}
+                      className={`text-sm leading-snug ${
+                        isMarketing
+                          ? isActive
+                            ? "font-semibold"
+                            : "font-medium text-[#6B7280]"
+                          : isActive
+                            ? "font-semibold"
+                            : "font-medium text-[#52525b]"
+                      }`}
                       style={isActive ? { color: tabTheme.accent } : undefined}
                     >
                       {tab.label}
@@ -283,7 +404,13 @@ export default function CapabilityAreasSection({
               })}
             </nav>
 
-            <CapabilityPanel tab={active} theme={theme} metaLabel={content.metaLabel} />
+            <CapabilityPanel
+              tab={active}
+              theme={theme}
+              metaLabel={content.metaLabel}
+              circular={isMarketing}
+              areasLabel={isMarketing ? content.areasLabel : undefined}
+            />
           </div>
         </div>
       </div>

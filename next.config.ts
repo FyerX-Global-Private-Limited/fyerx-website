@@ -61,6 +61,16 @@ const nextConfig: NextConfig = {
         destination: "/contact?form=talent",
         permanent: true,
       },
+      {
+        source: "/marketing/case-studies/avekshaa",
+        destination: "/marketing/case-studies",
+        permanent: true,
+      },
+      {
+        source: "/marketing/case-studies/trndigital",
+        destination: "/marketing/case-studies",
+        permanent: true,
+      },
     ];
   },
   async rewrites() {
