@@ -1,62 +1,23 @@
 "use client";
 
 import React from "react";
-
-/**
- * "Resources to hit your goals" section.
- * Exact copy + design replication. No external dependencies.
- *
- * Cards 1 and 4 use photos — swap the `img` values for your own assets
- * (e.g. "/images/bottom-line.jpg"). Card 2 (dark "What's new" panel) is
- * rendered in markup. Card 3 uses a teal illustration image — replace its
- * `img` with your own illustration for a pixel match.
- */
-
-const IMG_AEO =
-  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80";
-const IMG_ABM =
-  "https://www.globalcoachcenter.com/wp-content/uploads/2024/09/Overcoming-Communication-Issues-When-Working-With-Indian-Team-1024x656.jpg";
-const IMG_AGENTS =
-  "https://cdn.prod.website-files.com/6491b0d1d31f1324881f1205/6785274bb4842c03eabe203b_Custom%20enterprise%20software%20development.png";
-
-function PhotoTop({ src, alt }: { src: string; alt: string }) {
-  return (
-    <div className="res-top res-top--photo">
-      <img src={src} alt={alt} />
-    </div>
-  );
-}
+import { PublicImage } from "@/components/ui/PublicImage";
 
 const cards = [
   {
-    top: (
-      <PhotoTop
-        src={IMG_AEO}
-        alt="How to Build a Go-to-Market Plan That Teams Can Use"
-      />
-    ),
+    src: "/marketingpageimages/blog (2).webp",
     title: "How to Build a Go-to-Market Plan That Teams Can Use",
     body: "A practical look at turning a launch idea into a workable marketing sequence.",
     link: "Read More",
   },
   {
-    top: (
-      <PhotoTop
-        src={IMG_ABM}
-        alt="SEO, AEO, and GEO: What Changes and What Does Not"
-      />
-    ),
+    src: "/marketingpageimages/blog (3).webp",
     title: "SEO, AEO, and GEO: What Changes and What Does Not",
     body: "How to strengthen visibility across search and AI-led discovery.",
     link: "Read More",
   },
   {
-    top: (
-      <PhotoTop
-        src={IMG_AGENTS}
-        alt="From Campaign Click to Customer Conversation"
-      />
-    ),
+    src: "/marketingpageimages/blog (1).webp",
     title: "From Campaign Click to Customer Conversation",
     body: "The essentials of a landing page and follow-up journey that does not drop intent.",
     link: "Read More",
@@ -75,7 +36,15 @@ export default function ResourcesSection() {
         <div className="res__grid">
           {cards.map((c) => (
             <article className="res__card" key={c.title}>
-              {c.top}
+              <div className="res-top res-top--photo">
+                <PublicImage
+                  src={c.src}
+                  alt={c.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 560px) 100vw, (max-width: 980px) 50vw, 33vw"
+                />
+              </div>
               <h3 className="res__card-title">{c.title}</h3>
               <p className="res__card-body">{c.body}</p>
               <a className="res__link" href="#">
@@ -192,16 +161,14 @@ export default function ResourcesSection() {
 
       <style jsx global>{`
         .res-top {
+          position: relative;
           width: 100%;
           aspect-ratio: 16 / 11;
           border-radius: 14px;
           overflow: hidden;
         }
         .res-top--photo img {
-          width: 100%;
-          height: 100%;
           object-fit: cover;
-          display: block;
         }
       `}</style>
     </section>

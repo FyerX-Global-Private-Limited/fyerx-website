@@ -6,11 +6,12 @@
 
 const LIVE_MARKETING_CASE_STUDIES = new Set([
   "wegofin",
-  "avekshaa",
-  "trndigital",
-  "kaypee-space",
-  "adro",
+  "cinepebble",
+  "workdayz",
   "onroadz",
+  "sayyam",
+  "adro",
+  "kaypee-space",
 ]);
 
 export const WORDPRESS_GONE_PREFIXES = [

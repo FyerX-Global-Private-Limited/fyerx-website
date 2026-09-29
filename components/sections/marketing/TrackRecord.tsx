@@ -2,27 +2,50 @@
 
 import { useState } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
-import {
-  MenuGlyphBold,
-  MENU_ICON_PALETTE,
-  type MenuIconName,
-} from "@/components/ui/MenuGlyph";
+import { PublicImage } from "@/components/ui/PublicImage";
 
-interface Goal {
-  icon: MenuIconName;
-  label: string;
-}
-
-const GOALS: Goal[] = [
-  { icon: "heart", label: "Sharper brand" },
-  { icon: "sparkle", label: "Product launch" },
-  { icon: "funnel", label: "Qualified enquiries" },
-  { icon: "search", label: "Search visibility" },
-  { icon: "megaphone", label: "Content & creative" },
-  { icon: "chart", label: "Paid media" },
-  { icon: "robot", label: "Leads & CRM" },
-  { icon: "clipboardCheck", label: "Outside view" },
-];
+const GOALS = [
+  {
+    src: "/marketingpageimages/section2 (2).webp",
+    label: "Sharper brand",
+    accent: "#C2185B",
+  },
+  {
+    src: "/marketingpageimages/section2 (3).webp",
+    label: "Product launch",
+    accent: "#3D4DB7",
+  },
+  {
+    src: "/marketingpageimages/section2 (4).webp",
+    label: "Qualified enquiries",
+    accent: "#F5A623",
+  },
+  {
+    src: "/marketingpageimages/section2 (5).webp",
+    label: "Search visibility",
+    accent: "#0B7A75",
+  },
+  {
+    src: "/marketingpageimages/section2 (6).webp",
+    label: "Content & creative",
+    accent: "#6C3CE1",
+  },
+  {
+    src: "/marketingpageimages/section2 (7).webp",
+    label: "Paid media",
+    accent: "#1AA3D1",
+  },
+  {
+    src: "/marketingpageimages/section2 (8).webp",
+    label: "Leads & CRM",
+    accent: "#E24A1B",
+  },
+  {
+    src: "/marketingpageimages/section2 (1).webp",
+    label: "Outside view",
+    accent: "#FF2D92",
+  },
+] as const;
 
 export default function TrackRecord() {
   const [selected, setSelected] = useState<Set<number>>(new Set());
@@ -52,7 +75,6 @@ export default function TrackRecord() {
           <div className="tr-cards" role="group" aria-label="What are you trying to move forward?">
             {GOALS.map((goal, i) => {
               const isOn = selected.has(i);
-              const palette = MENU_ICON_PALETTE[goal.icon];
               return (
                 <button
                   key={goal.label}
@@ -60,7 +82,7 @@ export default function TrackRecord() {
                   className={`tr-card${isOn ? " selected" : ""}`}
                   style={
                     isOn
-                      ? { borderColor: palette.color, boxShadow: `0 0 0 1px ${palette.color}` }
+                      ? { borderColor: goal.accent, boxShadow: `0 0 0 1px ${goal.accent}` }
                       : undefined
                   }
                   aria-pressed={isOn}
@@ -69,7 +91,7 @@ export default function TrackRecord() {
                   <span
                     className="tr-check"
                     aria-hidden="true"
-                    style={isOn ? { background: palette.color, borderColor: palette.color } : undefined}
+                    style={isOn ? { background: goal.accent, borderColor: goal.accent } : undefined}
                   >
                     {isOn && (
                       <svg viewBox="0 0 16 16" fill="none">
@@ -83,12 +105,14 @@ export default function TrackRecord() {
                       </svg>
                     )}
                   </span>
-                  <span
-                    className="tr-iconWrap"
-                    style={{ backgroundColor: palette.tint }}
-                    aria-hidden="true"
-                  >
-                    <MenuGlyphBold name={goal.icon} color={palette.color} size={24} />
+                  <span className="tr-iconWrap" aria-hidden="true">
+                    <PublicImage
+                      src={goal.src}
+                      alt=""
+                      width={88}
+                      height={88}
+                      className="tr-icon"
+                    />
                   </span>
                   <span className="tr-label">{goal.label}</span>
                 </button>
@@ -186,8 +210,15 @@ const css = `
     justify-content:center;
     width:40px;
     height:40px;
-    border-radius:10px;
+    border-radius:50%;
     flex-shrink:0;
+    overflow:hidden;
+    background:transparent;
+  }
+  .tr-hero .tr-icon{
+    width:40px;
+    height:40px;
+    object-fit:cover;
   }
   .tr-hero .tr-label{
     text-align:center;
@@ -199,13 +230,13 @@ const css = `
   }
   @media (max-width:380px){
     .tr-hero .tr-card{min-height:96px;padding:12px 6px;gap:4px;}
-    .tr-hero .tr-iconWrap{width:36px;height:36px;}
+    .tr-hero .tr-iconWrap,.tr-hero .tr-icon{width:36px;height:36px;}
     .tr-hero .tr-label{font-size:0.5625rem;}
   }
   @media (min-width:640px){
     .tr-hero .tr-cards{gap:10px;}
     .tr-hero .tr-card{min-height:115px;padding:16px 10px;}
-    .tr-hero .tr-iconWrap{width:44px;height:44px;}
+    .tr-hero .tr-iconWrap,.tr-hero .tr-icon{width:44px;height:44px;}
     .tr-hero .tr-label{font-size:0.72rem;padding:0 4px;}
   }
   @media (min-width:768px){
