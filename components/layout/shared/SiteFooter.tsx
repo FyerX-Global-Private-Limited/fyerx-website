@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { PublicImage } from "@/components/ui/PublicImage";
 import {
   HEADER_LOGO_CLASS,
   HEADER_LOGO_HEIGHT,
@@ -117,44 +118,23 @@ function FooterLinks({ items }: { items: FooterLink[] }) {
   );
 }
 
+const CAPABILITY_ICON_SRC: Record<FooterCapability["icon"], string> = {
+  marketing: "/marketingpageimages/Footer Icons/Marketing Icon.webp",
+  talent: "/marketingpageimages/Footer Icons/Talent Icon.webp",
+  technology: "/marketingpageimages/Footer Icons/Technology Icon.webp",
+  learning: "/marketingpageimages/Footer Icons/Learning Icon.webp",
+};
+
 function CapabilityIcon({ icon }: { icon: FooterCapability["icon"] }) {
-  switch (icon) {
-    case "marketing":
-      return (
-        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-          <circle cx="9" cy="9" r="8" fill="#FFC900" />
-          <path
-            d="M4 8.5v2h1.5l.8 2.5h1.2l-.8-2.5H8l4.5 1.8V5.2L8 8.5H4z"
-            fill="#111111"
-          />
-        </svg>
-      );
-    case "talent":
-      return (
-        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-          <circle cx="6.5" cy="9" r="5.5" fill="#003335" />
-          <circle cx="11.5" cy="9" r="5.5" fill="#00A88A" opacity="0.9" />
-        </svg>
-      );
-    case "technology":
-      return (
-        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-          <rect x="2.5" y="4" width="13" height="9" rx="1.5" fill="#2A35A1" />
-          <path d="M2 14.5h14" stroke="#2A35A1" strokeWidth="2" strokeLinecap="round" />
-          <path d="M6.5 7.5 5 9l1.5 1.5M11.5 7.5 13 9l-1.5 1.5" stroke="#fff" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      );
-    case "learning":
-      return (
-        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-          <path
-            d="M9 2.5 3 5.5v4.2c0 3.1 2.5 4.8 6 5.8 3.5-1 6-2.7 6-5.8V5.5L9 2.5z"
-            fill="#730031"
-          />
-          <circle cx="13.5" cy="4.5" r="2" fill="#CC0057" />
-        </svg>
-      );
-  }
+  return (
+    <PublicImage
+      src={CAPABILITY_ICON_SRC[icon]}
+      alt=""
+      width={80}
+      height={80}
+      className="h-[18px] w-[18px] object-contain"
+    />
+  );
 }
 
 function CapabilityLinks({ items }: { items: FooterCapability[] }) {

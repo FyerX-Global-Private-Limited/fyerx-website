@@ -50,7 +50,19 @@ export default function IntegrationsSection() {
         </p>
 
         <div className="integrations__cta-wrap">
-          <PrimaryCtaLink href="/contact#marketing" className="text-black!" color="#FFC900">Work With FyerX</PrimaryCtaLink>
+          <PrimaryCtaLink
+            href="/contact#marketing"
+            variant="nav"
+            color="#FFDF66"
+            textColor="#111111"
+            className="h-12 text-[15px]"
+            style={{
+              padding: "0.8rem 1.75rem",
+              boxShadow: "0 10px 28px rgba(255, 201, 0, 0.28)",
+            }}
+          >
+            Work with FyerX
+          </PrimaryCtaLink>
         </div>
 
         <div className="integrations__rows">

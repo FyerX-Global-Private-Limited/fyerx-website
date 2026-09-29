@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
-import { MenuHeroCircle, type MenuIconName } from "@/components/ui/MenuGlyph";
+import { PublicImage } from "@/components/ui/PublicImage";
 import { MARKETING_HOME } from "@/lib/marketing-home-palette";
 
 const WORDS = [
@@ -12,15 +12,6 @@ const WORDS = [
   { w: "Conversion", bg: "#fde68a", dot: "#d97706", text: "#6b4a12" },
   { w: "Growth", bg: "#fef3c7", dot: "#f59e0b", text: "#6b2f12" },
 ] as const;
-
-const HERO_ICONS: { label: string; icon: MenuIconName }[] = [
-  { label: "Campaigns", icon: "megaphone" },
-  { label: "Search & visibility", icon: "search" },
-  { label: "Creative", icon: "sparkle" },
-  { label: "Analytics", icon: "chart" },
-  { label: "Demand generation", icon: "funnel" },
-  { label: "AI marketing", icon: "robot" },
-];
 
 const ROTATE_MS = 5000;
 
@@ -55,23 +46,15 @@ export default function MarketingHero() {
       `}</style>
 
       <div className="mx-auto max-w-[1360px] text-center">
-        <div
-          className="flex items-center justify-center pl-3 sm:pl-4 md:pl-5"
-          aria-hidden="true"
-        >
-          {HERO_ICONS.map(({ label, icon }, i) => (
-            <MenuHeroCircle
-              key={label}
-              icon={icon}
-              label={label}
-              className={
-                i > 0
-                  ? "-ml-3 sm:-ml-3.5 md:-ml-4 lg:-ml-[1.125rem]"
-                  : undefined
-              }
-              style={{ zIndex: HERO_ICONS.length - i }}
-            />
-          ))}
+        <div className="flex items-center justify-center" aria-hidden="true">
+          <PublicImage
+            src="/marketingpageimages/Hero Icon.webp"
+            alt=""
+            width={1726}
+            height={320}
+            priority
+            className="h-14 w-auto object-contain sm:h-16 md:h-[4.5rem] lg:h-20"
+          />
         </div>
 
         <h1 className="mt-3 text-[clamp(1.625rem,7vw,6rem)] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)] sm:mt-4 sm:leading-[1.2] sm:tracking-[-0.03em] lg:mt-4 lg:leading-[1.26] lg:tracking-[-0.04em]">

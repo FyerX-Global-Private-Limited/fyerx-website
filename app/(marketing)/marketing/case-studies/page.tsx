@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { PublicImage } from "@/components/ui/PublicImage";
 import { MARKETING_CASE_STUDIES } from "@/data/marketing-case-studies";
 import { metadataForPath } from "@/lib/seo";
 
@@ -30,29 +31,51 @@ export default function CaseStudiesPage() {
             <Link
               key={study.slug}
               href={`/marketing/case-studies/${study.slug}`}
-              className="group rounded-[24px] border border-[#E6E9EF] bg-[#F6F7FB] p-8 transition-all hover:border-[#1F5C99]/30 hover:shadow-[0_16px_40px_-24px_rgba(11,46,89,0.25)]"
+              className="group overflow-hidden rounded-[24px] transition-transform hover:-translate-y-0.5"
+              style={{ backgroundColor: study.cardBg }}
             >
-              <div className="flex items-center gap-2">
+              {study.imageSrc ? (
+                <div className="px-5 pt-5">
+                  <div className="overflow-hidden rounded-[18px]">
+                    <PublicImage
+                      src={study.imageSrc}
+                      alt={`${study.clientName} case study`}
+                      width={1888}
+                      height={1676}
+                      className="h-auto w-full object-contain"
+                      sizes="(max-width: 768px) 100vw, 40vw"
+                    />
+                  </div>
+                </div>
+              ) : null}
+              <div className="p-6 sm:p-8">
+                <div className="flex items-center gap-2">
+                  <span
+                    className="h-2 w-2 rounded-full"
+                    style={{ backgroundColor: study.accentColor }}
+                    aria-hidden="true"
+                  />
+                  <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[#5a5f6b]">
+                    {study.label} · {study.clientName}
+                  </span>
+                </div>
+                <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.12em] text-[#5a5f6b]">
+                  {study.categoryLabel}
+                </p>
+                <h2 className="mt-4 text-xl font-semibold leading-snug text-[var(--ink)]">
+                  {study.title}
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-[#5a5f6b]">{study.summary}</p>
                 <span
-                  className="h-2 w-2 rounded-sm"
-                  style={{ backgroundColor: study.accentColor }}
-                  aria-hidden="true"
-                />
-                <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[#5a5f6b]">
-                  {study.label} · {study.clientName}
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold"
+                  style={{ color: study.accentColor }}
+                >
+                  View case study
+                  <span className="transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+                    →
+                  </span>
                 </span>
               </div>
-              <p className="mt-1 text-[11px] font-medium text-[#5a5f6b]">{study.categoryLabel}</p>
-              <h2 className="mt-4 text-xl font-semibold leading-snug text-[var(--ink)] group-hover:text-[#0B2E59]">
-                {study.title}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-[#5a5f6b]">{study.summary}</p>
-              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#1F5C99]">
-                View case study
-                <span className="transition-transform group-hover:translate-x-0.5" aria-hidden="true">
-                  →
-                </span>
-              </span>
             </Link>
           ))}
         </div>
