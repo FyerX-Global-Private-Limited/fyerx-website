@@ -1,43 +1,12 @@
 ﻿import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter, Inter_Tight, Poppins } from "next/font/google";
+import { geistSans, geistMono, inter, interTight, poppins } from "./fonts";
 import "./globals.css";
 import StyledJsxRegistry from "./registry";
 import { RecaptchaProvider } from "@/components/RecaptchaProvider";
+import { editorialMode } from "@/lib/editorial/config";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { SiteJsonLd } from "@/components/seo/SiteJsonLd";
 import { SITE_OG_IMAGE, SITE_OG_IMAGE_META, SITE_URL } from "@/data/seo-metadata";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const interTight = Inter_Tight({
-  variable: "--font-inter-tight",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-// Web-font fallback for Calibri (not distributable as a web font) on the homepage.
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -78,7 +47,7 @@ export default function RootLayout({
       style={{ colorScheme: "light" }}
     >
       <body className="min-h-full flex flex-col bg-white text-[#171717]">
-        <GoogleAnalytics />
+        {editorialMode() !== "isolated" && <GoogleAnalytics />}
         <SiteJsonLd />
         <RecaptchaProvider>
           <StyledJsxRegistry>{children}</StyledJsxRegistry>

@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { PublicImage } from "@/components/ui/PublicImage";
 import {
   HEADER_LOGO_CLASS,
@@ -100,7 +101,7 @@ const iconLinkCls =
 const iconWrapCls =
   "inline-flex h-[18px] w-[18px] shrink-0 items-center justify-center";
 
-function FooterLinks({ items }: { items: FooterLink[] }) {
+function FooterLinks({ items, blogLabel }: { items: FooterLink[]; blogLabel?: string }) {
   return (
     <ul className={listCls}>
       {items.map((item) => (
@@ -110,7 +111,7 @@ function FooterLinks({ items }: { items: FooterLink[] }) {
             className={linkCls}
             {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
           >
-            {item.label}
+            {item.href === "/blog" && blogLabel ? blogLabel : item.label}
           </Link>
         </li>
       ))}
@@ -185,6 +186,8 @@ function ContactIcon({ type }: { type: "phone" | "email" }) {
 
 export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterVariant }) {
   const logo = LOGO_BY_VARIANT[variant];
+  const pathname = usePathname();
+  const onBlog = pathname === "/blog" || pathname.startsWith("/blog/");
 
   return (
     <footer
@@ -304,7 +307,7 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
             <>
               <div className="min-w-0">
                 <h4 className={headingCls}>Explore FyerX</h4>
-                <FooterLinks items={FOOTER_EXPLORE_LINKS} />
+                <FooterLinks items={FOOTER_EXPLORE_LINKS} blogLabel={onBlog ? "FyerX Blogs" : undefined} />
               </div>
               <div className="min-w-0">
                 <h4 className={headingCls}>For Business</h4>
@@ -312,7 +315,7 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
               </div>
               <div className="min-w-0">
                 <h4 className={headingCls}>Resources</h4>
-                <FooterLinks items={FOOTER_RESOURCES_LINKS} />
+                <FooterLinks items={FOOTER_RESOURCES_LINKS} blogLabel={onBlog ? "Blogs" : undefined} />
               </div>
             </>
           )}
