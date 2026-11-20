@@ -6,7 +6,8 @@ import samples from "@/data/service-work-samples.json";
 import { SITE_URL } from "@/data/seo-metadata";
 import { serviceDirectory, type ServiceEntry } from "@/lib/service-directory";
 import { articleFor, divisionNames, findService, type ServiceDivision, type ServiceParams } from "@/lib/service-articles";
-import { buildMetadata, metadataForPath } from "@/lib/seo";
+import searchMetadata from "@/data/service-search-metadata.json";
+import { buildMetadata } from "@/lib/seo";
 import { ServiceReference } from "./ServiceReference";
 import ApprovedServiceNow from "./ApprovedServiceNow";
 import styles from "./service-detail.module.css";
@@ -48,12 +49,11 @@ function headingFor(entry: ServiceEntry) {
 export function serviceMetadata(division: ServiceDivision, params: ServiceParams): Metadata {
   const entry = findService(division, params);
   if (!entry) notFound();
-  if (entry.path === serviceNowPath) return metadataForPath(entry.path);
+  const metadata: Record<string, { title: string; description: string }> = searchMetadata;
   return buildMetadata({
     path: entry.path,
     canonical: SITE_URL + entry.path,
-    title: `${headingFor(entry)} | FyerX ${divisionNames[division]}`,
-    description: serviceSummaries[entry.slug],
+    ...metadata[entry.slug],
     robots: "index,follow",
     ogType: "website",
   });
