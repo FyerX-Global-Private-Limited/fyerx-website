@@ -98,6 +98,7 @@ function Glyph({ name }: { name: IconName }) {
 const simpleLinks = [
   { label: "Blueprints", href: "/technology/case-studies" },
   { label: "Careers", href: "https://fyerx.zohorecruit.in/jobs/Careers", external: true },
+  { label: "Blog", href: "/blog" },
 ];
 
 const TECH_MENU_HOVER = TECH_PRIMARY;

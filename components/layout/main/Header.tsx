@@ -126,6 +126,7 @@ const capabilityCols: ConsultingCol[] = [
 
 const simpleLinks = [
   { label: "Careers", href: "https://fyerx.zohorecruit.in/jobs/Careers", external: true },
+  { label: "Blog", href: "/blog" },
 ];
 
 type MenuCategory = {

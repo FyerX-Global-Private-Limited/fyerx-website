@@ -79,7 +79,7 @@ export const FOOTER_MARKETING_EXPLORE_LINKS: FooterLink[] = [
 ];
 
 export const FOOTER_MARKETING_RESOURCES_LINKS: FooterLink[] = [
-  { label: "Marketing Insights", href: "/blog" },
+  { label: "Blog", href: "/blog" },
   { label: "Case Studies", href: "/marketing/case-studies" },
   { label: "Marketing FAQs", href: "/marketing#faqs" },
   { label: "Privacy Policy", href: "/privacy-policy" },
@@ -114,7 +114,7 @@ export const FOOTER_TALENT_EXPLORE_LINKS: FooterLink[] = [
 ];
 
 export const FOOTER_TALENT_RESOURCES_LINKS: FooterLink[] = [
-  { label: "Talent Insights", href: "/blog" },
+  { label: "Blog", href: "/blog" },
   { label: "Hiring Guides", href: "/talent" },
   { label: "Candidate FAQs", href: "/talent#faqs" },
   { label: "Privacy Policy", href: "/privacy-policy" },
@@ -149,7 +149,7 @@ export const FOOTER_TECHNOLOGY_EXPLORE_LINKS: FooterLink[] = [
 ];
 
 export const FOOTER_TECHNOLOGY_RESOURCES_LINKS: FooterLink[] = [
-  { label: "Technology Insights", href: "/blog" },
+  { label: "Blog", href: "/blog" },
   { label: "Delivery Blueprints", href: "/technology/case-studies" },
   { label: "Technology FAQs", href: "/technology#faqs" },
   { label: "Privacy Policy", href: "/privacy-policy" },
