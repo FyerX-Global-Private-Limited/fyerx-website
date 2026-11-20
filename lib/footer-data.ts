@@ -19,7 +19,7 @@ export const FOOTER_CAPABILITIES: FooterCapability[] = [
   { label: "Marketing", href: "/marketing", icon: "marketing" },
   { label: "Talent", href: "/talent", icon: "talent" },
   { label: "Technology", href: "/technology", icon: "technology" },
-  { label: "Learning", href: "#capabilities", icon: "learning" },
+  { label: "Learning", href: "/#capabilities", icon: "learning" },
 ];
 
 export const FOOTER_EXPLORE_LINKS: FooterLink[] = [
@@ -38,7 +38,7 @@ export const FOOTER_FOR_BUSINESS_LINKS: FooterLink[] = [
   { label: "Growth & Marketing", href: "/marketing" },
   { label: "Talent & Hiring", href: "/talent" },
   { label: "Technology & Transformation", href: "/technology" },
-  { label: "Learning & Development", href: "#capabilities" },
+  { label: "Learning & Development", href: "/#capabilities" },
 ];
 
 export const FOOTER_RESOURCES_LINKS: FooterLink[] = [
@@ -53,21 +53,21 @@ export const FOOTER_MARKETING_TAGLINE =
   "Marketing built around business outcomes." as const;
 
 export const FOOTER_MARKETING_SERVICES: FooterLink[] = [
-  { label: "Strategy & Consulting", href: "/marketing/services" },
-  { label: "Demand & Lead Generation", href: "/marketing/services" },
-  { label: "Search & AI Visibility", href: "/marketing/services" },
-  { label: "Social Media Marketing", href: "/marketing/services" },
-  { label: "Performance Marketing", href: "/marketing/services" },
-  { label: "Branding & Design", href: "/marketing/services" },
+  { label: "Strategy & Consulting", href: "/marketing#services-strategy-consulting" },
+  { label: "Demand & Lead Generation", href: "/marketing#services-demand-lead-generation" },
+  { label: "Search & AI Visibility", href: "/marketing#services-search-ai-visibility" },
+  { label: "Social Media Marketing", href: "/marketing/services/brand-digital-experience/social-media-management" },
+  { label: "Performance Marketing", href: "/marketing#services-performance-marketing" },
+  { label: "Branding & Design", href: "/marketing#services-brand-digital-experience" },
 ];
 
 export const FOOTER_MARKETING_GROWTH_FOCUS: FooterLink[] = [
-  { label: "Go-to-Market Strategy", href: "/marketing/services" },
-  { label: "Account-Based Marketing", href: "/marketing/services" },
-  { label: "LinkedIn Lead Generation", href: "/marketing/services" },
-  { label: "SEO", href: "/marketing/services" },
-  { label: "Paid Search", href: "/marketing/services" },
-  { label: "Marketing Automation", href: "/marketing/services" },
+  { label: "Go-to-Market Strategy", href: "/marketing/services/strategy-consulting/go-to-market-strategy" },
+  { label: "Account-Based Marketing", href: "/marketing/services/demand-lead-generation/account-based-marketing" },
+  { label: "LinkedIn Lead Generation", href: "/marketing/services/demand-lead-generation/linkedin-lead-generation" },
+  { label: "SEO", href: "/marketing/services/search-ai-visibility/seo" },
+  { label: "Paid Search", href: "/marketing/services/performance-marketing/paid-search" },
+  { label: "Marketing Automation", href: "/marketing#services-ai-marketing-automation" },
 ];
 
 export const FOOTER_MARKETING_EXPLORE_LINKS: FooterLink[] = [
@@ -90,19 +90,19 @@ export const FOOTER_TALENT_TAGLINE =
   "The right people for the work ahead." as const;
 
 export const FOOTER_TALENT_SERVICES: FooterLink[] = [
-  { label: "Contract Staffing", href: "/talent" },
-  { label: "Recruitment Process Outsourcing", href: "/talent" },
-  { label: "Permanent Hiring", href: "/talent" },
-  { label: "Executive Search", href: "/talent" },
-  { label: "IT & Technology Talent", href: "/talent" },
+  { label: "Contract Staffing", href: "/talent#services-contract-staffing" },
+  { label: "Recruitment Process Outsourcing", href: "/talent#services-rpo" },
+  { label: "Permanent Hiring", href: "/talent/services/permanent-hiring-executive-search/permanent-hiring" },
+  { label: "Executive Search", href: "/talent/services/permanent-hiring-executive-search/executive-search" },
+  { label: "IT & Technology Talent", href: "/talent#services-technology-recruitment" },
 ];
 
 export const FOOTER_TALENT_HIRING_NEEDS: FooterLink[] = [
-  { label: "IT Contract Staffing", href: "/talent" },
-  { label: "Project-Based Staffing", href: "/talent" },
-  { label: "Volume Hiring", href: "/talent" },
-  { label: "Remote Team Building", href: "/talent" },
-  { label: "Data & AI Talent", href: "/talent" },
+  { label: "IT Contract Staffing", href: "/talent/services/contract-staffing/it-contract-staffing" },
+  { label: "Project-Based Staffing", href: "/talent/services/contract-staffing/project-based-staffing" },
+  { label: "Volume Hiring", href: "/talent/services/contract-staffing/high-volume-staffing" },
+  { label: "Remote Team Building", href: "/talent/services/global-staffing/remote-team-building" },
+  { label: "Data & AI Talent", href: "/talent/services/technology-recruitment/data-ai-talent" },
 ];
 
 export const FOOTER_TALENT_EXPLORE_LINKS: FooterLink[] = [
@@ -125,19 +125,19 @@ export const FOOTER_TECHNOLOGY_TAGLINE =
   "Systems that keep the business moving" as const;
 
 export const FOOTER_TECHNOLOGY_SERVICES: FooterLink[] = [
-  { label: "Enterprise Platforms", href: "/technology#services" },
-  { label: "Digital Transformation", href: "/technology#services" },
-  { label: "Data & AI", href: "/technology#services" },
-  { label: "Cloud & DevOps", href: "/technology#services" },
-  { label: "Strategic Advisory", href: "/technology#services" },
+  { label: "Enterprise Platforms", href: "/technology#services-enterprise-platforms" },
+  { label: "Digital Transformation", href: "/technology#services-digital-transformation" },
+  { label: "Data & AI", href: "/technology#services-data-ai" },
+  { label: "Cloud & DevOps", href: "/technology#services-cloud-devops" },
+  { label: "Strategic Advisory", href: "/technology#services-strategic-advisory" },
 ];
 
 export const FOOTER_TECHNOLOGY_PRIORITIES: FooterLink[] = [
-  { label: "Enterprise Platform Change", href: "/technology" },
-  { label: "Legacy Modernisation", href: "/technology" },
-  { label: "Data and AI Adoption", href: "/technology" },
-  { label: "Cloud Operating Maturity", href: "/technology" },
-  { label: "Process Automation", href: "/technology" },
+  { label: "Enterprise Platform Change", href: "/technology#services-enterprise-platforms" },
+  { label: "Legacy Modernisation", href: "/technology/services/digital-transformation/application-modernisation" },
+  { label: "Data and AI Adoption", href: "/technology/services/data-ai/ai-enablement" },
+  { label: "Cloud Operating Maturity", href: "/technology/services/cloud-devops/cloud-transformation" },
+  { label: "Process Automation", href: "/technology/services/digital-transformation/process-automation" },
 ];
 
 export const FOOTER_TECHNOLOGY_EXPLORE_LINKS: FooterLink[] = [

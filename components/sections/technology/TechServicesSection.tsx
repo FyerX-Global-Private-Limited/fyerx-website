@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { TECHNOLOGY_MENU_CATEGORIES } from "@/lib/technology-menu";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { TECHNOLOGY_SERVICE_TABS, type TechServiceTab } from "@/data/technology-services";
 import { TECH_HOME } from "@/lib/technology-home-palette";
@@ -68,6 +70,7 @@ function ServicePanel({
   tab: TechServiceTab;
   theme: (typeof TAB_THEMES)[number];
 }) {
+  const services = TECHNOLOGY_MENU_CATEGORIES.find((category) => category.label === tab.label)?.items;
   return (
     <article className="min-w-0 rounded-2xl bg-white p-4 shadow-sm sm:p-5 lg:p-8">
       <div className="flex items-start gap-3">
@@ -81,31 +84,36 @@ function ServicePanel({
       <p className="mt-4 text-sm leading-relaxed text-[#3d4a5c] sm:mt-5">{tab.description}</p>
 
       <div className="mt-4 grid gap-3 sm:mt-6 sm:grid-cols-2 sm:gap-4">
-        {tab.groups.map((group) => (
-          <div
-            key={group.label}
-            className="rounded-xl border p-3 sm:p-4"
-            style={{ borderColor: theme.bg, backgroundColor: `${theme.bg}55` }}
-          >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#676879]">
-              {group.label}
-            </p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {group.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border bg-white px-2.5 py-1 text-[11px] font-medium"
-                  style={{
-                    borderColor: theme.bg,
-                    color: theme.accent,
-                  }}
-                >
-                  {tag}
-                </span>
-              ))}
+        {tab.groups.map((group) => {
+          const service = services?.find((item) => item.label.toLowerCase() === group.label.toLowerCase());
+          return (
+            <div
+              key={group.label}
+              className="rounded-xl border p-3 sm:p-4"
+              style={{ borderColor: theme.bg, backgroundColor: `${theme.bg}55` }}
+            >
+              <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#676879]">
+                {service ? (
+                  <Link href={service.href} className="underline underline-offset-4 hover:text-[#20287a]">{service.label}</Link>
+                ) : group.label}
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {group.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border bg-white px-2.5 py-1 text-[11px] font-medium"
+                    style={{
+                      borderColor: theme.bg,
+                      color: theme.accent,
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <div className="mt-6">
