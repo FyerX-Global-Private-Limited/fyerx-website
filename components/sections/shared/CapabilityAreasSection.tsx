@@ -248,7 +248,7 @@ export default function CapabilityAreasSection({
   if (!active) return null;
 
   return (
-    <section className="home-section overflow-x-clip bg-white">
+    <section id={variant === "main" ? "capabilities" : undefined} className="home-section scroll-mt-24 overflow-x-clip bg-white">
       <div className="mx-auto max-w-[1400px]">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="section-title-lg">

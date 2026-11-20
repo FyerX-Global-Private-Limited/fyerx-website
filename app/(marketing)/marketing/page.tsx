@@ -1,3 +1,4 @@
+import { DivisionServicesNav } from "@/components/services/DivisionServicesNav";
 import type { Metadata } from "next";
 import MarketingHero from "@/components/sections/marketing/MarketingHero";
 import ServicesGrid from "@/components/sections/marketing/ServicesGrid";
@@ -36,6 +37,7 @@ export default function MarketingPage() {
       <ResourcesSection />
       <FaqSection />
       <TestimonialsCTA />
+      <DivisionServicesNav division="marketing" />
     </>
   );
 }

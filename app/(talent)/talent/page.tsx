@@ -1,3 +1,4 @@
+import { DivisionServicesNav } from "@/components/services/DivisionServicesNav";
 import type { Metadata } from "next";
 import MarketingHero from "@/components/sections/talent/MarketingHero";
 import FoundationSection from "@/components/sections/talent/FoundationSection";
@@ -33,6 +34,7 @@ export default function TalentHomePage() {
       <ResourcesSection />
       <TestimonialsCTA />
       <FaqSection />
+      <DivisionServicesNav division="talent" />
     </>
   );
 }
