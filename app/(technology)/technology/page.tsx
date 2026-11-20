@@ -1,3 +1,4 @@
+import { DivisionServicesNav } from "@/components/services/DivisionServicesNav";
 import type { Metadata } from "next";
 import TechHero from "@/components/sections/technology/TechHero";
 import TechBuiltToSection from "@/components/sections/technology/TechBuiltToSection";
@@ -37,6 +38,7 @@ export default function TechnologyHomePage() {
       <TechFaqSection />
       <TechFinalCta />
       <TechContactSection />
+      <DivisionServicesNav division="technology" />
     </>
   );
 }
