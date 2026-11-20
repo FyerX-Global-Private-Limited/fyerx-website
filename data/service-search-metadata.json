@@ -1,0 +1,270 @@
+{
+  "servicenow": {
+    "title": "ServiceNow Consulting & Implementation Services | FyerX",
+    "description": "Bring incidents, service requests and changes into one ServiceNow workflow. FyerX helps with ITSM implementation, CMDB design, integrations and ongoing support."
+  },
+  "sap": {
+    "title": "SAP Consulting & Implementation Services | FyerX",
+    "description": "Move SAP processes from design to cutover. FyerX helps your business owners map master data, test integrations and prepare users for the first production run."
+  },
+  "oracle-fusion": {
+    "title": "Oracle Fusion Cloud Implementation & Consulting | FyerX",
+    "description": "Implement Oracle Fusion Cloud for finance and HR with FyerX. Map approvals, migrate records and test user roles against the transactions your teams run daily."
+  },
+  "salesforce": {
+    "title": "Salesforce Consulting, Implementation & Integration | FyerX",
+    "description": "Give sales and service teams a Salesforce setup they can use. FyerX configures workflows, migrates CRM data and builds reports around your pipeline."
+  },
+  "microsoft-business-applications": {
+    "title": "Dynamics 365 & Microsoft Power Platform Consulting | FyerX",
+    "description": "Connect Dynamics 365 records with Power Apps and Power Automate. FyerX designs approvals, manages access and helps administrators take over the finished apps."
+  },
+  "enterprise-automation-integration": {
+    "title": "Enterprise Application Integration & API Services | FyerX",
+    "description": "Connect the systems behind orders, invoices and service requests. FyerX maps fields, builds API integrations and plans how failed transactions get retried."
+  },
+  "application-modernisation": {
+    "title": "Legacy Application Modernisation Services | FyerX",
+    "description": "Decide which legacy applications to retain, refactor or replace. FyerX maps dependencies and tests critical journeys before moving users to the new system."
+  },
+  "connected-experiences": {
+    "title": "Customer Portal & Digital Experience Integration | FyerX",
+    "description": "Help customers finish a task across your portal, product and service desk. FyerX connects identity, data and handoffs across the customer journey."
+  },
+  "process-automation": {
+    "title": "Business Process & Workflow Automation Services | FyerX",
+    "description": "Replace manual routing and repeat data entry with an auditable workflow. FyerX defines triggers, approval rules and who handles exceptions."
+  },
+  "delivery-foundations": {
+    "title": "Software Delivery & Release Engineering Consulting | FyerX",
+    "description": "Make software releases repeatable across teams. FyerX sets up shared environments, test gates, release ownership and a documented handover to operations."
+  },
+  "data-engineering-platforms": {
+    "title": "Data Engineering & Data Platform Consulting Services | FyerX",
+    "description": "Build pipelines that deliver usable data to analysts and applications. FyerX designs ingestion, transformations and checks for missing or inconsistent records."
+  },
+  "analytics-reporting": {
+    "title": "Business Intelligence & Dashboard Consulting | FyerX",
+    "description": "Give finance, sales and operations a consistent view of performance. FyerX defines metrics, reconciles source data and builds dashboards around business decisions."
+  },
+  "ai-enablement": {
+    "title": "Enterprise AI Consulting & Pilot Implementation | FyerX",
+    "description": "Choose an AI use case worth taking to pilot. FyerX checks the available data, defines a human review step and measures output quality on real tasks."
+  },
+  "mlops": {
+    "title": "MLOps Consulting & Model Deployment Services | FyerX",
+    "description": "Take trained models into production with versioned releases and rollback. FyerX sets up model monitoring, retraining triggers and operational ownership."
+  },
+  "cloud-transformation": {
+    "title": "Cloud Migration & Transformation Consulting | FyerX",
+    "description": "Plan a cloud move workload by workload. FyerX maps dependencies, designs the target environment and coordinates migration testing, cutover and support."
+  },
+  "devops-ci-cd": {
+    "title": "DevOps Consulting & CI/CD Pipeline Services | FyerX",
+    "description": "Shorten the path from a code change to a tested release. FyerX designs build pipelines, deployment gates and rollback procedures for your environments."
+  },
+  "platform-engineering": {
+    "title": "Platform Engineering & Developer Platform Services | FyerX",
+    "description": "Give developers a repeatable way to provision environments and deploy services. FyerX designs self-service workflows and defines who maintains the platform."
+  },
+  "reliability-cost": {
+    "title": "Cloud Reliability & Cost Optimisation Services | FyerX",
+    "description": "Find cloud savings without losing sight of uptime. FyerX reviews usage, incident patterns and service targets to prioritise reliability and cost improvements."
+  },
+  "strategy-roadmap": {
+    "title": "IT Strategy & Technology Roadmap Consulting | FyerX",
+    "description": "Turn competing IT requests into a sequenced roadmap. FyerX helps leaders compare business value, dependencies, delivery capacity and investment priorities."
+  },
+  "architecture-leadership": {
+    "title": "Enterprise Architecture & Technology Advisory | FyerX",
+    "description": "Work through architecture decisions before teams commit to a build. FyerX reviews system boundaries, integration choices and the trade-offs behind each option."
+  },
+  "vendor-platform-decisions": {
+    "title": "Technology Vendor Selection & Platform Evaluation | FyerX",
+    "description": "Compare shortlisted platforms using your own workflows. FyerX helps write requirements, structure vendor demos and score the evidence behind a purchase."
+  },
+  "transformation-planning": {
+    "title": "Digital Transformation Planning & Advisory | FyerX",
+    "description": "Build a delivery plan for a technology transformation. FyerX maps workstreams, dependencies, business owners and acceptance criteria before rollout."
+  },
+  "it-contract-staffing": {
+    "title": "IT Contract Staffing Agency in Bangalore | FyerX",
+    "description": "Hire IT contractors in Bangalore for a fixed assignment. FyerX screens for hands-on skills, shift coverage, notice period and availability before submission."
+  },
+  "project-based-staffing": {
+    "title": "Project Staffing Services in Bangalore | FyerX",
+    "description": "Staff each phase of a project as the work comes due. FyerX maps milestones to roles, screens available candidates and coordinates start dates in Bangalore."
+  },
+  "high-volume-staffing": {
+    "title": "Bulk Hiring & Volume Recruitment Agency in Bangalore | FyerX",
+    "description": "Plan a hiring drive in Bangalore around real interview capacity. FyerX coordinates sourcing, screening and joining dates across roles, locations and hiring waves."
+  },
+  "us-contract-staffing": {
+    "title": "US Contract Staffing Services from Bangalore | FyerX",
+    "description": "Staff US contract assignments with FyerX. Align the work location, time-zone overlap, candidate availability and onboarding responsibilities before interviews."
+  },
+  "end-to-end-rpo": {
+    "title": "Recruitment Process Outsourcing (RPO) Services in Bangalore | FyerX",
+    "description": "Outsource recruitment in Bangalore from intake to joining. FyerX manages sourcing, screening, interview coordination and offer follow-up against your open roles."
+  },
+  "on-demand-rpo": {
+    "title": "On-Demand RPO & Recruiter Support in Bangalore | FyerX",
+    "description": "Add recruiter capacity in Bangalore for a hiring surge or specialist vacancy. FyerX agrees the workload, reporting cadence and handover with your hiring team."
+  },
+  "enterprise-rpo": {
+    "title": "Enterprise RPO Services in Bangalore | FyerX",
+    "description": "Coordinate recruiting across business units with FyerX in Bangalore. Set intake rules, assign sourcing ownership and track offers and joining across teams."
+  },
+  "permanent-hiring": {
+    "title": "Permanent IT Staffing & Recruitment Agency in Bangalore | FyerX",
+    "description": "Hire full-time IT professionals in Bangalore. FyerX screens technical experience, salary expectations and notice periods so hiring managers can assess fit early."
+  },
+  "executive-search": {
+    "title": "Executive Search & Leadership Hiring Firm in Bangalore | FyerX",
+    "description": "Fill a leadership role in Bangalore with a confidential search. FyerX maps target companies, approaches candidates and builds a shortlist against the mandate."
+  },
+  "software-development-roles": {
+    "title": "Software Developer Recruitment Agency in Bangalore | FyerX",
+    "description": "Hire software developers in Bangalore for the stack you run. FyerX screens for production experience, engineering responsibilities and the work each hire will own."
+  },
+  "servicenow-enterprise-platform-talent": {
+    "title": "ServiceNow & Enterprise Platform Recruitment in Bangalore | FyerX",
+    "description": "Find ServiceNow developers, administrators and enterprise platform specialists in Bangalore. Match candidates by module, project phase and availability."
+  },
+  "data-ai-talent": {
+    "title": "Data Engineering & AI Recruitment Agency in Bangalore | FyerX",
+    "description": "Recruit data engineers, analytics specialists and AI practitioners in Bangalore. FyerX checks the pipelines, models and production workloads candidates have owned."
+  },
+  "devops-cloud-talent": {
+    "title": "DevOps & Cloud Recruitment Agency in Bangalore | FyerX",
+    "description": "Hire DevOps and cloud engineers in Bangalore. FyerX screens for deployment pipelines, cloud environments, on-call duties and incident ownership."
+  },
+  "hiring-assessments": {
+    "title": "Pre-Employment Assessment Services in Bangalore | FyerX",
+    "description": "Assess candidates against the work a role requires. FyerX builds screening questions, practical exercises and interview scorecards for hiring teams in Bangalore."
+  },
+  "background-verification": {
+    "title": "Employee Background Verification Services in Bangalore | FyerX",
+    "description": "Coordinate candidate background checks in Bangalore. FyerX helps define checks, collect authorisation and route discrepancies to the hiring decision-maker."
+  },
+  "compensation-benchmarking": {
+    "title": "Salary & Compensation Benchmarking Services in Bangalore | FyerX",
+    "description": "Set a defensible salary range for a Bangalore hire. FyerX compares role scope, seniority, fixed pay and incentives before you take an offer to market."
+  },
+  "remote-team-building": {
+    "title": "Remote Team Recruitment Services in Bangalore | FyerX",
+    "description": "Build a remote team with FyerX in Bangalore. Define the role mix, working-hour overlap, screening criteria and onboarding handoffs for distributed delivery."
+  },
+  "cross-border-compliance-support": {
+    "title": "Cross-Border Staffing Compliance Support in Bangalore | FyerX",
+    "description": "Plan cross-border hiring with FyerX in Bangalore. Map work locations, contracting responsibilities and documents that need specialist review before onboarding."
+  },
+  "go-to-market-strategy": {
+    "title": "Go-to-Market Strategy Consulting in Bangalore | FyerX",
+    "description": "Launch an offer with a clear first market. FyerX helps Bangalore teams choose a buyer segment, shape the offer and plan the handoff from campaigns to sales."
+  },
+  "icp-buyer-personas": {
+    "title": "ICP & Buyer Persona Development Services in Bangalore | FyerX",
+    "description": "Use customer interviews and sales evidence to define your ideal accounts. FyerX builds buyer personas around decision roles, buying triggers and objections."
+  },
+  "marketing-audits": {
+    "title": "Digital Marketing Audit Services in Bangalore | FyerX",
+    "description": "Find where campaigns lose qualified enquiries. FyerX audits channel spend, messaging, tracking and conversion paths, then ranks the fixes your team can make."
+  },
+  "competitive-positioning": {
+    "title": "Brand & Competitive Positioning Consulting in Bangalore | FyerX",
+    "description": "Give sales a clear answer when buyers compare alternatives. FyerX maps competitors, decision criteria and proof points to sharpen your positioning."
+  },
+  "account-based-marketing": {
+    "title": "B2B Account-Based Marketing Agency in Bangalore | FyerX",
+    "description": "Reach the buying group inside your target accounts. FyerX plans account selection, tailored campaigns and sales follow-up, then tracks engagement by account."
+  },
+  "linkedin-lead-generation": {
+    "title": "B2B LinkedIn Lead Generation Agency in Bangalore | FyerX",
+    "description": "Reach relevant buyers on LinkedIn with targeted lists and messages tied to their role. FyerX qualifies replies and coordinates the next step with sales."
+  },
+  "outbound-outreach": {
+    "title": "B2B Outbound Lead Generation Agency in Bangalore | FyerX",
+    "description": "Build outbound campaigns around accounts with a reason to buy. FyerX develops prospect lists, email sequences and reply handling for your sales team."
+  },
+  "landing-pages-nurture": {
+    "title": "Landing Page & Lead Nurturing Services in Bangalore | FyerX",
+    "description": "Turn campaign clicks into sales conversations. FyerX connects focused landing pages, capture forms, nurture emails and CRM routing around a single offer."
+  },
+  "attribution-pipeline-reporting": {
+    "title": "Marketing Attribution & Pipeline Reporting in Bangalore | FyerX",
+    "description": "See which campaigns contribute to qualified pipeline. FyerX connects campaign tracking to CRM stages and makes the attribution assumptions clear in your reports."
+  },
+  "seo": {
+    "title": "SEO Agency in Bangalore | FyerX",
+    "description": "Bring qualified organic traffic to your service pages. FyerX audits technical SEO, maps buyer searches to content and tracks enquiries from organic search."
+  },
+  "aeo": {
+    "title": "Answer Engine Optimisation (AEO) Agency in Bangalore | FyerX",
+    "description": "Make your expertise easier for answer engines to interpret. FyerX maps buyer questions, structures clear answers and reviews the sources that support them."
+  },
+  "geo": {
+    "title": "Generative Engine Optimisation (GEO) Agency in Bangalore | FyerX",
+    "description": "See how AI search tools describe your brand. FyerX tests relevant buyer prompts, identifies missing evidence and improves content that supports accurate answers."
+  },
+  "local-seo": {
+    "title": "Local SEO Services in Bangalore | FyerX",
+    "description": "Help nearby customers find the right location and service. FyerX improves Google Business Profiles, location pages and tracking for calls and local enquiries."
+  },
+  "lead-operations-automation": {
+    "title": "Lead Management Automation Services in Bangalore | FyerX",
+    "description": "Get each enquiry to the right salesperson. FyerX automates lead enrichment, assignment and follow-up, with a route for duplicates and incomplete records."
+  },
+  "ai-content-operations": {
+    "title": "AI Content Workflow Consulting in Bangalore | FyerX",
+    "description": "Build an AI-assisted publishing workflow with editorial checks. FyerX sets up briefs, source verification, approvals and review after publication."
+  },
+  "reporting-spend-guardrails": {
+    "title": "Marketing Spend Monitoring & Reporting Services in Bangalore | FyerX",
+    "description": "Catch campaign overspend before the month closes. FyerX sets budget alerts, pacing reports and clear responsibilities for reviewing and adjusting spend."
+  },
+  "conversational-ai": {
+    "title": "Conversational AI & Chatbot Services in Bangalore | FyerX",
+    "description": "Help website visitors get answers and reach sales. FyerX designs approved chatbot responses, qualification questions and handoffs for complex enquiries."
+  },
+  "crm-integration": {
+    "title": "Marketing CRM Integration Services in Bangalore | FyerX",
+    "description": "Connect website forms, campaigns and sales records. FyerX maps CRM fields, resolves duplicate leads and tracks enquiries through to opportunities."
+  },
+  "paid-search": {
+    "title": "Google Ads & PPC Management Agency in Bangalore | FyerX",
+    "description": "Reach buyers searching for your services. FyerX manages paid search keywords, negative terms, ad copy and landing pages against qualified enquiry data."
+  },
+  "paid-social": {
+    "title": "Paid Social Advertising Agency in Bangalore | FyerX",
+    "description": "Run paid social campaigns with a clear test plan. FyerX compares audiences, creative and offers using qualified enquiries to guide budget decisions."
+  },
+  "landing-page-optimisation": {
+    "title": "Landing Page Optimisation Services in Bangalore | FyerX",
+    "description": "Find where visitors drop out of your campaign landing page. FyerX tests messaging, form fields and calls to action against completion rates and lead quality."
+  },
+  "analytics-roi-tracking": {
+    "title": "Marketing Analytics & ROI Tracking Services in Bangalore | FyerX",
+    "description": "Trace ad spend through to sales outcomes. FyerX connects conversion events, channel costs and CRM records so your team can compare marketing returns."
+  },
+  "brand-strategy-identity": {
+    "title": "Brand Strategy & Visual Identity Agency in Bangalore | FyerX",
+    "description": "Give your brand a clear position and a consistent visual identity. FyerX develops messaging, design direction and guidelines for sales and marketing teams."
+  },
+  "website-ux-design": {
+    "title": "Website Design & UI/UX Agency in Bangalore | FyerX",
+    "description": "Design a website around the tasks buyers come to complete. FyerX maps navigation, prototypes key journeys and prepares responsive designs for development."
+  },
+  "social-media-management": {
+    "title": "Social Media Management Agency in Bangalore | FyerX",
+    "description": "Keep social publishing tied to audience needs. FyerX plans channel calendars, creates posts, manages community responses and reviews performance."
+  },
+  "content-strategy-production": {
+    "title": "Content Marketing & Production Agency in Bangalore | FyerX",
+    "description": "Build content around the questions buyers ask before they enquire. FyerX handles research, briefs, writing, expert review and distribution planning."
+  },
+  "video-production": {
+    "title": "Corporate & Marketing Video Production Agency in Bangalore | FyerX",
+    "description": "Turn a campaign brief into a finished brand video. FyerX plans the script, shoot, edit and channel-specific cuts for your launch or sales campaign."
+  }
+}
