@@ -3,13 +3,7 @@
 import React from "react";
 import { PublicImage as Image } from "@/components/ui/PublicImage";
 import Link from "next/link";
-import { Inter } from "next/font/google";
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-});
+import { inter } from "@/app/fonts";
 
 const css = `
 .gro-section{background:#fff;width:100%;overflow:hidden;}

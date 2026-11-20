@@ -62,6 +62,7 @@ const servicesCategories = MARKETING_MENU_CATEGORIES;
 const simpleLinks = [
   { label: "Our Work", href: "/marketing/case-studies" },
   { label: "Careers", href: "https://fyerx.zohorecruit.in/jobs/Careers", external: true },
+  { label: "Blog", href: "/blog" },
 ];
 
 const MARKETING_CRIMSON = "#730031";

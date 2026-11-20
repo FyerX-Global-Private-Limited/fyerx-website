@@ -1,12 +1,6 @@
 import React from "react";
-import { Poppins } from "next/font/google";
+import { poppins } from "@/app/fonts";
 import { PublicImage } from "@/components/ui/PublicImage";
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-});
 
 const css = `
 .ldr-section{background:#fff;width:100%;overflow:hidden;}

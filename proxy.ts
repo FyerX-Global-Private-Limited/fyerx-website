@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { getInsightTopic } from "@/data/blog-topics";
+import { editorialMode } from "@/lib/editorial/config";
 import { wordpressLegacyAction } from "@/lib/wordpress-legacy";
 
 function gone() {
@@ -34,7 +36,12 @@ export function proxy(request: NextRequest) {
       changed = true;
     }
 
-    const legacy = wordpressLegacyAction(pathname);
+    const mode = editorialMode();
+    const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
+    const isEditorial = pathname === "/editorial" || pathname.startsWith("/editorial/");
+    const isDesignPreview = process.env.NODE_ENV === "development" &&
+      (pathname === "/blog" || (isBlog && getInsightTopic(pathname.slice(6))));
+    const legacy = isBlog && (mode || isDesignPreview) ? null : wordpressLegacyAction(pathname);
     if (legacy?.type === "gone") {
       return gone();
     }
@@ -49,7 +56,20 @@ export function proxy(request: NextRequest) {
       return NextResponse.redirect(url, 301);
     }
 
-    return NextResponse.next();
+    const response = NextResponse.next();
+    if (isEditorial || (isBlog && mode !== "live")) {
+      response.headers.set("X-Robots-Tag", "noindex, nofollow");
+    }
+    if (isEditorial || (isBlog && mode === "isolated")) {
+      response.headers.set("Cache-Control", "private, no-store");
+      response.headers.set("CDN-Cache-Control", "no-store");
+    }
+    if (isEditorial) {
+      response.headers.set("Referrer-Policy", "no-referrer");
+      const devEval = process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : "";
+      response.headers.set("Content-Security-Policy", `default-src 'self'; script-src 'self' 'unsafe-inline'${devEval}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'`);
+    }
+    return response;
   } catch {
     return NextResponse.next();
   }

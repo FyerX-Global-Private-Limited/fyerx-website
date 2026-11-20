@@ -72,5 +72,5 @@ all of them. As of this build, that includes:
 The homepage uses a strict, fixed blue palette defined once in
 `app/globals.css` (`--color-deep-blue`, `--color-mid-blue`, `--color-pale-blue`,
 `--color-slate`), exposed as Tailwind utilities (`bg-deep-blue`, `text-mid-blue`,
-etc.). Typography defaults to Calibri, falling back to Inter (loaded via
-`next/font/google`) via the `font-calibri` utility class.
+etc.). Typography defaults to Calibri, falling back to Inter (bundled via
+`next/font/local`) via the `font-calibri` utility class.

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "rea
 import { useRouter } from "next/navigation";
 import type { CountryCode } from "libphonenumber-js";
 import { DEFAULT_PHONE_COUNTRY, PhoneInput } from "@/components/ui/PhoneInput";
-import { validateEmail, validatePhone } from "@/lib/form-validation";
+import { validateEmail, validatePhone, validateWorkEmail } from "@/lib/form-validation";
 import { readFormString } from "@/lib/submit-lead";
 import { useSubmitLead } from "@/lib/use-submit-lead";
 import { RecaptchaLegalNote } from "@/components/RecaptchaLegalNote";
@@ -440,7 +440,7 @@ export function ContactEnquiryForm({
     const form = e.currentTarget;
     const expectedStart = (form.elements.namedItem("expectedStart") as HTMLSelectElement).value;
     const choiceOptions = config.teamOptions ?? config.helpOptions;
-    const nextEmailError = validateEmail(email);
+    const nextEmailError = formKey === "job" ? validateEmail(email) : validateWorkEmail(email);
     const nextPhoneError = validatePhone(phone, phoneCountry);
     const nextExpectedStartError = !expectedStart;
 
@@ -489,6 +489,10 @@ export function ContactEnquiryForm({
     setSubmitting(false);
 
     if (!result.ok) {
+      if (result.field === "email") {
+        setEmailError(result.error);
+        return;
+      }
       setSubmitError(result.error);
       return;
     }

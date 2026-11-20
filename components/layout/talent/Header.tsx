@@ -103,6 +103,7 @@ const talentCategories = TALENT_MENU_CATEGORIES;
 const simpleLinks = [
   { label: "Case Studies", href: "/talent/case-studies" },
   { label: "Careers", href: "https://fyerx.zohorecruit.in/jobs/Careers", external: true },
+  { label: "Blog", href: "/blog" },
 ];
 
 const TALENT_MENU_HOVER = TALENT_PRIMARY;

@@ -1,6 +1,6 @@
 export type SubmitLeadResult =
   | { ok: true; id: number }
-  | { ok: false; error: string; details?: unknown };
+  | { ok: false; error: string; details?: unknown; field?: string };
 
 /** Same-origin path for the leads handler (public /leads rewrite also maps here). */
 const LEADS_ENDPOINT = "/api/leads";
@@ -23,13 +23,15 @@ export async function submitLead(payload: Record<string, unknown>): Promise<Subm
     if (!response.ok || !data?.ok || typeof data.id !== "number") {
       const details = data?.details;
       let error = data?.error || "Unable to submit your enquiry. Please try again.";
+      let field: string | undefined;
       if (Array.isArray(details) && details.length > 0) {
         const first = details[0] as { field?: string; message?: string };
         if (first?.message) error = first.message;
+        field = first?.field;
       } else if (typeof details === "string" && details.trim()) {
         error = details;
       }
-      return { ok: false, error, details };
+      return { ok: false, error, details, field };
     }
 
     return { ok: true, id: data.id };
