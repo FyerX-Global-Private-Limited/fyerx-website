@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import type { CountryCode } from "libphonenumber-js";
 import { PrimaryCtaButton } from "@/components/ui/PrimaryCta";
 import { DEFAULT_PHONE_COUNTRY, PhoneInput } from "@/components/ui/PhoneInput";
-import { validateEmail, validatePhone } from "@/lib/form-validation";
+import { validatePhone, validateWorkEmail } from "@/lib/form-validation";
 import { readFormString } from "@/lib/submit-lead";
 import { useSubmitLead } from "@/lib/use-submit-lead";
 import { TRUSTBAR_LOGOS } from "@/lib/trustbar-logos";
@@ -62,7 +62,7 @@ export default function TestimonialsCTA() {
     if (submitting) return;
 
     const form = e.currentTarget;
-    const nextEmailError = validateEmail(email);
+    const nextEmailError = validateWorkEmail(email);
     const nextPhoneError = validatePhone(phone, phoneCountry);
     setEmailError(nextEmailError);
     setPhoneError(nextPhoneError);
@@ -91,6 +91,10 @@ export default function TestimonialsCTA() {
     setSubmitting(false);
 
     if (!result.ok) {
+      if (result.field === "email") {
+        setEmailError(result.error);
+        return;
+      }
       setSubmitError(result.error);
       return;
     }

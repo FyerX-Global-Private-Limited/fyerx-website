@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 import sharp from "sharp";
-import { currentUser, sessionCookie, sessionSeconds, signIn, signOut } from "@/lib/editorial/auth";
+import { createTeamMember, currentUser, sessionCookie, sessionSeconds, signIn, signOut } from "@/lib/editorial/auth";
 import { editorialMode, editorialOrigin } from "@/lib/editorial/config";
 import { mediaId, mediaPrefix, validateDraft } from "@/lib/editorial/document";
 import { changePost, createPost, db, WorkflowError } from "@/lib/editorial/store";
@@ -63,7 +63,7 @@ export async function POST(request: Request, { params }: Props) {
   try {
     if (resource === "login" && parts.length === 1) {
       const { username, password } = JSON.parse((await readBody(request, 4096)).toString());
-      if (typeof username !== "string" || username.length > 80 || typeof password !== "string" || password.length > 256) {
+      if (typeof username !== "string" || username.length > 254 || typeof password !== "string" || password.length > 256) {
         return error("Invalid credentials", 401);
       }
       const result = await signIn(username, password);
@@ -77,6 +77,11 @@ export async function POST(request: Request, { params }: Props) {
     }
     const user = await currentUser();
     if (!user) return error("Sign in to continue", 401);
+    if (resource === "team" && parts.length === 1) {
+      if (user.role !== "owner") return error("Only the owner can add team members.", 403);
+      const data = JSON.parse((await readBody(request, 4096)).toString());
+      return json({ member: await createTeamMember(data?.email, data?.password) }, 201);
+    }
     if (resource === "logout" && parts.length === 1) {
       await signOut();
       const response = json({ ok: true });

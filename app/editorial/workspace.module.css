@@ -40,6 +40,14 @@
 .login form { display: grid; gap: 15px; margin-top: 23px; }
 .login form button { justify-self: start; }
 .error { margin: 8px 0; padding: 10px 12px; background: #fff0ef; color: #8c1f15; border-radius: 7px; overflow-wrap: anywhere; }
+.teamGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 18px; align-items: start; }
+.teamPanel { padding: 22px; background: #fff; border: 1px solid var(--line); border-radius: 14px; }
+.teamPanel h2 { font-weight: 650; margin-bottom: 14px; }
+.teamPanel form { display: grid; gap: 14px; }
+.teamPanel form button { justify-self: start; }
+.teamPanel > [role="status"] { margin-top: 12px; overflow-wrap: anywhere; }
+.teamList li { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px 14px; padding: 11px 0; border-top: 1px solid var(--line); font-size: .83rem; overflow-wrap: anywhere; }
+.teamList time { color: var(--muted); font-size: .76rem; }
 
 .editorTabs { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
 .editorTabs button { border-radius: 7px; padding: 8px 11px; min-height: 37px; font-size: .82rem; font-weight: 550; color: var(--muted); }

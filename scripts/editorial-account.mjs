@@ -1,8 +1,8 @@
 import { randomBytes, scryptSync } from "node:crypto";
 
 const [username, role] = process.argv.slice(2);
-if (!/^[a-z0-9][a-z0-9._-]{2,79}$/i.test(username ?? "") || !["owner", "publisher", "editor"].includes(role) || process.stdin.isTTY) {
-  console.error("Usage: pipe a password into node scripts/editorial-account.mjs <username> <owner|publisher|editor>");
+if (!/^[a-z0-9][a-z0-9._-]{2,79}(?:@[a-z0-9-]+(?:\.[a-z0-9-]+)+)?$/i.test(username ?? "") || username.length > 254 || !["owner", "editor"].includes(role) || process.stdin.isTTY) {
+  console.error("Usage: pipe a password into node scripts/editorial-account.mjs <email-or-username> <owner|editor>");
   process.exit(1);
 }
 

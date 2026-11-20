@@ -21,7 +21,7 @@ export default async function EditorialLayout({ children }: { children: React.Re
       <header className={styles.topBar}>
         <Link href="/editorial" className={styles.logo}><span>FX</span> FyerX Blogs</Link>
         {user && <nav aria-label="Workspace" className={styles.topNav}>
-          <DashboardNav />
+          <DashboardNav canManageTeam={user.role === "owner"} />
           <span className={styles.role}>{user.username} · {user.role}</span>
           <SignOut />
         </nav>}

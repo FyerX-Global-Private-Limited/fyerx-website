@@ -1,7 +1,19 @@
 import type { ResultSetHeader } from "mysql2";
 import type { CountryCode } from "libphonenumber-js";
-import { validateEmail, validatePhone } from "@/lib/form-validation";
+import { emailDomain, validateEmail, validatePhone, validateWorkEmail, WORK_EMAIL_ERROR } from "@/lib/form-validation";
 import { getPool } from "@/lib/db";
+import disposableEmailDomains from "@/data/disposable-email-domains.json";
+
+const disposableDomains = new Set(disposableEmailDomains);
+
+function isDisposableEmail(email: string) {
+  let domain = emailDomain(email);
+  while (domain.includes(".")) {
+    if (disposableDomains.has(domain)) return true;
+    domain = domain.slice(domain.indexOf(".") + 1);
+  }
+  return false;
+}
 
 export const FORM_TYPES = ["contact", "job", "talent", "marketing", "technology"] as const;
 export type LeadFormType = (typeof FORM_TYPES)[number];
@@ -111,7 +123,9 @@ export function parseLeadPayload(input: unknown): { data?: LeadPayload; errors: 
   if (!email) {
     errors.push({ field: "email", message: "email is required." });
   } else {
-    const emailError = validateEmail(email);
+    const emailError = formType === "job"
+      ? validateEmail(email)
+      : validateWorkEmail(email) ?? (isDisposableEmail(email) ? WORK_EMAIL_ERROR : null);
     if (emailError) errors.push({ field: "email", message: emailError });
   }
 

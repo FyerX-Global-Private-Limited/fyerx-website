@@ -9,15 +9,15 @@ Set these server-side variables and start Next.js in development mode bound to t
 - `BLOG_MODE=isolated`
 - `BLOG_ORIGIN=http://127.0.0.1:3000`
 - `BLOG_DB_PATH` set to an absolute SQLite path in a private directory outside the checkout and `public/`
-- `BLOG_ACCOUNTS` set to a JSON array of account objects. Pipe a strong password into `node scripts/editorial-account.mjs <username> <owner|publisher|editor>` to generate an object for each account. Keep password plaintext out of the repository, command history and logs. Use separate owner, publisher, and editor accounts to exercise permissions.
+- `BLOG_ACCOUNTS` set to a JSON array of account objects. Pipe a strong password into `node scripts/editorial-account.mjs <email-or-username> <owner|editor>` to generate an object for each initial account. Keep plaintext passwords out of the repository, command history and logs.
 
 Open `/editorial` to sign in. The isolated database seeds the two existing sample articles as drafts. Use a separate test post to exercise publication. In isolated mode, publication only affects the local reader and sitemap. The blog sends an additional noindex header in this mode.
 
-Editors may create and save drafts, view private previews, and submit revisions for review. Owners explicitly approve a saved revision and can publish or unpublish it. A trusted team member with the publisher role can publish an approved revision. Saving a changed draft clears its approval. The reader holds the last published snapshot until the owner publishes another one or unpublishes it. Old published slugs redirect to the current slug while the post is live. Previously redirected slugs remain reserved.
+Contributors may create and save drafts, view private previews, and submit revisions for review. The owner approves saved revisions, publishes them, unpublishes them, and adds contributors under Team. Contributor passwords are hashed in the editorial database. Legacy publisher accounts sign in as contributors. Saving a changed draft clears its approval. The reader holds the last published snapshot until the owner publishes another one or unpublishes it. Old published slugs redirect to the current slug while the post is live. Previously redirected slugs remain reserved.
 
 ## Launch requirements
 
-Keep the feature disabled until launch is authorised. For a future launch, set `BLOG_MODE=live` only in the production process, configure the final HTTPS `BLOG_ORIGIN`, provision real accounts through your secret configuration, and start with a fresh persistent database. Use role assignments and password storage approved by the site owner. Backups contain unpublished material and require restricted access. Confirm HTTPS, proxy cache behaviour, authenticated previews, and SEO output on the chosen runtime before enabling public access.
+Keep the feature disabled until launch is authorised. Set `BLOG_MODE=live` only in the production process, set `BLOG_ORIGIN=https://fyerx.com`, and start with a fresh persistent database. Set `BLOG_OWNER_EMAIL` to the primary owner's work email in the hosting environment. Bootstrap that same email as the owner in the private `BLOG_ACCOUNTS` environment variable using the account script. Only the configured owner email can assume the owner role on the FyerX production domain. The owner can then add contributors under `/editorial/team`. Backups contain unpublished material and require restricted access. Confirm HTTPS, proxy cache behaviour, authenticated previews, and SEO output on the chosen runtime before enabling public access.
 
 ## Article traffic
 

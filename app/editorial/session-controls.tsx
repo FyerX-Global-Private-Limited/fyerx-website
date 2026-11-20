@@ -41,7 +41,7 @@ export function Login() {
     <h1>Sign in to FyerX Blogs</h1>
     <p>Manage drafts, reviews and published posts.</p>
     <form onSubmit={submit}>
-      <label>Username<input name="username" autoComplete="username" required maxLength={80} /></label>
+      <label>Email or username<input name="username" autoComplete="username" required maxLength={254} /></label>
       <label>Password<input name="password" type="password" autoComplete="current-password" required maxLength={256} /></label>
       <button type="submit" className={styles.primary} disabled={busy}>{busy ? "Signing in…" : "Sign in"}</button>
       {error && <p role="alert" className={styles.error}>{error}</p>}

@@ -6,7 +6,7 @@ import { insights } from "@/data/insights";
 import { blankDraft, mediaSources, publishIssues, type Draft, type Node } from "./document";
 import { editorialMode, editorialOrigin } from "./config";
 
-export type Role = "owner" | "publisher" | "editor";
+export type Role = "owner" | "editor";
 export type Workflow = "draft" | "review" | "approved";
 export type Post = { id: string; draft: Draft; revision: number; version: number; stage: Workflow; approved: number | null; liveSlug: string | null; liveRevision: number | null; updated: string };
 type Row = Omit<Post, "draft"> & { draft: string };
@@ -49,6 +49,9 @@ export function db() {
     );
     CREATE INDEX IF NOT EXISTS article_views_day ON article_daily_views(day);
     CREATE TABLE IF NOT EXISTS sessions (token TEXT PRIMARY KEY, username TEXT NOT NULL, expires INTEGER NOT NULL);
+    CREATE TABLE IF NOT EXISTS editorial_users (
+      email TEXT PRIMARY KEY, salt TEXT NOT NULL, hash TEXT NOT NULL, created TEXT NOT NULL
+    );
     CREATE TABLE IF NOT EXISTS login_attempts (at INTEGER NOT NULL);
   `);
   database = connection;
@@ -129,7 +132,7 @@ export function changePost(id: string, version: number, action: string, role: Ro
       return post(id)!;
     }
     if (["approve", "unpublish"].includes(action) && role !== "owner") throw new WorkflowError("Only the owner can perform this action", 403);
-    if (action === "publish" && role === "editor") throw new WorkflowError("Only the owner or a publisher can publish posts", 403);
+    if (action === "publish" && role !== "owner") throw new WorkflowError("Only the owner can publish posts", 403);
     if (action === "submit" && row.stage === "draft") {
       const issues = publishIssues(row.draft);
       if (issues.length) throw new WorkflowError(issues.join(" "), 400);

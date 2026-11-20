@@ -83,14 +83,14 @@ export function PostEditor({ initial, role, origin }: { initial: Post; role: Rol
           : "This post is private until an owner publishes an approved revision."}</p>
         {dirty && <p>Save your changes before previewing or moving this revision forward.</p>}
         {!dirty && saved.stage === "review" && role !== "owner" && <p>Waiting for owner approval.</p>}
-        {!dirty && saved.stage === "approved" && role === "editor" && !liveCurrent && <p>Waiting for a publisher.</p>}
+        {!dirty && saved.stage === "approved" && role === "editor" && !liveCurrent && <p>Waiting for the owner to publish.</p>}
         {!dirty && saved.stage === "draft" && issues.length > 0 && <ul>{issues.map((issue) => <li key={issue}>{issue}</li>)}</ul>}
       </div>
       <div className={styles.lineActions}>
         {saved.liveSlug && <Link className={styles.secondary} href={"/blog/" + saved.liveSlug}>View live <ExternalLink size={15} /></Link>}
         {saved.stage === "draft" && <button type="button" className={styles.secondary} disabled={dirty || !!busy || !!issues.length} onClick={() => doAction("submit", "Sent for owner review.")}>Send for review</button>}
         {role === "owner" && saved.stage === "review" && <button type="button" className={styles.primary} disabled={dirty || !!busy} onClick={() => doAction("approve", `Revision ${saved.revision} approved.`)}>Approve revision {saved.revision}</button>}
-        {role !== "editor" && saved.stage === "approved" && !liveCurrent && <button type="button" className={styles.primary} disabled={dirty || !!busy} onClick={() => doAction("publish", `Revision ${saved.revision} published.`)}>Publish revision {saved.revision}</button>}
+        {role === "owner" && saved.stage === "approved" && !liveCurrent && <button type="button" className={styles.primary} disabled={dirty || !!busy} onClick={() => doAction("publish", `Revision ${saved.revision} published.`)}>Publish revision {saved.revision}</button>}
         {role === "owner" && saved.liveSlug && <button type="button" className={styles.secondary} disabled={dirty || !!busy} onClick={() => {
           if (window.confirm("Remove this article from the blog?")) void doAction("unpublish", "Post unpublished.");
         }}>Unpublish</button>}
