@@ -22,7 +22,7 @@ export const TECHNOLOGY_SERVICE_TABS: TechServiceTab[] = [
       "Support for enterprise service, CRM, ERP and automation platforms that connect people, processes and data across the organisation.",
     groups: [
       {
-        label: "SERVICE & WORKFLOW PLATFORMS",
+        label: "ServiceNow",
         tags: [
           "ServiceNow",
           "ITSM",
@@ -36,24 +36,34 @@ export const TECHNOLOGY_SERVICE_TABS: TechServiceTab[] = [
         ],
       },
       {
-        label: "ERP & BUSINESS PLATFORMS",
+        label: "SAP",
         tags: [
           "SAP S/4HANA",
           "SuccessFactors",
           "Fiori",
           "ABAP",
           "BTP",
+        ],
+      },
+      {
+        label: "Oracle Fusion",
+        tags: [
           "Oracle Fusion",
           "ERP",
           "HCM",
         ],
       },
       {
-        label: "CRM & PRODUCTIVITY PLATFORMS",
+        label: "Salesforce",
         tags: [
           "Salesforce Sales Cloud",
           "Service Cloud",
           "Experience Cloud",
+        ],
+      },
+      {
+        label: "Microsoft Business Applications",
+        tags: [
           "Dynamics 365",
           "Power Platform",
           "SharePoint",
@@ -61,7 +71,7 @@ export const TECHNOLOGY_SERVICE_TABS: TechServiceTab[] = [
         ],
       },
       {
-        label: "AUTOMATION & INTEGRATION",
+        label: "Enterprise Automation & Integration",
         tags: [
           "MuleSoft",
           "APIs",
@@ -73,7 +83,7 @@ export const TECHNOLOGY_SERVICE_TABS: TechServiceTab[] = [
       },
     ],
     cta: "Explore Enterprise Platforms",
-    ctaHref: "/contact?form=technology",
+    ctaHref: "#services-enterprise-platforms",
   },
   {
     id: "digital-transformation",
@@ -110,7 +120,7 @@ export const TECHNOLOGY_SERVICE_TABS: TechServiceTab[] = [
       },
     ],
     cta: "Explore Digital Transformation",
-    ctaHref: "/contact?form=technology",
+    ctaHref: "#services-digital-transformation",
   },
   {
     id: "data-ai",
@@ -162,7 +172,7 @@ export const TECHNOLOGY_SERVICE_TABS: TechServiceTab[] = [
       },
     ],
     cta: "Explore Data & AI",
-    ctaHref: "/contact?form=technology",
+    ctaHref: "#services-data-ai",
   },
   {
     id: "cloud-devops",
@@ -217,7 +227,7 @@ export const TECHNOLOGY_SERVICE_TABS: TechServiceTab[] = [
       },
     ],
     cta: "Explore Cloud & DevOps",
-    ctaHref: "/contact?form=technology",
+    ctaHref: "#services-cloud-devops",
   },
   {
     id: "strategic-advisory",
