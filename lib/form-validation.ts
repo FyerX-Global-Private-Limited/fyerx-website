@@ -9,7 +9,7 @@ const PERSONAL_EMAIL_DOMAINS = new Set([
   "mail.com", "yandex.com", "yandex.ru", "qq.com", "163.com", "rediffmail.com", "tuta.com", "tutanota.com",
 ]);
 const REGIONAL_PERSONAL_EMAIL = /^(?:yahoo|hotmail|outlook|live)\.(?:[a-z]{2}|(?:co|com)\.[a-z]{2})$/;
-export const WORK_EMAIL_ERROR = "Please use your company email address. Personal and temporary email addresses are not accepted for business enquiries.";
+export const WORK_EMAIL_ERROR = "Please use your company email address.";
 
 export function emailDomain(email: string) {
   const trimmed = email.trim();
