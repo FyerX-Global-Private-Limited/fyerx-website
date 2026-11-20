@@ -1,0 +1,398 @@
+{
+  "sap": {
+    "title": "A goods receipt arrives after month end",
+    "input": "Purchasing has the purchase order and the warehouse has recorded delivery, but accounts payable cannot match the invoice.",
+    "decision": "Walk the receipt, invoice and posting dates through a test company code with a finance owner. Check tolerance rules and who can release an exception.",
+    "output": "An agreed three-way match test pack and a named owner for blocked invoices."
+  },
+  "oracle-fusion": {
+    "title": "A new business unit needs its first close",
+    "input": "The entity shares suppliers with its parent but uses a different approval chain and reporting currency.",
+    "decision": "Map the ledger, business unit, procurement roles and reporting requirements before loading opening balances.",
+    "output": "A reconciled trial balance, tested supplier invoice and signed-off close checklist."
+  },
+  "salesforce": {
+    "title": "Pipeline reports count the same deal twice",
+    "input": "An inbound demo creates a lead even though the account owner already has an open opportunity.",
+    "decision": "Review matching rules, lead conversion and account assignment using a small set of known duplicate records.",
+    "output": "A repeatable conversion path that preserves campaign history and routes the deal to one owner."
+  },
+  "microsoft-business-applications": {
+    "title": "An accepted quote never reaches finance",
+    "input": "Sales maintains the quote in Dynamics while finance rekeys it into the order system.",
+    "decision": "Agree the customer identifier, tax fields and point at which an accepted quote can be amended. Test a rejected order as well as an accepted one.",
+    "output": "A traceable quote-to-order flow with a queue for finance exceptions."
+  },
+  "enterprise-automation-integration": {
+    "title": "A supplier update reaches only one system",
+    "input": "A master-data change succeeds in procurement and times out while updating the ERP.",
+    "decision": "Use the supplier ID to check the destination before retrying. Decide which application owns payment terms and who resolves conflicting values.",
+    "output": "A reconciled supplier record and an exception that operations can replay safely."
+  },
+  "application-modernisation": {
+    "title": "Replace one part of an order monolith",
+    "input": "Checkout and billing share a release cycle. A small billing fix currently needs a full storefront release.",
+    "decision": "Trace the dependencies around invoice generation, define the interface and compare both paths against the same completed orders.",
+    "output": "A separately deployable billing component with reconciliation and a documented rollback."
+  },
+  "connected-experiences": {
+    "title": "A customer starts online and finishes on the phone",
+    "input": "The contact centre cannot see the information already captured during an abandoned online application.",
+    "decision": "Agree which fields can follow a signed-in customer, how consent is recorded and when an agent should resume a saved application.",
+    "output": "A cross-channel journey test that covers resume, expiry and a change of contact details."
+  },
+  "process-automation": {
+    "title": "Resolve a purchase exception",
+    "input": "Buyers spend time chasing the same approval when a purchase exceeds the receiving team's threshold.",
+    "decision": "Capture the thresholds and delegation rules. Test a split order and an absent approver before turning on reminders.",
+    "output": "An approval queue with dates, delegates and a documented exception route."
+  },
+  "delivery-foundations": {
+    "title": "Make a release reproducible",
+    "input": "A fix passes on the developer's laptop but fails in test because the environment uses different settings.",
+    "decision": "Write down environment dependencies, build once and promote the same artefact. Rehearse rollback on the test environment.",
+    "output": "A repeatable release checklist and an artefact the support team can identify."
+  },
+  "data-engineering-platforms": {
+    "title": "A dashboard loses late-arriving transactions",
+    "input": "The sales feed closes at midnight while returns arrive the next morning against earlier order dates.",
+    "decision": "Choose a change marker and replay window. Reprocess one day twice and check that orders and returns still reconcile.",
+    "output": "A documented ingestion contract and a reconciliation report for the data owner."
+  },
+  "analytics-reporting": {
+    "title": "Two reports disagree on net revenue",
+    "input": "Finance recognises credits on posting date. Sales subtracts them on the customer's original order date.",
+    "decision": "Calculate both definitions against the same invoice sample. Agree which definition belongs in each decision and label the time basis explicitly.",
+    "output": "A governed metric definition with drill-through to the underlying transactions."
+  },
+  "ai-enablement": {
+    "title": "Pilot an internal policy assistant",
+    "input": "HR wants faster answers but policies differ by location and some pages are obsolete.",
+    "decision": "Curate current documents, define access boundaries and test questions that should trigger a referral to HR.",
+    "output": "A reviewed answer set, documented failure modes and a decision on the pilot's next release."
+  },
+  "mlops": {
+    "title": "A forecasting model changes its input distribution",
+    "input": "A forecasting pipeline still runs after a product hierarchy change, but the mix of categories has shifted.",
+    "decision": "Check feature distributions and back-test the candidate model by category. Agree the rollback trigger with the forecast owner.",
+    "output": "A versioned model release with monitoring and a known-good fallback."
+  },
+  "cloud-transformation": {
+    "title": "Move the service behind an overnight batch",
+    "input": "An application looks independent until the team discovers a scheduled on-premise file transfer.",
+    "decision": "Map that dependency, choose the migration wave and rehearse a cutover that includes the overnight job.",
+    "output": "A tested move sequence and business-owner reconciliation after the batch finishes."
+  },
+  "devops-ci-cd": {
+    "title": "Ship the same build through every environment",
+    "input": "Production is rebuilt from source after QA signs off, so the artefact under test can differ from the one released.",
+    "decision": "Build and identify the artefact once, promote it through the pipeline and test rollback with the release owner.",
+    "output": "A pipeline run that links a production release back to its build and test evidence."
+  },
+  "platform-engineering": {
+    "title": "Give a new team its first service environment",
+    "input": "A product team needs a repository, runtime, telemetry and access before it can deploy its first endpoint.",
+    "decision": "Identify the common defaults, expose the choices teams actually need and test the path with a team using it for the first time.",
+    "output": "A documented self-service starter with operating ownership and an upgrade path."
+  },
+  "reliability-cost": {
+    "title": "Investigate a costly overnight workload",
+    "input": "Compute spend rises after a batch change while the customer-facing service target stays flat.",
+    "decision": "Separate baseline capacity from the job's peak usage. Test scheduling or sizing against completion time and recovery requirements.",
+    "output": "A cost decision linked to the service target and a dashboard for recurrence."
+  },
+  "strategy-roadmap": {
+    "title": "Sequence three competing platform investments",
+    "input": "A CRM replacement, data clean-up and portal launch all need the same integration team.",
+    "decision": "Map shared dependencies and identify the business decision each investment enables. Compare the cost of delaying each release.",
+    "output": "A phased roadmap with decision owners and dependencies visible to sponsors."
+  },
+  "architecture-leadership": {
+    "title": "Agree who owns the customer record",
+    "input": "Product teams propose different sources of truth and both already publish customer updates.",
+    "decision": "Trace one update from creation to downstream consumption. Record who can overwrite each field and what happens during a conflict.",
+    "output": "An architecture decision record with a migration path and review date."
+  },
+  "vendor-platform-decisions": {
+    "title": "Compare two platforms on a difficult return",
+    "input": "Both vendors demonstrate order creation well. Your team also needs partial returns across two warehouses.",
+    "decision": "Give both vendors the same sample data and acceptance criteria. Record implementation dependencies, licence assumptions and support obligations.",
+    "output": "A scored comparison whose exceptions are visible alongside the commercial terms."
+  },
+  "transformation-planning": {
+    "title": "Plan a rollout around a trading peak",
+    "input": "The new process touches stores, support and finance shortly before the busiest month.",
+    "decision": "Group sites by readiness, test one representative wave and agree stop conditions with operations.",
+    "output": "A wave plan with training owners, support coverage and a decision point before each cutover."
+  },
+  "it-contract-staffing": {
+    "title": "Cover a cloud engineer's release assignment",
+    "input": "The requirement names Azure and Terraform, an overlap window and an end date tied to a release.",
+    "decision": "Separate the work the contractor must own from tools they only need to recognise. Confirm availability, shift and rate before submission.",
+    "output": "A shortlist with relevant project evidence and confirmed commercial and joining details."
+  },
+  "project-based-staffing": {
+    "title": "Ramp a testing team ahead of UAT",
+    "input": "The release plan needs test design first, execution next and defect triage during cutover.",
+    "decision": "Map each role to its entry and exit milestone. Check whether the lead must remain through handover after execution finishes.",
+    "output": "A role-by-phase staffing plan that shows start dates and dependencies."
+  },
+  "high-volume-staffing": {
+    "title": "Staff two shifts at a new delivery centre",
+    "input": "A single headline target hides different location, language and shift requirements.",
+    "decision": "Break demand into shift-level cohorts, reserve interview capacity and track confirmed starts separately from offered candidates.",
+    "output": "A cohort tracker showing exactly which shift still has uncovered seats."
+  },
+  "us-contract-staffing": {
+    "title": "Define a US team's remote delivery requirement",
+    "input": "A US manager requests a contractor but has not specified where the work will be performed.",
+    "decision": "Confirm work location, time-zone overlap, engagement entity and onboarding requirements with authorised stakeholders before sourcing.",
+    "output": "A location-specific brief that candidates and the client can evaluate on the same terms."
+  },
+  "end-to-end-rpo": {
+    "title": "Take ownership from intake to joining",
+    "input": "A business unit wants one recruiting partner to run requisitions across several hiring managers.",
+    "decision": "Agree who can open a requisition, who approves changes and how long feedback stays with each interviewer.",
+    "output": "A recruiting operating model covering intake, submission, interviews, offers and joining."
+  },
+  "on-demand-rpo": {
+    "title": "Clear a short-term sourcing backlog",
+    "input": "The internal team can interview candidates but lacks capacity to start searches for a new product launch.",
+    "decision": "Set a time-box, assign named requisitions and document which activities return to the internal team when demand falls.",
+    "output": "A short-term recruiter allocation with an explicit handback date and live pipeline."
+  },
+  "enterprise-rpo": {
+    "title": "Unify reporting across business units",
+    "input": "Three units count submissions, interviews and holds differently, making the monthly review unreliable.",
+    "decision": "Define stage entry and exit, agree what pauses a requisition and keep local approval exceptions visible.",
+    "output": "One reporting dictionary with unit-level views and escalation ownership."
+  },
+  "permanent-hiring": {
+    "title": "Hire a finance systems analyst",
+    "input": "An attractive CV shows implementation exposure, but the role owns month-end production support.",
+    "decision": "Agree the first six months of work and screen for a real close-cycle incident. Align notice period and compensation before interviews.",
+    "output": "A shortlist scored against the actual responsibilities and a clear offer pathway."
+  },
+  "executive-search": {
+    "title": "Appoint a delivery leader for a new practice",
+    "input": "The CEO wants growth and the COO wants operating discipline, so candidates receive different briefs.",
+    "decision": "Resolve the first-year mandate, reporting line and decision rights before mapping the market. Agree who can see confidential candidate details.",
+    "output": "A calibrated target profile and shortlist with evidence against the agreed mandate."
+  },
+  "software-development-roles": {
+    "title": "Recruit an engineer to own an API",
+    "input": "A job description asks for Java, React and cloud experience but the first release is a backend integration.",
+    "decision": "Ask the hiring manager which interface the engineer must own. Screen for implementation decisions and production debugging on comparable work.",
+    "output": "A shortlist distinguishing hands-on backend ownership from adjacent exposure."
+  },
+  "servicenow-enterprise-platform-talent": {
+    "title": "Separate a platform architect from a developer",
+    "input": "The requirement lists ITSM, ITOM and integrations under one generic ServiceNow title.",
+    "decision": "Map design authority, configuration work and administration to the release milestone. Ask candidates which decisions and artefacts they personally owned.",
+    "output": "Role-specific evidence against each platform workstream before submission."
+  },
+  "data-ai-talent": {
+    "title": "Hire for a production data pipeline",
+    "input": "A candidate can train a model but the vacancy owns ingestion, validation and daily recovery.",
+    "decision": "Calibrate on the deliverable first. Screen for late data, failed runs and reconciliation with a named business owner.",
+    "output": "An evidence-based shortlist for engineering, analytics or modelling according to the actual gap."
+  },
+  "devops-cloud-talent": {
+    "title": "Find an engineer for a live on-call rotation",
+    "input": "The team needs deployment automation and incident ownership, with a fixed shift handover.",
+    "decision": "Verify the candidate's experience restoring service and maintaining infrastructure changes. Confirm rotation expectations before technical interviews.",
+    "output": "A clear comparison of operational responsibility, platform depth and availability."
+  },
+  "hiring-assessments": {
+    "title": "Calibrate a structured interview",
+    "input": "Two panels disagree on candidates because one weights syntax and the other weights debugging.",
+    "decision": "Choose a representative work sample, define acceptable evidence and have both panels score the same example independently.",
+    "output": "A role-specific rubric with recorded scoring differences and agreed follow-up questions."
+  },
+  "background-verification": {
+    "title": "Resolve an employment-date discrepancy",
+    "input": "One employer's confirmation shows a different end date from the candidate's application.",
+    "decision": "Check consent and agreed scope, invite clarification and route the discrepancy to the designated decision-maker with its evidence.",
+    "output": "A documented disposition and an audit trail of what was verified."
+  },
+  "compensation-benchmarking": {
+    "title": "Price a specialist role in a second city",
+    "input": "A national salary band combines individual contributors with team leads.",
+    "decision": "Match role scope, location, experience and fixed versus variable pay. Mark sparse comparison groups so outliers do not set the band.",
+    "output": "A comparable range with assumptions and decision notes for the hiring manager."
+  },
+  "remote-team-building": {
+    "title": "Set up a distributed delivery pod",
+    "input": "A product owner works in London while development and QA operate from India.",
+    "decision": "Agree overlap hours, handovers, equipment readiness and escalation coverage. Test the first sprint's dependencies before the team starts.",
+    "output": "A team charter with role ownership, communication windows and onboarding milestones."
+  },
+  "cross-border-compliance-support": {
+    "title": "Prepare a multi-country staffing handoff",
+    "input": "The client, worker and contracting entity are in different jurisdictions.",
+    "decision": "Collect the proposed arrangement and route classification, payroll and documentation questions to the client's authorised advisers before onboarding.",
+    "output": "A tracked list of documents, approvals and unresolved decisions by owner."
+  },
+  "go-to-market-strategy": {
+    "title": "Launch a managed cloud offer",
+    "input": "The practice can deliver the service, but sales is pitching the same deck to IT directors and finance leaders.",
+    "decision": "Choose an initial segment, buying trigger and entry offer. Test the pitch against the objections on recent discovery calls.",
+    "output": "A launch brief connecting the offer, evidence, audience and first sales conversation."
+  },
+  "icp-buyer-personas": {
+    "title": "Separate the sponsor from the evaluator",
+    "input": "Recent deals include IT managers who ran evaluations and CFOs who approved spend.",
+    "decision": "Review won and lost opportunities by role. Capture what each person needed to believe and which proof changed their decision.",
+    "output": "A buying-group map and segment criteria sales can use to qualify accounts."
+  },
+  "marketing-audits": {
+    "title": "Find where enquiries lose momentum",
+    "input": "Ads report conversions, yet sales receives very few enquiries it can act on.",
+    "decision": "Trace selected enquiries from click through form, routing and first response. Compare channel reports with CRM records.",
+    "output": "A prioritised audit distinguishing tracking errors, targeting issues and response delays."
+  },
+  "competitive-positioning": {
+    "title": "Explain why a buyer would switch",
+    "input": "A prospect sees little difference between two implementation proposals except price.",
+    "decision": "Compare alternatives against an actual buying decision. Identify one claim the delivery team can demonstrate with evidence.",
+    "output": "A positioning brief and objection responses grounded in the customer's choice."
+  },
+  "account-based-marketing": {
+    "title": "Open a discussion with a target account",
+    "input": "A manufacturer has announced a platform change involving operations, IT and procurement.",
+    "decision": "Map stakeholders and build a hypothesis for each role. Agree with sales what counts as account engagement before launching outreach.",
+    "output": "An account plan linking evidence, contacts, campaign activity and the next sales action."
+  },
+  "linkedin-lead-generation": {
+    "title": "Start a conversation with a hiring leader",
+    "input": "A target company is recruiting across several delivery roles, but the reason for the hiring burst is unclear.",
+    "decision": "Use public context to frame a relevant question. Qualify the reply and record consent or a request to stop follow-up.",
+    "output": "A documented conversation passed to sales with the need, contact and agreed next step."
+  },
+  "outbound-outreach": {
+    "title": "Test a new segment before scaling",
+    "input": "A team wants to contact a large list of prospects with one generic pitch.",
+    "decision": "Select a small, relevant segment. Check source quality and suppression rules, then test one offer and read the replies by intent.",
+    "output": "A decision on audience and message, with exclusions carried into the next send."
+  },
+  "landing-pages-nurture": {
+    "title": "Connect a webinar registration to the next conversation",
+    "input": "Registrants include live attendees, absentees and existing customers.",
+    "decision": "Match the page promise to the invitation. Branch follow-up by attendance and interest, then route explicit requests to sales.",
+    "output": "A campaign page and nurture sequence with clear suppression and handoff rules."
+  },
+  "attribution-pipeline-reporting": {
+    "title": "Explain a deal touched by several campaigns",
+    "input": "A first search visit, a webinar and a sales workshop all appear against one account.",
+    "decision": "Reconstruct the opportunity timeline and distinguish sourced pipeline from influenced pipeline. Agree how duplicate contact records are handled.",
+    "output": "A pipeline report with definitions the finance and sales teams can reconcile."
+  },
+  "seo": {
+    "title": "Fix a service page competing with its own category",
+    "input": "Two pages rank intermittently for the same enquiry and visitors land on the less useful one.",
+    "decision": "Compare intent, indexing signals and internal links. Give each page a distinct purpose or consolidate where the content serves the same need.",
+    "output": "A page-level change list with a baseline for search visibility and qualified enquiries."
+  },
+  "aeo": {
+    "title": "Answer a buyer's comparison question",
+    "input": "Sales repeatedly explains the difference between two delivery models, but the website never addresses it directly.",
+    "decision": "Write a clear answer, qualify it with scope and exceptions, and give the reader a way to verify the claim.",
+    "output": "A buyer-readable answer page with supporting evidence and a maintenance owner."
+  },
+  "geo": {
+    "title": "Check how an AI answer describes the offer",
+    "input": "A buyer researching the category encounters an outdated description of the company's services.",
+    "decision": "Review a defined prompt set, record the source links that appear and reconcile public descriptions with the current service scope.",
+    "output": "A dated observation log and an evidence-led content backlog."
+  },
+  "local-seo": {
+    "title": "Correct a branch's local search presence",
+    "input": "A location listing points to an old phone number and a page for a different branch.",
+    "decision": "Verify business details with the branch owner and align the listing, contact page and location-specific services.",
+    "output": "A consistent branch profile and a way to track relevant calls or direction requests."
+  },
+  "lead-operations-automation": {
+    "title": "Route a repeat enquiry without double assignment",
+    "input": "An existing customer submits a campaign form using a different email alias.",
+    "decision": "Agree how to match the account and decide whether the account manager or inbound sales owns follow-up.",
+    "output": "A tested routing flow with duplicate handling and a visible exception queue."
+  },
+  "ai-content-operations": {
+    "title": "Turn a workshop into a publishable article",
+    "input": "A transcript contains useful technical detail alongside private customer information.",
+    "decision": "Build an approved source pack, remove confidential material and assign an expert reviewer for claims before publication.",
+    "output": "An edited article with traceable evidence, review history and a named owner."
+  },
+  "reporting-spend-guardrails": {
+    "title": "Catch spend continuing after an offer closes",
+    "input": "A campaign keeps running after its landing page switches to a waiting list.",
+    "decision": "Monitor destination availability and budget pacing. Decide who can pause spend and how the owner is notified.",
+    "output": "An actionable alert and a tested pause-and-resume process."
+  },
+  "conversational-ai": {
+    "title": "Route a pricing question to the right team",
+    "input": "A visitor asks for a quote that depends on contract size, region and implementation scope.",
+    "decision": "Use approved information for the initial answer, gather only what sales needs and transfer unanswered questions with their context.",
+    "output": "A documented conversation flow with escalation, consent and transcript review."
+  },
+  "crm-integration": {
+    "title": "Carry campaign source into an opportunity",
+    "input": "Marketing sees a form fill while sales creates a new opportunity without its campaign context.",
+    "decision": "Agree field ownership and identifiers, test an existing contact and check updates flowing back from opportunity stages.",
+    "output": "A mapped lead-to-opportunity record with reconciliation and error handling."
+  },
+  "paid-search": {
+    "title": "Separate urgent buying searches from research",
+    "input": "A campaign for implementation services also attracts people looking for training and login help.",
+    "decision": "Review actual queries with sales, isolate commercial intent and align each ad group with the right service page.",
+    "output": "A search campaign with exclusions, conversion definitions and a budget review plan."
+  },
+  "paid-social": {
+    "title": "Test proof against a product pitch",
+    "input": "Two audiences see the same generic ad despite having different roles in the buying decision.",
+    "decision": "Design a creative comparison around one decision and hold the landing page constant. Review qualified responses alongside cost.",
+    "output": "A creative learning record that explains what to test next and why."
+  },
+  "landing-page-optimisation": {
+    "title": "Find why visitors abandon a demo form",
+    "input": "Enquiries fall on mobile even though campaign traffic and audience mix appear stable.",
+    "decision": "Check field errors, keyboard behaviour, load speed and the promise above the form. Prioritise one hypothesis for a controlled change.",
+    "output": "A tested revision and a record of conversion quality as well as completion rate."
+  },
+  "analytics-roi-tracking": {
+    "title": "Reconcile a campaign's reported return",
+    "input": "An ad platform counts a sale twice while finance records a refund later in the month.",
+    "decision": "Agree revenue basis, deduplication keys and reporting windows. Reconcile sample transactions before calculating return.",
+    "output": "A measurement sheet with reconciled revenue, spend and stated attribution assumptions."
+  },
+  "brand-strategy-identity": {
+    "title": "Unify a brand after adding a second service line",
+    "input": "The sales deck and website present the new service as if it belonged to a different company.",
+    "decision": "Define what the parent brand stands for and where each practice needs its own emphasis. Test the system on a homepage and proposal cover.",
+    "output": "A practical identity system with approved positioning and reusable applications."
+  },
+  "website-ux-design": {
+    "title": "Help buyers find the right specialist service",
+    "input": "The navigation groups capabilities by internal team names that new visitors do not recognise.",
+    "decision": "Map the questions buyers bring, test alternative navigation labels and prototype the path from service discovery to enquiry.",
+    "output": "A tested page architecture with responsive layouts and handoff specifications."
+  },
+  "social-media-management": {
+    "title": "Plan a month around a specialist practice",
+    "input": "A delivery team has valuable expertise but can spare only one interview each month.",
+    "decision": "Turn that interview into posts with distinct purposes. Assign factual approval and agree how commercial questions move to sales.",
+    "output": "An editorial calendar, response ownership and a review of relevant audience engagement."
+  },
+  "content-strategy-production": {
+    "title": "Build an article that helps sales answer objections",
+    "input": "Prospects ask whether a migration can be phased, while the website only describes the end state.",
+    "decision": "Interview the delivery lead, map the buyer's decision and verify a representative sequence with its dependencies.",
+    "output": "A reviewed article, sales excerpt and internal links to the relevant service."
+  },
+  "video-production": {
+    "title": "Explain a technical service in a short film",
+    "input": "The subject specialist has a long presentation, but the buyer needs one clear explanation.",
+    "decision": "Choose the single decision the film supports. Storyboard the sequence, confirm permissions and review a rough cut before final graphics.",
+    "output": "A captioned master and channel-specific cuts with agreed review and usage rights."
+  }
+}

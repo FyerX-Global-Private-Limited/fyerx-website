@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
-import { ALL_INDEXABLE_ENTRIES } from "@/data/seo-metadata";
+import { ALL_INDEXABLE_ENTRIES, SITE_URL } from "@/data/seo-metadata";
 
+import { serviceDirectory } from "@/lib/service-directory";
 import { livePosts } from "@/lib/editorial/store";
 import { publication } from "@/lib/editorial/metadata";
 
@@ -19,5 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const page = publication(post);
     return page.indexable && page.canonical === page.url ? [{ url: page.url, lastModified: post.modified }] : [];
   });
-  return [...site, ...blog];
+  const listed = new Set(site.map(item => item.url));
+  const services = serviceDirectory.map(entry => ({ url: SITE_URL + entry.path })).filter(item => !listed.has(item.url));
+  return [...site, ...services, ...blog];
 }

@@ -259,6 +259,15 @@ export const SEO_MANIFEST: SeoEntry[] = [
     ogType: "article",
   },
   {
+    path: "/technology/services/enterprise-platforms/servicenow",
+    title: "ServiceNow Consulting & Implementation Services | FyerX",
+    description:
+      "FyerX helps teams implement and improve ServiceNow ITSM, ITOM, CMDB, HR and customer service workflows, integrations and upgrades.",
+    canonical: `${SITE_URL}/technology/services/enterprise-platforms/servicenow`,
+    robots: "index,follow",
+    ogType: "website",
+  },
+  {
     path: "/technology/case-studies",
     title: "Technology Consulting Case Studies | FyerX",
     description:

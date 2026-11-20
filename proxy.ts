@@ -36,6 +36,10 @@ export function proxy(request: NextRequest) {
       changed = true;
     }
 
+    if (pathname === "/service-review" && ["fyerx.com", "www.fyerx.com"].includes(host.split(":")[0])) {
+      return new NextResponse(null, { status: 404 });
+    }
+
     const mode = editorialMode();
     const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
     const isEditorial = pathname === "/editorial" || pathname.startsWith("/editorial/");
@@ -57,7 +61,9 @@ export function proxy(request: NextRequest) {
     }
 
     const response = NextResponse.next();
-    if (isEditorial || (isBlog && mode !== "live")) {
+    const isStagingService = host.split(":")[0].endsWith(".hostingersite.com") &&
+      /^\/(technology|talent|marketing)\/services(?:\/|$)/.test(pathname);
+    if (isStagingService || isEditorial || (isBlog && mode !== "live")) {
       response.headers.set("X-Robots-Tag", "noindex, nofollow");
     }
     if (isEditorial || (isBlog && mode === "isolated")) {
