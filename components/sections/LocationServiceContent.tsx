@@ -16,14 +16,14 @@ export function LocalServiceScope({ page, playbook }: { page: LocationPage; play
   return (
     <section className="home-section" aria-labelledby="local-service-title">
       <div className="section-shell section-shell--wide">
-        <header className="section-header">
-          <p className={"text-sm font-semibold " + highlight}>{service.offer}</p>
+        <header className="grid max-w-5xl gap-2.5 text-left sm:gap-3">
+          <p className={"text-sm font-semibold leading-snug " + highlight}>{service.offer}</p>
           <h2 className="section-heading" id="local-service-title">{copy.heading}</h2>
-          <p className="section-subheading max-w-4xl">{copy.detail}</p>
+          <p className="max-w-[68ch] text-[15px] leading-relaxed text-[#3d4a5c] sm:text-[17px]">{copy.detail}</p>
         </header>
-        <div className="section-body grid gap-4 md:grid-cols-3 md:gap-6">
+        <div className="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:gap-4 lg:grid-cols-3 lg:gap-6">
           {playbook.work.map(([title, body]) => (
-            <article key={title} className="rounded-2xl border border-neutral-200 p-5 sm:p-7">
+            <article key={title} className="min-w-0 rounded-2xl border border-neutral-200 p-5 text-left sm:p-6 lg:p-7">
               <h3 className="text-lg font-semibold">{title}</h3>
               <p className="mt-3 leading-relaxed text-[#3d4a5c]">{body}</p>
             </article>
