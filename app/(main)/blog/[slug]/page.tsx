@@ -27,8 +27,8 @@ const relatedService: Record<string, { href: string; label: string }> = {
     label: "Marketing analytics and ROI tracking",
   },
   "quit-your-it-job-to-become-a-youtuber-in-2027": {
-    href: "/careers",
-    label: "Explore career opportunities at FyerX",
+    href: "/talent/individual",
+    label: "Explore FyerX resources for job seekers",
   },
 };
 
