@@ -35,6 +35,7 @@ export default function TalentHomePage() {
       <TestimonialsCTA />
       <nav aria-label="Explore staffing services" className="mx-auto flex max-w-7xl flex-wrap gap-x-6 gap-y-3 px-5 py-6 text-sm font-semibold text-slate-900 sm:px-8">
         <Link className="underline underline-offset-4" href="/staffing-agency-in-bangalore">Staffing services in Bangalore</Link>
+        <Link className="underline underline-offset-4" href="/us/offshore-it-staffing">Offshore IT staffing for US companies</Link>
       </nav>
       <LatestBlogs topic="talent" />
       <FaqSection />

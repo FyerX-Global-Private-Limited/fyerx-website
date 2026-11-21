@@ -38,6 +38,7 @@ export default function MarketingPage() {
       <nav aria-label="Explore marketing services" className="mx-auto flex max-w-7xl flex-wrap gap-x-6 gap-y-3 px-5 py-6 text-sm font-semibold text-slate-900 sm:px-8">
         <Link className="underline underline-offset-4" href="/lead-generation-agency-in-bangalore">Lead generation in Bangalore</Link>
         <Link className="underline underline-offset-4" href="/marketing/services">All marketing services</Link>
+        <Link className="underline underline-offset-4" href="/us/b2b-marketing-for-it-services">B2B marketing for US IT services</Link>
       </nav>
       <LatestBlogs topic="marketing" />
       <FaqSection />

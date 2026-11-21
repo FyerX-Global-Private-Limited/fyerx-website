@@ -9,6 +9,7 @@ import { readFormString } from "@/lib/submit-lead";
 import { useSubmitLead } from "@/lib/use-submit-lead";
 import { RecaptchaLegalNote } from "@/components/RecaptchaLegalNote";
 import { trackEvent } from "@/lib/analytics";
+import type { UsOfferKey } from "@/data/us-offers";
 
 export const BRAND = {
   crimson: "#730031",
@@ -381,7 +382,14 @@ function CompactHelpMultiselect({
   );
 }
 
+const usHelp: Record<UsOfferKey, string[]> = {
+  "offshore-it-staffing": ["ServiceNow", "Salesforce", "SAP", "Cloud and DevOps", "Data engineering", "Other IT roles"],
+  "offshore-it-staffing/servicenow": ["ITSM", "ITOM", "CSM", "HRSD", "Integrations and platform development", "Other ServiceNow roles"],
+  "b2b-marketing-for-it-services": ["Demand generation pilot", "Offer and landing page", "Acquisition and CRM reporting"],
+};
+
 type ContactEnquiryFormProps = {
+  usOffer?: UsOfferKey;
   formKey: FormKey;
   className?: string;
   title?: string;
@@ -395,15 +403,23 @@ export function ContactEnquiryForm({
   title,
   nameGridClassName = "grid grid-cols-2 gap-3",
   submitLabel,
+  usOffer,
 }: ContactEnquiryFormProps) {
   const router = useRouter();
   const submitLead = useSubmitLead();
-  const config = FORM_CONFIG[formKey];
+  const baseConfig = FORM_CONFIG[formKey];
+  const config = usOffer ? {
+    ...baseConfig,
+    helpOptions: usHelp[usOffer],
+    budgetOptions: formKey === "marketing" ? ["Budget approved", "Budget under review", "Still scoping"] : undefined,
+  } : baseConfig;
+  const defaultCountry = usOffer ? "US" : DEFAULT_PHONE_COUNTRY;
+  const attribution = usOffer ? { market: "us", offer: usOffer } : {};
   const [selected, setSelected] = useState<string[]>([]);
   const [helpError, setHelpError] = useState(false);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [phoneCountry, setPhoneCountry] = useState<CountryCode>(DEFAULT_PHONE_COUNTRY);
+  const [phoneCountry, setPhoneCountry] = useState<CountryCode>(defaultCountry);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [phoneError, setPhoneError] = useState<string | null>(null);
   const [expectedStartError, setExpectedStartError] = useState(false);
@@ -416,14 +432,14 @@ export function ContactEnquiryForm({
     setHelpError(false);
     setEmail("");
     setPhone("");
-    setPhoneCountry(DEFAULT_PHONE_COUNTRY);
+    setPhoneCountry(defaultCountry);
     setEmailError(null);
     setPhoneError(null);
     setExpectedStartError(false);
     setSubmitting(false);
     setSubmitError(null);
     formStarted.current = false;
-  }, [formKey]);
+  }, [formKey, defaultCountry, usOffer]);
 
   const toggleOption = (opt: string) => {
     setSelected((prev) => {
@@ -465,6 +481,7 @@ export function ContactEnquiryForm({
     }
 
     setSubmitting(true);
+    const message = readFormString(form, "message");
     const result = await submitLead(
       {
         formType: formKey,
@@ -481,7 +498,7 @@ export function ContactEnquiryForm({
         monthlyBudget: readFormString(form, "monthlyBudget") || null,
         helpWith: selected,
         expectedStart,
-        message: readFormString(form, "message") || null,
+        message: usOffer ? ["US website enquiry: " + usOffer, message].filter(Boolean).join("\n\n") : message || null,
         privacyAccepted: true,
       },
       formKey
@@ -497,7 +514,7 @@ export function ContactEnquiryForm({
       return;
     }
 
-    trackEvent("generate_lead", { form_type: formKey });
+    trackEvent("generate_lead", { form_type: formKey, ...attribution });
     router.push(`${THANK_YOU_BY_FORM[formKey]}?leadId=${result.id}`);
   };
 
@@ -514,7 +531,7 @@ export function ContactEnquiryForm({
         onFocusCapture={() => {
           if (formStarted.current) return;
           formStarted.current = true;
-          trackEvent("form_start", { form_type: formKey });
+          trackEvent("form_start", { form_type: formKey, ...attribution });
         }}
       >
         <div className={nameGridClassName}>
@@ -586,7 +603,7 @@ export function ContactEnquiryForm({
           <div className="relative">
             <select name="monthlyBudget" required defaultValue="" className={selectBase}>
               <option value="" disabled>
-                Monthly Marketing Budget*
+                {usOffer ? "Monthly budget status*" : "Monthly Marketing Budget*"}
               </option>
               {config.budgetOptions.map((opt) => (
                 <option key={opt} value={opt}>
