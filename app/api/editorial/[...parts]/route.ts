@@ -1,10 +1,13 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
 import sharp from "sharp";
 import { createTeamMember, currentUser, sessionCookie, sessionSeconds, signIn, signOut } from "@/lib/editorial/auth";
 import { editorialMode, editorialOrigin } from "@/lib/editorial/config";
 import { mediaId, mediaPrefix, validateDraft } from "@/lib/editorial/document";
-import { changePost, createPost, db, WorkflowError } from "@/lib/editorial/store";
+import { changePost, createPost, db, livePost, post, WorkflowError } from "@/lib/editorial/store";
+
+import { publication } from "@/lib/editorial/metadata";
+import { indexNowOrigin, submitIndexNow } from "@/lib/index-now";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -17,6 +20,14 @@ const privateHeaders = {
 };
 const json = (body: unknown, status = 200) => NextResponse.json(body, { status, headers: privateHeaders });
 const error = (message: string, status: number) => json({ error: message }, status);
+
+function indexableArticleUrl(slug: string | null | undefined) {
+  if (!slug) return undefined;
+  const { article } = livePost(slug);
+  if (!article) return undefined;
+  const page = publication(article);
+  if (page.indexable && page.canonical === page.url) return page.url;
+}
 
 async function readBody(request: Request, limit: number) {
   const reader = request.body?.getReader();
@@ -116,7 +127,21 @@ export async function POST(request: Request, { params }: Props) {
           return error(failure instanceof Error ? failure.message : "Invalid draft", 400);
         }
       }
-      return json({ post: changePost(id, data.version, action, user.role, draft) });
+      const affectsSearch = mode === "live" && process.env.BLOG_ORIGIN === indexNowOrigin &&
+        (action === "publish" || action === "unpublish");
+      const previousUrl = affectsSearch ? indexableArticleUrl(post(id)?.liveSlug) : undefined;
+      const updated = changePost(id, data.version, action, user.role, draft);
+      if (affectsSearch) {
+        after(async () => {
+          try {
+            const currentUrl = indexableArticleUrl(updated.liveSlug);
+            await submitIndexNow([previousUrl, currentUrl].filter((url) => url !== undefined));
+          } catch (failure) {
+            console.error("IndexNow notification failed", failure);
+          }
+        });
+      }
+      return json({ post: updated });
     }
     return error("Not found", 404);
   } catch (failure) {

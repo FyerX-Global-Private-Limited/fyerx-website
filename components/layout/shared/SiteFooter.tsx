@@ -332,6 +332,9 @@ export default function SiteFooter({ variant = "main" }: { variant?: SiteFooterV
                 </React.Fragment>
               ))}
             </div>
+            <Link href="/locations" className="mt-2 inline-block text-[12px] text-[#323338] underline sm:text-[13px]">
+              Service areas
+            </Link>
             <p className="mt-2 text-[12px] text-[#323338] sm:text-[13px]">
               &copy; 2026 FyerX Global Private Limited. All rights reserved.
             </p>

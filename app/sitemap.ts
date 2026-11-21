@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const pages = ALL_INDEXABLE_ENTRIES.filter(
     (entry) => entry.robots === "index,follow" && !LEGACY_SITEMAP_PATH.test(entry.path)
   ).map((entry) => ({
-    url: entry.canonical,
+    url: new URL(entry.canonical).href,
   }));
   const blog = livePosts().flatMap((post) => {
     const page = publication(post);
