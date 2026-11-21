@@ -3,11 +3,13 @@ import type { LocationPage } from "@/data/location-pages";
 import { findLocationPage, locationsPath } from "@/data/location-pages";
 import { locationPlaybooks, type Playbook } from "@/data/location-playbooks";
 import { talentPlaybooks } from "@/data/location-talent-playbooks";
+import { cityServiceScopes } from "@/data/location-city-scopes";
 
 export function playbookFor(page: LocationPage) {
   const playbook = (page.division === "marketing" ? locationPlaybooks : talentPlaybooks)[page.service.slug];
   if (!playbook) throw new Error("Missing landing-page content for " + page.slug);
-  return playbook;
+  const cityScope = cityServiceScopes[page.service.slug]?.[page.cityKey];
+  return { ...playbook, ...cityScope };
 }
 
 export function LocalServiceScope({ page, playbook }: { page: LocationPage; playbook: Playbook }) {
