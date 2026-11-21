@@ -1,13 +1,30 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ChevronDown, ChevronRight } from "lucide-react";
-import { insights } from "@/data/insights";
-import { insightTopics } from "@/data/blog-topics";
+import { insightTopics, type InsightTopic } from "@/data/blog-topics";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { blogBrand, blogBrandStyle } from "./blog-brand";
 import type { Draft } from "@/lib/editorial/document";
 import { ArticleBody, articleHeadings } from "./article-body";
 import styles from "./insights.module.css";
+
+const enquiryByTopic = {
+  marketing: {
+    title: "Looking for marketing support?",
+    description: "Tell us what you want to achieve and where your team could use support.",
+    label: "Talk to FyerX Marketing",
+  },
+  technology: {
+    title: "Looking for technology support?",
+    description: "Tell us what you need to build, improve, or manage.",
+    label: "Talk to FyerX Technology",
+  },
+  talent: {
+    title: "Looking for recruitment support?",
+    description: "Tell us which roles you’re hiring for and when you need them filled.",
+    label: "Talk to FyerX Talent",
+  },
+} satisfies Record<InsightTopic, { title: string; description: string; label: string }>;
 
 function ContentsLinks({ headings }: { headings: ReturnType<typeof articleHeadings> }) {
   return (
@@ -67,13 +84,13 @@ export function BlogArticle({ article, timestamp, preview }: { article: Draft; t
             <nav aria-label="On this page"><ContentsLinks headings={headings} /></nav>
           </details>}
           <div className={`${styles.enquiry} ${styles.desktopEnquiry}`}>
-            <Enquiry article={article} />
+            <Enquiry topic={article.topic} />
           </div>
         </aside>
         <div className={styles.articleBody}>
           <ArticleBody doc={article.body} />
           <div className={`${styles.enquiry} ${styles.mobileEnquiry}`}>
-            <Enquiry article={article} />
+            <Enquiry topic={article.topic} />
           </div>
         </div>
       </div>
@@ -81,19 +98,15 @@ export function BlogArticle({ article, timestamp, preview }: { article: Draft; t
   );
 }
 
-function Enquiry({ article }: { article: Draft }) {
-  const enquiry = insights.find((entry) => entry.topic === article.topic)?.enquiry ?? {
-    title: "Have a technology project?",
-    description: "Tell FyerX Technology what you are building and where you need support.",
-    label: "Discuss your project",
-  };
-  const brand = blogBrand[article.topic];
+function Enquiry({ topic }: { topic: InsightTopic }) {
+  const enquiry = enquiryByTopic[topic];
+  const brand = blogBrand[topic];
 
   return (
     <>
       <h2>{enquiry.title}</h2>
       <p>{enquiry.description}</p>
-      <PrimaryCtaLink href={`/contact?form=${article.topic}`} variant="nav" color={brand.button} textColor={brand.buttonText} className={styles.enquiryLink}>
+      <PrimaryCtaLink href={`/contact?form=${topic}`} variant="nav" color={brand.button} textColor={brand.buttonText} className={styles.enquiryLink}>
         {enquiry.label}
       </PrimaryCtaLink>
     </>
