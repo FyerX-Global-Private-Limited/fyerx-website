@@ -55,24 +55,29 @@ const TABS: TabData[] = [
   },
 ];
 
-export default function HowWeWork() {
+type TabCopy = Pick<TabData, "label" | "para" | "cta"> & { href: string };
+
+export default function HowWeWork({ content }: { content?: { heading: string; highlight: string; tabs: TabCopy[] } }) {
+  const tabs = content ? content.tabs.map(({ href, ...copy }, index) => ({
+    ...TABS[index % TABS.length], ...copy, href,
+  })) : TABS.map((tab, index) => ({ ...tab, href: TAB_LINKS[index] }));
   const [active, setActive] = useState<number>(0);
-  const t = TABS[active];
+  const t = tabs[active] ?? tabs[0];
 
   return (
     <section className="home-section hww-hero">
       <div className="section-shell section-shell--wide">
         <div className="section-header section-header--center mb-[var(--section-content-gap)]">
           <h2 className="section-heading">
-            Support that moves with{" "}
-            <span className="brand-gradient-text">your business</span>
+            {content?.heading ?? "Support that moves with"}{" "}
+            <span className="brand-gradient-text">{content?.highlight ?? "your business"}</span>
           </h2>
         </div>
 
         <div className="section-body mt-0 flex flex-col gap-10 lg:gap-12">
         <div className="tabbar-wrap">
           <div className="tabbar" role="tablist">
-            {TABS.map((tab, i) => (
+            {tabs.map((tab, i) => (
               <button
                 key={tab.label}
                 role="tab"
@@ -108,7 +113,7 @@ export default function HowWeWork() {
             <h2>{t.label}</h2>
             <p>{t.para}</p>
             <PrimaryCtaLink
-              href={TAB_LINKS[active]}
+              href={t.href}
               className="panel-cta"
               color={
                 t.label === "Marketing"

@@ -181,24 +181,26 @@ function CaseCard({ card }: { card: UseCaseCard }) {
   );
 }
 
-const WhoWeAre: React.FC = () => {
+type CardCopy = Pick<UseCaseCard, "title" | "description" | "href" | "ctaLabel" | "metrics">;
+
+const WhoWeAre: React.FC<{ usCards?: readonly [CardCopy, CardCopy] }> = ({ usCards }) => {
+  const cards = usCards ? usCards.map((copy, index) => ({ ...CARDS[index + 1], ...copy })) : CARDS;
   return (
     <section className="home-section w-full bg-white font-calibri">
       <div className="section-shell">
         <div className="section-header section-header--center">
           <h2 className="section-heading">
-            <span className="text-black">Integrated Capabilities, </span>
-            <span className="brand-gradient-text">Clear Business Impact</span>
+            <span className="text-black">{usCards ? "Two ways to support " : "Integrated Capabilities, "}</span>
+            <span className="brand-gradient-text">{usCards ? "US technology teams" : "Clear Business Impact"}</span>
           </h2>
 
           <p className="section-subheading section-subheading--wide">
-            Engage the expertise you need today, with room to extend support as
-            requirements change.
+            {usCards ? "Choose the offer that fits your immediate delivery or sales priority. Each starts with a defined scope and clear ownership." : "Engage the expertise you need today, with room to extend support as requirements change."}
           </p>
         </div>
 
-        <div className="section-body grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-6">
-          {CARDS.map((card) => (
+        <div className={`section-body grid grid-cols-1 gap-6 lg:gap-6 ${usCards ? "lg:grid-cols-2" : "lg:grid-cols-3"}`}>
+          {cards.map((card) => (
             <CaseCard key={card.title} card={card} />
           ))}
         </div>

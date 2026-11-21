@@ -13,7 +13,7 @@ const BRAND = {
 
 const HERO_IMAGE_ASPECT = "3056 / 2560";
 
-const pillars: {
+const defaultPillars: {
   label: string;
   image: string;
   brandColor: string;
@@ -68,7 +68,11 @@ function CheckIcon() {
   );
 }
 
-export default function Hero() {
+export default function Hero({ us = false }: { us?: boolean }) {
+  const pillars = us ? defaultPillars.slice(1, 3).map((pillar) => ({
+    ...pillar,
+    ctaHref: pillar.label === "Talent" ? "/us/offshore-it-staffing" : "/us/b2b-marketing-for-it-services",
+  })) : defaultPillars;
   const [active, setActive] = useState(0);
   const stoppedRef = useRef(false);
   const activePillar = pillars[active];
@@ -79,7 +83,7 @@ export default function Hero() {
       setActive((i) => (i + 1) % pillars.length);
     }, 5000);
     return () => window.clearInterval(id);
-  }, []);
+  }, [pillars.length]);
 
   const selectPillar = (i: number) => {
     stoppedRef.current = true;
@@ -92,7 +96,7 @@ export default function Hero() {
         <div className="flex flex-col gap-6 sm:gap-8 lg:flex-row lg:items-center lg:gap-10">
           <div className="order-2 flex w-full min-w-0 flex-col justify-start text-left lg:order-1 lg:max-w-[23rem] lg:shrink-0 lg:pt-4">
             <h1 className="text-balance text-[clamp(1.375rem,5.5vw,2.25rem)] font-medium leading-[1.2] tracking-[-0.03em] text-black">
-              You{" "}
+              {us ? "Offshore staffing and B2B marketing for" : "You"}{" "}
               <span
                 style={{
                   background: "linear-gradient(90deg, #730031 0%, #CC0057 100%)",
@@ -102,14 +106,13 @@ export default function Hero() {
                   color: "transparent",
                 }}
               >
-                focus on growth.
+                {us ? "US companies" : "focus on growth."}
               </span>
-              <br />
-              We handle execution.
+              {!us && <><br />We handle execution.</>}
             </h1>
 
             <p className="mt-4 max-w-none text-[clamp(0.875rem,3.5vw,0.9375rem)] leading-relaxed text-black sm:mt-5 lg:max-w-[44ch]">
-              The people, skills, and support to turn plans into progress.
+              {us ? "FyerX helps US technology businesses add India-based delivery capacity and build a measurable sales pipeline." : "The people, skills, and support to turn plans into progress."}
             </p>
 
             <div className="mt-5 grid grid-cols-2 gap-2 sm:mt-6 sm:flex sm:flex-wrap lg:max-w-[23rem]">
@@ -167,10 +170,10 @@ export default function Hero() {
                 textColor={activePillar.ctaTextColor}
                 className="w-full justify-center sm:w-fit"
               >
-                Get Started
+                {us ? (activePillar.label === "Talent" ? "Explore offshore staffing" : "Explore B2B marketing") : "Get Started"}
               </PrimaryCtaLink>
               <p className="mt-3 text-xs leading-relaxed text-slate">
-                Confidential consultation · Custom to your business
+                {us ? "India-based delivery · US working-hour overlap by agreement" : "Confidential consultation · Custom to your business"}
               </p>
             </div>
           </div>

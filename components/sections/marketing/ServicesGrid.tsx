@@ -131,7 +131,12 @@ const SERVICE_CARDS: ServiceCard[] = [
  * Component
  * ---------------------------------------------------------------------- */
 
-export default function ServicesGrid() {
+type ServiceCopy = Pick<ServiceCard, "title" | "description">;
+
+export default function ServicesGrid({ content }: { content?: { heading: string; highlight: string; cards: ServiceCopy[] } }) {
+  const cards = content ? content.cards.map((copy, index) => ({
+    ...SERVICE_CARDS[index % SERVICE_CARDS.length], ...copy,
+  })) : SERVICE_CARDS;
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -153,7 +158,7 @@ export default function ServicesGrid() {
     if (!el) return;
     const step = getStep();
     const index = Math.round(el.scrollLeft / step);
-    setActiveIndex(Math.max(0, Math.min(index, SERVICE_CARDS.length - 1)));
+    setActiveIndex(Math.max(0, Math.min(index, cards.length - 1)));
   };
 
   return (
@@ -162,9 +167,9 @@ export default function ServicesGrid() {
         {/* Heading */}
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="section-title-lg">
-            A{" "}
-            <span className="marketing-gradient-text">practical marketing partner</span>
-            , built around the work
+            {content?.heading ?? "A"}{" "}
+            <span className="marketing-gradient-text">{content?.highlight ?? "practical marketing partner"}</span>
+            {!content && ", built around the work"}
             <SparkleIcon className="ml-2 inline-block h-6 w-6 align-middle sm:h-8 sm:w-8" />
           </h2>
         </div>
@@ -176,7 +181,7 @@ export default function ServicesGrid() {
             onScroll={handleScroll}
             className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            {SERVICE_CARDS.map((card) => (
+            {cards.map((card) => (
               <article
                 key={card.id}
                 data-card
@@ -206,7 +211,7 @@ export default function ServicesGrid() {
           {/* Pagination dots + nav arrows */}
           <div className="mt-6 flex items-center justify-between px-1">
             <div className="flex items-center gap-1.5">
-              {SERVICE_CARDS.map((card, index) => (
+              {cards.map((card, index) => (
                 <span
                   key={card.id}
                   className={`h-1.5 rounded-full transition-all duration-300 ${

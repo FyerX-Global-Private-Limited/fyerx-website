@@ -27,7 +27,7 @@ function GreenCheck() {
   );
 }
 
-export default function EnterpriseSection() {
+export default function EnterpriseSection({ enquiryHref = "/contact#marketing" }: { enquiryHref?: string }) {
   return (
     <section className="w-full overflow-x-clip bg-white">
       <div className="mx-auto w-full max-w-[1400px]">
@@ -54,7 +54,7 @@ export default function EnterpriseSection() {
             </ul>
 
             <PrimaryCtaLink
-              href="/contact#marketing"
+              href={enquiryHref}
               variant="nav"
               color="#FFDF66"
               textColor="#111111"

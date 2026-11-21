@@ -15,7 +15,7 @@ const WORDS = [
 
 const ROTATE_MS = 2500;
 
-export default function TalentClosingSection() {
+export default function TalentClosingSection({ enquiryHref = "/contact#talent" }: { enquiryHref?: string }) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export default function TalentClosingSection() {
 
         <div className="mt-6 flex w-full flex-col items-center justify-center gap-3 sm:mt-[30px] sm:w-auto sm:flex-row sm:gap-[22px]">
           <PrimaryCtaLink
-            href="/contact#talent"
+            href={enquiryHref}
             className="w-full max-w-[300px] justify-center sm:w-auto"
             color={TALENT_HOME.primary}
             textColor={TALENT_HOME.accent}

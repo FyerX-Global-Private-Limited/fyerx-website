@@ -32,19 +32,20 @@ const CARDS: Card[] = [
   },
 ];
 
-export default function SecurityControl() {
+export default function SecurityControl({ content }: { content?: { heading: string; highlight: string; cards: Pick<Card, "title" | "body">[] } }) {
+  const cards = content ? content.cards.map((copy, index) => ({ ...CARDS[index % CARDS.length], ...copy })) : CARDS;
   return (
     <section className="home-section sc">
       <div className="section-shell">
         <div className="section-header section-header--center mb-[var(--section-content-gap)]">
           <h2 className="section-heading">
-            Capability for Every Stage of{" "}
-            <span className="brand-gradient-text">Growth</span>
+            {content?.heading ?? "Capability for Every Stage of"}{" "}
+            <span className="brand-gradient-text">{content?.highlight ?? "Growth"}</span>
           </h2>
         </div>
 
         <div className="section-body mt-0 sc__grid">
-          {CARDS.map((c) => (
+          {cards.map((c) => (
             <article className="sc__card" key={c.title}>
               <h3 className="sc__cardTitle">{c.title}</h3>
               <div className="sc__icon">

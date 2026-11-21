@@ -66,7 +66,7 @@ const Card: React.FC<CapabilityCard> = ({ image, imageAlt, title, description })
   </article>
 );
 
-const Capabilities: React.FC = () => {
+const Capabilities: React.FC<{ enquiryHref?: string }> = ({ enquiryHref = "/contact" }) => {
   return (
     <section className="home-section w-full bg-white">
       <div className="section-shell section-shell--wide">
@@ -78,7 +78,7 @@ const Capabilities: React.FC = () => {
                 <span className="brand-gradient-text">lasting success</span>
               </h2>
 
-              <PrimaryCtaLink href="/contact" className="mt-[var(--section-content-gap)]">
+              <PrimaryCtaLink href={enquiryHref} className="mt-[var(--section-content-gap)]">
                 Contact Us
               </PrimaryCtaLink>
             </div>

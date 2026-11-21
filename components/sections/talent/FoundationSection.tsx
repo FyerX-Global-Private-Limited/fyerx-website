@@ -38,22 +38,25 @@ const CARDS = [
   },
 ] as const;
 
-export default function FoundationSection() {
+type FoundationCopy = { title: string; body: string; tags: string[] };
+
+export default function FoundationSection({ content }: { content?: { heading: string; highlight: string; intro: string; cards: readonly FoundationCopy[] } }) {
+  const cards = content ? content.cards.map((copy, index) => ({ ...CARDS[index % CARDS.length], ...copy })) : CARDS;
   return (
     <section className="overflow-x-clip bg-white">
       <div className="mx-auto max-w-[1400px]">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="section-title-lg">
-            Built on a foundation you can{" "}
-            <span className="talent-gradient-text">rely on</span>
+            {content?.heading ?? "Built on a foundation you can"}{" "}
+            <span className="talent-gradient-text">{content?.highlight ?? "rely on"}</span>
           </h2>
           <p className="mt-4 text-base leading-relaxed text-[#52525b] sm:text-[17px]">
-            The screening, process, and compliance behind every hire we make.
+            {content?.intro ?? "The screening, process, and compliance behind every hire we make."}
           </p>
         </div>
 
         <div className="mt-10 grid items-stretch gap-4 sm:mt-14 md:grid-cols-3 md:gap-5">
-          {CARDS.map((card) => (
+          {cards.map((card) => (
             <article
               key={card.title}
               className="relative flex h-full min-h-[300px] flex-col rounded-2xl p-5 sm:min-h-[320px] sm:p-6 lg:p-7"

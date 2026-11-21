@@ -42,7 +42,7 @@ const PIPELINE = [
   "Deployment support",
 ] as const;
 
-export default function ProjectStaffingPods() {
+export default function ProjectStaffingPods({ enquiryHref = "/contact#talent" }: { enquiryHref?: string }) {
   return (
     <section className="home-section overflow-x-clip bg-white">
       <div className="section-shell">
@@ -76,7 +76,7 @@ export default function ProjectStaffingPods() {
 
             <div className="mt-7 sm:mt-8">
               <PrimaryCtaLink
-                href="/contact#talent"
+                href={enquiryHref}
                 color={TALENT_HOME.primary}
                 textColor={TALENT_HOME.accent}
               >

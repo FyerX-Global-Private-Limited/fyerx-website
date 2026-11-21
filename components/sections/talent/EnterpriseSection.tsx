@@ -30,7 +30,7 @@ function FeatureCheck() {
   );
 }
 
-export default function EnterpriseSection() {
+export default function EnterpriseSection({ enquiryHref = "/contact#talent" }: { enquiryHref?: string }) {
   return (
     <section className="overflow-x-clip bg-white">
       <div className="mx-auto max-w-[1400px]">
@@ -58,7 +58,7 @@ export default function EnterpriseSection() {
             </ul>
 
             <div className="mt-7">
-              <PrimaryCtaLink href="/contact#talent" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
+              <PrimaryCtaLink href={enquiryHref} color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
                 Contact Us
               </PrimaryCtaLink>
             </div>
