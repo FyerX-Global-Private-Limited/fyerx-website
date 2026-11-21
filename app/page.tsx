@@ -16,7 +16,18 @@ import SecurityControl from "@/components/sections/main/securitycontrol";
 import Trust from "@/components/sections/main/trust";
 import { metadataForPath } from "@/lib/seo";
 
-export const metadata: Metadata = metadataForPath("/");
+const homepageMetadata = metadataForPath("/");
+
+export const metadata: Metadata = {
+  ...homepageMetadata,
+  verification: {
+    ...homepageMetadata.verification,
+    other: {
+      ...homepageMetadata.verification?.other,
+      "msvalidate.01": "355E214250583797E5A4AF248FB4698B",
+    },
+  },
+};
 
 export default function Home() {
   return (
