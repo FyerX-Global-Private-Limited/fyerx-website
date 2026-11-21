@@ -212,7 +212,11 @@ function StackedCaseStudyCard({
   );
 }
 
-export default function StackedScrollSection() {
+export default function StackedScrollSection({ featured }: { featured?: string }) {
+  const studies = featured
+    ? [...TALENT_CASE_STUDIES.filter(study => study.slug === featured),
+       ...TALENT_CASE_STUDIES.filter(study => study.slug !== featured)]
+    : TALENT_CASE_STUDIES;
   // Sticky stack on desktop only — mobile shows a normal stacked section so
   // the full card (including the visual panel) stays visible while scrolling.
   const [stackEnabled, setStackEnabled] = useState(false);
@@ -243,7 +247,7 @@ export default function StackedScrollSection() {
             stackEnabled ? "pb-4 sm:pb-6" : "pb-4 sm:pb-6"
           }`}
         >
-          {TALENT_CASE_STUDIES.map((study, index) => (
+          {studies.map((study, index) => (
             <StackedCaseStudyCard
               key={study.slug}
               study={study}

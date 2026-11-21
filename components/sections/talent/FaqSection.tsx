@@ -6,7 +6,7 @@ import React, { useState } from "react";
  * Frequently Asked Questions — Talent homepage.
  */
 
-const faqs = [
+const defaultFaqs = [
   {
     q: "What talent solutions does FyerX Talent provide?",
     a: "We support contract staffing, RPO, permanent hiring, executive search, technology hiring, HR advisory, and global staffing requirements.",
@@ -66,7 +66,11 @@ function ChevronIcon({ open }: { open: boolean }) {
   );
 }
 
-export default function FaqSection() {
+export default function FaqSection({ localQuestions = [], includeGeneral = true }: {
+  localQuestions?: { q: string; a: string }[];
+  includeGeneral?: boolean;
+}) {
+  const faqs = [...localQuestions, ...(includeGeneral ? defaultFaqs : [])];
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggle = (i: number) => setOpenIndex((prev) => (prev === i ? null : i));

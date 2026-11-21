@@ -6,7 +6,7 @@ import React, { useState } from "react";
  * Frequently Asked Questions — Marketing homepage.
  */
 
-const faqs = [
+const defaultFaqs = [
   {
     q: "What does FyerX Marketing do?",
     a: "We provide strategy, demand generation, search visibility, AI marketing, social, content, performance, branding, web, and automation support.",
@@ -66,7 +66,11 @@ function ChevronIcon({ open }: { open: boolean }) {
   );
 }
 
-export default function FaqSection() {
+export default function FaqSection({ localQuestions = [], includeGeneral = true }: {
+  localQuestions?: { q: string; a: string }[];
+  includeGeneral?: boolean;
+}) {
+  const faqs = [...localQuestions, ...(includeGeneral ? defaultFaqs : [])];
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggle = (i: number) => setOpenIndex((prev) => (prev === i ? null : i));

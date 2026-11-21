@@ -53,7 +53,7 @@ function MetricPills({
   );
 }
 
-function CaseStudyCard({ study }: { study: CaseStudy & { imageSrc: string } }) {
+function CaseStudyCard({ study, usePublishedMetrics }: { study: CaseStudy & { imageSrc: string }; usePublishedMetrics: boolean }) {
   return (
     <article
       className="overflow-hidden rounded-[28px] sm:rounded-[32px]"
@@ -75,7 +75,7 @@ function CaseStudyCard({ study }: { study: CaseStudy & { imageSrc: string } }) {
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#3d4a5c]">
             {study.cardSummary ?? study.summary}
           </p>
-          <MetricPills metrics={study.cardMetrics} accentColor={study.accentColor} />
+          <MetricPills metrics={usePublishedMetrics ? study.metrics : study.cardMetrics} accentColor={study.accentColor} />
           <PrimaryCtaLink
             href={`/marketing/case-studies/${study.slug}`}
             variant="nav"
@@ -107,7 +107,11 @@ function CaseStudyCard({ study }: { study: CaseStudy & { imageSrc: string } }) {
   );
 }
 
-export default function StackedScrollSection() {
+export default function StackedScrollSection({ location, featured }: { location?: boolean; featured?: string }) {
+  const studies = featured
+    ? [...MARKETING_HOME_CASE_STUDIES.filter(study => study.slug === featured),
+       ...MARKETING_HOME_CASE_STUDIES.filter(study => study.slug !== featured)]
+    : MARKETING_HOME_CASE_STUDIES;
   return (
     <section className="w-full overflow-x-clip bg-white">
       <div className="mx-auto w-full max-w-[1400px]">
@@ -125,8 +129,8 @@ export default function StackedScrollSection() {
         </div>
 
         <div className="relative mt-8 flex flex-col gap-6 md:mt-12 md:gap-8">
-          {MARKETING_HOME_CASE_STUDIES.map((study) => (
-            <CaseStudyCard key={study.slug} study={study} />
+          {studies.map((study) => (
+            <CaseStudyCard key={study.slug} study={study} usePublishedMetrics={Boolean(location)} />
           ))}
         </div>
       </div>
