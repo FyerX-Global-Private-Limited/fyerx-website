@@ -40,6 +40,7 @@ const EXACT_REDIRECTS: Record<string, string> = {
   "/digital-marketing": "/marketing/services",
   "/services": "/marketing/services",
   "/portfolio": "/marketing/case-studies",
+  "/portfolio/cinepebble-ui-design": "/marketing/case-studies/cinepebble",
   "/portfolio-all": "/marketing/case-studies",
   "/case-study": "/marketing/case-studies",
   "/case-studies": "/marketing/case-studies",
