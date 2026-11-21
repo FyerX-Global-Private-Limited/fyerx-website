@@ -10,7 +10,7 @@ import TechSolutionsSection from "@/components/sections/technology/TechSolutions
 import TechIndustriesSection from "@/components/sections/technology/TechIndustriesSection";
 import TechApproachSection from "@/components/sections/technology/TechApproachSection";
 import TechStartSection from "@/components/sections/technology/TechStartSection";
-import TechInsightsSection from "@/components/sections/technology/TechInsightsSection";
+import LatestBlogs from "@/components/sections/LatestBlogs";
 import TechTrustSection from "@/components/sections/technology/TechTrustSection";
 import TechFaqSection from "@/components/sections/technology/TechFaqSection";
 import TechFinalCta from "@/components/sections/technology/TechFinalCta";
@@ -33,8 +33,8 @@ export default function TechnologyHomePage() {
       <TechIndustriesSection />
       <TechApproachSection />
       <TechStartSection />
-      <TechInsightsSection />
       <TechTrustSection />
+      <LatestBlogs topic="technology" />
       <TechFaqSection />
       <TechFinalCta />
       <TechContactSection />

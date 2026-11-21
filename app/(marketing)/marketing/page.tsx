@@ -13,7 +13,7 @@ import CampaignsSection from "@/components/sections/marketing/CampaignsSection";
 import TestimonialsCTA from "@/components/sections/marketing/TestimonialsCTA";
 import IntegrationsSection from "@/components/sections/marketing/IntegrationsSection";
 import EnterpriseSection from "@/components/sections/marketing/EnterpriseSection";
-import ResourcesSection from "@/components/sections/marketing/ResourcesSection";
+import LatestBlogs from "@/components/sections/LatestBlogs";
 import FaqSection from "@/components/sections/marketing/FaqSection";
 
 import { metadataForPath } from "@/lib/seo";
@@ -34,7 +34,7 @@ export default function MarketingPage() {
       <CampaignsSection />
       <IntegrationsSection />
       <EnterpriseSection />
-      <ResourcesSection />
+      <LatestBlogs topic="marketing" />
       <FaqSection />
       <TestimonialsCTA />
       <DivisionServicesNav division="marketing" />

@@ -9,7 +9,7 @@ import StackedScrollSection from "@/components/sections/talent/StackedScrollSect
 import IndustriesSection from "@/components/sections/talent/IndustriesSection";
 import CampaignsSection from "@/components/sections/talent/CampaignsSection";
 import EnterpriseSection from "@/components/sections/talent/EnterpriseSection";
-import ResourcesSection from "@/components/sections/talent/ResourcesSection";
+import LatestBlogs from "@/components/sections/LatestBlogs";
 import TestimonialsCTA from "@/components/sections/talent/TestimonialsCTA";
 import FaqSection from "@/components/sections/talent/FaqSection";
 import TalentClosingSection from "@/components/sections/talent/TalentClosingSection";
@@ -31,8 +31,8 @@ export default function TalentHomePage() {
       <IndustriesSection />
       <CampaignsSection />
       <EnterpriseSection />
-      <ResourcesSection />
       <TestimonialsCTA />
+      <LatestBlogs topic="talent" />
       <FaqSection />
       <DivisionServicesNav division="talent" />
     </>

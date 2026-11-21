@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { geistSans, geistMono, inter, interTight, poppins } from "./fonts";
 import "./globals.css";
 import StyledJsxRegistry from "./registry";
@@ -11,11 +11,6 @@ import { SITE_OG_IMAGE, SITE_OG_IMAGE_META, SITE_URL } from "@/data/seo-metadata
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "FyerX",
-  icons: {
-    icon: [{ url: "/favicon.webp", type: "image/webp" }],
-    shortcut: ["/favicon.webp"],
-    apple: [{ url: "/favicon.webp", type: "image/webp" }],
-  },
   openGraph: {
     siteName: "FyerX",
     locale: "en_IN",

@@ -9,7 +9,7 @@ import MainCapabilityAreas from "@/components/sections/main/MainCapabilityAreas"
 import HowWeWork from "@/components/sections/main/HowWeWork";
 import TrackRecord from "@/components/sections/main/TrackRecord";
 import Leadership from "@/components/sections/main/Leadership";
-import GrowthOutlook from "@/components/sections/main/GrowthOutlook";
+import LatestBlogs from "@/components/sections/LatestBlogs";
 import TestimonialsCTA from "@/components/sections/main/TestimonialsCTA";
 import AiHiring from "@/components/sections/main/aihiring";
 import SecurityControl from "@/components/sections/main/securitycontrol";
@@ -34,7 +34,7 @@ export default function Home() {
         <Leadership />
         {/* <Trust /> */}
         <SecurityControl />
-        <GrowthOutlook />
+        <LatestBlogs />
         <TestimonialsCTA />
       </main>
       <MainFooter />
