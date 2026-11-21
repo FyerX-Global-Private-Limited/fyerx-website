@@ -72,7 +72,7 @@ function TalentPeopleMarquee() {
                   width={640}
                   height={5232}
                   priority={index === 0 && copy === 0}
-                  sizes="(max-width: 1024px) 22vw, 160px"
+                  sizes="(max-width: 479px) calc(25vw - 14px), (max-width: 639px) 106px, (max-width: 1023px) 136px, (max-width: 1279px) 132px, 153px"
                   className="block h-auto w-full shrink-0 select-none"
                   draggable={false}
                 />
