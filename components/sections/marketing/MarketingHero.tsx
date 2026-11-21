@@ -15,18 +15,21 @@ const WORDS = [
 
 const ROTATE_MS = 5000;
 
-export default function MarketingHero() {
+type LocationHero = { title: string; highlight: string; description: string; href: string; action: string };
+
+export default function MarketingHero({ location }: { location?: LocationHero }) {
   const [index, setIndex] = useState(0);
   const pausedRef = useRef(false);
   const stoppedRef = useRef(false);
 
   useEffect(() => {
+    if (location) return;
     const id = setInterval(() => {
       if (pausedRef.current || stoppedRef.current) return;
       setIndex((i) => (i + 1) % WORDS.length);
     }, ROTATE_MS);
     return () => clearInterval(id);
-  }, []);
+  }, [location]);
 
   const { w, bg, dot, text } = WORDS[index];
 
@@ -58,7 +61,7 @@ export default function MarketingHero() {
         </div>
 
         <h1 className="mt-3 text-[clamp(1.625rem,7vw,6rem)] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)] sm:mt-4 sm:leading-[1.2] sm:tracking-[-0.03em] lg:mt-4 lg:leading-[1.26] lg:tracking-[-0.04em]">
-          Marketing built to create{" "}
+          {location?.title ?? "Marketing built to create"}{" "}
           <span
             className="inline-flex h-[1.22em] -translate-y-[0.06em] items-center rounded-full pl-[0.4em] pr-[0.48em] align-middle transition-colors duration-300"
             style={{ backgroundColor: bg }}
@@ -83,24 +86,23 @@ export default function MarketingHero() {
                 aria-hidden="true"
               />
               <span className="leading-none">
-                {w}.
+                {location?.highlight ?? w + "."}
               </span>
             </span>
           </span>
         </h1>
 
-        <p className="mt-4 text-[15px] leading-[1.5] text-[#191918] sm:mt-5 sm:text-[17px] lg:mt-[26px] lg:text-[20px]">
-          We combine strategy, creative, search, and automation into marketing
-          programs that build visibility and drive conversions.
+        <p className={"mt-4 text-[15px] leading-[1.5] text-[#191918] sm:mt-5 sm:text-[17px] lg:mt-[26px] lg:text-[20px]" + (location ? " mx-auto max-w-[52rem]" : "")}>
+          {location?.description ?? "We combine strategy, creative, search, and automation into marketing programs that build visibility and drive conversions."}
         </p>
 
         <div className="mt-6 flex w-full flex-col items-center justify-center sm:mt-[30px]">
           <PrimaryCtaLink
-            href="/contact#marketing"
-            className="w-[234px] justify-center text-black!"
+            href={location?.href ?? "/contact#marketing"}
+            className={(location ? "min-w-[234px]" : "w-[234px]") + " justify-center text-black!"}
             color={MARKETING_HOME.primary}
           >
-            Start a Conversation
+            {location?.action ?? "Start a Conversation"}
           </PrimaryCtaLink>
         </div>
       </div>

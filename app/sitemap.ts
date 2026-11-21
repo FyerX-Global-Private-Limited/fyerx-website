@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { serviceDirectory } from "@/lib/service-directory";
+import { locationPages, locationsPath } from "@/data/location-pages";
 import { ALL_INDEXABLE_ENTRIES, SITE_URL } from "@/data/seo-metadata";
 
 import { livePosts } from "@/lib/editorial/store";
@@ -22,5 +23,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   });
   const listed = new Set(pages.map(page => page.url));
   const services = serviceDirectory.map(service => ({ url: SITE_URL + service.path })).filter(page => !listed.has(page.url));
-  return [...pages, ...services, ...blog];
+  const locations = [locationsPath, ...locationPages.map(page => "/" + page.slug)]
+    .map(path => ({ url: SITE_URL + path }))
+    .filter(page => !listed.has(page.url));
+  return [...pages, ...services, ...locations, ...blog];
 }
+

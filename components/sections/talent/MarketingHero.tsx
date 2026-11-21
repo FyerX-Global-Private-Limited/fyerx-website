@@ -112,7 +112,9 @@ function PillarCard({
   );
 }
 
-export default function MarketingHero() {
+type LocationHero = { title: string; highlight: string; description: string; href: string; action: string };
+
+export default function MarketingHero({ location }: { location?: LocationHero }) {
   return (
     <section className="overflow-x-clip bg-white pt-1 sm:pt-4 lg:pt-0">
       <div className="mx-auto grid w-full max-w-[1400px] items-center gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-16 xl:gap-20">
@@ -125,25 +127,23 @@ export default function MarketingHero() {
           </span>
 
           <h1 className="mt-4 max-w-[18ch] text-[clamp(1.75rem,6.5vw,3.25rem)] font-medium leading-[1.12] tracking-[-0.03em] text-[var(--ink)] sm:mt-5">
-            Hire Technology Talent for{" "}
-            <span className="talent-gradient-text">Critical Roles</span>
+            {location?.title ?? "Hire Technology Talent for"}{" "}
+            <span className="talent-gradient-text">{location?.highlight ?? "Critical Roles"}</span>
           </h1>
 
           <p className="mt-4 max-w-[32rem] text-[15px] leading-relaxed text-[#3d4a5c] sm:mt-5 sm:text-[17px]">
-            Hire contract professionals, permanent employees, and project teams
-            across ServiceNow, SAP, Salesforce, Data & AI, Cloud, DevOps, and
-            more.
+            {location?.description ?? "Hire contract professionals, permanent employees, and project teams across ServiceNow, SAP, Salesforce, Data & AI, Cloud, DevOps, and more."}
           </p>
 
-          <div className="mt-6 grid w-full max-w-[34rem] grid-cols-1 gap-3 sm:mt-8 sm:grid-cols-2 sm:gap-4">
+          {!location && <div className="mt-6 grid w-full max-w-[34rem] grid-cols-1 gap-3 sm:mt-8 sm:grid-cols-2 sm:gap-4">
             {PILLARS.map((pillar) => (
               <PillarCard key={pillar.title} {...pillar} />
             ))}
-          </div>
+          </div>}
 
           <div className="mt-6 flex w-full justify-start sm:mt-7">
-            <PrimaryCtaLink href="/contact#talent" color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
-              Talk to Our Team
+            <PrimaryCtaLink href={location?.href ?? "/contact#talent"} color={TALENT_HOME.primary} textColor={TALENT_HOME.accent}>
+              {location?.action ?? "Talk to Our Team"}
             </PrimaryCtaLink>
           </div>
         </div>

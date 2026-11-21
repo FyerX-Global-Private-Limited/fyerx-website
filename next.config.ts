@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import { getLeadsApiPath } from "./lib/leads-api-path";
 import { wordpressPermanentRedirects } from "./lib/wordpress-legacy";
+import { locationRedirects } from "./data/location-pages";
 
 const leadsApiPath = getLeadsApiPath();
 
@@ -31,6 +32,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       ...wordpressPermanentRedirects(),
+      ...locationRedirects(),
       {
         source: "/technology/case-studies/servicenow-platform-optimisation",
         destination: "/technology/case-studies/servicenow-workflow-transformation",
