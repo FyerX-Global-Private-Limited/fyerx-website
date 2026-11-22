@@ -192,8 +192,14 @@
 
 .cardMeta {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 11px;
+}
+
+.publicationDate {
+  color: #596174;
+  font-size: .8rem;
 }
 
 .topic {

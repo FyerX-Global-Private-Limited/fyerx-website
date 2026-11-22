@@ -33,7 +33,7 @@ export default async function LatestBlogs({ topic, featured, relatedTo }: {
           <BlogCarousel labelId={`${id}-title`}>
             {articles.map((article) => (
               <article key={article.slug} className={styles.card} style={blogBrandStyle(article.topic)}>
-                <Link prefetch={false} href={`/blog/${article.slug}`} aria-labelledby={`${id}-${article.slug}-title`}>
+                <Link prefetch={false} href={`/blog/${article.slug}`} target="_blank" rel="noopener" aria-labelledby={`${id}-${article.slug}-title`}>
                   <div className={styles.cover}>
                     <Image src={article.cover} alt="" fill unoptimized sizes="(max-width: 639px) 100vw, (max-width: 959px) 50vw, 400px" />
                   </div>

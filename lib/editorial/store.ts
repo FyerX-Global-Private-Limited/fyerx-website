@@ -219,7 +219,7 @@ export function livePost(slug: string) {
   return { redirect: redirect?.slug as string | undefined };
 }
 
-export type BlogCard = { slug: string; topic: InsightTopic; title: string; description: string; cover: string };
+export type BlogCard = { slug: string; topic: InsightTopic; title: string; description: string; cover: string; published: string };
 type CardFilters = { topic?: InsightTopic; featured?: boolean; relatedTo?: { slug: string; topic: InsightTopic } };
 
 const featuredFirst = "(SELECT position FROM featured_order WHERE id = live.id) ASC NULLS LAST, ";
@@ -284,7 +284,7 @@ export function blogCards(filters: CardFilters, limit = 10, offset = 0): BlogCar
     : filters.featured ? featuredFirst : "";
   if (filters.relatedTo) values.push(filters.relatedTo.topic);
   return db().prepare(`
-    SELECT slug, json_extract(draft, '$.topic') AS topic, json_extract(draft, '$.title') AS title,
+    SELECT slug, published, json_extract(draft, '$.topic') AS topic, json_extract(draft, '$.title') AS title,
       json_extract(draft, '$.description') AS description, json_extract(draft, '$.cover.src') AS cover
     FROM live ${where}
     ORDER BY ${priority} published DESC, slug

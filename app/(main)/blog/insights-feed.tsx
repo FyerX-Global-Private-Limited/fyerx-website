@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Code2, LayoutGrid, Megaphone, Star, Users } from "lucide-react";
 import { insightTopics, type InsightTopic } from "@/data/blog-topics";
+import { dateLabel } from "@/lib/editorial/traffic-dates";
 import { blogCardPage, blogCardPagination } from "@/lib/editorial/store";
 import { Pagination } from "@/components/ui/Pagination";
 import { pageHref, type Query } from "@/lib/pagination";
@@ -69,13 +70,14 @@ export function InsightsFeed({ topic, featured, query }: Feed) {
             <div className={styles.grid}>
               {articles.map((article) => (
                 <article key={article.slug} className={styles.card} style={blogBrandStyle(article.topic)}>
-                  <Link prefetch={false} href={`/blog/${article.slug}`} aria-labelledby={`${article.slug}-title`}>
+                  <Link prefetch={false} href={`/blog/${article.slug}`} target="_blank" rel="noopener" aria-labelledby={`${article.slug}-title`}>
                     <div className={styles.cardImage}>
                       <Image src={article.cover} alt="" fill unoptimized sizes="(max-width: 700px) 95vw, 42vw" />
                     </div>
                     <div className={styles.cardBody}>
                       <div className={styles.cardMeta}>
                         <span className={styles.topic}>{insightTopics[article.topic].label}</span>
+                        {!active && <time className={styles.publicationDate} dateTime={article.published}>{dateLabel(article.published, true)}</time>}
                       </div>
                       <h3 id={`${article.slug}-title`}>{article.title}</h3>
                       <p>{article.description}</p>
