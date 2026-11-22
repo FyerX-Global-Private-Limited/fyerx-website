@@ -63,7 +63,7 @@ export default function LocationPageView({ page }: { page: LocationPage }) {
         <MarketingCapabilities />
         <AIPlatformHero />
         {example}
-        <MarketingCases location featured={service.proof} />
+        <MarketingCases featured={service.proof} />
         <Leadership />
         <MarketingCampaigns />
         <Integrations />

@@ -136,7 +136,7 @@ export const SEO_MANIFEST: SeoEntry[] = [
     path: "/marketing/case-studies/wegofin",
     title: "Wegofin Digital Marketing Case Study | FyerX",
     description:
-      "FyerX combined celebrity-led brand campaigns, sales enablement, and landing pages to establish market trust for WegoFin's platform.",
+      "FyerX developed WegoFin’s B2B banking positioning and supported a celebrity-led campaign with sales collateral and landing pages.",
     canonical: `${SITE_URL}/marketing/case-studies/wegofin`,
     robots: "index,follow",
     ogType: "article",
@@ -145,7 +145,7 @@ export const SEO_MANIFEST: SeoEntry[] = [
     path: "/marketing/case-studies/cinepebble",
     title: "Cinepebble Digital Marketing Case Study | FyerX",
     description:
-      "FyerX engineered the complete brand identity, end-to-end UI/UX architecture across 45+ product screens, and go-to-market creative assets.",
+      "FyerX built Cinepebble’s brand and mobile app experience. Its Facebook and Instagram launch campaigns generated more than 3,400 website pre-signups.",
     canonical: `${SITE_URL}/marketing/case-studies/cinepebble`,
     robots: "index,follow",
     ogType: "article",
@@ -154,7 +154,7 @@ export const SEO_MANIFEST: SeoEntry[] = [
     path: "/marketing/case-studies/workdayz",
     title: "Workdayz Digital Marketing Case Study | FyerX",
     description:
-      "FyerX unified multiple apparel verticals into a cohesive brand identity system, delivering comprehensive guidelines and collateral.",
+      "FyerX launched Workdayz as a unified B2B workwear brand, with six sub-brands, a new website and more than 40 brand assets.",
     canonical: `${SITE_URL}/marketing/case-studies/workdayz`,
     robots: "index,follow",
     ogType: "article",
@@ -163,7 +163,7 @@ export const SEO_MANIFEST: SeoEntry[] = [
     path: "/marketing/case-studies/sayyam",
     title: "Sayyam Digital Marketing Case Study | FyerX",
     description:
-      "FyerX mapped high-intent investor search queries, restructuring core service pages and technical SEO signals to capture competitive terms.",
+      "FyerX helped Sayyam Investments earn 18 first-page rankings and generate 16 investor enquiries within six months through targeted SEO.",
     canonical: `${SITE_URL}/marketing/case-studies/sayyam`,
     robots: "index,follow",
     ogType: "article",
@@ -172,7 +172,7 @@ export const SEO_MANIFEST: SeoEntry[] = [
     path: "/marketing/case-studies/adro",
     title: "Adro Digital Marketing Case Study | FyerX",
     description:
-      "FyerX restructured Meta and Google ad funnels alongside landing pages, generating ₹8.32L in attributed revenue across 860 orders.",
+      "FyerX rebuilt Adro’s paid campaigns around website purchases, achieving 12× return on ad spend on Meta and 7× on Google.",
     canonical: `${SITE_URL}/marketing/case-studies/adro`,
     robots: "index,follow",
     ogType: "article",
@@ -181,7 +181,7 @@ export const SEO_MANIFEST: SeoEntry[] = [
     path: "/marketing/case-studies/onroadz",
     title: "Onroadz Digital Marketing Case Study | FyerX",
     description:
-      "FyerX deployed a multi-city local search and paid acquisition framework, ranking rental keywords to scale fleet utilization.",
+      "FyerX used local SEO and Google Ads to help Onroadz and OnTrot rank for 100+ first-page keywords and generate 250+ daily lead calls.",
     canonical: `${SITE_URL}/marketing/case-studies/onroadz`,
     robots: "index,follow",
     ogType: "article",

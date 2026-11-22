@@ -45,17 +45,15 @@ export function UsOverview() {
       <TrustBar />
       <div id="us-services" className="scroll-mt-24">
         <WhoWeAre usCards={usHubCards} />
+        <nav aria-label="Specialist staffing" className="section-shell mt-5 px-4 text-sm font-semibold">
+          <Link href={usPaths.servicenow} className="underline underline-offset-4">ServiceNow staffing</Link>
+        </nav>
       </div>
       <HowWeWork content={usHubWork} />
       <Capabilities enquiryHref="#us-services" />
       <SecurityControl content={usHubControl} />
       <Leadership />
       <LatestBlogs />
-      <nav aria-label="US services" className="section-shell flex flex-wrap gap-4 px-4 text-sm font-semibold">
-        <Link href={usPaths.staffing} className="underline underline-offset-4">Offshore IT staffing</Link>
-        <Link href={usPaths.servicenow} className="underline underline-offset-4">ServiceNow staffing</Link>
-        <Link href={usPaths.marketing} className="underline underline-offset-4">B2B marketing for IT services</Link>
-      </nav>
     </div>
   );
 }
@@ -77,7 +75,7 @@ export function UsOfferPage({ offerKey }: { offerKey: UsOfferKey }) {
           <HowWeWork content={copy.workflow} />
           <MarketingCapabilityAreas />
           <SecurityControl content={copy.checkpoints} />
-          <MarketingCases featured="workdayz" location />
+          <MarketingCases featured="workdayz" />
           <MarketingIntegrations />
           <MarketingEnterprise enquiryHref={enquiry} />
           <LatestBlogs topic="marketing" />

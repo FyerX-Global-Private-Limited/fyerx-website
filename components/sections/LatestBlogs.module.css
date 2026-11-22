@@ -7,6 +7,13 @@
   padding: clamp(40px, 5vw, 72px) 20px;
 }
 
+/* Homepage layouts already space neighboring sections with their flex gap. */
+:global(.home-main) > .section { padding-block: 0; }
+
+:global(.home-article-feeds) > .section:first-child { padding-top: 0; }
+
+:global(.home-article-feeds) > .section:last-child { padding-bottom: 0; }
+
 .section:has(+ .section) { padding-bottom: 0; }
 
 .section + .section { padding-top: clamp(32px, 4vw, 56px); }

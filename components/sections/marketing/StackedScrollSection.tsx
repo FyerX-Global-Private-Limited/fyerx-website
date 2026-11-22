@@ -5,8 +5,8 @@ import { MARKETING_HOME } from "@/lib/marketing-home-palette";
 import {
   MARKETING_HOME_CASE_STUDIES,
   type CaseStudy,
-  type CaseStudyMetric,
 } from "@/data/marketing-case-studies";
+import { CaseStudyMetricPills } from "./CaseStudyMetricPills";
 
 function CaseStudyBadge({
   label,
@@ -29,31 +29,7 @@ function CaseStudyBadge({
   );
 }
 
-function MetricPills({
-  metrics,
-  accentColor,
-}: {
-  metrics: CaseStudyMetric[];
-  accentColor: string;
-}) {
-  return (
-    <div className="mt-6 flex flex-wrap gap-2.5">
-      {metrics.map((metric) => (
-        <span
-          key={metric.label}
-          className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[13px] shadow-[0_1px_2px_rgba(16,16,20,0.04)]"
-        >
-          <span className="text-[#5a5f6b]">{metric.label}</span>
-          <span className="font-semibold" style={{ color: accentColor }}>
-            {metric.value}
-          </span>
-        </span>
-      ))}
-    </div>
-  );
-}
-
-function CaseStudyCard({ study, usePublishedMetrics }: { study: CaseStudy & { imageSrc: string }; usePublishedMetrics: boolean }) {
+function CaseStudyCard({ study }: { study: CaseStudy & { imageSrc: string } }) {
   return (
     <article
       className="overflow-hidden rounded-[28px] sm:rounded-[32px]"
@@ -73,9 +49,9 @@ function CaseStudyCard({ study, usePublishedMetrics }: { study: CaseStudy & { im
             {study.cardTitle ?? study.title}
           </h3>
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#3d4a5c]">
-            {study.cardSummary ?? study.summary}
+            {study.summary}
           </p>
-          <MetricPills metrics={usePublishedMetrics ? study.metrics : study.cardMetrics} accentColor={study.accentColor} />
+          <CaseStudyMetricPills metrics={study.metrics} accentColor={study.accentColor} />
           <PrimaryCtaLink
             href={`/marketing/case-studies/${study.slug}`}
             variant="nav"
@@ -107,7 +83,7 @@ function CaseStudyCard({ study, usePublishedMetrics }: { study: CaseStudy & { im
   );
 }
 
-export default function StackedScrollSection({ location, featured }: { location?: boolean; featured?: string }) {
+export default function StackedScrollSection({ featured }: { featured?: string }) {
   const studies = featured
     ? [...MARKETING_HOME_CASE_STUDIES.filter(study => study.slug === featured),
        ...MARKETING_HOME_CASE_STUDIES.filter(study => study.slug !== featured)]
@@ -130,7 +106,7 @@ export default function StackedScrollSection({ location, featured }: { location?
 
         <div className="relative mt-8 flex flex-col gap-6 md:mt-12 md:gap-8">
           {studies.map((study) => (
-            <CaseStudyCard key={study.slug} study={study} usePublishedMetrics={Boolean(location)} />
+            <CaseStudyCard key={study.slug} study={study} />
           ))}
         </div>
       </div>

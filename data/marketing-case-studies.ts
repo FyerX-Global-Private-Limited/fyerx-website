@@ -12,7 +12,6 @@ export type CaseStudy = {
   summary: string;
   /** Homepage card copy — kept when inner-page headline differs from the Figma cards. */
   cardTitle?: string;
-  cardSummary?: string;
   services: string[];
   imageSrc?: string;
   cardBg: string;
@@ -20,7 +19,6 @@ export type CaseStudy = {
   accentColor: string;
   ctaBg: string;
   ctaText: string;
-  cardMetrics: CaseStudyMetric[];
   metrics: CaseStudyMetric[];
   challenge: string;
   approach: string[];
@@ -32,29 +30,20 @@ export type CaseStudy = {
   };
 };
 
-const FIGMA_CARD_METRICS: CaseStudyMetric[] = [
-  { value: "+41%", label: "Increase in qualified enquiries" },
-  { value: "+33%", label: "Increase in campaign engagement" },
-  { value: "+27%", label: "Increase in product-page visits" },
-];
-
 export const MARKETING_CASE_STUDIES: CaseStudy[] = [
   {
     slug: "wegofin",
     label: "Case Study 01",
     clientName: "WegoFin",
     categoryLabel: "Fintech Go-To-Market & Brand Activation",
-    title: "Driving SME adoption with a celebrity-backed digital banking campaign",
+    title: "Launching a celebrity-backed B2B banking campaign",
     summary:
-      "FyerX combined celebrity-led brand campaigns, sales enablement, and landing pages to establish market trust for WegoFin's platform.",
+      "FyerX developed WegoFin’s B2B banking positioning and supported a celebrity-led campaign with sales collateral and landing pages.",
     cardTitle: "Building a stronger growth engine for a payments platform",
-    cardSummary:
-      "FyerX combined website, performance creative, social media, and video to help WegoFin communicate its payment solutions with greater clarity and drive market engagement.",
     services: [
-      "Demand Generation",
+      "Brand Positioning",
       "Influencer Campaign",
       "Sales Enablement",
-      "Performance Marketing",
       "Landing Pages",
     ],
     imageSrc: "/marketingpageimages/Case Study 01.webp",
@@ -63,23 +52,22 @@ export const MARKETING_CASE_STUDIES: CaseStudy[] = [
     accentColor: "#0A8A4A",
     ctaBg: "#006660",
     ctaText: "#FFFFFF",
-    cardMetrics: FIGMA_CARD_METRICS,
     metrics: [
-      { value: "120+", label: "Qualified SME demos" },
-      { value: "35%", label: "Faster deal closure" },
-      { value: "2", label: "A-list brand ambassadors" },
+      { value: "2", label: "Celebrity ambassadors" },
+      { value: "B2B", label: "Sales collateral" },
+      { value: "Campaign", label: "Landing pages" },
     ],
     challenge:
-      "WeGoFin launched an innovative B2B banking platform but struggled to differentiate against established payment gateways. Sales lacked credible collateral to convince SME owners to switch their financial infrastructure.",
+      "WegoFin needed to distinguish its AI-powered B2B banking platform from established payment gateways and give its sales team clearer material for conversations with SMEs.",
     approach: [
-      "Developed a clear fintech positioning strategy simplifying complex API banking features.",
-      "Executed a high-visibility campaign featuring Rashmika Mandanna and Shraddha Kapoor.",
-      "Equipped sales with targeted B2B collateral and conversion-optimized landing pages.",
+      "Clarified the positioning and messaging for the B2B banking platform.",
+      "Developed a campaign featuring Rashmika Mandanna and Shraddha Kapoor.",
+      "Supported the campaign with targeted sales collateral and optimised landing pages.",
     ],
     results: [
-      "Generated over 120 qualified SME product demos across target commercial accounts.",
-      "Accelerated average deal closure time by 35% using focused sales collateral.",
-      "Elevated brand credibility and digital campaign engagement significantly nationwide.",
+      "The campaign featured two celebrity ambassadors.",
+      "The sales team received material tailored to conversations with B2B prospects.",
+      "Campaign landing pages gave prospects a place to explore the offer.",
     ],
   },
   {
@@ -90,15 +78,13 @@ export const MARKETING_CASE_STUDIES: CaseStudy[] = [
     title:
       "Bringing an entertainment networking platform from wireframes to market launch",
     summary:
-      "FyerX engineered the complete brand identity, end-to-end UI/UX architecture across 45+ product screens, and go-to-market creative assets.",
-    cardSummary:
-      "FyerX engineered the complete brand identity, end-to-end UI/UX architecture across 45+ product screens, and go-to-market creative assets to accelerate creator signups during the official app rollout.",
+      "FyerX built Cinepebble’s brand and mobile app experience. Its Facebook and Instagram launch campaigns generated more than 3,400 website pre-signups.",
     services: [
       "Brand Identity",
       "UI/UX Design",
       "Mobile App Design",
-      "Product Launch",
-      "Design Systems",
+      "Pricing Strategy",
+      "Paid Social",
     ],
     imageSrc: "/marketingpageimages/Case Study 02.webp",
     cardBg: "#F8F1D8",
@@ -106,23 +92,21 @@ export const MARKETING_CASE_STUDIES: CaseStudy[] = [
     accentColor: "#D97706",
     ctaBg: "#F8B104",
     ctaText: "#111111",
-    cardMetrics: FIGMA_CARD_METRICS,
     metrics: [
-      { value: "45+", label: "UI/UX screens built" },
-      { value: "100%", label: "Unified design system" },
-      { value: "+58%", label: "Onboarding completion rate" },
+      { value: "3,400+", label: "Website pre-signups" },
+      { value: "115+", label: "UI/UX screens built" },
+      { value: "1", label: "Product and launch system" },
     ],
     challenge:
-      "Cinepebble required a modern digital product identity and seamless mobile experience to connect film professionals and creators. The platform needed an intuitive architecture to drive creator onboarding before rollout.",
+      "Cinepebble needed a recognisable identity, an intuitive app for movie enthusiasts, pricing for different user groups, and an audience before launch.",
     approach: [
-      "Designed complete visual guidelines, typography, and entertainment-focused design language.",
-      "Architected end-to-end user flows and 45+ interactive mobile application screens.",
-      "Created digital launch collateral and promotional teaser assets for community onboarding.",
+      "Created the visual identity and mascot and designed the mobile app experience.",
+      "Developed pricing for the platform’s different user categories.",
+      "Connected Facebook and Instagram launch campaigns to the website signup journey.",
     ],
     results: [
-      "Delivered an intuitive 45+ screen mobile UI/UX system optimized for creator profiles.",
-      "Unified digital brand identity across all touchpoints prior to public store release.",
-      "Accelerated talent registrations through friction-free user onboarding and portfolio setups.",
+      "Facebook and Instagram launch campaigns generated more than 3,400 website pre-signups.",
+      "FyerX built more than 115 UI/UX screens as part of a single product and launch system.",
     ],
   },
   {
@@ -133,15 +117,13 @@ export const MARKETING_CASE_STUDIES: CaseStudy[] = [
     title:
       "Consolidating multi-vertical corporate workwear into a unified B2B brand",
     summary:
-      "FyerX unified multiple apparel verticals into a cohesive brand identity system, delivering comprehensive guidelines and collateral.",
-    cardSummary:
-      "FyerX unified multiple apparel verticals into a cohesive brand identity system, delivering comprehensive digital guidelines and over 40 corporate sales collaterals to power targeted institutional outreach.",
+      "FyerX launched Workdayz as a unified B2B workwear brand, with six sub-brands, a new website and more than 40 brand assets.",
     services: [
       "Brand Architecture",
       "B2B Positioning",
-      "Sales Enablement",
-      "Digital Guidelines",
-      "Collaterals",
+      "Website Design",
+      "Brand Collateral",
+      "LinkedIn Marketing",
     ],
     imageSrc: "/marketingpageimages/Case Study 03.webp",
     cardBg: "#E4F4FB",
@@ -149,23 +131,21 @@ export const MARKETING_CASE_STUDIES: CaseStudy[] = [
     accentColor: "#2A3594",
     ctaBg: "#2A3594",
     ctaText: "#FFFFFF",
-    cardMetrics: FIGMA_CARD_METRICS,
     metrics: [
-      { value: "6", label: "Sub-brand identities unified" },
-      { value: "40+", label: "B2B sales assets created" },
-      { value: "1", label: "Connected brand architecture" },
+      { value: "6", label: "Sub-brand identities" },
+      { value: "1", label: "Connected B2B brand system" },
+      { value: "40+", label: "Brand assets created" },
     ],
     challenge:
-      "Saraogi operated multiple fragmented workwear sub-brands without a clear parent identity. Enterprise procurement heads struggled to understand the full catalogue scope, leading to disjointed pitches and lost sales.",
+      "The workwear business had established clients under the Saraogi name and relied heavily on referrals. It needed a distinct B2B brand and a way to reach prospects beyond its existing network.",
     approach: [
-      "Consolidated six disparate apparel lines under the unified 'Workdayz' brand architecture.",
-      "Standardized visual guidelines, typography, catalogue layouts, and presentation standards.",
-      "Produced over 40 corporate sales decks, sample kits, and institutional brochures.",
+      "Launched the Workdayz brand and website and created six sub-brand identities for distinct markets.",
+      "Extended the new identity to brochures, packaging, stationery and other brand assets.",
+      "Introduced the brand to relevant business audiences on LinkedIn.",
     ],
     results: [
-      "Unified six fragmented sub-brands into one cohesive, institutional B2B identity system.",
-      "Equipped enterprise sales teams with 40+ standardized sales and presentation assets.",
-      "Streamlined corporate procurement pitches, accelerating institutional client onboarding.",
+      "Six sub-brand identities and more than 40 brand assets formed one B2B brand system.",
+      "Workdayz recorded new hospitality orders after the launch, including from the Maldives.",
     ],
   },
   {
@@ -173,18 +153,14 @@ export const MARKETING_CASE_STUDIES: CaseStudy[] = [
     label: "Case Study 04",
     clientName: "Onroadz",
     categoryLabel: "Multi-City Mobility & Search Acquisition",
-    title:
-      "Expanding rental market reach with programmatic local search architecture",
+    title: "Growing rental enquiries across cities with local SEO and Google Ads",
     summary:
-      "FyerX deployed a multi-city local search and paid acquisition framework, ranking rental keywords to scale fleet utilization.",
-    cardSummary:
-      "FyerX deployed a multi-city local search and paid acquisition framework, ranking over 3,600 high-intent rental keywords to scale organic traffic to 40.6K monthly visits and support a 500+ vehicle fleet.",
+      "FyerX used local SEO and Google Ads to help Onroadz and OnTrot rank for 100+ first-page keywords and generate 250+ daily lead calls.",
     services: [
+      "SEO",
       "Local SEO",
       "Google Ads",
-      "Organic Growth",
-      "Performance Acquisition",
-      "Landing Pages",
+      "Lead Generation",
     ],
     imageSrc: "/marketingpageimages/Case Study 04.webp",
     cardBg: "#FDE8EE",
@@ -192,23 +168,21 @@ export const MARKETING_CASE_STUDIES: CaseStudy[] = [
     accentColor: "#C40650",
     ctaBg: "#C40650",
     ctaText: "#FFFFFF",
-    cardMetrics: FIGMA_CARD_METRICS,
     metrics: [
-      { value: "40.6K", label: "Monthly organic visits" },
-      { value: "3.6K", label: "Ranking rental keywords" },
-      { value: "500+", label: "Rental fleet size supported" },
+      { value: "100+", label: "First-page keywords" },
+      { value: "250+", label: "Daily lead calls" },
+      { value: "500+", label: "Fleet size supported" },
     ],
     challenge:
-      "Onroadz needed to scale self-drive car rental bookings across multiple cities while competing against heavily funded aggregators. The brand required dominant local search visibility without unsustainable ad spend.",
+      "Onroadz needed stronger Google visibility as it expanded into new cities. The launch of OnTrot’s car and bike hosting service also needed sustained search demand.",
     approach: [
-      "Engineered programmatic multi-city landing pages optimized for city-specific rental intent.",
-      "Deployed targeted Google Search campaigns capturing urgent, same-day vehicle bookings.",
-      "Implemented localized schema markup and Google Business Profile optimization across branches.",
+      "Used SEO and local SEO to target high-intent, location-specific searches for Onroadz and OnTrot.",
+      "Ran Google Ads with festive offers and coupons while organic visibility grew.",
     ],
     results: [
-      "Scaled organic search traffic to 40.6K monthly visits across target operating regions.",
-      "Ranked over 3,600 high-intent vehicle rental keywords on page one of Google.",
-      "Delivered sustained booking volume to support an expanding fleet of over 500 vehicles.",
+      "The portfolio ranked on Google’s first page for more than 100 competitive keywords.",
+      "Together, SEO and Google Ads generated more than 250 daily lead calls.",
+      "The programme supported fleet growth beyond 500 vehicles.",
     ],
   },
   {
@@ -219,9 +193,7 @@ export const MARKETING_CASE_STUDIES: CaseStudy[] = [
     title:
       "Scaling inbound wealth advisory leads through high-intent search visibility",
     summary:
-      "FyerX mapped high-intent investor search queries, restructuring core service pages and technical SEO signals to capture competitive terms.",
-    cardSummary:
-      "FyerX mapped high-intent investor search queries, restructuring core service pages and technical SEO signals to capture competitive terms, securing 18 first-page rankings and 16 qualified investor enquiries.",
+      "FyerX helped Sayyam Investments earn 18 first-page rankings and generate 16 investor enquiries within six months through targeted SEO.",
     services: [
       "Technical SEO",
       "Content Strategy",
@@ -235,11 +207,10 @@ export const MARKETING_CASE_STUDIES: CaseStudy[] = [
     accentColor: "#6A4DF7",
     ctaBg: "#6A4DF7",
     ctaText: "#FFFFFF",
-    cardMetrics: FIGMA_CARD_METRICS,
     metrics: [
       { value: "18", label: "First-page ranking terms" },
-      { value: "+62%", label: "Qualified organic growth" },
-      { value: "16", label: "Direct investor enquiries" },
+      { value: "+62%", label: "Qualified organic sessions" },
+      { value: "16", label: "Investor enquiries" },
     ],
     challenge:
       "Sayyam Investments possessed strong advisory credentials but relied heavily on traditional referrals. High-net-worth investors could not discover their specialized wealth management services through non-branded organic search.",
@@ -259,18 +230,14 @@ export const MARKETING_CASE_STUDIES: CaseStudy[] = [
     label: "Case Study 06",
     clientName: "Adro",
     categoryLabel: "E-commerce Performance & Retention",
-    title:
-      "Restructuring paid acquisition to drive profitable direct-to-consumer scale",
+    title: "Improving return on ad spend for direct-to-consumer apparel",
     summary:
-      "FyerX restructured Meta and Google ad funnels alongside landing pages, generating ₹8.32L in attributed revenue across 860 orders.",
-    cardSummary:
-      "FyerX restructured cross-channel Meta and Google ad funnels alongside conversion landing pages, generating ₹8.32L in attributed revenue across 860 orders while lifting repeat purchases to 9%.",
+      "FyerX rebuilt Adro’s paid campaigns around website purchases, achieving 12× return on ad spend on Meta and 7× on Google.",
     services: [
       "Performance Marketing",
       "Paid Social",
       "Google Ads",
-      "CRO & Landing Pages",
-      "Retention Marketing",
+      "Conversion Optimisation",
     ],
     imageSrc: "/marketingpageimages/Case Study 06.webp",
     cardBg: "#FBE8E0",
@@ -278,23 +245,21 @@ export const MARKETING_CASE_STUDIES: CaseStudy[] = [
     accentColor: "#E44A18",
     ctaBg: "#E44A18",
     ctaText: "#FFFFFF",
-    cardMetrics: FIGMA_CARD_METRICS,
     metrics: [
-      { value: "₹8.32L", label: "Attributed revenue generated" },
-      { value: "860", label: "Direct store orders delivered" },
-      { value: "9%", label: "Returning customer rate" },
+      { value: "12×", label: "Meta ROAS" },
+      { value: "7×", label: "Google ROAS" },
+      { value: "9%+", label: "Returning customer rate" },
     ],
     challenge:
-      "Adro faced escalating customer acquisition costs and low repeat purchase rates across direct-to-consumer channels. Inefficient ad spend and generic landing pages failed to convert seasonal fashion shoppers profitably.",
+      "Adro sold hoodies successfully on Amazon, but its own website generated few sales and previous campaigns put cost per purchase above ₹540.",
     approach: [
-      "Restructured Meta and Google Ads account architecture around high-intent apparel SKUs.",
-      "Deployed high-converting landing pages tailored to specific seasonal ad creative.",
-      "Built post-purchase email and WhatsApp retention workflows to stimulate re-orders.",
+      "Rebuilt Google and Meta campaigns with focused ad sets, product-specific creative and audience targeting.",
+      "Optimised campaigns around website purchases and return on ad spend.",
     ],
     results: [
-      "Generated ₹8.32L in verified store revenue across 860 profitable direct orders.",
-      "Achieved 6.45M targeted brand impressions while maintaining strict ROAS efficiency.",
-      "Lifted returning customer rate to 9% through automated lifecycle re-engagement.",
+      "Facebook and Instagram ads achieved 12× return on ad spend.",
+      "Google and its ad network achieved 7× return on ad spend.",
+      "The returning customer rate exceeded 9%.",
     ],
   },
   {
@@ -317,11 +282,6 @@ export const MARKETING_CASE_STUDIES: CaseStudy[] = [
     accentColor: "#163E6B",
     ctaBg: "#163E6B",
     ctaText: "#FFFFFF",
-    cardMetrics: [
-      { value: "+46%", label: "Increase in qualified enquiries" },
-      { value: "+31%", label: "Increase in site-to-lead rate" },
-      { value: "-22%", label: "Reduction in cost per enquiry" },
-    ],
     metrics: [
       { value: "+46%", label: "Increase in qualified enquiries" },
       { value: "+31%", label: "Increase in site-to-lead rate" },

@@ -43,7 +43,7 @@ export default function Home() {
         <Leadership />
         {/* <Trust /> */}
         <SecurityControl />
-        <div className="min-w-0">
+        <div className="home-article-feeds min-w-0">
           <LatestBlogs />
           <LatestBlogs featured />
         </div>

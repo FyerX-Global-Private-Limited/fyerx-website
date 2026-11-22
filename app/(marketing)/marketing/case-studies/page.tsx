@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
+import { CaseStudyMetricPills } from "@/components/sections/marketing/CaseStudyMetricPills";
 import { PublicImage } from "@/components/ui/PublicImage";
 import { MARKETING_CASE_STUDIES } from "@/data/marketing-case-studies";
 import { metadataForPath } from "@/lib/seo";
@@ -66,6 +67,7 @@ export default function CaseStudiesPage() {
                   {study.title}
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-[#5a5f6b]">{study.summary}</p>
+                {study.imageSrc && <CaseStudyMetricPills metrics={study.metrics} accentColor={study.accentColor} />}
                 <span
                   className="mt-6 inline-flex items-center gap-2 text-sm font-semibold"
                   style={{ color: study.accentColor }}
