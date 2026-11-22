@@ -1,9 +1,10 @@
 import { currentUser } from "@/lib/editorial/auth";
-import { dashboardData } from "./dashboard-data";
+import type { Query } from "@/lib/pagination";
+import { postLibraryData } from "./post-library-data";
 import { Login } from "./session-controls";
 import { PostsList } from "./posts-list";
 
-export default async function EditorialPage({ searchParams }: { searchParams: Promise<{ sample?: string | string[] }> }) {
+export default async function EditorialPage({ searchParams }: { searchParams: Promise<Query> }) {
   if (!(await currentUser())) return <Login />;
-  return <PostsList {...dashboardData((await searchParams).sample)} />;
+  return <PostsList {...postLibraryData(await searchParams)} />;
 }

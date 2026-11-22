@@ -74,6 +74,13 @@ const groupImages: Record<string, string> = {
   "Enterprise Platforms": "/images/services/servicenow-operations.webp",
 };
 
+const technologyRecruitmentImages: Record<string, string> = {
+  "software-development-roles": "/updatedtalentimage/section11-1.webp",
+  "servicenow-enterprise-platform-talent": "/updatedtalentimage/section11-2.webp",
+  "data-ai-talent": "/updatedmainpage/section9-1.webp",
+  "devops-cloud-talent": "/contact/contact-technology.webp",
+};
+
 const coverImages = {
   talent: "/updatedtalentimage/herosection.webp",
   technology: "/contact/contact-technology.webp",
@@ -110,6 +117,9 @@ export function ServiceDetail({division, params}: {division: ServiceDivision; pa
     <ApprovedServiceNow />
   </>;
   const article = articleFor(entry);
+  const specialistImage = division === "talent" && entry.categorySlug === "technology-recruitment"
+    ? technologyRecruitmentImages[entry.slug]
+    : undefined;
   const sample = (samples as Record<string, { title: string; input: string; decision: string; output: string }>)[entry.slug];
   if (!sample) throw new Error(`Missing worked example at ${entry.path}`);
   const team = divisionNames[division];
@@ -141,7 +151,7 @@ export function ServiceDetail({division, params}: {division: ServiceDivision; pa
             <Link className={styles.button} href={enquire}>Discuss your {division === "talent" ? "hiring requirement" : division === "marketing" ? "marketing brief" : "technology project"}</Link>
           </div>
           <figure className={styles.heroArt}>
-            <img src={groupImages[entry.category] || coverImages[division]} alt="" fetchPriority="high" />
+            <img src={specialistImage || groupImages[entry.category] || coverImages[division]} alt="" fetchPriority="high" />
             {entry.image && <div className={styles.glyph}><img src={entry.image} alt=""/></div>}
           </figure>
         </div>

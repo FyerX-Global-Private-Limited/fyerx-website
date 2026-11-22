@@ -25,11 +25,20 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(16px, 2.2vw, 32px);
+  --gap: clamp(16px, 2.2vw, 32px);
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 2 * var(--gap)) / 3);
+  gap: var(--gap);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 6px;
 }
 
 .card {
+  scroll-snap-align: start;
+  min-width: 0;
   border: 1px solid #e4dfe2;
   border-radius: 14px;
   background: #fff;
@@ -134,9 +143,25 @@
 }
 
 @media (max-width: 959px) {
-  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid { grid-auto-columns: calc((100% - var(--gap)) / 2); }
 }
 
 @media (max-width: 639px) {
-  .grid { grid-template-columns: minmax(0, 1fr); }
+  .grid { grid-auto-columns: 88%; }
+}
+.carousel { min-width: 0; }
+.carouselControls { display: flex; justify-content: flex-end; gap: 8px; margin: 0 0 12px; }
+.carouselControls button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  color: var(--accent);
+}
+.carouselControls button:hover:not(:disabled) { background: var(--tint); }
+.carouselControls button:disabled { opacity: .38; }
+@media (prefers-reduced-motion: reduce) {
+  .grid { scroll-behavior: auto; }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 import { PublicImage } from "@/components/ui/PublicImage";
 import { MARKETING_HOME } from "@/lib/marketing-home-palette";
@@ -13,25 +13,35 @@ const WORDS = [
   { w: "Growth", bg: "#fef3c7", dot: "#f59e0b", text: "#6b2f12" },
 ] as const;
 
-const ROTATE_MS = 5000;
-
 type LocationHero = { title: string; highlight: string; description: string; href: string; action: string };
 
 export default function MarketingHero({ location }: { location?: LocationHero }) {
-  const [index, setIndex] = useState(0);
-  const pausedRef = useRef(false);
-  const stoppedRef = useRef(false);
+  const [typing, setTyping] = useState({ index: 0, length: WORDS[0].w.length + 1, deleting: false });
+  const [paused, setPaused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const { w, bg, dot, text } = WORDS[reducedMotion ? 0 : typing.index];
+  const word = w + ".";
 
   useEffect(() => {
-    if (location) return;
-    const id = setInterval(() => {
-      if (pausedRef.current || stoppedRef.current) return;
-      setIndex((i) => (i + 1) % WORDS.length);
-    }, ROTATE_MS);
-    return () => clearInterval(id);
-  }, [location]);
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReducedMotion(preference.matches);
+    update();
+    preference.addEventListener("change", update);
+    return () => preference.removeEventListener("change", update);
+  }, []);
 
-  const { w, bg, dot, text } = WORDS[index];
+  useEffect(() => {
+    if (location || paused || reducedMotion) return;
+    const { index, length, deleting } = typing;
+    const complete = length === word.length;
+    const delay = deleting ? 45 : complete ? 1050 : 75;
+    const id = window.setTimeout(() => {
+      if (deleting && length === 0) setTyping({ index: (index + 1) % WORDS.length, length: 0, deleting: false });
+      else if (deleting || complete) setTyping({ index, length: length - 1, deleting: true });
+      else setTyping({ index, length: length + 1, deleting: false });
+    }, delay);
+    return () => window.clearTimeout(id);
+  }, [location, paused, reducedMotion, typing, word.length]);
 
   return (
     <section
@@ -41,12 +51,6 @@ export default function MarketingHero({ location }: { location?: LocationHero })
           "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       }}
     >
-      <style>{`
-        @keyframes heroWordIn {
-          from { opacity: 0; transform: translateY(0.18em); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
 
       <div className="mx-auto max-w-[1360px] text-center">
         <div className="flex items-center justify-center" aria-hidden="true">
@@ -62,32 +66,32 @@ export default function MarketingHero({ location }: { location?: LocationHero })
 
         <h1 className="mt-3 text-[clamp(1.625rem,7vw,6rem)] font-medium leading-[1.12] tracking-[-0.02em] text-[var(--ink)] sm:mt-4 sm:leading-[1.2] sm:tracking-[-0.03em] lg:mt-4 lg:leading-[1.26] lg:tracking-[-0.04em]">
           {location?.title ?? "Marketing built to create"}{" "}
+          {!location && <span className="sr-only">Clarity.</span>}
           <span
+            aria-hidden={location ? undefined : true}
             className="inline-flex h-[1.22em] -translate-y-[0.06em] items-center rounded-full pl-[0.4em] pr-[0.48em] align-middle transition-colors duration-300"
             style={{ backgroundColor: bg }}
-            onMouseEnter={() => {
-              pausedRef.current = true;
-            }}
-            onMouseLeave={() => {
-              pausedRef.current = false;
-            }}
-            onClick={() => {
-              stoppedRef.current = true;
-            }}
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
           >
             <span
-              key={w}
               className="inline-flex items-center gap-[0.22em] leading-none"
-              style={{ color: text, animation: "heroWordIn 0.3s ease" }}
+              style={{ color: text }}
             >
               <span
                 className="h-[0.27em] w-[0.27em] shrink-0 rounded-full"
                 style={{ backgroundColor: dot }}
                 aria-hidden="true"
               />
-              <span className="leading-none">
-                {location?.highlight ?? w + "."}
-              </span>
+              {location ? location.highlight : (
+                <span className="inline-grid whitespace-nowrap text-left">
+                  <span className="invisible col-start-1 row-start-1">Conversion.</span>
+                  <span className="col-start-1 row-start-1">
+                    {reducedMotion ? word : word.slice(0, typing.length)}
+                    {!reducedMotion && <span className="ml-[0.04em] inline-block h-[0.8em] w-[0.025em] bg-current align-baseline" />}
+                  </span>
+                </span>
+              )}
             </span>
           </span>
         </h1>

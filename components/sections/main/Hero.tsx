@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, type FocusEvent } from "react";
 import Image from "next/image";
 import { PrimaryCtaLink } from "@/components/ui/PrimaryCta";
 
@@ -74,20 +74,32 @@ export default function Hero({ us = false }: { us?: boolean }) {
     ctaHref: pillar.label === "Talent" ? "/us/offshore-it-staffing" : "/us/b2b-marketing-for-it-services",
   })) : defaultPillars;
   const [active, setActive] = useState(0);
-  const stoppedRef = useRef(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const activePillar = pillars[active];
 
   useEffect(() => {
-    const id = window.setInterval(() => {
-      if (stoppedRef.current) return;
-      setActive((i) => (i + 1) % pillars.length);
-    }, 5000);
-    return () => window.clearInterval(id);
-  }, [pillars.length]);
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReducedMotion(preference.matches);
+    update();
+    preference.addEventListener("change", update);
+    return () => preference.removeEventListener("change", update);
+  }, []);
 
-  const selectPillar = (i: number) => {
-    stoppedRef.current = true;
-    setActive(i);
+  useEffect(() => {
+    if (hovered || focused || reducedMotion) return;
+    const id = window.setTimeout(() => setActive((i) => (i + 1) % pillars.length), us ? 5000 : 3000);
+    return () => window.clearTimeout(id);
+  }, [active, focused, hovered, pillars.length, reducedMotion, us]);
+
+  const interaction = {
+    onPointerEnter: (event: React.PointerEvent) => {
+      if (event.pointerType === "mouse") setHovered(true);
+    },
+    onPointerLeave: () => setHovered(false),
+    onFocus: (event: FocusEvent) => setFocused(event.target.matches(":focus-visible")),
+    onBlur: () => setFocused(false),
   };
 
   return (
@@ -115,14 +127,15 @@ export default function Hero({ us = false }: { us?: boolean }) {
               {us ? "FyerX helps US technology businesses add India-based delivery capacity and build a measurable sales pipeline." : "The people, skills, and support to turn plans into progress."}
             </p>
 
-            <div className="mt-5 grid grid-cols-2 gap-2 sm:mt-6 sm:flex sm:flex-wrap lg:max-w-[23rem]">
+            <div {...interaction} className="mt-5 grid grid-cols-2 gap-2 sm:mt-6 sm:flex sm:flex-wrap lg:max-w-[23rem]">
               {pillars.map((pillar, i) => {
                 const isActive = active === i;
                 return (
                   <button
                     key={pillar.label}
                     type="button"
-                    onClick={() => selectPillar(i)}
+                    aria-pressed={isActive}
+                    onClick={() => setActive(i)}
                     className={`inline-flex h-9 w-full cursor-pointer items-center justify-center gap-1.5 rounded-full border px-3 text-[13px] transition-all duration-200 sm:h-8 sm:w-auto sm:justify-start sm:px-3.5 sm:text-sm ${
                       isActive
                         ? "border-transparent font-medium shadow-sm"
@@ -164,6 +177,7 @@ export default function Hero({ us = false }: { us?: boolean }) {
             </div>
 
             <div className="mt-5 sm:mt-6">
+              <div {...interaction} className="w-full sm:w-fit">
               <PrimaryCtaLink
                 href={activePillar.ctaHref}
                 color={activePillar.brandColor}
@@ -172,6 +186,7 @@ export default function Hero({ us = false }: { us?: boolean }) {
               >
                 {us ? (activePillar.label === "Talent" ? "Explore offshore staffing" : "Explore B2B marketing") : "Get Started"}
               </PrimaryCtaLink>
+              </div>
               <p className="mt-3 text-xs leading-relaxed text-slate">
                 {us ? "India-based delivery · US working-hour overlap by agreement" : "Confidential consultation · Custom to your business"}
               </p>
@@ -187,11 +202,11 @@ export default function Hero({ us = false }: { us?: boolean }) {
                 <Image
                   key={pillar.label}
                   src={pillar.image}
-                  alt={`${pillar.label} overview`}
+                  alt={active === i ? `${pillar.label} overview` : ""}
                   fill
                   sizes="(max-width: 1024px) 100vw, 58vw"
                   priority={i === 0}
-                  className={`bg-white object-contain object-center transition-opacity duration-500 ${
+                  className={`bg-white object-contain object-center transition-opacity duration-500 motion-reduce:transition-none ${
                     active === i ? "opacity-100" : "pointer-events-none opacity-0"
                   }`}
                   unoptimized={pillar.label === "Marketing"}

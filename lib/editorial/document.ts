@@ -10,14 +10,14 @@ export type Mark = { type: string; attrs?: { href: string } };
 export type Node = { type: string; attrs?: Record<string, string | number>; text?: string; marks?: Mark[]; content?: Node[] };
 export type Media = { src: string; alt: string; caption: string };
 export type Draft = {
-  title: string; description: string; slug: string; topic: InsightTopic; author: string;
+  title: string; description: string; slug: string; topic: InsightTopic; featured?: boolean; author: string;
   cover: Media; body: Node;
   seo: { title: string; description: string; canonical: string; socialTitle: string; socialDescription: string; socialImage: string; focusPhrase?: string; indexable: boolean };
 };
 
 export function blankDraft(): Draft {
   return {
-    title: "", description: "", slug: "", topic: "talent", author: "FyerX Editorial",
+    title: "", description: "", slug: "", topic: "talent", featured: false, author: "FyerX Editorial",
     cover: { src: "", alt: "", caption: "" }, body: { type: "doc", content: [{ type: "paragraph" }] },
     seo: { title: "", description: "", canonical: "", socialTitle: "", socialDescription: "", socialImage: "", indexable: true },
   };
@@ -79,7 +79,7 @@ export function validateDraft(value: unknown): Draft {
   const seo = record(d.seo);
   const topic = getInsightTopic(string(d.topic, 20));
   const slug = string(d.slug, 90).trim();
-  if (!topic || (slug && (!slugPattern.test(slug) || getInsightTopic(slug)))) throw new Error("Use a lowercase, hyphenated slug distinct from a category");
+  if (!topic || (slug && (!slugPattern.test(slug) || getInsightTopic(slug) || slug === "featured"))) throw new Error("Use a lowercase, hyphenated slug distinct from a category");
   const canonical = string(seo.canonical, 400).trim();
   if (canonical && (!canonical.startsWith("https://") || !safeLink(canonical) || /[#?]/.test(canonical))) {
     throw new Error("Use a complete HTTPS canonical URL without a query or fragment");
@@ -122,7 +122,7 @@ export function validateDraft(value: unknown): Draft {
 
   return {
     title: string(d.title, 160).trim(), description: string(d.description, 500).trim(),
-    slug, topic, author: string(d.author, 100).trim(), cover: media(d.cover),
+    slug, topic, featured: d.featured === true, author: string(d.author, 100).trim(), cover: media(d.cover),
     body: clean(d.body, "", 0),
     seo: {
       title: string(seo.title, 160).trim(), description: string(seo.description, 500).trim(),
@@ -135,6 +135,7 @@ export function validateDraft(value: unknown): Draft {
 
 export function publishIssues(draft: Draft) {
   const issues = [];
+  if (draft.slug === "featured") issues.push("Choose a URL slug other than featured.");
   if (!draft.title || !draft.slug || !draft.description || !draft.author) issues.push("Add a title, slug, summary and author.");
   if (!draft.cover.src || !draft.cover.alt.trim()) issues.push("Add a cover image and describe it in alt text.");
   let hasText = false;

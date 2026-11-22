@@ -1,21 +1,44 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Code2, LayoutGrid, Megaphone, Users } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Code2, LayoutGrid, Megaphone, Star, Users } from "lucide-react";
 import { insightTopics, type InsightTopic } from "@/data/blog-topics";
-import { livePosts } from "@/lib/editorial/store";
+import { blogCardPage, blogCardPagination } from "@/lib/editorial/store";
+import { Pagination } from "@/components/ui/Pagination";
+import { pageHref, type Query } from "@/lib/pagination";
+import type { Metadata } from "next";
 import { editorialMode } from "@/lib/editorial/config";
 import { blogBrandStyle } from "./blog-brand";
 import styles from "./insights.module.css";
 
 const topics = [
   { slug: "", label: "All Blogs", Icon: LayoutGrid },
+  { slug: "featured", label: "Featured Blogs", Icon: Star },
   { slug: "talent", label: insightTopics.talent.label, Icon: Users },
   { slug: "marketing", label: insightTopics.marketing.label, Icon: Megaphone },
   { slug: "technology", label: insightTopics.technology.label, Icon: Code2 },
 ] as const;
 
-export function InsightsFeed({ topic }: { topic?: InsightTopic }) {
-  const articles = livePosts().map((post) => post.draft).filter((draft) => !topic || topic === draft.topic);
+type Feed = { topic?: InsightTopic; featured?: boolean; query: Query };
+
+export function feedMetadata({ topic, featured, query }: Feed): Metadata {
+  const path = featured ? "/blog/featured" : topic ? `/blog/${topic}` : "/blog";
+  const description = topic ? insightTopics[topic].description : featured
+    ? "Selected FyerX articles on talent, marketing and technology."
+    : "Practical perspectives on talent, marketing and technology.";
+  const { page, size, total } = blogCardPagination({ topic, featured }, query);
+  const title = featured ? "Featured Blogs | FyerX" : topic ? `${insightTopics[topic].label} | FyerX Blogs` : "FyerX Blogs";
+  return {
+    title: page > 1 ? `${title} – Page ${page}` : title,
+    description,
+    alternates: { canonical: "https://fyerx.com" + pageHref(path, page, { size: String(size) }) },
+    ...(size !== 10 || (featured && !total) ? { robots: { index: false, follow: true } } : {}),
+  };
+}
+
+export function InsightsFeed({ topic, featured, query }: Feed) {
+  const { articles, pagination } = blogCardPage({ topic, featured }, query);
+  const active = featured ? "featured" : topic ?? "";
+  const path = active ? `/blog/${active}` : "/blog";
 
   return (
     <div style={blogBrandStyle(topic)}>
@@ -30,7 +53,7 @@ export function InsightsFeed({ topic }: { topic?: InsightTopic }) {
         <nav aria-label="Blog categories" className={styles.categories}>
           <p className={styles.navLabel}>Browse by topic</p>
           {topics.map(({ slug, label, Icon }) => (
-            <Link key={label} href={slug ? `/blog/${slug}` : "/blog"} style={blogBrandStyle(slug || undefined)} aria-current={(topic ?? "") === slug ? "page" : undefined}>
+            <Link key={label} href={slug ? `/blog/${slug}` : "/blog"} style={blogBrandStyle(slug && slug !== "featured" ? slug : undefined)} aria-current={active === slug ? "page" : undefined}>
               <Icon aria-hidden="true" size={17} />
               {label}
             </Link>
@@ -38,17 +61,17 @@ export function InsightsFeed({ topic }: { topic?: InsightTopic }) {
         </nav>
         <section aria-labelledby="feed-title">
           <div className={styles.feedHeading}>
-            <h2 id="feed-title">{topic ? insightTopics[topic].label : "All Blogs"}</h2>
-            <span>{articles.length} {articles.length === 1 ? "article" : "articles"}</span>
+            <h2 id="feed-title">{featured ? "Featured Blogs" : topic ? insightTopics[topic].label : "All Blogs"}</h2>
+            <span>{pagination.total} {pagination.total === 1 ? "article" : "articles"}</span>
           </div>
           {topic && <p className={styles.topicDescription}>{insightTopics[topic].description}</p>}
           {articles.length ? (
             <div className={styles.grid}>
               {articles.map((article) => (
                 <article key={article.slug} className={styles.card} style={blogBrandStyle(article.topic)}>
-                  <Link href={`/blog/${article.slug}`} aria-labelledby={`${article.slug}-title`}>
+                  <Link prefetch={false} href={`/blog/${article.slug}`} aria-labelledby={`${article.slug}-title`}>
                     <div className={styles.cardImage}>
-                      <Image src={article.cover.src} alt="" fill unoptimized sizes="(max-width: 700px) 95vw, 42vw" />
+                      <Image src={article.cover} alt="" fill unoptimized sizes="(max-width: 700px) 95vw, 42vw" />
                     </div>
                     <div className={styles.cardBody}>
                       <div className={styles.cardMeta}>
@@ -65,11 +88,12 @@ export function InsightsFeed({ topic }: { topic?: InsightTopic }) {
           ) : (
             <div className={styles.empty}>
               <span className={styles.emptyIcon}><Code2 aria-hidden="true" size={24} /></span>
-              <h3>{topic ? `No ${insightTopics[topic].label} articles yet` : "No articles yet"}</h3>
+              <h3>{featured ? "No featured articles yet" : topic ? `No ${insightTopics[topic].label} articles yet` : "No articles yet"}</h3>
               <p>{topic === "technology" ? "This section will open with its first full-length Technology article." : "Articles will appear here once published."}</p>
-              {topic && <Link className={styles.read} href="/blog">Browse all blogs <ArrowRight aria-hidden="true" size={16} /></Link>}
+              {active && <Link className={styles.read} href="/blog">Browse all blogs <ArrowRight aria-hidden="true" size={16} /></Link>}
             </div>
           )}
+          <Pagination path={path} pagination={pagination} />
         </section>
       </div>
     </div>

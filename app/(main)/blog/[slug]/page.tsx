@@ -1,22 +1,24 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
-import { getInsightTopic, insightTopics } from "@/data/blog-topics";
+import { getInsightTopic } from "@/data/blog-topics";
 import { livePost } from "@/lib/editorial/store";
 import { postMetadata, postStructuredData } from "@/lib/editorial/metadata";
-import { InsightsFeed } from "../insights-feed";
+import type { Query } from "@/lib/pagination";
+import LatestBlogs from "@/components/sections/LatestBlogs";
+import { feedMetadata, InsightsFeed } from "../insights-feed";
 import { currentUser } from "@/lib/editorial/auth";
 import { trafficEnabled } from "@/lib/editorial/traffic";
 import { ArticleView } from "../article-view";
 import { BlogArticle } from "../blog-article";
 
 export const dynamic = "force-dynamic";
-type Props = { params: Promise<{ slug: string }> };
+type Props = { params: Promise<{ slug: string }>; searchParams: Promise<Query> };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { slug } = await params;
   const topic = getInsightTopic(slug);
-  if (topic) return { title: `${insightTopics[topic].label} | FyerX Blogs`, description: insightTopics[topic].description };
+  if (topic || slug === "featured") return feedMetadata({ topic, featured: slug === "featured", query: await searchParams });
   const { article } = livePost(slug);
   return article ? postMetadata(article) : {};
 }
@@ -32,10 +34,10 @@ const relatedService: Record<string, { href: string; label: string }> = {
   },
 };
 
-export default async function BlogPage({ params }: Props) {
+export default async function BlogPage({ params, searchParams }: Props) {
   const { slug } = await params;
   const topic = getInsightTopic(slug);
-  if (topic) return <InsightsFeed topic={topic} />;
+  if (topic || slug === "featured") return <InsightsFeed topic={topic} featured={slug === "featured"} query={await searchParams} />;
 
   const { article, redirect } = livePost(slug);
   if (redirect) permanentRedirect("/blog/" + redirect);
@@ -56,6 +58,7 @@ export default async function BlogPage({ params }: Props) {
           <Link className="underline underline-offset-4" href={related.href}>{related.label}</Link>
         </nav>
       )}
+      <LatestBlogs relatedTo={{ slug, topic: article.draft.topic }} />
     </>
   );
 }

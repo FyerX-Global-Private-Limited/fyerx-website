@@ -3,54 +3,32 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ArrowDown, BarChart3, CircleCheck, Eye, FileText, Files, Hourglass, Plus, Search, X } from "lucide-react";
-import { insightTopics, type InsightTopic } from "@/data/blog-topics";
-import { dateLabel, editorialDay, rangeStart, totals, type TrafficRange } from "@/lib/editorial/traffic-dates";
-import type { DashboardData, DashboardPost } from "./dashboard-data";
+import { ArrowDown, BarChart3, CircleCheck, Eye, FileText, Files, Hourglass, Plus, Search } from "lucide-react";
+import { insightTopics } from "@/data/blog-topics";
+import { dateLabel } from "@/lib/editorial/traffic-dates";
+import { pageHref } from "@/lib/pagination";
+import { Pagination } from "@/components/ui/Pagination";
+import type { PostLibraryData } from "./post-library-data";
 import { DashboardHeader, SampleMode, TrafficNote } from "./dashboard-shared";
 import { editorialRequest } from "./api";
 import styles from "./dashboard.module.css";
 import workspace from "./workspace.module.css";
 
 const statuses = { draft: "Draft", review: "In review", approved: "Approved", published: "Published" } as const;
-type Status = keyof typeof statuses;
+const path = "/editorial";
 
-function editorialStatus(post: DashboardPost): Status {
-  return post.liveRevision === post.revision ? "published" : post.stage;
-}
-
-export function PostsList({ entries, traffic, isolated }: DashboardData) {
+export function PostsList({ entries, traffic, isolated, filters, summary, pagination, sort }: PostLibraryData) {
   const router = useRouter();
-  const [status, setStatus] = useState("");
-  const [topic, setTopic] = useState("");
-  const [query, setQuery] = useState("");
-  const [date, setDate] = useState("");
-  const [sort, setSort] = useState<"recent" | "views">("recent");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const views = totals(traffic, 30);
-  const count = (p: DashboardPost) => traffic.started && p.hasPublication ? views.get(p.id) ?? 0 : null;
-  const search = query.trim().toLowerCase();
-  const earliest = date ? rangeStart(traffic.today, Number(date) as TrafficRange) : "";
-  const filters = [
-    search && ["Search · " + query.trim(), () => setQuery("")],
-    topic && [insightTopics[topic as InsightTopic].label, () => setTopic("")],
-    status && [statuses[status as Status], () => setStatus("")],
-    date && ["Updated in last " + date + " days", () => setDate("")],
-  ].filter(Boolean) as [string, () => void][];
-  const clear = () => { setQuery(""); setTopic(""); setStatus(""); setDate(""); };
-  const matches = entries.filter((post) =>
-    (!status || (status === "published" ? !!post.liveSlug : editorialStatus(post) === status)) &&
-    (!topic || post.topic === topic) &&
-    (!earliest || (editorialDay(post.updated) >= earliest && editorialDay(post.updated) <= traffic.today)) &&
-    (!search || [post.title, post.slug, post.liveSlug].join(" ").toLowerCase().includes(search)),
-  ).sort((a, b) => (sort === "views" ? (count(b) ?? -1) - (count(a) ?? -1) : 0) ||
-    b.updated.localeCompare(a.updated) || a.id.localeCompare(b.id));
+  const size = String(pagination.size);
+  const href = (changes: Partial<Record<keyof typeof filters, string>>) => pageHref(path, 1, { ...filters, size, ...changes });
+  const clearHref = pageHref(path, 1, { size, sample: filters.sample });
   const cards = [
-    ["All posts", entries.length, Files, "all"],
-    ["Drafts", entries.filter((post) => editorialStatus(post) === "draft").length, FileText, "draft"],
-    ["In review", entries.filter((post) => editorialStatus(post) === "review").length, Hourglass, "review"],
-    ["Live articles", entries.filter((post) => post.liveSlug).length, CircleCheck, "published"],
+    ["All posts", summary.allPosts, Files, "all"],
+    ["Drafts", summary.drafts, FileText, "draft"],
+    ["In review", summary.review, Hourglass, "review"],
+    ["Live articles", summary.live, CircleCheck, "published"],
   ] as const;
   const create = async () => {
     setBusy(true);
@@ -70,34 +48,41 @@ export function PostsList({ entries, traffic, isolated }: DashboardData) {
     } />
     <SampleMode isolated={isolated} traffic={traffic} path="/editorial" />
     <section className={styles.metrics} aria-label="Editorial summary">
-      {cards.map(([label, value, Icon, metric]) => <button type="button" key={label} className={styles.metric} data-tone={metric} aria-pressed={metric === (status || "all")} onClick={() => setStatus(metric === "all" ? "" : metric)}>
+      {cards.map(([label, value, Icon, metric]) => <button type="button" key={label} className={styles.metric} data-tone={metric} aria-pressed={metric === (filters.status || "all")} onClick={() => router.push(href({ status: metric === "all" ? "" : metric }))}>
         <Icon aria-hidden="true" size={17} /><strong>{value}</strong><span>{label}</span>
       </button>)}
     </section>
     {error && <p role="alert" className={workspace.error}>{error}</p>}
     <section className={styles.panel} aria-labelledby="library">
-      <div className={styles.panelTitle}><div><h2 id="library">Post library</h2><p>Search by title or URL slug.</p></div><span className={styles.result} aria-live="polite">{matches.length} of {entries.length} posts</span></div>
-      <div className={styles.controls}>
-        <label className={styles.search}><Search size={19} aria-hidden="true" /><input type="search" aria-label="Search posts" value={query} placeholder="Search posts…" onChange={(event) => setQuery(event.target.value)} /></label>
-        <label>Category<select value={topic} onChange={(event) => setTopic(event.target.value)} aria-label="Filter by category"><option value="">All categories</option>{Object.entries(insightTopics).map(([value, entry]) => <option key={value} value={value}>{entry.label}</option>)}</select></label>
-        <label>Status<select value={status} onChange={(event) => setStatus(event.target.value)} aria-label="Filter by status"><option value="">All statuses</option>{Object.entries(statuses).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
-        <label>Updated<select value={date} onChange={(event) => setDate(event.target.value)} aria-label="Filter by updated date"><option value="">Any time</option>{[7, 30, 90].map((n) => <option key={n} value={n}>Last {n} days</option>)}</select></label>
-        <label>Sort by<select value={sort} onChange={(event) => setSort(event.target.value as typeof sort)} aria-label="Sort posts"><option value="recent">Most recent</option><option value="views">Most viewed</option></select></label>
-      </div>
-      {!!filters.length && <div className={styles.filterBar} aria-label="Active filters"><span>Active filters</span>{filters.map(([label, remove]) => <button type="button" key={label} onClick={remove} aria-label={"Remove filter: " + label}>{label}<X size={13} aria-hidden="true" /></button>)}<button type="button" className={styles.clear} onClick={clear}>Clear all</button></div>}
-      {matches.length ? <table className={styles.table}>
+      <div className={styles.panelTitle}><div><h2 id="library">Post library</h2><p>Search by title or URL slug.</p></div><span className={styles.result} aria-live="polite">{pagination.total} of {summary.allPosts} posts</span></div>
+      <form action={path} method="get" key={href({})}>
+        {pagination.size !== 10 && <input type="hidden" name="size" value={size} />}
+        {filters.sample && <input type="hidden" name="sample" value={filters.sample} />}
+        <div className={styles.controls}>
+          <label className={styles.search}><Search size={19} aria-hidden="true" /><input type="search" name="q" aria-label="Search posts" defaultValue={filters.q} placeholder="Search posts…" /></label>
+          <label>Category<select name="topic" defaultValue={filters.topic}><option value="">All categories</option>{Object.entries(insightTopics).map(([value, entry]) => <option key={value} value={value}>{entry.label}</option>)}</select></label>
+          <label>Status<select name="status" defaultValue={filters.status}><option value="">All statuses</option>{Object.entries(statuses).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
+          <label>Updated<select name="date" defaultValue={filters.date}><option value="">Any time</option>{[7, 30, 90].map((n) => <option key={n} value={n}>Last {n} days</option>)}</select></label>
+          <label>Sort by<select name="sort" defaultValue={sort}><option value="recent">Most recent</option><option value="views">Most viewed</option></select></label>
+        </div>
+        <div className="flex flex-wrap items-center gap-3 px-4 pb-3">
+          <button className={workspace.secondary} type="submit">Apply filters</button>
+          {(filters.q || filters.topic || filters.status || filters.date || filters.sort) && <Link className="text-sm underline" href={clearHref}>Clear filters</Link>}
+        </div>
+      </form>
+      {entries.length ? <table className={styles.table}>
         <caption className="sr-only">Posts with 30-day page views</caption>
         <thead><tr>
           <th scope="col">Article</th><th scope="col">Category</th><th scope="col">Status</th>
-          <th scope="col" aria-sort={sort === "recent" ? "descending" : "none"}><button type="button" onClick={() => setSort("recent")}>Updated {sort === "recent" && <ArrowDown size={13} aria-hidden="true" />}</button></th>
-          <th scope="col" aria-sort={sort === "views" ? "descending" : "none"}><button type="button" onClick={() => setSort("views")}>Views · 30d {sort === "views" && <ArrowDown size={13} aria-hidden="true" />}</button></th>
+          <th scope="col" aria-sort={sort === "recent" ? "descending" : "none"}><button type="button" onClick={() => router.push(href({ sort: "" }))}>Updated {sort === "recent" && <ArrowDown size={13} aria-hidden="true" />}</button></th>
+          <th scope="col" aria-sort={sort === "views" ? "descending" : "none"}><button type="button" onClick={() => router.push(href({ sort: "views" }))}>Views · 30d {sort === "views" && <ArrowDown size={13} aria-hidden="true" />}</button></th>
           <th scope="col">Actions</th>
         </tr></thead>
         <tbody>
-          {matches.map((post) => {
-            const state = editorialStatus(post);
+          {entries.map((post) => {
+            const state = post.status;
             const title = post.title || "Untitled post";
-            const value = count(post);
+            const value = post.views;
             return <tr key={post.id}>
               <td className={styles.articleCell}><Link href={"/editorial/posts/" + post.id}><span className={styles.fileIcon}><FileText size={17} aria-hidden="true" /></span><span><strong>{title}</strong>{post.slug && <small>/{post.slug}</small>}</span></Link></td>
               <td><span className={styles.chip} data-tone={post.topic}>{insightTopics[post.topic].label}</span></td>
@@ -108,7 +93,8 @@ export function PostsList({ entries, traffic, isolated }: DashboardData) {
             </tr>;
           })}
         </tbody>
-      </table> : <div className={styles.empty}><Search size={25} aria-hidden="true" /><h3>{entries.length ? "No matching posts" : "No posts yet"}</h3><p>{entries.length ? "Try a different search or remove a filter." : "Create a post to get your editorial queue started."}</p><button className={workspace.secondary} type="button" onClick={entries.length ? clear : create}>{entries.length ? "Clear filters" : "Create a post"}</button></div>}
+      </table> : <div className={styles.empty}><Search size={25} aria-hidden="true" /><h3>{summary.allPosts ? "No matching posts" : "No posts yet"}</h3><p>{summary.allPosts ? "Try a different search or remove a filter." : "Create a post to get your editorial queue started."}</p><button className={workspace.secondary} type="button" onClick={summary.allPosts ? () => router.push(clearHref) : create}>{summary.allPosts ? "Clear filters" : "Create a post"}</button></div>}
+      <Pagination path={path} pagination={pagination} filters={filters} />
       <TrafficNote traffic={traffic} />
     </section>
   </div>;

@@ -107,6 +107,10 @@ export function PostEditor({ initial, role, origin }: { initial: Post; role: Rol
           update({ title, ...(!draft.slug || draft.slug === slugify(draft.title) && !saved.liveSlug ? { slug: slugify(title) } : {}) });
         }} /></label>
         <label>Summary<textarea aria-label="Summary" rows={2} value={draft.description} maxLength={500} onChange={(event) => update({ description: event.target.value })} /></label>
+        <label style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <input type="checkbox" style={{ width: 18, height: 18 }} checked={draft.featured === true} onChange={(event) => update({ featured: event.target.checked })} />
+          Feature this article when published
+        </label>
         <div className={styles.twoFields}>
           <label>Category<select aria-label="Category" value={draft.topic} onChange={(event) => update({ topic: event.target.value as InsightTopic })}>
             {Object.entries(insightTopics).map(([topic, item]) => <option key={topic} value={topic}>{item.label}</option>)}

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import MainHeader from "@/components/layout/main/Header";
 import MainFooter from "@/components/layout/main/Footer";
 import Hero from "@/components/sections/main/Hero";
-import TrustBar from "@/components/sections/main/TrustBar";
 import WhoWeAre from "@/components/sections/main/WhoWeAre";
 import Capabilities from "@/components/sections/main/Capabilities";
 import MainCapabilityAreas from "@/components/sections/main/MainCapabilityAreas";
@@ -35,7 +34,6 @@ export default function Home() {
       <MainHeader />
       <main className="home-main home-main--home flex-1">
         <Hero />
-        <TrustBar />
         <WhoWeAre />
         <HowWeWork />
         <Capabilities />
@@ -46,6 +44,7 @@ export default function Home() {
         {/* <Trust /> */}
         <SecurityControl />
         <LatestBlogs />
+        <LatestBlogs featured />
         <TestimonialsCTA />
       </main>
       <MainFooter />

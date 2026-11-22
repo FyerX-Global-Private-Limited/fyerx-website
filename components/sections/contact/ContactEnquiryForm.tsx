@@ -154,8 +154,8 @@ export const FORM_CONFIG: Record<FormKey, FormConfig> = {
     key: "talent",
     icon: <BriefcaseIcon />,
     tabLabel: "Talent",
-    hubCardTitle: "Talent Enquiry",
-    badgeLabel: "Talent Enquiry",
+    hubCardTitle: "Staffing Enquiry",
+    badgeLabel: "Staffing Enquiry",
     formHeader: "Contact Talent",
     formSubheading:
       "Let's explore how we can build your hiring pipeline through staffing, RPO, or executive search.",

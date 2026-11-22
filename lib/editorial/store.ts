@@ -4,6 +4,8 @@ import { dirname, isAbsolute } from "node:path";
 import { chmodSync, mkdirSync } from "node:fs";
 import { insights } from "@/data/insights";
 import { blankDraft, mediaSources, publishIssues, type Draft, type Node } from "./document";
+import type { InsightTopic } from "@/data/blog-topics";
+import { paginate, type Query } from "@/lib/pagination";
 import { editorialMode, editorialOrigin } from "./config";
 
 export type Role = "owner" | "editor";
@@ -176,4 +178,51 @@ export function livePost(slug: string) {
   if (row) return { article: { ...row, draft: JSON.parse(row.draft) } as LivePost };
   const redirect = db().prepare("SELECT live.slug FROM redirects JOIN live USING (id) WHERE redirects.slug = ?").get(slug);
   return { redirect: redirect?.slug as string | undefined };
+}
+
+export type BlogCard = { slug: string; topic: InsightTopic; title: string; description: string; cover: string };
+type CardFilters = { topic?: InsightTopic; featured?: boolean; relatedTo?: { slug: string; topic: InsightTopic } };
+
+function cardConditions({ topic, featured, relatedTo }: CardFilters) {
+  const conditions = [];
+  const values: string[] = [];
+  if (topic) {
+    conditions.push("json_extract(draft, '$.topic') = ?");
+    values.push(topic);
+  }
+  if (featured) conditions.push("json_extract(draft, '$.featured') = 1");
+  if (relatedTo) {
+    conditions.push("slug <> ?");
+    values.push(relatedTo.slug);
+  }
+  return { where: conditions.length ? "WHERE " + conditions.join(" AND ") : "", values };
+}
+
+export function blogCards(filters: CardFilters, limit = 10, offset = 0): BlogCard[] {
+  if (!editorialMode()) return [];
+  const { where, values } = cardConditions(filters);
+  const priority = filters.relatedTo
+    ? "CASE WHEN json_extract(draft, '$.topic') = ? THEN 0 ELSE 1 END, "
+    : "";
+  if (filters.relatedTo) values.push(filters.relatedTo.topic);
+  return db().prepare(`
+    SELECT slug, json_extract(draft, '$.topic') AS topic, json_extract(draft, '$.title') AS title,
+      json_extract(draft, '$.description') AS description, json_extract(draft, '$.cover.src') AS cover
+    FROM live ${where}
+    ORDER BY ${priority} published DESC, slug
+    LIMIT ? OFFSET ?
+  `).all(...values, limit, offset) as BlogCard[];
+}
+
+export function blogCardPagination(filters: CardFilters, query: Query) {
+  const { where, values } = cardConditions(filters);
+  const total = editorialMode()
+    ? Number(db().prepare(`SELECT COUNT(*) AS total FROM live ${where}`).get(...values)?.total ?? 0)
+    : 0;
+  return paginate(total, query);
+}
+
+export function blogCardPage(filters: CardFilters, query: Query) {
+  const pagination = blogCardPagination(filters, query);
+  return { pagination, articles: blogCards(filters, pagination.size, pagination.offset) };
 }

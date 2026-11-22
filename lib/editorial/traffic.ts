@@ -27,6 +27,16 @@ export function recordArticleView(slug: string) {
   `).run(editorialDay(now), slug);
 }
 
+export function trafficPeriod(): Traffic {
+  const today = editorialDay();
+  try {
+    const started = trafficEnabled() ? editorialDay(measurementStart()) : null;
+    return { today, started, sample: false, rows: [] };
+  } catch {
+    return { today, started: null, sample: false, rows: [] };
+  }
+}
+
 export function readTraffic(sample: boolean, eligible: string[]): Traffic {
   const today = editorialDay();
   if (sample && editorialMode() === "isolated") {
