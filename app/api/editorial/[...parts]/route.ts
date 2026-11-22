@@ -4,7 +4,7 @@ import sharp from "sharp";
 import { createTeamMember, currentUser, sessionCookie, sessionSeconds, signIn, signOut } from "@/lib/editorial/auth";
 import { editorialMode, editorialOrigin } from "@/lib/editorial/config";
 import { mediaId, mediaPrefix, validateDraft } from "@/lib/editorial/document";
-import { changePost, createPost, db, livePost, post, WorkflowError } from "@/lib/editorial/store";
+import { changePost, changePosts, createPost, db, livePost, post, saveFeaturedOrder, WorkflowError } from "@/lib/editorial/store";
 
 import { publication } from "@/lib/editorial/metadata";
 import { indexNowOrigin, submitIndexNow } from "@/lib/index-now";
@@ -93,6 +93,28 @@ export async function POST(request: Request, { params }: Props) {
       const data = JSON.parse((await readBody(request, 4096)).toString());
       return json({ member: await createTeamMember(data?.email, data?.password) }, 201);
     }
+    if (resource === "post-actions" && parts.length === 1) {
+      if (user.role !== "owner") return error("Only the owner can manage publication or Trash.", 403);
+      const data = JSON.parse((await readBody(request, 16_000)).toString());
+      if (data?.action !== "trash" && data?.action !== "restore" && data?.action !== "unpublish") return error("Invalid post action", 400);
+      const slugs = changePosts(data.ids, data.action);
+      if (mode === "live" && process.env.BLOG_ORIGIN === indexNowOrigin && slugs.length) {
+        after(async () => {
+          try {
+            await submitIndexNow(slugs.map((slug) => indexNowOrigin + "/blog/" + slug));
+          } catch (failure) {
+            console.error("IndexNow notification failed", failure);
+          }
+        });
+      }
+      return json({ ok: true });
+    }
+    if (resource === "featured" && parts.length === 1) {
+      if (user.role !== "owner") return error("Only the owner can reorder featured articles.", 403);
+      const data = JSON.parse((await readBody(request, 512_000)).toString());
+      saveFeaturedOrder(data?.previous, data?.order);
+      return json({ ok: true });
+    }
     if (resource === "logout" && parts.length === 1) {
       await signOut();
       const response = json({ ok: true });
@@ -116,7 +138,7 @@ export async function POST(request: Request, { params }: Props) {
     }
     if (resource === "posts" && parts.length === 1) return json({ post: createPost() }, 201);
     if (resource === "posts" && id && action && parts.length === 3) {
-      if (!["save", "submit", "approve", "publish", "unpublish"].includes(action)) return error("Not found", 404);
+      if (!["save", "submit", "approve", "publish", "unpublish", "schedule", "cancel-schedule"].includes(action)) return error("Not found", 404);
       const data = JSON.parse((await readBody(request, 512_000)).toString());
       if (!Number.isSafeInteger(data.version)) return error("A saved version is required", 400);
       let draft;
@@ -130,7 +152,7 @@ export async function POST(request: Request, { params }: Props) {
       const affectsSearch = mode === "live" && process.env.BLOG_ORIGIN === indexNowOrigin &&
         (action === "publish" || action === "unpublish");
       const previousUrl = affectsSearch ? indexableArticleUrl(post(id)?.liveSlug) : undefined;
-      const updated = changePost(id, data.version, action, user.role, draft);
+      const updated = changePost(id, data.version, action, user.role, draft, data.scheduleAt);
       if (affectsSearch) {
         after(async () => {
           try {

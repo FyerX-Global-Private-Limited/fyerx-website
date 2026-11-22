@@ -3,4 +3,10 @@ export async function register() {
     const { checkLeadsAtStartup } = await import("./instrumentation-node");
     await checkLeadsAtStartup();
   }
+  if (process.env.NEXT_RUNTIME === "nodejs") {
+    if (process.env.BLOG_MODE === "live" || process.env.BLOG_MODE === "isolated") {
+      const { startEditorialScheduler } = await import("./lib/editorial/scheduler");
+      startEditorialScheduler();
+    }
+  }
 }

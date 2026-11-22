@@ -35,3 +35,9 @@ export function totals(data: Traffic, days: TrafficRange) {
   }
   return byPost;
 }
+
+export function scheduleLabel(date: string) {
+  return new Intl.DateTimeFormat("en-IN", {
+    timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short",
+  }).format(new Date(date)) + " IST";
+}

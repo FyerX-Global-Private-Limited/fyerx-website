@@ -108,3 +108,23 @@
   .analyticsControls label { width:100%; }
   .rangeButtons { align-self:start; }
 }
+
+.bulkActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 12px 16px;
+  border-top: 1px solid #eadde8;
+  font-size: .875rem;
+}
+.bulkActions label { display: inline-flex; align-items: center; gap: 8px; }
+.bulkActions input, .rowSelection { width: 1rem; height: 1rem; accent-color: #730031; }
+.table .articleCell { position: relative; }
+.articleCell:has(.rowSelection) > a { padding-inline-start: 1.65rem; }
+.rowSelection { position: absolute; inset-inline-start: 12px; inset-block-start: 18px; }
+.chip[data-tone="scheduled"] { background: #fff3d5; color: #684600; }
+.chip[data-tone="schedule-failed"] { background: #fde8ef; color: #940d43; }
+@media (max-width: 700px) {
+  .rowSelection { inset-inline-start: 0; inset-block-start: 9px; }
+}

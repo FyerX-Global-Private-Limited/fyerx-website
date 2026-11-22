@@ -2,11 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowLeft, ExternalLink, Eye, ImagePlus, Save } from "lucide-react";
 import { useEffect, useState } from "react";
 import { insightTopics, type InsightTopic } from "@/data/blog-topics";
 import { publishIssues, type Draft } from "@/lib/editorial/document";
 import type { Post, Role } from "@/lib/editorial/store";
+import { scheduleLabel } from "@/lib/editorial/traffic-dates";
 import { editorialRequest } from "./api";
 import { RichEditor, type ImageRequest } from "./rich-editor";
 import { ImageDialog } from "./image-dialog";
@@ -17,6 +19,8 @@ const stage = { draft: "Draft", review: "In review", approved: "Approved" };
 const slugify = (title: string) => title.toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").slice(0, 90).replace(/^-|-$/g, "");
 
 export function PostEditor({ initial, role, origin }: { initial: Post; role: Role; origin: string }) {
+  const router = useRouter();
+  const [scheduleAt, setScheduleAt] = useState(() => initial.scheduledFor ? new Date(Date.parse(initial.scheduledFor) + 330 * 60000).toISOString().slice(0, 16) : "");
   const [saved, setSaved] = useState(initial);
   const [draft, setDraft] = useState(initial.draft);
   const [pane, setPane] = useState<"write" | "seo">("write");
@@ -48,6 +52,7 @@ export function PostEditor({ initial, role, origin }: { initial: Post; role: Rol
       const result = await editorialRequest(`posts/${saved.id}/${action}`, {
         version: saved.version,
         ...(action === "save" ? { draft } : {}),
+        ...(action === "schedule" ? { scheduleAt } : {}),
       });
       setSaved(result.post);
       setDraft(result.post.draft);
@@ -55,6 +60,20 @@ export function PostEditor({ initial, role, origin }: { initial: Post; role: Rol
     } catch (failure) {
       setError((failure as Error).message);
     } finally {
+      setBusy("");
+    }
+  }
+
+  async function trash() {
+    if (!window.confirm("Move this post to Trash? A published post will be removed from the site.")) return;
+    setBusy("trash");
+    setError("");
+    try {
+      await editorialRequest("post-actions", { action: "trash", ids: [saved.id] });
+      router.push("/editorial");
+      router.refresh();
+    } catch (failure) {
+      setError(failure instanceof Error ? failure.message : "The post could not be moved to Trash.");
       setBusy("");
     }
   }
@@ -81,7 +100,8 @@ export function PostEditor({ initial, role, origin }: { initial: Post; role: Rol
         <p>{saved.liveSlug
           ? `Revision ${saved.liveRevision} is visible on the blog. ${liveCurrent ? "It matches this saved revision." : "Draft changes remain private."}`
           : "This post is private until an owner publishes an approved revision."}</p>
-        {dirty && <p>Save your changes before previewing or moving this revision forward.</p>}
+        {saved.scheduledFor && <p>{saved.scheduleError ? `Scheduled publication failed: ${saved.scheduleError}` : `Scheduled for ${scheduleLabel(saved.scheduledFor)}.`}</p>}
+        {dirty && <p>{saved.scheduledFor ? "Saving changes cancels the schedule. Approve the new revision to schedule it again." : "Save your changes before previewing or moving this revision forward."}</p>}
         {!dirty && saved.stage === "review" && role !== "owner" && <p>Waiting for owner approval.</p>}
         {!dirty && saved.stage === "approved" && role === "editor" && !liveCurrent && <p>Waiting for the owner to publish.</p>}
         {!dirty && saved.stage === "draft" && issues.length > 0 && <ul>{issues.map((issue) => <li key={issue}>{issue}</li>)}</ul>}
@@ -94,8 +114,24 @@ export function PostEditor({ initial, role, origin }: { initial: Post; role: Rol
         {role === "owner" && saved.liveSlug && <button type="button" className={styles.secondary} disabled={dirty || !!busy} onClick={() => {
           if (window.confirm("Remove this article from the blog?")) void doAction("unpublish", "Post unpublished.");
         }}>Unpublish</button>}
+        {role === "owner" && <button type="button" className={styles.secondary} disabled={dirty || !!busy} onClick={trash}>Move to Trash</button>}
       </div>
     </div>
+    {role === "owner" && saved.stage === "approved" && !liveCurrent && (
+      <form className={styles.workflow} onSubmit={(event) => {
+        event.preventDefault();
+        void doAction("schedule", "Publication scheduled.");
+      }}>
+        <label className="grid gap-2">
+          Publish at (IST)
+          <input type="datetime-local" className="w-fit rounded-md border border-[#ddc7d7] bg-white p-2" value={scheduleAt} onChange={(event) => setScheduleAt(event.target.value)} required disabled={dirty || !!busy} />
+        </label>
+        <div className={styles.lineActions}>
+          <button type="submit" className={styles.primary} disabled={dirty || !!busy || !scheduleAt}>{saved.scheduledFor ? "Update schedule" : "Schedule publication"}</button>
+          {saved.scheduledFor && <button type="button" className={styles.secondary} disabled={dirty || !!busy} onClick={() => doAction("cancel-schedule", "Schedule cancelled.")}>Cancel schedule</button>}
+        </div>
+      </form>
+    )}
     <div className={styles.editorTabs} aria-label="Post settings">
       <button type="button" aria-pressed={pane === "write"} onClick={() => setPane("write")}>Write</button>
       <button type="button" aria-pressed={pane === "seo"} onClick={() => setPane("seo")}>Search & social</button>

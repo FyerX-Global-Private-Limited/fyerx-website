@@ -7,6 +7,10 @@
   padding: clamp(40px, 5vw, 72px) 20px;
 }
 
+.section:has(+ .section) { padding-bottom: 0; }
+
+.section + .section { padding-top: clamp(32px, 4vw, 56px); }
+
 .shell {
   max-width: 1200px;
   margin-inline: auto;

@@ -10,7 +10,7 @@ import { editorialMode, editorialOrigin } from "./config";
 
 export type Role = "owner" | "editor";
 export type Workflow = "draft" | "review" | "approved";
-export type Post = { id: string; draft: Draft; revision: number; version: number; stage: Workflow; approved: number | null; liveSlug: string | null; liveRevision: number | null; updated: string };
+export type Post = { id: string; draft: Draft; revision: number; version: number; stage: Workflow; approved: number | null; liveSlug: string | null; liveRevision: number | null; updated: string; scheduledFor: string | null; scheduleError: string | null };
 type Row = Omit<Post, "draft"> & { draft: string };
 export type LivePost = { id: string; draft: Draft; published: string; modified: string };
 type LiveRow = Omit<LivePost, "draft"> & { draft: string };
@@ -36,6 +36,21 @@ export function db() {
     CREATE TABLE IF NOT EXISTS live (
       id TEXT PRIMARY KEY REFERENCES posts(id), slug TEXT UNIQUE NOT NULL,
       draft TEXT NOT NULL, revision INTEGER NOT NULL, published TEXT NOT NULL, modified TEXT NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS post_trash (
+      id TEXT PRIMARY KEY REFERENCES posts(id) ON DELETE CASCADE,
+      trashed TEXT NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS publication_schedule (
+      id TEXT PRIMARY KEY REFERENCES posts(id) ON DELETE CASCADE,
+      revision INTEGER NOT NULL,
+      due TEXT NOT NULL,
+      error TEXT
+    );
+    CREATE INDEX IF NOT EXISTS editorial_schedule_due ON publication_schedule(due) WHERE error IS NULL;
+    CREATE TABLE IF NOT EXISTS featured_order (
+      id TEXT PRIMARY KEY REFERENCES live(id) ON DELETE CASCADE,
+      position INTEGER NOT NULL
     );
     CREATE TABLE IF NOT EXISTS slug_claims (slug TEXT PRIMARY KEY, id TEXT NOT NULL REFERENCES posts(id));
     CREATE TABLE IF NOT EXISTS redirects (slug TEXT PRIMARY KEY, id TEXT NOT NULL REFERENCES posts(id));
@@ -94,7 +109,9 @@ function seed() {
   });
 }
 
-const postQuery = "SELECT p.*, l.slug AS liveSlug, l.revision AS liveRevision FROM posts p LEFT JOIN live l ON l.id = p.id";
+const postQuery = `SELECT p.*, l.slug AS liveSlug, l.revision AS liveRevision, s.due AS scheduledFor, s.error AS scheduleError
+  FROM posts p LEFT JOIN live l ON l.id = p.id LEFT JOIN publication_schedule s ON s.id = p.id
+  WHERE NOT EXISTS (SELECT 1 FROM post_trash t WHERE t.id = p.id)`;
 
 function read(row: Row): Post {
   return { ...row, draft: JSON.parse(row.draft) };
@@ -105,7 +122,7 @@ export function posts() {
 }
 
 export function post(id: string) {
-  const row = db().prepare(postQuery + " WHERE p.id = ?").get(id) as Row | undefined;
+  const row = db().prepare(postQuery + " AND p.id = ?").get(id) as Row | undefined;
   return row && read(row);
 }
 
@@ -119,7 +136,7 @@ export class WorkflowError extends Error {
   constructor(message: string, public status = 409) { super(message); }
 }
 
-export function changePost(id: string, version: number, action: string, role: Role, draft?: Draft) {
+export function changePost(id: string, version: number, action: string, role: Role, draft?: Draft, scheduleAt?: unknown) {
   return transaction((connection) => {
     const row = post(id);
     if (!row) throw new WorkflowError("Post not found", 404);
@@ -129,13 +146,32 @@ export function changePost(id: string, version: number, action: string, role: Ro
       const lookup = connection.prepare("SELECT id FROM media WHERE id = ?");
       if (mediaSources(draft).some((key) => !lookup.get(key))) throw new WorkflowError("An image is missing", 400);
       if (JSON.stringify(row.draft) === JSON.stringify(draft)) return row;
+      connection.prepare("DELETE FROM publication_schedule WHERE id = ?").run(id);
       connection.prepare("UPDATE posts SET draft = ?, revision = revision + 1, version = version + 1, stage = 'draft', approved = NULL, updated = ? WHERE id = ?")
         .run(JSON.stringify(draft), now, id);
       return post(id)!;
     }
     if (["approve", "unpublish"].includes(action) && role !== "owner") throw new WorkflowError("Only the owner can perform this action", 403);
     if (action === "publish" && role !== "owner") throw new WorkflowError("Only the owner can publish posts", 403);
-    if (action === "submit" && row.stage === "draft") {
+    if (action === "schedule" || action === "cancel-schedule") {
+      if (role !== "owner") throw new WorkflowError("Only the owner can schedule posts", 403);
+      if (action === "cancel-schedule") {
+        connection.prepare("DELETE FROM publication_schedule WHERE id = ?").run(id);
+      } else {
+        if (row.stage !== "approved" || row.approved !== row.revision || row.liveRevision === row.revision) {
+          throw new WorkflowError("Approve this revision before scheduling it.");
+        }
+        const date = typeof scheduleAt === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(scheduleAt)
+          ? new Date(scheduleAt + ":00+05:30") : new Date(NaN);
+        if (!Number.isFinite(date.getTime()) || date.toISOString() <= now ||
+            new Date(date.getTime() + 330 * 60000).toISOString().slice(0, 16) !== scheduleAt) {
+          throw new WorkflowError("Choose a valid date and time in the future (IST).", 400);
+        }
+        connection.prepare(`INSERT INTO publication_schedule VALUES (?, ?, ?, NULL)
+          ON CONFLICT(id) DO UPDATE SET revision = excluded.revision, due = excluded.due, error = NULL`)
+          .run(id, row.revision, date.toISOString());
+      }
+    } else if (action === "submit" && row.stage === "draft") {
       const issues = publishIssues(row.draft);
       if (issues.length) throw new WorkflowError(issues.join(" "), 400);
       connection.prepare("UPDATE posts SET stage = 'review' WHERE id = ?").run(id);
@@ -153,10 +189,13 @@ export function changePost(id: string, version: number, action: string, role: Ro
       connection.prepare(`INSERT INTO live VALUES (?, ?, ?, ?, ?, ?)
         ON CONFLICT(id) DO UPDATE SET slug = excluded.slug, draft = excluded.draft, revision = excluded.revision, modified = excluded.modified`)
         .run(id, slug, JSON.stringify(row.draft), row.revision, now, now);
+      if (!row.draft.featured) connection.prepare("DELETE FROM featured_order WHERE id = ?").run(id);
+      connection.prepare("DELETE FROM publication_schedule WHERE id = ?").run(id);
       connection.prepare("DELETE FROM live_media WHERE post = ?").run(id);
       const insert = connection.prepare("INSERT INTO live_media VALUES (?, ?)");
       mediaSources(row.draft).forEach((media) => insert.run(id, media));
     } else if (action === "unpublish" && row.liveSlug) {
+      connection.prepare("DELETE FROM publication_schedule WHERE id = ?").run(id);
       connection.prepare("DELETE FROM live WHERE id = ?").run(id);
     } else {
       throw new WorkflowError("This action does not apply to the current revision");
@@ -183,6 +222,45 @@ export function livePost(slug: string) {
 export type BlogCard = { slug: string; topic: InsightTopic; title: string; description: string; cover: string };
 type CardFilters = { topic?: InsightTopic; featured?: boolean; relatedTo?: { slug: string; topic: InsightTopic } };
 
+const featuredFirst = "(SELECT position FROM featured_order WHERE id = live.id) ASC NULLS LAST, ";
+
+type FeaturedArticle = { id: string; title: string; slug: string; topic: InsightTopic };
+
+export function featuredArticles(connection = db()): FeaturedArticle[] {
+  const rows = connection.prepare(`
+    SELECT id, slug, json_extract(draft, '$.title') AS title, json_extract(draft, '$.topic') AS topic
+    FROM live WHERE json_extract(draft, '$.featured') = 1
+    ORDER BY ${featuredFirst} published DESC, slug
+  `).all() as FeaturedArticle[];
+  return rows.map((row) => ({ ...row }));
+}
+
+export function saveFeaturedOrder(previous: unknown, order: unknown) {
+  if (!Array.isArray(previous) || !Array.isArray(order) ||
+      !previous.every((id) => typeof id === "string") || !order.every((id) => typeof id === "string")) {
+    throw new WorkflowError("Choose a valid article order.", 400);
+  }
+
+  transaction((connection) => {
+    const current = featuredArticles(connection).map(({ id }) => id);
+    if (previous.length !== current.length || current.some((id, index) => previous[index] !== id)) {
+      throw new WorkflowError("The featured list changed. Reload the page and try again.");
+    }
+
+    const currentIds = new Set(current);
+    const orderedIds = new Set(order);
+    if (order.length !== current.length || orderedIds.size !== current.length || order.some((id) => !currentIds.has(id))) {
+      throw new WorkflowError("The order must include each featured article once.", 400);
+    }
+
+    const save = connection.prepare(`
+      INSERT INTO featured_order (id, position) VALUES (?, ?)
+      ON CONFLICT(id) DO UPDATE SET position = excluded.position
+    `);
+    order.forEach((id, position) => save.run(id, position));
+  });
+}
+
 function cardConditions({ topic, featured, relatedTo }: CardFilters) {
   const conditions = [];
   const values: string[] = [];
@@ -203,7 +281,7 @@ export function blogCards(filters: CardFilters, limit = 10, offset = 0): BlogCar
   const { where, values } = cardConditions(filters);
   const priority = filters.relatedTo
     ? "CASE WHEN json_extract(draft, '$.topic') = ? THEN 0 ELSE 1 END, "
-    : "";
+    : filters.featured ? featuredFirst : "";
   if (filters.relatedTo) values.push(filters.relatedTo.topic);
   return db().prepare(`
     SELECT slug, json_extract(draft, '$.topic') AS topic, json_extract(draft, '$.title') AS title,
@@ -225,4 +303,77 @@ export function blogCardPagination(filters: CardFilters, query: Query) {
 export function blogCardPage(filters: CardFilters, query: Query) {
   const pagination = blogCardPagination(filters, query);
   return { pagination, articles: blogCards(filters, pagination.size, pagination.offset) };
+}
+
+export function trashedPosts(query: Query) {
+  const connection = db();
+  const total = Number(connection.prepare("SELECT COUNT(*) AS total FROM post_trash").get()?.total ?? 0);
+  const pagination = paginate(total, query);
+  const articles = connection.prepare(`
+    SELECT p.id, json_extract(p.draft, '$.title') AS title, t.trashed
+    FROM post_trash t JOIN posts p ON p.id = t.id ORDER BY t.trashed DESC, p.id
+    LIMIT ? OFFSET ?
+  `).all(pagination.size, pagination.offset)
+    .map((row) => ({ id: String(row.id), title: String(row.title ?? ""), trashed: String(row.trashed) }));
+  return { articles, pagination };
+}
+
+export function changePosts(ids: unknown, action: "trash" | "restore" | "unpublish") {
+  if (!Array.isArray(ids) || !ids.length || ids.length > 50 ||
+      ids.some((id) => typeof id !== "string" || !id || id.length > 100)) {
+    throw new WorkflowError("Select between 1 and 50 posts.", 400);
+  }
+  return transaction((connection) => {
+    const now = new Date().toISOString();
+    const isTrashed = connection.prepare("SELECT 1 FROM post_trash WHERE id = ?");
+    const markTrash = connection.prepare("INSERT INTO post_trash VALUES (?, ?)");
+    const restore = connection.prepare("DELETE FROM post_trash WHERE id = ?");
+    const hide = connection.prepare("DELETE FROM live WHERE id = ?");
+    const cancel = connection.prepare("DELETE FROM publication_schedule WHERE id = ?");
+    const update = connection.prepare("UPDATE posts SET version = version + 1, updated = ? WHERE id = ?");
+    const reset = connection.prepare("UPDATE posts SET stage = 'draft', approved = NULL WHERE id = ?");
+    const removedSlugs: string[] = [];
+    for (const id of new Set<string>(ids)) {
+      if (action === "restore") {
+        if (!isTrashed.get(id)) throw new WorkflowError("A selected post is no longer in Trash. Refresh and try again.");
+        restore.run(id);
+        reset.run(id);
+      } else {
+        const entry = post(id);
+        if (!entry || (action === "unpublish" && !entry.liveSlug)) {
+          throw new WorkflowError("A selected post is no longer available for this action. Refresh and try again.");
+        }
+        if (entry.liveSlug) removedSlugs.push(entry.liveSlug);
+        if (action === "trash") markTrash.run(id, now);
+        cancel.run(id);
+        hide.run(id);
+      }
+      update.run(now, id);
+    }
+    return removedSlugs;
+  });
+}
+
+export function publishDuePosts(now = new Date().toISOString()) {
+  const connection = db();
+  const due = connection.prepare(`
+    SELECT p.id, p.version, s.due FROM publication_schedule s JOIN posts p ON p.id = s.id
+    WHERE s.due <= ? AND s.error IS NULL AND s.revision = p.revision
+    ORDER BY s.due, p.id LIMIT 25
+  `).all(now) as { id: string; version: number; due: string }[];
+  const published: string[] = [];
+  for (const entry of due) {
+    try {
+      const previous = post(entry.id)?.liveSlug;
+      const updated = changePost(entry.id, entry.version, "publish", "owner");
+      if (previous) published.push(previous);
+      if (updated.liveSlug) published.push(updated.liveSlug);
+    } catch (failure) {
+      if (!(failure instanceof WorkflowError)) throw failure;
+      connection.prepare(`UPDATE publication_schedule SET error = ?
+        WHERE id = ? AND due = ? AND EXISTS (SELECT 1 FROM posts WHERE id = ? AND version = ?)`)
+        .run(failure.message, entry.id, entry.due, entry.id, entry.version);
+    }
+  }
+  return published;
 }

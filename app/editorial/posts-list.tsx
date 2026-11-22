@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ArrowDown, BarChart3, CircleCheck, Eye, FileText, Files, Hourglass, Plus, Search } from "lucide-react";
+import { ArrowDown, BarChart3, CircleCheck, Eye, FileText, Files, Hourglass, Plus, Search, Trash2 } from "lucide-react";
 import { insightTopics } from "@/data/blog-topics";
-import { dateLabel } from "@/lib/editorial/traffic-dates";
+import { dateLabel, scheduleLabel } from "@/lib/editorial/traffic-dates";
 import { pageHref } from "@/lib/pagination";
 import { Pagination } from "@/components/ui/Pagination";
 import type { PostLibraryData } from "./post-library-data";
@@ -14,13 +14,42 @@ import { editorialRequest } from "./api";
 import styles from "./dashboard.module.css";
 import workspace from "./workspace.module.css";
 
-const statuses = { draft: "Draft", review: "In review", approved: "Approved", published: "Published" } as const;
+const statuses = { draft: "Draft", review: "In review", approved: "Approved", published: "Published", scheduled: "Scheduled", "schedule-failed": "Schedule failed" } as const;
 const path = "/editorial";
 
-export function PostsList({ entries, traffic, isolated, filters, summary, pagination, sort }: PostLibraryData) {
+export function PostsList({ entries, traffic, isolated, filters, summary, pagination, sort, owner }: PostLibraryData & { owner: boolean }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [selected, setSelected] = useState<string[]>([]);
+  const [notice, setNotice] = useState("");
+  const selectedRows = entries.filter((entry) => selected.includes(entry.id));
+  const allSelected = entries.length > 0 && selectedRows.length === entries.length;
+  const liveSelected = selectedRows.length > 0 && selectedRows.every(({ liveSlug }) => liveSlug);
+
+  function select(id: string, checked: boolean) {
+    setSelected((current) => checked ? [...current, id] : current.filter((value) => value !== id));
+  }
+
+  async function applyToSelected(action: "trash" | "unpublish") {
+    const message = action === "trash"
+      ? "Move the selected posts to Trash? Published posts will be removed from the site."
+      : "Remove the selected posts from the public blog?";
+    if (!window.confirm(message)) return;
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      await editorialRequest("post-actions", { action, ids: selectedRows.map(({ id }) => id) });
+      setNotice(`${selectedRows.length} ${selectedRows.length === 1 ? "post" : "posts"} ${action === "trash" ? "moved to Trash" : "unpublished"}.`);
+      setSelected([]);
+      router.refresh();
+    } catch (failure) {
+      setError(failure instanceof Error ? failure.message : "The selected posts could not be updated.");
+    } finally {
+      setBusy(false);
+    }
+  }
   const size = String(pagination.size);
   const href = (changes: Partial<Record<keyof typeof filters, string>>) => pageHref(path, 1, { ...filters, size, ...changes });
   const clearHref = pageHref(path, 1, { size, sample: filters.sample });
@@ -52,6 +81,7 @@ export function PostsList({ entries, traffic, isolated, filters, summary, pagina
         <Icon aria-hidden="true" size={17} /><strong>{value}</strong><span>{label}</span>
       </button>)}
     </section>
+    {notice && <p role="status" className={styles.note}>{notice}</p>}
     {error && <p role="alert" className={workspace.error}>{error}</p>}
     <section className={styles.panel} aria-labelledby="library">
       <div className={styles.panelTitle}><div><h2 id="library">Post library</h2><p>Search by title or URL slug.</p></div><span className={styles.result} aria-live="polite">{pagination.total} of {summary.allPosts} posts</span></div>
@@ -70,6 +100,16 @@ export function PostsList({ entries, traffic, isolated, filters, summary, pagina
           {(filters.q || filters.topic || filters.status || filters.date || filters.sort) && <Link className="text-sm underline" href={clearHref}>Clear filters</Link>}
         </div>
       </form>
+      {owner && <div className={styles.bulkActions}>
+        {entries.length > 0 && <label><input type="checkbox" checked={allSelected} disabled={busy} onChange={(event) => setSelected(event.target.checked ? entries.map(({ id }) => id) : [])} /> Select all on this page</label>}
+        {selectedRows.length > 0 && <>
+          <span aria-live="polite">{selectedRows.length} selected</span>
+          <button type="button" className={workspace.secondary} disabled={busy || !liveSelected} onClick={() => applyToSelected("unpublish")}>Unpublish selected</button>
+          <button type="button" className={workspace.secondary} disabled={busy} onClick={() => applyToSelected("trash")}>Move selected to Trash</button>
+          <button type="button" className={workspace.secondary} onClick={() => setSelected([])} disabled={busy}>Clear selection</button>
+        </>}
+        <Link className={workspace.secondary} href="/editorial/trash"><Trash2 size={16} aria-hidden="true" />Trash</Link>
+      </div>}
       {entries.length ? <table className={styles.table}>
         <caption className="sr-only">Posts with 30-day page views</caption>
         <thead><tr>
@@ -84,9 +124,9 @@ export function PostsList({ entries, traffic, isolated, filters, summary, pagina
             const title = post.title || "Untitled post";
             const value = post.views;
             return <tr key={post.id}>
-              <td className={styles.articleCell}><Link href={"/editorial/posts/" + post.id}><span className={styles.fileIcon}><FileText size={17} aria-hidden="true" /></span><span><strong>{title}</strong>{post.slug && <small>/{post.slug}</small>}</span></Link></td>
+              <td className={styles.articleCell}>{owner && <input className={styles.rowSelection} type="checkbox" checked={selected.includes(post.id)} disabled={busy} onChange={(event) => select(post.id, event.target.checked)} aria-label={`Select ${title}`} />}<Link href={"/editorial/posts/" + post.id}><span className={styles.fileIcon}><FileText size={17} aria-hidden="true" /></span><span><strong>{title}</strong>{post.slug && <small>/{post.slug}</small>}</span></Link></td>
               <td><span className={styles.chip} data-tone={post.topic}>{insightTopics[post.topic].label}</span></td>
-              <td><span className={styles.chip} data-tone={state}>{statuses[state]}</span>{post.liveSlug && state !== "published" && <small>Earlier revision live</small>}</td>
+              <td><span className={styles.chip} data-tone={state}>{statuses[state]}</span>{post.scheduledFor && state === "scheduled" && <small><time dateTime={post.scheduledFor}>{scheduleLabel(post.scheduledFor)}</time></small>}{post.liveSlug && state !== "published" && <small>Earlier revision live</small>}</td>
               <td className={styles.updated}><time dateTime={post.updated}>{dateLabel(post.updated, true)}</time></td>
               <td className={styles.views}><span className={styles.mobileLabel}>30-day views</span>{value === null ? <span title={traffic.started ? "Never published" : "Traffic unavailable"}>—<span className="sr-only">{traffic.started ? "Never published" : "Traffic unavailable"}</span></span> : value.toLocaleString("en-IN")}</td>
               <td className={styles.actionCell}><div className={styles.actions}><Link href={"/editorial/posts/" + post.id}>Edit<span className="sr-only"> {title}</span></Link><Link prefetch={false} href={"/editorial/preview/" + post.id} title="Private preview" aria-label={"Preview " + title}><Eye size={17} aria-hidden="true" /></Link>{post.hasPublication && <Link href={"/editorial/analytics?post=" + encodeURIComponent(post.id) + (traffic.sample ? "&sample=1" : "")} aria-label={"Traffic for " + title} title="Article traffic"><BarChart3 size={17} aria-hidden="true" /></Link>}</div></td>

@@ -6,13 +6,13 @@ import { rangeStart, totals, type TrafficRange } from "@/lib/editorial/traffic-d
 import { getInsightTopic, type InsightTopic } from "@/data/blog-topics";
 import { paginate, type Query } from "@/lib/pagination";
 
-const statusSQL = "CASE WHEN l.revision = p.revision THEN 'published' ELSE p.stage END";
+const statusSQL = "CASE WHEN l.revision = p.revision THEN 'published' WHEN s.error IS NOT NULL THEN 'schedule-failed' WHEN s.id IS NOT NULL THEN 'scheduled' ELSE p.stage END";
 const titleSQL = "json_extract(p.draft, '$.title')";
 const topicSQL = "json_extract(p.draft, '$.topic')";
 const slugSQL = "json_extract(p.draft, '$.slug')";
 type Row = {
   id: string; title: string; topic: InsightTopic; slug: string; updated: string;
-  status: "draft" | "review" | "approved" | "published"; liveSlug: string | null;
+  status: "draft" | "review" | "approved" | "published" | "scheduled" | "schedule-failed"; scheduledFor: string | null; liveSlug: string | null;
   hasPublication: number; views: number | null;
 };
 
@@ -24,11 +24,12 @@ export function postLibraryData(query: Query) {
   const traffic = sample ? readTraffic(true, eligible) : trafficPeriod();
   const term = typeof query.q === "string" ? query.q.trim().slice(0, 200) : "";
   const topic = typeof query.topic === "string" ? getInsightTopic(query.topic) ?? "" : "";
-  const status = typeof query.status === "string" && ["draft", "review", "approved", "published"].includes(query.status) ? query.status : "";
+  const status = typeof query.status === "string" && ["draft", "review", "approved", "published", "scheduled", "schedule-failed"].includes(query.status) ? query.status : "";
   const date = typeof query.date === "string" && ["7", "30", "90"].includes(query.date) ? query.date : "";
   const sort = query.sort === "views" ? "views" : "recent";
   const filters = { q: term, topic, status, date, sort: sort === "views" ? sort : "", sample: sample ? "1" : "" };
-  const conditions: string[] = [];
+  const inLibrary = "NOT EXISTS (SELECT 1 FROM post_trash t WHERE t.id = p.id)";
+  const conditions = [inLibrary];
   const args: string[] = [];
   if (term) {
     conditions.push(`instr(lower(coalesce(${titleSQL}, '') || ' ' || coalesce(${slugSQL}, '') || ' ' || coalesce(l.slug, '')), lower(?)) > 0`);
@@ -46,14 +47,14 @@ export function postLibraryData(query: Query) {
     conditions.push("date(p.updated, '+330 minutes') BETWEEN ? AND ?");
     args.push(rangeStart(traffic.today, Number(date) as TrafficRange), traffic.today);
   }
-  const source = "FROM posts p LEFT JOIN live l ON l.id = p.id";
-  const where = conditions.length ? "WHERE " + conditions.join(" AND ") : "";
+  const source = "FROM posts p LEFT JOIN live l ON l.id = p.id LEFT JOIN publication_schedule s ON s.id = p.id";
+  const where = "WHERE " + conditions.join(" AND ");
   const summary = connection.prepare(`SELECT COUNT(*) AS allPosts, COUNT(l.id) AS live,
     COUNT(CASE WHEN ${statusSQL} = 'draft' THEN 1 END) AS drafts,
-    COUNT(CASE WHEN ${statusSQL} = 'review' THEN 1 END) AS review ${source}`).get() as {
+    COUNT(CASE WHEN ${statusSQL} = 'review' THEN 1 END) AS review ${source} WHERE ${inLibrary}`).get() as {
       allPosts: number; live: number; drafts: number; review: number;
     };
-  const total = conditions.length
+  const total = conditions.length > 1
     ? Number(connection.prepare(`SELECT COUNT(*) AS total ${source} ${where}`).get(...args)?.total ?? 0)
     : summary.allPosts;
   const pagination = paginate(total, query);
@@ -64,10 +65,10 @@ export function postLibraryData(query: Query) {
   const earliest = rangeStart(traffic.today, 30);
   const viewArgs = sample ? [metrics] : [traffic.started && traffic.started > earliest ? traffic.started : earliest, traffic.today];
   const entries = connection.prepare(`
-    SELECT id, title, topic, slug, updated, status, liveSlug, hasPublication, CASE WHEN hasPublication AND ? THEN coalesce(rawViews, 0) ELSE NULL END AS views
+    SELECT id, title, topic, slug, updated, status, liveSlug, scheduledFor, hasPublication, CASE WHEN hasPublication AND ? THEN coalesce(rawViews, 0) ELSE NULL END AS views
     FROM (
       SELECT p.id, ${titleSQL} AS title, ${topicSQL} AS topic, ${slugSQL} AS slug, p.updated,
-        ${statusSQL} AS status, l.slug AS liveSlug,
+        ${statusSQL} AS status, l.slug AS liveSlug, s.due AS scheduledFor,
         (l.id IS NOT NULL OR EXISTS (SELECT 1 FROM slug_claims WHERE id = p.id)) AS hasPublication,
         ${views} AS rawViews
       ${source} ${where}

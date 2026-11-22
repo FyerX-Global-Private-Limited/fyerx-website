@@ -43,8 +43,10 @@ export default function Home() {
         <Leadership />
         {/* <Trust /> */}
         <SecurityControl />
-        <LatestBlogs />
-        <LatestBlogs featured />
+        <div className="min-w-0">
+          <LatestBlogs />
+          <LatestBlogs featured />
+        </div>
         <TestimonialsCTA />
       </main>
       <MainFooter />

@@ -5,6 +5,9 @@ import { Login } from "./session-controls";
 import { PostsList } from "./posts-list";
 
 export default async function EditorialPage({ searchParams }: { searchParams: Promise<Query> }) {
-  if (!(await currentUser())) return <Login />;
-  return <PostsList {...postLibraryData(await searchParams)} />;
+  const user = await currentUser();
+  if (!user) return <Login />;
+  const data = postLibraryData(await searchParams);
+  const key = JSON.stringify([data.filters, data.pagination.page, data.pagination.size]);
+  return <PostsList key={key} {...data} owner={user.role === "owner"} />;
 }
